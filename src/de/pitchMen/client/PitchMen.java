@@ -96,6 +96,17 @@ public class PitchMen implements EntryPoint {
 			}
 						
 		});
+		
+		// Die Partnerprofil-Seite laden, wenn partnerProfileBtn geklickt wird
+				partnerProfileBtn.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						RootPanel.get("content").clear();
+						RootPanel.get("content").add(partnerProfileText);
+					}
+								
+				});
 				
 	}
 }
