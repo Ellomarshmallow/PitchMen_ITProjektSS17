@@ -5,8 +5,8 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
-  <servlet>
+<!-- Servlets -->
+ <!--   <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>de.pitchMen.server.GreetingServiceImpl</servlet-class>
   </servlet>
@@ -14,7 +14,7 @@
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/pitchmen/greet</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
   
   <!-- Default page to serve -->
   <welcome-file-list>
