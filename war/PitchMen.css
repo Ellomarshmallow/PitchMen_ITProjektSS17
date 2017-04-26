@@ -1,34 +1,129 @@
-/** Add css rules here for your application. */
+/*
+ * Zentrale Style-Datei für die PitchMen-Applikation
+ * @author: Leon Schelle, Simon Kienzler
+ */
 
 
-/** Example rules used by the template application (remove for your app) */
+/*
+ * Import-Anweisungen. Das Theme nutzt die freie Schriftart Roboto. 
+ * Die Einbindung erfolgt über Google Fonts. Zusätzlich wird das 
+ * Icon-Set FontAwesome importiert.
+ */
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,700');
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+/*
+ * Seitenweite Regeln
+ */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	color: #666;
+	background: #eee;
+}
+
+/* 
+ * Sammler für alle HTML-Tags, die sich weigern, 
+ * die CI-Schriftart Roboto freiwillig anzunehmen. 
+ */
+button {
+	font-family: 'Roboto';
+}
+
+/* ### TOPBAR ### */
+
+#top {
+	cursor: default;
+	display: flex;
+	width: 100%;
+	flex: 0 1 auto;
+	/* TODO Hintergrund finden, der entsprechend lizensiert ist */
+	background: #999 url('http://mindchamps-medical.com/wp-content/uploads/2015/04/Abstract-Background-White.jpg') no-repeat left 50%;
+	background-size: cover;
+}
+
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+	font-weight: 400;
+	font-size: 16px;
+	padding: 20px 0px 20px 30px;
+	width: 30%;
+	box-sizing: border-box;
+	color: rgba(255,255,255,0.0);
+	background: url('PitchMenLogoFinal-01.png') no-repeat left 80%;
+	background-size: contain;
+	margin-left: 20px;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+#top p {
+	width: 70%;
+	padding: 20px 30px 20px 0px;
+	font-size: 16px;
+	text-align: right;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+#top p a {
+	margin-left: 10px;
+	padding-left: 10px;
+	text-decoration: none;
+	color: #666;
+	border-left: 1px solid #666;
 }
 
-.dialogVPanel {
-  margin: 5px;
+/* ### MAIN (Enthält nav und content) ### */
+
+#main {
+	display: flex;
+	flex-direction: row;
+	flex: 1 1 auto;
+	height: 0px;
+	overflow-y: hidden;
 }
 
-.serverResponseLabelError {
-  color: red;
+/* ### NAVIGATION ### */
+
+#nav {
+	width: 20%;
+	padding: 30px 0px;
+	display: flex;
+	flex-flow: column;
+	background: #ddd;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+#nav table {
+	width: 100%;
+}
+
+#nav button {
+	width: 100%;
+	border: none;
+	background: transparent;
+	color: #444;
+	padding: 15px 0px 15px 20px;
+	text-align: left;
+	font-size: 100%;
+}
+
+#nav button:hover,
+#nav button:active {
+	background: #d3d3d3;
+}
+
+/* ### CONTENT ### */
+
+#content {
+	padding: 30px 30px 100px 30px;
+	width: 80%;
+	overflow-y: auto;
 }
