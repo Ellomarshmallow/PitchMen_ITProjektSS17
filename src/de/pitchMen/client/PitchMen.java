@@ -27,7 +27,9 @@ public class PitchMen implements EntryPoint {
 	 * um eine zentrale Applikations-Verwaltung zu initialisieren,
 	 * die die Aktivitäten der Applikation steuert.
 	 */
+
 	//private final PitchMenAdminAsync pitchMenAdmin = GWT.create(PitchMenAdmin.class);
+
 
 	/**
 	 * Die Einstiegspunkt-Methode.
@@ -40,17 +42,21 @@ public class PitchMen implements EntryPoint {
 		final Button homeBtn = new Button("Startseite anzeigen");
 		final Button marketplaceBtn = new Button("Projektmarktplätze");
 		final Button jobPostingBtn = new Button("Ausschreibungen");
+		final Button partnerProfileBtn = new Button("Mein Partnerprofil");
 			
 		// Erstellung von Beispielinhalten
 		final HTML homeText = new HTML("<h2>Startseite</h2><p>blababla</p>");
 		final HTML marketplaceText = new HTML("<h2>Projektmarktplatz-Übersicht</h2><p>blababla</p>");
 		final HTML jobPostingText = new HTML("<h2>Sehen Sie sich diese Ausschreibung an</h2><p>blababla</p>");
 		final HTML defaultText = new HTML("<h2>Wählen Sie eine Option links.</h2>");
+		final HTML partnerProfileText = new HTML("<h2>Das ist Ihr Partnerprofil</h2><p>In Ihrem Partnerprofil stehen Ihre Eigenschaften</p>");
+		
 			
 		// Die Navigations-Buttons dem navPanel hinzufügen
 		navPanel.add(homeBtn);
 		navPanel.add(marketplaceBtn);
 		navPanel.add(jobPostingBtn);
+		navPanel.add(partnerProfileBtn);
 		
 		// Das navPanel der Seite im Bereich der id "nav" hinzufügen 
 		RootPanel.get("nav").add(navPanel);
