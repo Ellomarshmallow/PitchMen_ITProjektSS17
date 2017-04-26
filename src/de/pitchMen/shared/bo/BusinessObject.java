@@ -1,5 +1,6 @@
 package de.pitchMen.shared.bo;
 
+import java.io.Serializable;
 
 /**
  * Alle Klassen des packages bo erben von dieser Superklasse.
@@ -14,7 +15,7 @@ public abstract class BusinessObject implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID;
+    private static final long serialVersionUID = 1L;
 
     /**
      * @return
