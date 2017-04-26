@@ -9,6 +9,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.pitchMen.shared.PitchMenAdmin;
+import de.pitchMen.shared.PitchMenAdminAsync;
+
 /**
  * Die Klasse EntryPoint definiert die Methode <code>onModuleLoad()</code>, die beim Aufrufen der Applikation ausgeführt wird.
  */
@@ -19,8 +22,12 @@ public class PitchMen implements EntryPoint {
 	private static final String SERVER_ERROR = "Beim Verbindungsaufbau mit dem Server ist ein Fehler aufgereten." + 
 												" Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.";
 
-	// TODO GreetingService ersetzen
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+	/**
+	 * Das Erzeugen eines <code>PitchMenAdmin</code>-Objekts ist nötig, 
+	 * um eine zentrale Applikations-Verwaltung zu initialisieren,
+	 * die die Aktivitäten der Applikation steuert.
+	 */
+	private final PitchMenAdminAsync pitchMenAdmin = GWT.create(PitchMenAdmin.class);
 
 	/**
 	 * Die Einstiegspunkt-Methode.
