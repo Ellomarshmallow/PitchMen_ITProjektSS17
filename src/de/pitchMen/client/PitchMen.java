@@ -13,21 +13,21 @@ import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.PitchMenAdminAsync;
 
 /**
- * Die Klasse EntryPoint definiert die Methode <code>onModuleLoad()</code>, die beim Aufrufen der Applikation ausgeführt wird.
+ * Die Klasse EntryPoint definiert die Methode <code>onModuleLoad()</code>, die beim Aufrufen der Applikation ausgefÃ¼hrt wird.
  */
 public class PitchMen implements EntryPoint {
 	/**
 	 * Wird dem Nutzer ausgegeben, wenn der Server nicht erreichbar ist.
 	 */
 	private static final String SERVER_ERROR = "Beim Verbindungsaufbau mit dem Server ist ein Fehler aufgereten." + 
-												" Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.";
+												" Bitte Ã¼berprÃ¼fen Sie Ihre Internetverbindung und versuchen Sie es erneut.";
 
 	/**
-	 * Das Erzeugen eines <code>PitchMenAdmin</code>-Objekts ist nötig, 
+	 * Das Erzeugen eines <code>PitchMenAdmin</code>-Objekts ist nÃ¶tig, 
 	 * um eine zentrale Applikations-Verwaltung zu initialisieren,
-	 * die die Aktivitäten der Applikation steuert.
+	 * die die AktivitÃ¤ten der Applikation steuert.
 	 */
-	private final PitchMenAdminAsync pitchMenAdmin = GWT.create(PitchMenAdmin.class);
+	//private final PitchMenAdminAsync pitchMenAdmin = GWT.create(PitchMenAdmin.class);
 
 	/**
 	 * Die Einstiegspunkt-Methode.
@@ -38,24 +38,24 @@ public class PitchMen implements EntryPoint {
 				
 		// Erstellung der Navigations-Buttons
 		final Button homeBtn = new Button("Startseite anzeigen");
-		final Button marketplaceBtn = new Button("Projektmarktplätze");
+		final Button marketplaceBtn = new Button("ProjektmarktplÃ¤tze");
 		final Button jobPostingBtn = new Button("Ausschreibungen");
 			
 		// Erstellung von Beispielinhalten
 		final HTML homeText = new HTML("<h2>Startseite</h2><p>blababla</p>");
-		final HTML marketplaceText = new HTML("<h2>Projektmarktplatz-Übersicht</h2><p>blababla</p>");
+		final HTML marketplaceText = new HTML("<h2>Projektmarktplatz-Ãœbersicht</h2><p>blababla</p>");
 		final HTML jobPostingText = new HTML("<h2>Sehen Sie sich diese Ausschreibung an</h2><p>blababla</p>");
-		final HTML defaultText = new HTML("<h2>Wählen Sie eine Option links</h2>");
+		final HTML defaultText = new HTML("<h2>WÃ¤hlen Sie eine Option links.</h2>");
 			
-		// Die Navigations-Buttons dem navPanel hinzufügen
+		// Die Navigations-Buttons dem navPanel hinzufÃ¼gen
 		navPanel.add(homeBtn);
 		navPanel.add(marketplaceBtn);
 		navPanel.add(jobPostingBtn);
 		
-		// Das navPanel der Seite im Bereich der id "nav" hinzufügen 
+		// Das navPanel der Seite im Bereich der id "nav" hinzufÃ¼gen 
 		RootPanel.get("nav").add(navPanel);
 		
-		// Den HTML-Text defaultText im Bereich der id "content" hinzufügen
+		// Den HTML-Text defaultText im Bereich der id "content" hinzufÃ¼gen
 		RootPanel.get("content").add(defaultText);
 		
 		// Die Startseite laden, wenn homeBtn geklickt wird
