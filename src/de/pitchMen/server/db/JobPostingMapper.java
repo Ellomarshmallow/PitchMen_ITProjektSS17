@@ -1,7 +1,7 @@
 package de.pitchMen.server.db;
 
 /**
- * muss manuel importiert werden
+ * Bildet JobPosting-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * @author Heike
  *
  */

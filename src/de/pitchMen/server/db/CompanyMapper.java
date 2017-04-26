@@ -1,7 +1,8 @@
 package de.pitchMen.server.db;
 
 /**
- * muss manuell importiert werden
+ * Bildet Company-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ *
  * @author Heike
  *
  */
