@@ -43,6 +43,7 @@ public class PitchMen implements EntryPoint {
 		final Button marketplaceBtn = new Button("Projektmarktplätze");
 		final Button jobPostingBtn = new Button("Ausschreibungen");
 		final Button partnerProfileBtn = new Button("Mein Partnerprofil");
+		final Button applicationBtn	= new Button("Bewerbungen");
 			
 		// Erstellung von Beispielinhalten
 		final HTML homeText = new HTML("<h2>Startseite</h2><p>blababla</p>");
@@ -50,13 +51,14 @@ public class PitchMen implements EntryPoint {
 		final HTML jobPostingText = new HTML("<h2>Sehen Sie sich diese Ausschreibung an</h2><p>blababla</p>");
 		final HTML defaultText = new HTML("<h2>Wählen Sie eine Option links.</h2>");
 		final HTML partnerProfileText = new HTML("<h2>Das ist Ihr Partnerprofil</h2><p>In Ihrem Partnerprofil stehen Ihre Eigenschaften</p>");
-		
+		final HTML applicationText = new HTML  ("<h2>Alle Bewerbungen</h2><p>laufende,abgelehnte,angenommene Bewerbungen (Fan-in), insgesamte Anzahl bla bla bla Fan-out</p> "); 
 			
 		// Die Navigations-Buttons dem navPanel hinzufügen
 		navPanel.add(homeBtn);
 		navPanel.add(marketplaceBtn);
 		navPanel.add(jobPostingBtn);
 		navPanel.add(partnerProfileBtn);
+		navPanel.add(applicationBtn);
 		
 		// Das navPanel der Seite im Bereich der id "nav" hinzufügen 
 		RootPanel.get("nav").add(navPanel);
@@ -108,5 +110,15 @@ public class PitchMen implements EntryPoint {
 								
 				});
 				
+				// Die Bewerbungen laden, wenn applicationBtn geklickt wird
+				applicationBtn.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						RootPanel.get("content").clear();
+						RootPanel.get("content").add(applicationText);
+					}
+								
+				});
 	}
 }

@@ -121,6 +121,11 @@ h1 {
 	color: #fff;
 }
 
+#nav button:focus{
+	background: #006EB5;
+	color: #fff;
+}
+
 /* ### CONTENT ### */
 
 #content {
