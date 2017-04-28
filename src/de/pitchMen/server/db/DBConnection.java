@@ -1,7 +1,6 @@
 package de.pitchMen.server.db;
 
 /**
- * muss manuell importiert werden
  * @author Heike
  */
 
@@ -18,18 +17,16 @@ import com.google.appengine.api.utils.SystemProperty;
 public class DBConnection {
 
 	    /**
-	     * 
+	     * Die Klasse DBCOnnection wird nur einmal instatniiert. 
 	     */
-	    private static Connection con;
+	
+	    private static Connection con = null;
 
 	    /**
-	     * 
+	     *  Mit dieser Url wird die Datenbank angesprochen.
 	     */
+	    
 	    private static String localUrl;
-
-	    /**
-	     * 
-	     */
 	    private static String googleUrl;
 
 	    /**
@@ -37,9 +34,29 @@ public class DBConnection {
 	     * 
 	     * @return
 	     */
+	    	    
 	    public static Connection connection() {
-	        // TODO implement here
-	        return null;
+	    	/**
+	    	 * Herstellung einer DB Verbindung, wenn bisher keine Verbindung besteht
+	    	 * 
+	    	 * if (con == null) {
+	    	 * 	String url = null;
+	    	 *  try {
+	    	 *  	if (?
+	    	 *  		)
+	    	 *  	} else {
+	    	 *  		?
+	    	 *  	}
+	    	 *  }
+	    	 *  con = DriverManager.getConnection(url);
+	    	 *  } catch (Exception e) {
+	    	 *  	con = null;
+	    	 *  	e.printStackTrace();
+	    	 *  }
+	    	 *  }
+	    	 */
+
+	    return con;
 	    }
 
 }
