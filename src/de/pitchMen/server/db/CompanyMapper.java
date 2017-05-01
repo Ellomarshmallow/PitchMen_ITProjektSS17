@@ -62,13 +62,13 @@ public class CompanyMapper {
 			 * Der aktuelle Primärschlüssel wird um eins erhöht
 			 */
 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid " + "FROM company");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM company");
 			
 			if (rs.next()) {
 				company.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-
+//Test Execute
 				stmt.executeUpdate("INSERT INTO company (id, name, description) VALUES ( " + company.getId() + ", 'Bosch' ,'Thermotechnik')");
 			}
 		} catch (SQLException e2) {
