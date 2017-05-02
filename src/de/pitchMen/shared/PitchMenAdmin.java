@@ -2,6 +2,10 @@ package de.pitchMen.shared;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
+import de.pitchMen.shared.bo.ArrayList;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Participation;
+
 /**
  * Schnittstelle für die  RPC-Fähige Klasse PitchMenAdminImpl.
  * 
@@ -142,5 +146,5 @@ public interface PitchMenAdmin extends RemoteService {
      * @return
      */
     public void setMarketplaces(ArrayList<Marketplace> value);
-
+   
 }

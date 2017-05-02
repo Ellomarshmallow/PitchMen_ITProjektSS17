@@ -1,80 +1,82 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Jedes PartnerProfile-Objekt gehört zu genau einem Teilnehmer des Projektmarktplatzes bzw. einer Ausschreibung.
  * 
- * @author
- */
+ * @author JuliusDigel
+ */ 
 public class PartnerProfile extends BusinessObject {
 
-    /**
-     * 
-     */
-    private ArrayList<Trait> traits;
+	private ArrayList<Trait> traits = null;
 
-    /**
-     * 
-     */
-    private Date dateCreated;
+	private Date dateCreated = null;
 
-    /**
-     * 
-     */
-    private Date dateChanged;
+	private Date dateChanged = null;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 
-     */
-    public OrganisationUnit OrganisationUnit;
+	public OrganisationUnit OrganisationUnit = null;
 
-    /**
-     * 
-     */
-    public JobPosting JobPosting;
+	public JobPosting JobPosting = null;
 
-    /**
-     * 
-     */
-    public Set<Trait> Trait;
+	/**
+	 * @return
+	 */
+	public ArrayList<Trait> getTraits() {
+		return traits;
+	}
+	/**
+	 * @return
+	 */
+	public void setTraits(ArrayList<Trait> traits) {
+		this.traits = traits;
+	}
+	/**
+	 * @return
+	 */
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	/**
+	 * @return
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 
-    /**
-     * @return
-     */
-    public ArrayList<Trait> getTraits() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return
+	 */
+	public Date getDateChanged() {
+		return dateChanged;
+	}
 
-    /**
-     * @return
-     */
-    public Date getDateCreated() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return
+	 */
+	public void setDateChanged(Date dateChanged) {
+		this.dateChanged = dateChanged;
+	}
 
-    /**
-     * @return
-     */
-    public Date getDateChanged() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * Vergleicht das aufrufende PartnerProfile-Objekt mit dem übergebenen PartnerProfil-Objekt und ermittelt einen Übereinstimmungswert.
+	 * 
+	 * @param partnerProfile 
+	 * @return
+	 */
+	public float compareWith(PartnerProfile partnerProfile) {
+		
+		return 0.0f;
+	}
 
-    /**
-     * Vergleicht das aufrufende PartnerProfile-Objekt mit dem übergebenen PartnerProfil-Objekt und ermittelt einen Übereinstimmungswert.
-     * 
-     * @param partnerProfile 
-     * @return
-     */
-    public float compareWith(PartnerProfile partnerProfile) {
-        // TODO implement here
-        return 0.0f;
-    }
+
+
+
+
+
+
 
 }

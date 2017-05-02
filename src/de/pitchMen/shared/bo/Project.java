@@ -1,149 +1,143 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+
 /**
  * Repräsentiert eine Projekt.
  * 
- * @author
+ * @author JuliusDigel
  */
 public class Project extends BusinessObject {
 
-     /**
-     * 
-     */
-    private Date dateOpened;
 
-    /**
-     * 
-     */
-    private Date dateClosed;
+	private Date dateOpened = null;
 
-    /**
-     * 
-     */
-    private String title;
 
-    /**
-     * 
-     */
-    private String description;
+	private Date dateClosed = null;
 
-    /**
-     * 
-     */
-    private Person manager;
 
-    /**
-     * 
-     */
-    private ArrayList<JobPosting> jobPostings;
+	private String title = "";
 
-    /**
-     * 
-     */
-    private ArrayList<Participation> participations;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	private String description = "";
 
-    /**
-     * 
-     */
-    public Set<Participation> Participation;
 
-    /**
-     * 
-     */
-    public Person Manager;
+	private Person manager = null;
 
-    /**
-     * 
-     */
-    public Set<JobPosting> JobPosting;
 
-    /**
-     * @return
-     */
-    public Date getDateOpened() {
-        // TODO implement here
-        return null;
-    }
+	private ArrayList<JobPosting> jobPostings = null;
 
-    /**
-     * @param dateOpened 
-     * @return
-     */
-    public void setDateOpened(Date dateOpened) {
-        // TODO implement here
-        return null;
-    }
 
-    /**
-     * @return
-     */
-    public Date getDateClosed() {
-        // TODO implement here
-        return null;
-    }
+	private ArrayList<Participation> participations = null;
 
-    /**
-     * @param dateClosed 
-     * @return
-     */
-    public void setDateClosed(Date dateClosed) {
-        // TODO implement here
-        return null;
-    }
 
-    /**
-     * @return
-     */
-    public String getTitle() {
-        // TODO implement here
-        return "";
-    }
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * @param description 
-     * @return
-     */
-    public void setTitle(String description) {
-        // TODO implement here
-        return null;
-    }
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-        // TODO implement here
-        return "";
-    }
+	public Person Manager = null;
 
-    /**
-     * @param value 
-     * @return
-     */
-    public void setDescription(String value) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * Auslesen der JobPostings
+	 * @return jobPostings
+	 */
 
-    /**
-     * @return
-     */
-    public Person getManager() {
-        // TODO implement here
-        return null;
-    }
+	public ArrayList<Participation> getParticipations(){
+		return participations;
+	}
 
-    /**
-     * @return
-     */
-    public ArrayList<JobPosting> getJobPostings() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * Setzen der participations
+	 * @param participations
+	 */   
+
+	public void setParticipations(ArrayList<Participation> participations){
+		this.participations = participations;
+	}
+
+	/**
+	 * Auslesen der JobPostings
+	 * @return jobPostings
+	 */   
+
+	public ArrayList<JobPosting> getJobPostings(){
+		return jobPostings;
+	}
+
+	/**
+	 * Setzen der JobPostings
+	 * @param jobPostings
+	 */   
+
+	public void setJobPostings(ArrayList<JobPosting> jobPostings){
+		this.jobPostings = jobPostings;
+	}
+
+	/**
+	 * @return dateOpened
+	 */
+	public Date getDateOpened() {
+		return this.dateOpened;
+	}
+
+	/**
+	 * @param dateOpened 
+	 **/
+	public void setDateOpened(Date dateOpened) {
+		this.dateOpened = dateOpened;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getDateClosed() {
+		return this.dateClosed;
+	}
+
+	/**
+	 * @param dateClosed 
+	 */
+	public void setDateClosed(Date dateClosed) {
+		this.dateClosed = dateClosed;
+	}
+
+	/**
+	 * @return title
+	 */
+	public String getTitle() {
+		return this.title;
+	}
+
+	/**
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * @return describtion
+	 */
+	public String getDescription() {
+		return this.description;
+	}
+
+	/**
+	 * @param describtion
+	 */
+	public void setDescription(String describtion) {
+		this.description = describtion;
+	}
+
+	/**
+	 * @return manager
+	 */
+	public Person getManager() {
+		return this.manager;
+	}
+
+
+
 
 }
