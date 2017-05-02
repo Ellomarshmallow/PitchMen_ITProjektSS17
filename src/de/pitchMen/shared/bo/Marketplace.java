@@ -1,82 +1,91 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
+
 /**
  * Repräsentiert eine Marktplatz.
  * 
- * @author
+ * @author EleonoraRenz
  */
 public class Marketplace extends BusinessObject {
 
-     /**
-     * 
-     */
-    private String title;
+	/**
+	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
+	 * String verwendet, damit man das Werfen einer NullPointException
+	 * vermeidet.
+	 */
+	private String title = "";
 
-    /**
-     * 
-     */
-    private String description;
+	/**
+	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
+	 * String verwendet, damit man das Werfen einer NullPointException
+	 * vermeidet.
+	 */
+	private String description = "";
 
-    /**
-     * 
-     */
-    private ArrayList<Project> projects;
+	private ArrayList<Project> projects = null;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 
-     */
-    public Set<Project> Project;
+	private ArrayList<OrganisationUnit> organisationUnits = null;
 
-    /**
-     * 
-     */
-    public Set<OrganisationUnit> Participant;
+	public void setProject(ArrayList<Project> projects) {
+		this.projects = projects;
+	}
 
-    /**
-     * @return
-     */
-    public String getTitle() {
-        // TODO implement here
-        return "";
-    }
+	public void setParticipant(ArrayList<OrganisationUnit> organisationUnits) {
+		this.setOrganisationUnits(organisationUnits);
+	}
 
-    /**
-     * @param title 
-     * @return
-     */
-    public void setTitle(String title) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return title
+	 */
+	public String getTitle() {
+		return this.title;
+	}
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    /**
-     * @param description 
-     * @return
-     */
-    public void setDescription(String description) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return description
+	 */
+	public String getDescription() {
+		return this.description;
+	}
 
-    /**
-     * @return
-     */
-    public ArrayList<Project> getProjects() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return projects
+	 */
+	public ArrayList<Project> getProjects() {
+		return this.projects;
+	}
+
+	/**
+	 * @return organisationUnits
+	 */
+	public ArrayList<OrganisationUnit> getOrganisationUnits() {
+		return organisationUnits;
+	}
+
+	/**
+	 * @param organisationUnits
+	 */
+	public void setOrganisationUnits(ArrayList<OrganisationUnit> organisationUnits) {
+		this.organisationUnits = organisationUnits;
+	}
+
+	
 
 }

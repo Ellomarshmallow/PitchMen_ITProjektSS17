@@ -1,144 +1,116 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Repräsentiert eine Ausschreibung.
  * 
- * @author
+ * @author EleonoraRenz
  */
 public class JobPosting extends BusinessObject {
 
-	
-    private ArrayList<Application> applications;
+	private ArrayList<Application> applications;
 
-    /**
-     * 
-     */
-    private Person recruiter;
+	private Person recruiter = null;
+	/**
+	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
+	 * String verwendet, damit man das Werfen einer NullPointException
+	 * vermeidet.
+	 */
+	private String title = "";
+	/**
+	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
+	 * String verwendet, damit man das Werfen einer NullPointException
+	 * vermeidet.
+	 */
+	private String text = "";
 
-    /**
-     * 
-     */
-    private String title;
+	private Date deadline = null;
 
-    /**
-     * 
-     */
-    private String text;
+	private PartnerProfile partnerProfile = null;
 
-    /**
-     * 
-     */
-    private Date deadline;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 
-     */
-    private PartnerProfile partnerProfile;
+	// public PartnerProfile PartnerProfile;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	public Set<Application> Application;
 
-    /**
-     * 
-     */
-    public PartnerProfile PartnerProfile;
+	/**
+	 * @return applications
+	 */
+	public ArrayList<Application> getApplications() {
+		return this.applications;
+	}
 
-    /**
-     * 
-     */
-    public Set<Application> Application;
+	/**
+	 * @return recruiter
+	 */
+	public Person getRecruiter() {
+		return this.recruiter;
+	}
 
-    /**
-     * @return
-     */
-    public ArrayList<Application> getApplications() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param recruiter
+	 */
+	public void setRecruiter(Person recruiter) {
+		this.recruiter = recruiter;
+	}
 
-    /**
-     * @return
-     */
-    public Person getRecruiter() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return title
+	 */
+	public String getTitle() {
+		return this.title;
+	}
 
-    /**
-     * @param recruiter 
-     * @return
-     */
-    public void setRecruiter(Person recruiter) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    /**
-     * @return
-     */
-    public String getTitle() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @return text
+	 */
+	public String getText() {
+		return this.text;
+	}
 
-    /**
-     * @param title 
-     * @return
-     */
-    public void setTitle(String title) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param text
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
 
-    /**
-     * @return
-     */
-    public String getText() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @return deadline
+	 */
+	public Date getDeadline() {
+		return this.deadline;
+	}
 
-    /**
-     * @param text 
-     * @return
-     */
-    public void setText(String text) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param deadline
+	 */
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
 
-    /**
-     * @return
-     */
-    public Date getDeadline() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return partnerProfile
+	 */
+	public PartnerProfile getPartnerProfile() {
+		return this.partnerProfile;
+	}
 
-    /**
-     * @param deadline 
-     * @return
-     */
-    public void setDeadline(Date deadline) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public PartnerProfile getPartnerProfile() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param partnerProfile
-     */
-    public void setPartnerProfile(PartnerProfile partnerProfile) {
-        // TODO implement here
-    }
+	/**
+	 * @param partnerProfile
+	 */
+	public void setPartnerProfile(PartnerProfile partnerProfile) {
+		this.partnerProfile = partnerProfile;
+	}
 
 }
