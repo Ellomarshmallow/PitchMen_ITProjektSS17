@@ -1,130 +1,104 @@
 package de.pitchMen.shared.bo;
 
+import java.util.Date;
 
 /**
  * Repräsentiert eine Bewerbung.
  * 
- * @author
+ * @author EleonoraRenz
  */
 
 public class Application extends BusinessObject {
 
-    /**
-     * 
-     */
-    private Date dateCreated;
+	private Date dateCreated = null;
 
-    /**
-     * 
-     */
-    private OrganisationUnit applicant;
+	private OrganisationUnit applicant = null;
 
-    /**
-     * 
-     */
-    private String text;
+	/**
+	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
+	 * String verwendet, damit man das Werfen einer NullPointException
+	 * vermeidet.
+	 */
+	private String text = "";
 
-    /**
-     * 
-     */
-    private Rating rating;
+	private Rating rating = null;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 
-     */
-    public Rating Rating;
+	/**
+	 * @return dateCreated
+	 */
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
 
-    /**
-     * 
-     */
-    public JobPosting JobPosting;
+	/**
+	 * @return application
+	 */
+	public OrganisationUnit getApplicant() {
+		return this.applicant;
+	}
 
-    /**
-     * @return
-     */
-    public Date getDateCreated() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param applicant
+	 */
+	public void setApplicant(OrganisationUnit applicant) {
+		this.applicant = applicant;
+	}
 
-    /**
-     * @return
-     */
-    public OrganisationUnit getApplicant() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return text
+	 */
+	public String getText() {
+		return this.text;
+	}
 
-    /**
-     * @param applicant 
-     * @return
-     */
-    public void setApplicant(OrganisationUnit applicant) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param text
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
 
-    /**
-     * @return
-     */
-    public String getText() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @return rating
+	 */
+	public Rating getRating() {
+		return this.rating;
+	}
 
-    /**
-     * @param text 
-     * @return
-     */
-    public void setText(String text) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param rating
+	 */
+	public void setRating(Rating rating) {
+		this.rating = rating;
+	}
 
-    /**
-     * @return
-     */
-    public Rating getRating() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
+	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
+	 * Rating-Objekt.
+	 * 
+	 * @param score
+	 * @param statement
+	 */
+	public void rate(float score, String statement) {
+		Rating rate = new Rating(score, statement);
+		this.setRating(rate);
+	}
 
-    /**
-     * @param rating 
-     * @return
-     */
-    public void setRating(Rating rating) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * Bewertet das aufrufende Application-Objekt. Hierfür werden ein Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein Rating-Objekt.
-     * 
-     * @param score 
-     * @param statement 
-     * @return
-     */
-    public void rate(float score, String statement) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * Überprüft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung vorhanden, wird true ausgegeben, wenn nicht, false.
-     * 
-     * @return
-     */
-    public boolean isRated() {
-        // TODO implement here
-        return false;
-    }
-
-}
+	/**
+	 * Überprüft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung
+	 * vorhanden, wird true ausgegeben, wenn nicht, false.
+	 * 
+	 * @return
+	 */
+	public boolean isRated() {
+		if (this.getRating() != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
