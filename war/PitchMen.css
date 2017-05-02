@@ -133,3 +133,20 @@ h1 {
 	width: 80%;
 	overflow-y: auto;
 }
+
+#content table {
+	width: 100%;
+}
+
+#content .topbar-btn {
+    border: 1px solid #ccc;
+    padding: 5px 15px;
+    background: rgba(255,255,255,.5);
+    margin: 0px 0px 0px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content-header table td {
+	width: 100px;
+}

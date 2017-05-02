@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -39,32 +40,32 @@ public class PitchMen implements EntryPoint {
 		VerticalPanel navPanel = new VerticalPanel();
 				
 		// Erstellung der Navigations-Buttons
-		final Button homeBtn = new Button("Startseite anzeigen");
+		final Button homeBtn = new Button("Startseite");
 		final Button marketplaceBtn = new Button("Projektmarktplätze");
-		final Button jobPostingBtn = new Button("Ausschreibungen");
-		final Button partnerProfileBtn = new Button("Mein Partnerprofil");
-		final Button applicationBtn	= new Button("Bewerbungen");
-			
-		// Erstellung von Beispielinhalten
-		final HTML homeText = new HTML("<h2>Startseite</h2><p>blababla</p>");
-		final HTML marketplaceText = new HTML("<h2>Projektmarktplatz-Übersicht</h2><p>blababla</p>");
-		final HTML jobPostingText = new HTML("<h2>Sehen Sie sich diese Ausschreibung an</h2><p>blababla</p>");
-		final HTML defaultText = new HTML("<h2>Wählen Sie eine Option links.</h2>");
-		final HTML partnerProfileText = new HTML("<h2>Das ist Ihr Partnerprofil</h2><p>In Ihrem Partnerprofil stehen Ihre Eigenschaften</p>");
-		final HTML applicationText = new HTML  ("<h2>Alle Bewerbungen</h2><p>laufende,abgelehnte,angenommene Bewerbungen (Fan-in), insgesamte Anzahl bla bla bla Fan-out</p> "); 
+		final Button myApplicationsBtn = new Button("Meine Bewerbungen");
+		final Button myPartnerProfileBtn = new Button("Mein Partnerprofil");
+		final Button reportBtn = new Button("Berichte");
+		final Button helpBtn	= new Button("Hilfe");
+		final Content homeContent = new Content("Startseite", "Hier erfahren Sie mehr über PitchMen und wie man es benutzt.");
 			
 		// Die Navigations-Buttons dem navPanel hinzufügen
 		navPanel.add(homeBtn);
 		navPanel.add(marketplaceBtn);
-		navPanel.add(jobPostingBtn);
-		navPanel.add(partnerProfileBtn);
-		navPanel.add(applicationBtn);
+		navPanel.add(myApplicationsBtn);
+		navPanel.add(myPartnerProfileBtn);
+		navPanel.add(reportBtn);
+		navPanel.add(helpBtn);
+		
+		// Beispiel-Inhalte für homeContent
+		homeContent.addTopBarButton(new Button("Anlegen"));
+		homeContent.addTopBarButton(new Button("Bearbeiten"));
+		homeContent.addTopBarButton(new Button("Löschen"));
 		
 		// Das navPanel der Seite im Bereich der id "nav" hinzufügen 
 		RootPanel.get("nav").add(navPanel);
 		
-		// Den HTML-Text defaultText im Bereich der id "content" hinzufügen
-		RootPanel.get("content").add(defaultText);
+		// Default homeContent im Bereich der id "content" hinzufügen
+		RootPanel.get("content").add(homeContent);
 		
 		// Die Startseite laden, wenn homeBtn geklickt wird
 		homeBtn.addClickHandler(new ClickHandler() {
@@ -72,53 +73,53 @@ public class PitchMen implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(homeText);
+				RootPanel.get("content").add(homeContent);
 			}
 			
 		});
 				
-		// Die Projektmarktplatz-Seite laden, wenn marketplaceBtn geklickt wird
-		marketplaceBtn.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(marketplaceText);
-			}
-			
-		});
-		
-		// Die Ausschreibungs-Seite laden, wenn jobPostingBtn geklickt wird
-		jobPostingBtn.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(jobPostingText);
-			}
-						
-		});
-		
-		// Die Partnerprofil-Seite laden, wenn partnerProfileBtn geklickt wird
-				partnerProfileBtn.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						RootPanel.get("content").clear();
-						RootPanel.get("content").add(partnerProfileText);
-					}
-								
-				});
-				
-				// Die Bewerbungen laden, wenn applicationBtn geklickt wird
-				applicationBtn.addClickHandler(new ClickHandler() {
-
-					@Override
-					public void onClick(ClickEvent event) {
-						RootPanel.get("content").clear();
-						RootPanel.get("content").add(applicationText);
-					}
-								
-				});
+//		// Die Projektmarktplatz-Seite laden, wenn marketplaceBtn geklickt wird
+//		marketplaceBtn.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				RootPanel.get("content").clear();
+//				//RootPanel.get("content").add(marketplaceText);
+//			}
+//			
+//		});
+//		
+//		// Die Ausschreibungs-Seite laden, wenn jobPostingBtn geklickt wird
+//		jobPostingBtn.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				RootPanel.get("content").clear();
+//				//RootPanel.get("content").add(jobPostingText);
+//			}
+//						
+//		});
+//		
+//		// Die Partnerprofil-Seite laden, wenn partnerProfileBtn geklickt wird
+//				partnerProfileBtn.addClickHandler(new ClickHandler() {
+//
+//					@Override
+//					public void onClick(ClickEvent event) {
+//						RootPanel.get("content").clear();
+//						RootPanel.get("content").add(partnerProfileText);
+//					}
+//								
+//				});
+//				
+//				// Die Bewerbungen laden, wenn applicationBtn geklickt wird
+//				applicationBtn.addClickHandler(new ClickHandler() {
+//
+//					@Override
+//					public void onClick(ClickEvent event) {
+//						RootPanel.get("content").clear();
+//						RootPanel.get("content").add(applicationText);
+//					}
+//								
+//				});
 	}
 }
