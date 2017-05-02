@@ -1,149 +1,98 @@
 package de.pitchMen.shared.bo;
 
+import java.util.Date;
+
 /**
  * Repräsentiert eine Projekt.
  * 
- * @author
+ * @author JuliusDigel
  */
 public class Project extends BusinessObject {
 
-     /**
-     * 
-     */
-    private Date dateOpened;
 
-    /**
-     * 
-     */
-    private Date dateClosed;
+	private Date dateOpened = null;
 
-    /**
-     * 
-     */
-    private String title;
 
-    /**
-     * 
-     */
-    private String description;
+	private Date dateClosed = null;
 
-    /**
-     * 
-     */
-    private Person manager;
 
-    /**
-     * 
-     */
-    private ArrayList<JobPosting> jobPostings;
+	private String title = "";
 
-    /**
-     * 
-     */
-    private ArrayList<Participation> participations;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	private String description = "";
 
-    /**
-     * 
-     */
-    public Set<Participation> Participation;
 
-    /**
-     * 
-     */
-    public Person Manager;
+	private Person manager = null;
 
-    /**
-     * 
-     */
-    public Set<JobPosting> JobPosting;
 
-    /**
-     * @return
-     */
-    public Date getDateOpened() {
-        // TODO implement here
-        return null;
-    }
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * @param dateOpened 
-     * @return
-     */
-    public void setDateOpened(Date dateOpened) {
-        // TODO implement here
-        return null;
-    }
 
-    /**
-     * @return
-     */
-    public Date getDateClosed() {
-        // TODO implement here
-        return null;
-    }
+	public Person Manager = null;
 
-    /**
-     * @param dateClosed 
-     * @return
-     */
-    public void setDateClosed(Date dateClosed) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return dateOpened
+	 */
+	public Date getDateOpened() {
+		return this.dateOpened;
+	}
 
-    /**
-     * @return
-     */
-    public String getTitle() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @param dateOpened 
+	 **/
+	public void setDateOpened(Date dateOpened) {
+		this.dateOpened = dateOpened;
+	}
 
-    /**
-     * @param description 
-     * @return
-     */
-    public void setTitle(String description) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return
+	 */
+	public Date getDateClosed() {
+		return this.dateClosed;
+	}
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @param dateClosed 
+	 */
+	public void setDateClosed(Date dateClosed) {
+		this.dateClosed = dateClosed;
+	}
 
-    /**
-     * @param value 
-     * @return
-     */
-    public void setDescription(String value) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return title
+	 */
+	public String getTitle() {
+		return this.title;
+	}
 
-    /**
-     * @return
-     */
-    public Person getManager() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    /**
-     * @return
-     */
-    public ArrayList<JobPosting> getJobPostings() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return describtion
+	 */
+	public String getDescription() {
+		return this.description;
+	}
+
+	/**
+	 * @param describtion
+	 */
+	public void setDescription(String describtion) {
+		this.description = describtion;
+	}
+
+	/**
+	 * @return manager
+	 */
+	public Person getManager() {
+		return this.manager;
+	}
+
+
 
 }

@@ -2,6 +2,10 @@ package de.pitchMen.shared;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
+import de.pitchMen.shared.bo.ArrayList;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Participation;
+
 /**
  * Schnittstelle für die  RPC-Fähige Klasse PitchMenAdminImpl.
  * 
@@ -142,5 +146,25 @@ public interface PitchMenAdmin extends RemoteService {
      * @return
      */
     public void setMarketplaces(ArrayList<Marketplace> value);
+   
+    /**
+     * Array Lists "JobPosting" und "Participation aus Klasse Project.java kopiert,
+     * da Frage aufkam ob diese Array Lists in der falschen Klasse waren
+     */ 
+    
+    private ArrayList<JobPosting> jobPostings;
+
+    
+    private ArrayList<Participation> participations;
+
+    
+    /**
+     * Methode "getJobPostings" aus Klasse Project.java kopiert,
+     * da Frage aufkam ob diese Methode in der falschen Klasse waren
+     */
+    public ArrayList<JobPosting> getJobPostings() {
+        // TODO implement here
+        return null;
+    }
 
 }

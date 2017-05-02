@@ -3,62 +3,48 @@ package de.pitchMen.shared.bo;
 /**
  * Repräsentiert eine Bewertung.
  * 
- * @author
+ * @author JuliusDigel
  */
 public class Rating extends BusinessObject {
 
-    /**
-     * 
-     */
-    private String statement;
 
-    /**
-     * 
-     */
-    private float score;
+	private String statement = "";
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
 
-    /**
-     * 
-     */
-    public Application Application;
+	private float score = 0.0f;
 
-    /**
-     * @return
-     */
-    public String getStatement() {
-        // TODO implement here
-        return "";
-    }
 
-    /**
-     * @param statement 
-     * @return
-     */
-    public void setStatement(String statement) {
-        // TODO implement here
-        return null;
-    }
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * @return
-     */
-    public float getScore() {
-        // TODO implement here
-        return 0.0f;
-    }
 
-    /**
-     * @param score 
-     * @return
-     */
-    public void setScore(float score) {
-        // TODO implement here
-        return null;
-    }
+	public Application Application = null;
+
+	/**
+	 * @return statement
+	 */
+	public String getStatement() {
+		return this.statement;
+	}
+
+	/**
+	 * @param statement 
+	 */
+	public void setStatement(String statement) {
+		this.statement = statement;
+	}
+
+	/**
+	 * @return score
+	 */
+	public float getScore() {
+		return this.score;
+	}
+
+	/**
+	 * @param score 
+	 */
+	public void setScore(float score) {
+		this.score = score;
+	}
 
 }

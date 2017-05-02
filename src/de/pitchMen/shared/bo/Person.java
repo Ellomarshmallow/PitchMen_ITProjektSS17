@@ -3,22 +3,19 @@ package de.pitchMen.shared.bo;
 /**
  * Repräsentiert eine Person und erbt von der Superklasse OrganisationUnit.
  * 
- * @author
+ * @author JuliusDigel
  */
 public class Person extends OrganisationUnit {
-	/**
-     * 
-     */
-    private String firstName;
+
+	
+    private String firstName = "";
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 
      */
-    private static final long serialVersionUID;
-
-    /**
-     * 
-     */
+    
     public Set<Project> Project;
 
     /**

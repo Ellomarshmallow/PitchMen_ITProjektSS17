@@ -3,57 +3,45 @@ package de.pitchMen.shared.bo;
 /**
  * Repräsentiert eine Eigenschaft, bestehend aus einem Attribut-Wert-Paar. 
  * 
- * @author
+ * @author JuliusDigel
  */
 public class Trait extends BusinessObject {
 
-     /**
-     * 
-     */
-    private String name;
 
-    /**
-     * 
-     */
-    private String value;
+	private String name = "";
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
 
-    /**
-     * @return
-     */
-    public String getName() {
-        // TODO implement here
-        return "";
-    }
+	private String value = "";
+	
 
-    /**
-     * @param name 
-     * @return
-     */
-    public void setName(String name) {
-        // TODO implement here
-        return null;
-    }
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * @return
-     */
-    public String getValue() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @return name
+	 */
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @param value 
-     * @return
-     */
-    public void setValue(String value) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param name 
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return value
+	 */
+	public String getValue() {
+		return this.value;
+	}
+
+	/**
+	 * @param value 
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 }
