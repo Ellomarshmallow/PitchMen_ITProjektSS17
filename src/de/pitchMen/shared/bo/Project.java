@@ -1,6 +1,8 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
 import java.util.Date;
+
 
 /**
  * Repräsentiert eine Projekt.
@@ -25,10 +27,52 @@ public class Project extends BusinessObject {
 	private Person manager = null;
 
 
+	private ArrayList<JobPosting> jobPostings = null;
+
+
+	private ArrayList<Participation> participations = null;
+
+
 	private static final long serialVersionUID = 1L;
 
 
 	public Person Manager = null;
+
+	/**
+	 * Auslesen der JobPostings
+	 * @return jobPostings
+	 */
+
+	public ArrayList<Participation> getParticipations(){
+		return participations;
+	}
+
+	/**
+	 * Setzen der participations
+	 * @param participations
+	 */   
+
+	public void setParticipations(ArrayList<Participation> participations){
+		this.participations = participations;
+	}
+
+	/**
+	 * Auslesen der JobPostings
+	 * @return jobPostings
+	 */   
+
+	public ArrayList<JobPosting> getJobPostings(){
+		return jobPostings;
+	}
+
+	/**
+	 * Setzen der JobPostings
+	 * @param jobPostings
+	 */   
+
+	public void setJobPostings(ArrayList<JobPosting> jobPostings){
+		this.jobPostings = jobPostings;
+	}
 
 	/**
 	 * @return dateOpened
@@ -92,6 +136,7 @@ public class Project extends BusinessObject {
 	public Person getManager() {
 		return this.manager;
 	}
+
 
 
 
