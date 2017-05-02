@@ -1,5 +1,7 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
+
 /**
  * Repräsentiert eine Person und erbt von der Superklasse OrganisationUnit.
  * 
@@ -7,32 +9,41 @@ package de.pitchMen.shared.bo;
  */
 public class Person extends OrganisationUnit {
 
-	
-    private String firstName = "";
 
-    private static final long serialVersionUID = 1L;
+	private String firstName = "";
 
-    /**
-     * 
-     */
-    
-    public Set<Project> Project;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * @return
-     */
-    public String getFirstName() {
-        // TODO implement here
-        return "";
-    }
+	private ArrayList<Project> projects = null;
 
-    /**
-     * @param firstName 
-     * @return
-     */
-    public void setFirstName(String firstName) {
-        // TODO implement here
-        return null;
-    }
+
+
+	/**
+	 * @return firstName
+	 */
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	/**
+	 * @param firstName 
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return projects
+	 */
+	public ArrayList<Project> getProjects() {
+		return projects;
+	}
+
+	/**
+	 * @param projects
+	 */
+	public void setProjects(ArrayList<Project> projects) {
+		this.projects = projects;
+	}
 
 }
