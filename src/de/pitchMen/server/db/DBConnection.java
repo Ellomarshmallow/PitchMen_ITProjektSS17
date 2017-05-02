@@ -1,8 +1,6 @@
-package de.pitchMen.server.db;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-
+import java.sql.SQLException;
 import com.google.appengine.api.utils.SystemProperty;
 
 /**
@@ -22,13 +20,11 @@ public class DBConnection {
 	/**
 	 * Mit dieser Url wird die Datenbank angesprochen.
 	 */
-	static final String user = "root";
-	static final String pass = "winter2017";
-	static final String dbName = "pitchmen_itprojekt_schema";
-	static final String googleUrl = "jdbc:google:mysql://173.194.105.139:3306/" + dbName + "?user=" + user
-			+ "&password=" + pass + "";
-	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/" + dbName + "?user=" + user + "&password=" + pass
-			+ "";
+	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	   static final String googleUrl = "jdbc:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema";
+	   static final String USER = "root";
+	   static final String PASS = "winter2017";
+	private static String TestUrl = "jdbc:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema";
 
 	/**
 	 * Stellt die Verbindung zur Datenbank her.
@@ -45,7 +41,7 @@ public class DBConnection {
 			String url = null;
 			try {
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
-					Class.forName("com.mysql.jdbc.GoogleDriver");
+					Class.forName("com.mysql.jdbc.Driver");
 					url = googleUrl;
 				} else {
 					/**
@@ -53,13 +49,14 @@ public class DBConnection {
 					 * Alternativlösung während des Entwickelns.
 					 */
 					Class.forName("com.mysql.jdbc.Driver");
-					url = localUrl;
+					url = TestUrl;
 				}
 				/**
 				 * Die Verbindung zur Datenbank wird in der Variablen 
 				 * con mit den dazugehörigen Informationen gespeichert
 				 */
-				con = DriverManager.getConnection(url);
+				con = DriverManager.getConnection(url, USER, PASS);
+
 			} catch (Exception e) {
 				con = null;
 				e.printStackTrace();
@@ -72,3 +69,6 @@ public class DBConnection {
 	}
 
 }
+
+
+
