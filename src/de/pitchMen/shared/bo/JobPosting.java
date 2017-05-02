@@ -34,15 +34,6 @@ public class JobPosting extends BusinessObject {
 
 	// public PartnerProfile PartnerProfile;
 
-	public Set<Application> Application;
-
-	/**
-	 * @return applications
-	 */
-	public ArrayList<Application> getApplications() {
-		return this.applications;
-	}
-
 	/**
 	 * @return recruiter
 	 */
@@ -111,6 +102,20 @@ public class JobPosting extends BusinessObject {
 	 */
 	public void setPartnerProfile(PartnerProfile partnerProfile) {
 		this.partnerProfile = partnerProfile;
+	}
+
+	/**
+	 * @return applications
+	 */
+	public ArrayList<Application> getApplications() {
+		return this.applications;
+	}
+
+	/**
+	 * @param applications
+	 */
+	public void setApplications(ArrayList<Application> applications) {
+		this.applications = applications;
 	}
 
 }

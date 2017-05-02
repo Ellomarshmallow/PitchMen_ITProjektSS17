@@ -1,156 +1,129 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Repräsentiert eine Beteiligung.
  * 
- * @author
+ * @author EleonoraRenz
  */
 public class Participation extends BusinessObject {
-    /**
-     * 
-     */
-    private Date dateOpened;
 
-    /**
-     * 
-     */
-    private Date dateClosed;
+	private Date dateOpened = null;
 
-    /**
-     * 
-     */
-    private float workload;
+	private Date dateClosed = null;
 
-    /**
-     * 
-     */
-    private Rating rating;
+	private float workload = 0.0f;
 
-    /**
-     * 
-     */
-    private OrganisationUnit associatedApplicant;
+	private Rating rating = null;
 
-    /**
-     * 
-     */
-    private Project associatedProject;
+	private OrganisationUnit associatedApplicant = null;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	private Project associatedProject = null;
 
-    /**
-     * 
-     */
-    public Project Project;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 
-     */
-    public Set<OrganisationUnit> Partner;
+	public Project project = null;
 
-    /**
-     * @return
-     */
-    public Date getDateOpened() {
-        // TODO implement here
-        return null;
-    }
+	public ArrayList<OrganisationUnit> partners = null;
 
-    /**
-     * @param dateOpened 
-     * @return
-     */
-    public void setDateOpened(Date dateOpened) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return dateOpened
+	 */
+	public Date getDateOpened() {
+		return this.dateOpened;
+	}
 
-    /**
-     * @return
-     */
-    public float getWorkload() {
-        // TODO implement here
-        return 0.0f;
-    }
+	/**
+	 * @param dateOpened
+	 */
+	public void setDateOpened(Date dateOpened) {
+		this.dateOpened = dateOpened;
+	}
 
-    /**
-     * @param workload 
-     * @return
-     */
-    public void setWorkload(float workload) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return workload
+	 */
+	public float getWorkload() {
+		return this.workload;
+	}
 
-    /**
-     * @return
-     */
-    public Date getDateClosed() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param workload
+	 */
+	public void setWorkload(float workload) {
+		this.workload = workload;
+	}
 
-    /**
-     * @param dateClosed 
-     * @return
-     */
-    public void setDateClosed(Date dateClosed) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return dateClosed
+	 */
+	public Date getDateClosed() {
+		return this.dateClosed;
+	}
 
-    /**
-     * @return
-     */
-    public Rating getRating() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param dateClosed
+	 */
+	public void setDateClosed(Date dateClosed) {
+		this.dateClosed = dateClosed;
+	}
 
-    /**
-     * @param rating 
-     * @return
-     */
-    public void setRating(Rating rating) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return rating
+	 */
+	public Rating getRating() {
+		return this.rating;
+	}
 
-    /**
-     * @return
-     */
-    public OrganisationUnit getAssociatedApplicant() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param rating
+	 */
+	public void setRating(Rating rating) {
+		this.rating = rating;
+	}
 
-    /**
-     * @param associatedApplicant 
-     * @return
-     */
-    public void setAssociatedApplicant(OrganisationUnit associatedApplicant) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return associatedApplication
+	 */
+	public OrganisationUnit getAssociatedApplicant() {
+		return this.associatedApplicant;
+	}
 
-    /**
-     * @return
-     */
-    public Project getAssociatedProject() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param associatedApplicant
+	 */
+	public void setAssociatedApplicant(OrganisationUnit associatedApplicant) {
+		this.associatedApplicant = associatedApplicant;
+	}
 
-    /**
-     * @param associatedProject 
-     * @return
-     */
-    public void setAssociatedProject(Project associatedProject) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return associatedProject
+	 */
+	public Project getAssociatedProject() {
+		return this.associatedProject;
+	}
+
+	/**
+	 * @param associatedProject
+	 */
+	public void setAssociatedProject(Project associatedProject) {
+		this.associatedProject = associatedProject;
+	}
+
+	/**
+	 * @return partners
+	 */
+	public ArrayList<OrganisationUnit> getPartners() {
+		return partners;
+	}
+
+	/**
+	 * @param partners
+	 */
+	public void setPartners(ArrayList<OrganisationUnit> partners) {
+		this.partners = partners;
+	}
 
 }

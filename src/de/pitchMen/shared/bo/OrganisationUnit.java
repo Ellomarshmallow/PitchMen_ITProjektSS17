@@ -1,119 +1,97 @@
 package de.pitchMen.shared.bo;
 
+import java.util.ArrayList;
 
 /**
- * Abstrakte Superklasse der Klassen Person, Team, Company. 
+ * Abstrakte Superklasse der Klassen Person, Team, Company.
  * 
- * @author
+ * @author EleonoraRenz
  */
 public abstract class OrganisationUnit extends BusinessObject {
 
-     /**
-     * 
-     */
-    private String description;
+	private String description = "";
 
-    /**
-     * 
-     */
-    private String name;
+	private String name = "";
 
-    /**
-     * 
-     */
-    private PartnerProfile partnerProfile;
+	private PartnerProfile partnerProfile = null;
 
-    /**
-     * 
-     */
-    private ArrayList<Participation> participations;
+	private ArrayList<Participation> participations = null;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 
-     */
-    public PartnerProfile PartnerProfile;
+	private ArrayList<Marketplace> marketplaces = null;
 
-    /**
-     * 
-     */
-    public Set<Marketplace> Marketplace;
+	// public PartnerProfile PartnerProfile;
 
-    /**
-     * 
-     */
-    public Set<Participation> Participation;
+	/**
+	 * @return description
+	 */
+	public String getDescription() {
+		return this.description;
+	}
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @param description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    /**
-     * @param description 
-     * @return
-     */
-    public void setDescription(String description) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return name
+	 */
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @return
-     */
-    public String getName() {
-        // TODO implement here
-        return "";
-    }
+	/**
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * @param name 
-     * @return
-     */
-    public void setName(String name) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return partnerProfile
+	 */
+	public PartnerProfile getPartnerProfile() {
+		return this.partnerProfile;
+	}
 
-    /**
-     * @return
-     */
-    public PartnerProfile getPartnerProfile() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param partnerProfile
+	 */
+	public void setPartnerProfile(PartnerProfile partnerProfile) {
+		this.partnerProfile = partnerProfile;
+	}
 
-    /**
-     * @param partnerProfile 
-     * @return
-     */
-    public void setPartnerProfile(PartnerProfile partnerProfile) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return participations
+	 */
+	public ArrayList<Participation> getParticipations() {
+		return participations;
+	}
 
-    /**
-     * @return
-     */
-    public ArrayList<Participation> getParticipations() {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @param participations
+	 */
+	public void setParticipations(ArrayList<Participation> participations) {
+		this.participations = participations;
+	}
 
-    /**
-     * @param participition 
-     * @return
-     */
-    public void setParticipations(ArrayList<Participation> participition) {
-        // TODO implement here
-        return null;
-    }
+	/**
+	 * @return marketplaces
+	 */
+	public ArrayList<Marketplace> getMarketplaces() {
+		return marketplaces;
+	}
+
+	/**
+	 * 
+	 * @param marketplaces
+	 */
+	public void setMarketplaces(ArrayList<Marketplace> marketplaces) {
+		this.marketplaces = marketplaces;
+	}
 
 }
