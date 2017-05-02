@@ -19,6 +19,15 @@ public class Rating extends BusinessObject {
 
 	public Application Application = null;
 
+	public Rating (){
+		
+	}
+	
+	public Rating(float score, String statement) {
+		this.score = score;
+		this.statement = statement;
+	}
+
 	/**
 	 * @return statement
 	 */
