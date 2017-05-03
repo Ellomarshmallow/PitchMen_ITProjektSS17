@@ -21,11 +21,10 @@ public interface ReportGeneratorAsync {
 
 	
 	void init(AsyncCallback<Void> callback);
-
-    /**
-     * 
-     */
-	void AllJobPostings(AsyncCallback<AllJobPostings> callback);
+	/**
+	 * 
+	 */
+    void AllJobPostings(AsyncCallback<AllJobPostings> callback);
 	/**
 	 * 
 	 */
