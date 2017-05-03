@@ -2,14 +2,24 @@ package de.pitchMen.server;
 
 import java.util.*;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import de.pitchMen.shared.ArrayList;
+import de.pitchMen.shared.Marketplace;
+import de.pitchMen.shared.PitchMenAdmin;
+import de.pitchMen.shared.Project;
+import de.pitchMen.shared.Trait;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Participation;
+
 /**
  * Implemetierungsklasse des Interface PitchMenAdmin.  
- * Sie enthält die Applikationslogik, stellt die Zusammenhänge konstistent dar 
- * und ist zuständig für einen geordneten Ablauf.
+ * Sie enthï¿½lt die Applikationslogik, stellt die Zusammenhï¿½nge konstistent dar 
+ * und ist zustï¿½ndig fï¿½r einen geordneten Ablauf.
  * 
  * @author
  */
-private class PitchMenAdminImpl extends RemoteServiceServlet {
+private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenAdmin {
 
     /**
      * Default constructor
@@ -160,5 +170,83 @@ private class PitchMenAdminImpl extends RemoteServiceServlet {
         // TODO implement here
         return null;
     }
+
+	@Override
+	public void addJobPosting(JobPosting jobPosting) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Marketplace createMarketplace() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Project createProject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Trait createTrait() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteJobPosting(JobPosting jobPosting) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteParticipation(Participation participation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Marketplace> getMarketplaces() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMarketplaces(ArrayList<Marketplace> value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Marketplace createMarketplace() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Project createProject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Trait createTrait() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Marketplace> getMarketplaces() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setMarketplaces(ArrayList<Marketplace> value) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
