@@ -13,6 +13,6 @@ public class ApplicationsRelatedToJobPostingsOfUser extends CompositeReport {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 
 }

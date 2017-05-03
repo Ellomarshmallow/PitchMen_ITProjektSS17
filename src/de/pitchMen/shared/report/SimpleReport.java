@@ -1,4 +1,6 @@
 package de.pitchMen.shared.report;
+import java.util.ArrayList;
+
 
 /**
  * Superklasse der Klassen AllJobPostings und AllApplicationsOfUser und
@@ -17,20 +19,20 @@ public abstract class SimpleReport extends Report {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 
 	 */
-	private ArrayList<Report> tables;
+	private ArrayList<Row> tables = new ArrayList<Row>();
 
 	/**
 	 * @param row
 	 * @return
 	 */
 	public void addRow(Row row) {
-		// TODO implement here
-		return null;
+		
+		this.tables.add(row);
 	}
 
 	/**
@@ -38,16 +40,14 @@ public abstract class SimpleReport extends Report {
 	 * @return
 	 */
 	public void removeRow(Row row) {
-		// TODO implement here
-		return null;
+		this.tables.remove(row);
 	}
 
 	/**
 	 * @return
 	 */
-	public ArrayList<Report> getRows() {
-		// TODO implement here
-		return null;
+	public ArrayList<Row> getRows() {
+		return this.tables;
 	}
 
 }

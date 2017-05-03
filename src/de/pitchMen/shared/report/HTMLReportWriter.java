@@ -1,4 +1,4 @@
-package de.pitchMen.shared.report;
+	package de.pitchMen.shared.report;
 
 	/**
 	 * Subklasse von ReportWriter.
@@ -17,22 +17,21 @@ package de.pitchMen.shared.report;
 	    /**
 	     * 
 	     */
-	    private String reportText;
+	    private String reportText = "";
 
 	    /**
 	     * @return
 	     */
-	    public void restReportText() {
-	        // TODO implement here
-	        return null;
+	    public void resetReportText() {
+	     this.reportText = ""; 
 	    }
 
 	    /**
 	     * @return
 	     */
 	    public String getReportText() {
-	        // TODO implement here
-	        return "";
+	        
+	        return this.reportText;
 	    }
 
 	

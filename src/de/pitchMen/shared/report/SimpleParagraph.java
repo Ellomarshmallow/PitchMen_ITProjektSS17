@@ -1,8 +1,8 @@
 package de.pitchMen.shared.report;
 
 /**
- * Subklasse von Paragraph. Einzelne Absätze werden als String gespeichert. Das
- * Einfügen von Formatiertungssymbolen ist nicht erwünscht.
+ * Subklasse von Paragraph. Einzelne Absï¿½tze werden als String gespeichert. Das
+ * Einfï¿½gen von Formatiertungssymbolen ist nicht erwï¿½nscht.
  * 
  * @author
  */
@@ -16,29 +16,28 @@ public class SimpleParagraph extends Paragraph {
 	/**
 	 * 
 	 */
-	private String text;
+	private String text = "";
 
 	/**
 	 * @return
 	 */
 	public String toString() {
-		// TODO implement here
-		return "";
+		
+		return this.text;
 	}
 
 	/**
 	 * @return
 	 */
 	public String getText() {
-		// TODO implement here
-		return "";
+		return this.text;
 	}
 
 	/**
 	 * @param value
 	 */
-	public void setText(String value) {
-		// TODO implement here
+	public void setText(String v) {
+		this.text = v; 
 	}
 
 }

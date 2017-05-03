@@ -1,5 +1,7 @@
 package de.pitchMen.shared.report;
 
+import java.io.Serializable;
+
 /**
  * Report zur Abfrage der Anzahl von Ausschreibungen (erfolgreich besetzt,
  * abgebrochen und laufend). Subklasse von CompositeReport. Enthält keine
@@ -7,11 +9,11 @@ package de.pitchMen.shared.report;
  * 
  * @author
  */
-public class FanInJobPostingsOfUser extends CompositeReport {
+public class FanInJobPostingsOfUser extends CompositeReport implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID;
+	private static final long serialVersionUID = 1L;
 
 }

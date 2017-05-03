@@ -1,6 +1,6 @@
 package de.pitchMen.shared.report;
 
-import java.io.Serializable;
+
 
 /**
  * Überführt Report-Objekte in ein menschenlesbares Format von Server zu
@@ -8,6 +8,17 @@ import java.io.Serializable;
  * 
  * @author
  */
-public abstract class ReportWriter implements Serializable {
+public abstract class ReportWriter {
 
+	
+	
+	
+	public abstract void process(AllApplicationsOfUser a); 
+	
+	public abstract void process(AllJobPostings a); 
+	
+	public abstract void process(AllJobPostingsMatchingPartnerProfileOfUser a); 
+	
+	public abstract void process(ApplicationsRelatedToJobPostingsOfUser a); 
+	
 }
