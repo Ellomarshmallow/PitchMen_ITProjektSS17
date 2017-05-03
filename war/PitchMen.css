@@ -113,6 +113,7 @@ h1 {
 	padding: 15px 0px 15px 20px;
 	text-align: left;
 	font-size: 100%;
+	cursor: pointer;
 }
 
 #nav button:hover,
@@ -145,6 +146,14 @@ h1 {
     margin: 0px 0px 0px 20px;
     border-radius: 5px;
     cursor: pointer;
+    color: #777;
+}
+
+#content .topbar-btn:hover,
+#content .topbar-btn:active {
+	background: rgba(255,255,255,.3);
+	color: #777;
+	border: 1px solid #999;
 }
 
 .content-header table td {
