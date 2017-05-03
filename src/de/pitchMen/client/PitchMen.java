@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -46,7 +47,7 @@ public class PitchMen implements EntryPoint {
 		final Button myPartnerProfileBtn = new Button("Mein Partnerprofil");
 		final Button reportBtn = new Button("Berichte");
 		final Button helpBtn	= new Button("Hilfe");
-		final Content homeContent = new Content("Startseite", "Hier erfahren Sie mehr über PitchMen und wie man es benutzt.");
+		final Content homeContent = new Content("Startseite", "Hier erfahren Sie mehr über PitchMen und wie man es benutzt.",2);
 			
 		// Die Navigations-Buttons dem navPanel hinzufügen
 		navPanel.add(homeBtn);
@@ -57,9 +58,12 @@ public class PitchMen implements EntryPoint {
 		navPanel.add(helpBtn);
 		
 		// Beispiel-Inhalte für homeContent
-		homeContent.addTopBarButton(new Button("Anlegen"));
-		homeContent.addTopBarButton(new Button("Bearbeiten"));
-		homeContent.addTopBarButton(new Button("Löschen"));
+		Button createBtn = new Button("Anlegen");
+		Button editBtn = new Button("Bearbeiten");
+		Button deleteBtn = new Button("Löschen");
+		homeContent.addTopBarButton(createBtn);
+		homeContent.addTopBarButton(editBtn);
+		homeContent.addTopBarButton(deleteBtn);
 		
 		// Das navPanel der Seite im Bereich der id "nav" hinzufügen 
 		RootPanel.get("nav").add(navPanel);
@@ -74,6 +78,18 @@ public class PitchMen implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(homeContent);
+			}
+			
+		});
+		
+		// füge neues Grid-Element hinzu, wenn createBtn geklickt wird
+		createBtn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				homeContent.addToGrid(
+						new HTML("<div class='item'><h3>Test-Item</h3><p>Beschreibender Text, "
+								+ "der etwas länger ist und hoffentlich schön aussieht.</p></div>"));
 			}
 			
 		});
