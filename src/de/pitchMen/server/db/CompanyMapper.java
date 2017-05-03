@@ -1,77 +1,83 @@
 package de.pitchMen.server.db;
 
+import java.sql.*;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import de.pitchMen.shared.bo.Company;
+
 /**
- * Bildet Company-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
- *
+ * Die Klasse CompanyMapper bildet Company-Objekte auf einer relationale Datenbank ab. 
+ * Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * 
+ * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende 
+ * Methoden (Speichern, Suchen, Löschen, Bearbeiten).
+ * 
  * @author Heike
  *
  */
 
-import java.sql.*;
-import java.util.Vector;
-
-import de.pitchMen.shared.bo.Company;
-
 public class CompanyMapper {
 
 	/**
-	 * Die Klasse CompanyMapper wird nur einmal instantiiert. Die Variable ist
-	 * mit static gekennzeichnet, da sie die einzige Instanz dieser Klasse
-	 * speichert.
+	 * Die Klasse CompanyMapper wird nur einmal instantiiert (Singelton-Eigenschaft). Die Variable ist
+	 * mit static gekennzeichnet, da sie die einzige Instanz dieser Klasse speichert.
 	 */
 
 	private static CompanyMapper companyMapper = null;
 
 	/**
-	 * Ein geschützter Konstrukter verhinder eine neue Instanz dieser Klasse zu
-	 * erzeugen.
+	 * Ein geschützter Konstrukter verhindert eine neue Instanz dieser Klasse zu erzeugen.
 	 */
 
 	protected CompanyMapper() {
 	}
 
-	/*
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit
-	 * existiert nur eine einzige Instanz der CompanyMapper
+	/**
+	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit sichergestellt, 
+	 * das nur eine einzige Instanz der CompanyMapper existiert.
+	 * 
+	 * @return companyMapper
 	 */
 
 	public static CompanyMapper companyMapper() {
-
-		if (companyMapper == null)
-
-		{
+		if (companyMapper == null){
 			companyMapper = new CompanyMapper();
 		}
 		return companyMapper;
 	}
 
 	/**
-	 * Fügt ein Company-Objekt der Datenbank hinzu.
+	 * Fügt ein Company-Objekt der Datenbank hinzu. 
+	 * Und gibt das korrigierte Customerobjekt zurück. 
 	 * 
 	 * @param company
-	 * @return
+	 * @return company
 	 * @throws ClassNotFoundException 
 	 */
 	public Company insert(Company company) throws ClassNotFoundException {
-
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
-			/* Abfrage des Primärschlüssels, letzten hinzugefügten Datensatzes 
-			 * Der aktuelle Primärschlüssel wird um eins erhöht
-			 */
 
+			/** Abfrage des als letztes hinzugefügten Primärschlüssels des Datensatzes.
+			 * Der aktuelle Primärschlüssel wird um eins erhöht.
+			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM company");
-			
 			if (rs.next()) {
 				company.setId(rs.getInt("maxid") + 1);
-
 				stmt = con.createStatement();
-//Test Execute
-				stmt.executeUpdate("INSERT INTO company (id, name, description) VALUES ( " + company.getId() + ", 'Bosch' ,'Thermotechnik')");
+
+				/**
+				 * Ausführen der Einfügeoperation
+				 */
+				stmt.executeUpdate("INSERT INTO company (id, name, description)"
+				 + "VALUES ( " + company.getId() + ", 'Bosch' ,'Thermotechnik')");
 			}
-		} catch (SQLException e2) {
+		} 
+		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
@@ -82,56 +88,163 @@ public class CompanyMapper {
 	 * Aktuallisiert ein Company-Objekt in der Datenbank.
 	 * 
 	 * @param company
-	 * @return
+	 * @throws ClassNotFoundException 
+	 * @return company
 	 */
-	public Company update(Company company) {
-		// TODO implement here
-		return null;
+	public Company update(Company company) throws ClassNotFoundException {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("UPDATE company " + "SET Name=\"" + company.getName() + "\", " 
+			+ "description=\"" + company.getDescription() + "\" " 
+			+ "WHERE id=" + company.getId());
+			}
+
+		catch (SQLException e2){
+			e2.printStackTrace();
+		}	
+
+		return company;
 	}
 
 	/**
 	 * Löscht ein Company-Objekt aus der Datenbank.
 	 * 
-	 * @param company
-	 * @return
+	 * @param company 
+	 * @throws ClassNotFoundException 
 	 */
-	public void delete(Company company) {
-		// TODO implement here
-		return null;
+	public void delete(Company company) throws ClassNotFoundException {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE FROM company " 
+			+ "WHERE id=" + company.getId());
+			}
+
+		catch (SQLException e2){
+			e2.printStackTrace();
+		}
 	}
 
 	/**
 	 * Findet ein Company-Objekt anhand der übergebenen Id in der Datenbank.
 	 * 
 	 * @param id
-	 * @return
+ 	 * @throws ClassNotFoundException 
+	 * @return company
 	 */
-	public Company findById(int id) {
-		// TODO implement here
+	public Company findById(int id) throws ClassNotFoundException {
+		Connection con = DBConnection.connection();
+
+		try {
+				Statement stmt = con.createStatement();
+
+				ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " 
+				+ "WHERE id=" + id + "ORDER BY id");
+				
+			/**
+			 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben.
+			 * Es wird geprüft ob ein Ergebnis vorliegt
+			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+			 * 
+			 */			
+			if (rs.next()){
+				Company company = new Company();
+				company.setId(rs.getInt("id"));
+				company.setName(rs.getString("name"));
+				company.setDescription(rs.getString("description"));
+				
+				return company;
+			}
+		}
+		catch (SQLException e2){
+			e2.printStackTrace();
+		}
+	
 		return null;
 	}
 
+		
 	/**
 	 * Findet alle Company-Objekte in der Datenbank.
 	 * 
-	 * @return
+	 * @throws ClassNotFoundException
+	 * @return ArrayList<Company>
 	 */
-	public ArrayList<Company> findAll() {
-		// TODO implement here
-		return null;
+	public ArrayList<Company> findAll() throws ClassNotFoundException {
+		Connection con = DBConnection.connection();
+		
+		ArrayList<Company> result = new ArrayList<Company>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " 
+			+ "WHERE company " + "ORDER BY id");
+			
+		/**
+		 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben.
+		 * Es wird geprüft ob ein Ergebnis vorliegt
+		 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+		 * 
+		 */			
+		while (rs.next()){
+			Company company = new Company();
+			company.setId(rs.getInt("id"));
+			company.setName(rs.getString("name"));
+			company.setDescription(rs.getString("description"));
+			
+			result.add(company);
+		}
+	}
+	catch (SQLException e2){
+		e2.printStackTrace();
+	}
+
+	return result;
 	}
 
 	/**
 	 * Findet ein Company-Objekt anhand des übergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
-	 * @return
+	 * @throws ClassNotFoundException
+	 * @return ArryList<company>
 	 */
-	public ArrayList<Company> findByName(String name) {
-		// TODO implement here
-		return null;
+	public ArrayList<Company> findByName(String name) throws ClassNotFoundException {
+		Connection con = DBConnection.connection();
+		
+		ArrayList<Company> result = new ArrayList<Company>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " 
+			+ "WHERE name LIKE " + name + "ORDER BY id");
+			
+		/**
+		 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben.
+		 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+		 * 
+		 */			
+		while (rs.next()){
+			Company company = new Company();
+			company.setId(rs.getInt("id"));
+			company.setName(rs.getString("name"));
+			company.setDescription(rs.getString("description"));
+			
+			result.add(company);
+		}
+	}
+	catch (SQLException e2){
+		e2.printStackTrace();
 	}
 
-
+	return result;
+	}
 
 }
