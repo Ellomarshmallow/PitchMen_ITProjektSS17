@@ -1,6 +1,14 @@
 package de.pitchMen.shared;
 
 import de.pitchMen.shared.report.AllJobPostings;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
+import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.FanInJobPostingsOfUser;
+import de.pitchMen.shared.report.FanOutApplicationsOfUser;
+import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -19,39 +27,32 @@ public interface ReportGenerator extends RemoteService {
 	 */
 	public void init() throws IllegalArgumentException;
 	/**
-	 * @return
+	 * 
 	 */
-
 	public abstract AllJobPostings AllJobPostings() throws IllegalArgumentException;
-
 	/**
 	 * 
 	 */
-	public abstract AllJobPostingsMatchingPartnerProfileOfUser AllJobPostingsMatchingPartnerProfileOfUser() throws IllegalArgumentException;
-
+	public abstract AllJobPostingsMatchingPartnerProfileOfUser AllJobPostingsMatchingPartnerProfileOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public void AllApplicationsOfUser(): AllApplicationsOfUser();
-
+	public abstract AllApplicationsOfUser AllApplicationsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public void ProjectInterweavingsWithParticipationsAndApplications(): ProjectInterweavingsWithParticipationsAndApplications();
-
+	public abstract ProjectInterweavingsWithParticipationsAndApplications ProjectInterweavingsWithParticipationsAndApplications(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public void FanInJobPostingsOfUser(): FanInJobPostingsOfUser();
-
+	public abstract FanInJobPostingsOfUser FanInJobPostingsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public void FanOutApplicationsOfUser(): FanOutApplicationsOfUser();
-
+	public abstract FanOutApplicationsOfUser FanOutApplicationsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public void ApplicationsRelatedToJobPostingsOfUser(): ApplicationsRelatedToJobPostingsOfUser();
+	public abstract ApplicationsRelatedToJobPostingsOfUser ApplicationsRelatedToJobPostingsOfUser(JobPosting j) throws IllegalArgumentException;
 
 }
