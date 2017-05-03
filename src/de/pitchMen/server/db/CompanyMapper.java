@@ -97,8 +97,8 @@ public class CompanyMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE company SET Name=\"" + company.getName() + "\", " 
-			+ "description=\"" + company.getDescription() + "\" " 
+			stmt.executeUpdate("UPDATE company SET Name='" + company.getName() + "', " 
+			+ "description='" + company.getDescription() + "' " 
 			+ "WHERE id=" + company.getId());
 			}
 
@@ -144,7 +144,7 @@ public class CompanyMapper {
 				Statement stmt = con.createStatement();
 
 				ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " 
-				+ "WHERE id=" + id + "ORDER BY id");
+				+ "WHERE id=" + id);
 				
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
