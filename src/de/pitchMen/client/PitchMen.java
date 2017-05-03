@@ -32,6 +32,8 @@ public class PitchMen implements EntryPoint {
 	 * die die Aktivitäten der Applikation steuert.
 	 */
 
+	// Zeile auskommentiert, da das Interface aktuell nicht lauffähig ist. 
+	//Stand: 03.05.2017 19:00 Uhr - Simon
 	//private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
 	
 	/**
@@ -39,7 +41,9 @@ public class PitchMen implements EntryPoint {
 	 * um einen zentralen ReportGenerator nutzen zu können.
 	 */
 
-	private final ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
+	// Zeile auskommentiert, da das Interface aktuell nicht lauffähig ist. 
+	//Stand: 03.05.2017 19:00 Uhr - Simon
+	//private final ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 
 
 	/**
@@ -103,14 +107,21 @@ public class PitchMen implements EntryPoint {
 			
 		});
 				
-		// Die Projektmarktplatz-Seite laden, wenn marketplaceBtn geklickt wird
+		/*
+		 *  Einen report laden, wenn der reportBtn geklickt wird. Aktuell ist das der Report
+		 *  ShowAllJobPostings. Dieser wiederum implementiert Reportgenerator und PitchMenAdmin,
+		 *  beide aktuell noch nicht funktionsfähig. Durch auskommentieren dieses Aufrufs
+		 *  bleibt die GUI aktuell compilierfähig. Auskommentierung kann zum Testen und final
+		 *  nach Fertigstellung der beiden Interfaces entfernt werden.
+		 *  Stand: 03.05.2017 19:00 Uhr - Simon
+		 */
 		reportBtn.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				RootPanel.get("content").clear();
-				VerticalPanel report = (VerticalPanel) new ShowAllJobPostings();
-				RootPanel.get("content").add(report);
+//				RootPanel.get("content").clear();
+//				VerticalPanel report = (VerticalPanel) new ShowAllJobPostings();
+//				RootPanel.get("content").add(report);
 			}
 			
 		});
