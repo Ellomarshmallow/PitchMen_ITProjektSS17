@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.PitchMenAdminAsync;
+import de.pitchMen.shared.ReportGeneratorAsync;
 
 /**
  * Die Klasse EntryPoint definiert die Methode <code>onModuleLoad()</code>, die beim Aufrufen der Applikation ausgeführt wird.
@@ -30,7 +31,14 @@ public class PitchMen implements EntryPoint {
 	 * die die Aktivitäten der Applikation steuert.
 	 */
 
-	//private final PitchMenAdminAsync pitchMenAdmin = GWT.create(PitchMenAdmin.class);
+	private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
+	
+	/**
+	 * Initialisierung eines <code>ReportGenerator</code>-Objekts ist nötig, 
+	 * um einen zentralen ReportGenerator nutzen zu können.
+	 */
+
+	private final ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 
 
 	/**
