@@ -29,30 +29,30 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract AllJobPostings AllJobPostings() throws IllegalArgumentException;
+	public abstract AllJobPostings showAllJobPostings() throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract AllJobPostingsMatchingPartnerProfileOfUser AllJobPostingsMatchingPartnerProfileOfUser(Person p) throws IllegalArgumentException;
+	public abstract AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract AllApplicationsOfUser AllApplicationsOfUser(Person p) throws IllegalArgumentException;
+	public abstract AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract ProjectInterweavingsWithParticipationsAndApplications ProjectInterweavingsWithParticipationsAndApplications(Person p) throws IllegalArgumentException;
+	public abstract ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract FanInJobPostingsOfUser FanInJobPostingsOfUser(Person p) throws IllegalArgumentException;
+	public abstract FanInJobPostingsOfUser showFanInJobPostingsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract FanOutApplicationsOfUser FanOutApplicationsOfUser(Person p) throws IllegalArgumentException;
+	public abstract FanOutApplicationsOfUser showFanOutApplicationsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract ApplicationsRelatedToJobPostingsOfUser ApplicationsRelatedToJobPostingsOfUser(JobPosting j) throws IllegalArgumentException;
+	public abstract ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(JobPosting j) throws IllegalArgumentException;
 
 }
