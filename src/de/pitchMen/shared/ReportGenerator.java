@@ -1,6 +1,8 @@
 package de.pitchMen.shared;
 
 import de.pitchMen.shared.report.AllJobPostings;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
@@ -31,26 +33,26 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract AllJobPostingsMatchingPartnerProfileOfUser AllJobPostingsMatchingPartnerProfileOfUser() throws IllegalArgumentException;
+	public abstract AllJobPostingsMatchingPartnerProfileOfUser AllJobPostingsMatchingPartnerProfileOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract AllApplicationsOfUser AllApplicationsOfUser() throws IllegalArgumentException;
+	public abstract AllApplicationsOfUser AllApplicationsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract ProjectInterweavingsWithParticipationsAndApplications ProjectInterweavingsWithParticipationsAndApplications() throws IllegalArgumentException;
+	public abstract ProjectInterweavingsWithParticipationsAndApplications ProjectInterweavingsWithParticipationsAndApplications(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract FanInJobPostingsOfUser FanInJobPostingsOfUser() throws IllegalArgumentException;
+	public abstract FanInJobPostingsOfUser FanInJobPostingsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract FanOutApplicationsOfUser FanOutApplicationsOfUser() throws IllegalArgumentException;
+	public abstract FanOutApplicationsOfUser FanOutApplicationsOfUser(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
-	public abstract ApplicationsRelatedToJobPostingsOfUser ApplicationsRelatedToJobPostingsOfUser() throws IllegalArgumentException;
+	public abstract ApplicationsRelatedToJobPostingsOfUser ApplicationsRelatedToJobPostingsOfUser(JobPosting j) throws IllegalArgumentException;
 
 }
