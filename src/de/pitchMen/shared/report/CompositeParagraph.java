@@ -1,6 +1,8 @@
 package de.pitchMen.shared.report;
 
-	/**
+import java.util.ArrayList;
+
+/**
 	 * Subklasse von Paragraph.
 	 * Einzelne Absätze werden als Menga dargestellt, welche als Unterabschnitte in einer ArrayList abgelegt und verwaltet werden.
 	 * 
@@ -11,17 +13,17 @@ package de.pitchMen.shared.report;
 	    /**
 	     * 
 	     */
-	    private static final long serialVersionUID;
+	    private static final long serialVersionUID = 1L;
 
 	    /**
 	     * 
 	     */
-	    private ArrayList<subParagraph> subParagraphs;
+	    private ArrayList<SimpleParagraph> subParagraphs = new ArrayList<SimpleParagraph>();
 
 	    /**
 	     * @return
 	     */
-	    public STring toString() {
+	    public String toString() {
 	        // TODO implement here
 	        return null;
 	    }
@@ -29,7 +31,7 @@ package de.pitchMen.shared.report;
 	    /**
 	     * @return
 	     */
-	    public ArraList<subParagraph> getSubParagraphs() {
+	    public ArrayList<SimpleParagraph> getSubParagraphs() {
 	        // TODO implement here
 	        return null;
 	    }
@@ -37,9 +39,9 @@ package de.pitchMen.shared.report;
 	    /**
 	     * @param value
 	     */
-	    public void setSubParagraphs(ArraList<subParagraph> value) {
+	    public void setSubParagraphs(ArrayList<SimpleParagraph> value) {
 	        // TODO implement here
 	    }
 
 	}
-}
+

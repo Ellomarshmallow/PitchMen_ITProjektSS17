@@ -15,9 +15,16 @@ public class SimpleParagraph extends Paragraph {
 
 	/**
 	 * 
+	 * 
 	 */
 	private String text = "";
-
+	
+	/**
+	 * 
+	 */
+	public SimpleParagraph(String v) {
+	    this.text = v;
+	  }
 	/**
 	 * @return
 	 */
