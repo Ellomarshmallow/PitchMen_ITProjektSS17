@@ -36,7 +36,7 @@ public class CompanyMapper {
 
 	/**
 	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit sichergestellt, 
-	 * das nur eine einzige Instanz der CompanyMapper existiert.
+	 * dass nur eine einzige Instanz der CompanyMapper existiert.
 	 * 
 	 * @return companyMapper
 	 */
@@ -74,7 +74,7 @@ public class CompanyMapper {
 				 * Ausführen der Einfügeoperation
 				 */
 				stmt.executeUpdate("INSERT INTO company (id, name, description)"
-				 + "VALUES ( " + company.getId() + ", 'Bosch' ,'Thermotechnik')");
+				 + "VALUES ( " + company.getId() + ", '" + company.getName() + "' ,'" + company.getDescription() + "')");
 			}
 		} 
 		catch (SQLException e2) {
@@ -97,7 +97,7 @@ public class CompanyMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE company " + "SET Name=\"" + company.getName() + "\", " 
+			stmt.executeUpdate("UPDATE company SET Name=\"" + company.getName() + "\", " 
 			+ "description=\"" + company.getDescription() + "\" " 
 			+ "WHERE id=" + company.getId());
 			}
@@ -147,7 +147,7 @@ public class CompanyMapper {
 				+ "WHERE id=" + id + "ORDER BY id");
 				
 			/**
-			 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben.
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
 			 * Es wird geprüft ob ein Ergebnis vorliegt
 			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
 			 * 
@@ -184,10 +184,10 @@ public class CompanyMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " 
-			+ "WHERE company " + "ORDER BY id");
+			 + "ORDER BY id");
 			
 		/**
-		 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben.
+		 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
 		 * Es wird geprüft ob ein Ergebnis vorliegt
 		 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
 		 * 
