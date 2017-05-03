@@ -1,5 +1,8 @@
 package de.pitchMen.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.AttachEvent.Handler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Grid;
@@ -96,13 +99,25 @@ public class Content extends VerticalPanel {
 	 * Methode zum Hinzufügen von Widgets zum Grid des Contens.
 	 * @param das hinzuzufügende Widget-Objekt
 	 */
-	public void addToGrid(Widget w) {
+	public void addToGrid(HTML h) {
 		if(this.gridColCounter == 3) {
 			this.gridColCounter = 0;
 			this.gridRowCounter++;
 			this.grid.resize((this.gridRowCounter+1), 3);
 		}
-		this.grid.setWidget(this.gridRowCounter, this.gridColCounter++, w);
+		this.grid.setWidget(this.gridRowCounter, this.gridColCounter++, h);
+		h.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				grid.clear();
+				grid.setWidget(0,0,new HTML ("<div class='item'><h3>Klick entdeckt!</h3>"
+						+ "<p>Sie haben ein Item aus dem Grid angeklickt, sie Fuchs!</p></div>"));
+				gridColCounter = 1;
+				gridRowCounter = 0;
+			}
+			
+		});
 	}
 
 }
