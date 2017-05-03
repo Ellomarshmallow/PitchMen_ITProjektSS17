@@ -1,7 +1,7 @@
 package de.pitchMen.shared.report;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 /**
 	 * Superklasse der Klassen ApplicationsRelatedJobPostingsOfUser, ProjectInterweavingsWithParticipationsAndApplications, FanInJobPostingsOfUser, FanOutApplicationsOfUser.
 	 * Zusammensetzung von mehreren Teil-Reports (SubReports Attribut).
@@ -20,7 +20,7 @@ import java.io.Serializable;
 	    /**
 	     * 
 	     */
-	    private ArrayList<Report> subReports;
+	    private ArrayList<Report> subReports = new ArrayList<Report>();
 
 	    /**
 	     * @param report 
@@ -28,7 +28,7 @@ import java.io.Serializable;
 	     */
 	    public void addSubReport(Report report) {
 	        // TODO implement here
-	        return null;
+	   
 	    }
 
 	    /**
@@ -37,8 +37,7 @@ import java.io.Serializable;
 	     */
 	    public void removeSubReport(Report report) {
 	        // TODO implement here
-	        return null;
+	        
 	    }
 
 	}
-}

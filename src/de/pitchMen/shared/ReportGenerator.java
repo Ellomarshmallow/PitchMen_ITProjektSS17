@@ -1,48 +1,57 @@
 package de.pitchMen.shared;
 
+import de.pitchMen.shared.report.AllJobPostings;
 import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 /**
  * Schnittstelle für die  RPC-Fähige Klasse ReportGeneratorImpl.
  * 
  * @author
  */
+@RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
 
 
-    /**
-     * @return
-     */
-    public AllJobPostings AllJobPostings();
+	/**
+	 * Initialisierung des objektes mit anschließendem No Argument Konstruktor
+	 * @throws IllegalArgumentException
+	 */
+	public void init() throws IllegalArgumentException;
+	/**
+	 * @return
+	 */
 
-    /**
-     * 
-     */
-    public void AllJobPostingsMatchingPartnerProfileOfUser(): AllJobPostingsMatchingPartnerProfileOfUser();
+	public abstract AllJobPostings AllJobPostings() throws IllegalArgumentException;
 
-    /**
-     * 
-     */
-    public void AllApplicationsOfUser(): AllApplicationsOfUser();
+	/**
+	 * 
+	 */
+	public abstract AllJobPostingsMatchingPartnerProfileOfUser AllJobPostingsMatchingPartnerProfileOfUser() throws IllegalArgumentException;
 
-    /**
-     * 
-     */
-    public void ProjectInterweavingsWithParticipationsAndApplications(): ProjectInterweavingsWithParticipationsAndApplications();
+	/**
+	 * 
+	 */
+	public void AllApplicationsOfUser(): AllApplicationsOfUser();
 
-    /**
-     * 
-     */
-    public void FanInJobPostingsOfUser(): FanInJobPostingsOfUser();
+	/**
+	 * 
+	 */
+	public void ProjectInterweavingsWithParticipationsAndApplications(): ProjectInterweavingsWithParticipationsAndApplications();
 
-    /**
-     * 
-     */
-    public void FanOutApplicationsOfUser(): FanOutApplicationsOfUser();
+	/**
+	 * 
+	 */
+	public void FanInJobPostingsOfUser(): FanInJobPostingsOfUser();
 
-    /**
-     * 
-     */
-    public void ApplicationsRelatedToJobPostingsOfUser(): ApplicationsRelatedToJobPostingsOfUser();
+	/**
+	 * 
+	 */
+	public void FanOutApplicationsOfUser(): FanOutApplicationsOfUser();
+
+	/**
+	 * 
+	 */
+	public void ApplicationsRelatedToJobPostingsOfUser(): ApplicationsRelatedToJobPostingsOfUser();
 
 }

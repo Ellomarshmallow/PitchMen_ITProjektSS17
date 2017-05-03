@@ -1,6 +1,8 @@
 package de.pitchMen.shared.report;
 
 import java.io.Serializable;
+import java.util.Date;
+
 
 /**
  * Implemetierungsklasse des Interface Serializable. Ist die Superklasse von
@@ -18,46 +20,45 @@ public abstract class Report implements Serializable {
 	/**
 	 * 
 	 */
-	private String title;
+	private String title = "";
 
 	/**
 	 * 
 	 */
-	private Date dateCreated;
+	private Date dateCreated = new Date();
 
 	/**
 	 * 
 	 */
-	private Paragraph headerDatea;
+	private Paragraph headerData = null;
 
 	/**
 	 * @return
 	 */
 	public String getTitle() {
-		// TODO implement here
-		return "";
+		return this.title;
 	}
 
 	/**
 	 * @param value
 	 */
 	public void setTitle(String value) {
-		// TODO implement here
+		this.title = value;
 	}
 
 	/**
 	 * @return
 	 */
 	public Date getDatecreated() {
-		// TODO implement here
-		return null;
+		
+		return this.dateCreated;
 	}
 
 	/**
 	 * @param value
 	 */
 	public void setDatecreated(Date value) {
-		// TODO implement here
+		this.dateCreated = value; 
 	}
 
 }

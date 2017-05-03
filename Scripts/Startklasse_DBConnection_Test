@@ -1,0 +1,28 @@
+
+import java.sql.Connection;
+
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Startklasse {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Connection con = null;
+		Statement stmt = null;
+
+
+
+		try{
+	
+			con = DBConnection.connection();
+			stmt = con.createStatement();
+			stmt.executeUpdate("INSERT INTO pitchmen_itprojekt_schema.company(id, name, description) VALUES(4, 'Drews GmbH', 'Sportboutique')");
+		
+		}finally{
+
+
+			if(stmt != null)stmt.close();			
+			if(con !=null)con.close();
+		}	
+	}
+}
+

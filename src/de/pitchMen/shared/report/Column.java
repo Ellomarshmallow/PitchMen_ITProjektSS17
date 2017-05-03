@@ -17,31 +17,29 @@ import java.io.Serializable;
 	    /**
 	     * 
 	     */
-	    private String value;
+	    private String value = "";
 
 	    /**
 	     * @return
 	     */
 	    public String toString() {
-	        // TODO implement here
-	        return "";
+	        return this.value;
 	    }
 
 	    /**
 	     * @return
 	     */
 	    public String getValue() {
-	        // TODO implement here
-	        return "";
+	        return this.value;
 	    }
 
 	    /**
 	     * @param value
 	     */
-	    public void setValue(String value) {
-	        // TODO implement here
+	    public void setValue(String v) {
+	    	this.value = v; 
 	    }
 
 	}
 	
-}
+

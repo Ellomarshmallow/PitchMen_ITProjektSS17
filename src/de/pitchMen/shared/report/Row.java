@@ -1,11 +1,12 @@
 package de.pitchMen.shared.report;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Implemetierungsklasse des Interface Serializable. Ist die Zeile einer Tabelle
  * eines SimpleReports-Objekts. Row-Objekt kann als Kopie z.B. vom Server an den
- * Client übertragen werden.
+ * Client ï¿½bertragen werden.
  * 
  * @author
  */
@@ -19,15 +20,14 @@ public class Row implements Serializable {
 	/**
 	 * 
 	 */
-	private ArrayList<Column> columns;
+	private ArrayList<Column> columns = new ArrayList<Column>();
 
 	/**
 	 * @param column
 	 * @return
 	 */
 	public void addColumn(Column column) {
-		// TODO implement here
-		return null;
+		this.columns.add(column); 
 	}
 
 	/**
@@ -35,16 +35,31 @@ public class Row implements Serializable {
 	 * @return
 	 */
 	public void deleteColumn(Column column) {
-		// TODO implement here
-		return null;
+		this.columns.remove(column);
 	}
 
 	/**
 	 * @return
 	 */
-	public ArraList<Column> getColunms() {
-		// TODO implement here
-		return null;
+	public ArrayList<Column> getColumns() {
+		return this.columns;
 	}
-
+	
+	
+	/** Anzahl aller Spalten  
+	 * @return Spaltenanzahl 
+	 *  */
+	//BenÃ¶tigen wir die Gesamtanzahl der Spalten?
+	public int getNumberOfColumns(){
+		return this.columns.size(); 
+	}
+	
+	/** Column Objekt an der Stelle i wird ausgelesen
+	 * @return column Objekt an der Stelle i
+	 */
+	 public Column getColumnAt(int i) {
+		    return this.columns.get(i); 
+		  }
+	
+	
 }
