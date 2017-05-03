@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.PitchMenAdminAsync;
@@ -31,7 +32,7 @@ public class PitchMen implements EntryPoint {
 	 * die die Aktivitäten der Applikation steuert.
 	 */
 
-	private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
+	//private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
 	
 	/**
 	 * Initialisierung eines <code>ReportGenerator</code>-Objekts ist nötig, 
@@ -102,48 +103,16 @@ public class PitchMen implements EntryPoint {
 			
 		});
 				
-//		// Die Projektmarktplatz-Seite laden, wenn marketplaceBtn geklickt wird
-//		marketplaceBtn.addClickHandler(new ClickHandler() {
-//
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				RootPanel.get("content").clear();
-//				//RootPanel.get("content").add(marketplaceText);
-//			}
-//			
-//		});
-//		
-//		// Die Ausschreibungs-Seite laden, wenn jobPostingBtn geklickt wird
-//		jobPostingBtn.addClickHandler(new ClickHandler() {
-//
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				RootPanel.get("content").clear();
-//				//RootPanel.get("content").add(jobPostingText);
-//			}
-//						
-//		});
-//		
-//		// Die Partnerprofil-Seite laden, wenn partnerProfileBtn geklickt wird
-//				partnerProfileBtn.addClickHandler(new ClickHandler() {
-//
-//					@Override
-//					public void onClick(ClickEvent event) {
-//						RootPanel.get("content").clear();
-//						RootPanel.get("content").add(partnerProfileText);
-//					}
-//								
-//				});
-//				
-//				// Die Bewerbungen laden, wenn applicationBtn geklickt wird
-//				applicationBtn.addClickHandler(new ClickHandler() {
-//
-//					@Override
-//					public void onClick(ClickEvent event) {
-//						RootPanel.get("content").clear();
-//						RootPanel.get("content").add(applicationText);
-//					}
-//								
-//				});
+		// Die Projektmarktplatz-Seite laden, wenn marketplaceBtn geklickt wird
+		reportBtn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				VerticalPanel report = (VerticalPanel) new ShowAllJobPostings();
+				RootPanel.get("content").add(report);
+			}
+			
+		});
 	}
 }
