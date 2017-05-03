@@ -12,7 +12,7 @@
 	 * 
 	 * @author
 	 */
-	public class HTMLReportWriter  extends ReportWriter {
+	public class HTMLReportWriter extends ReportWriter {
 
 	    /**
 	     * 

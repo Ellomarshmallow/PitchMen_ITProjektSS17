@@ -49,5 +49,11 @@ public abstract class SimpleReport extends Report {
 	public ArrayList<Row> getRows() {
 		return this.tables;
 	}
+	
+
+	
+	
+	
+	
 
 }
