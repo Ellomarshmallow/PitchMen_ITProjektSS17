@@ -32,27 +32,78 @@ import java.util.ArrayList;
 	    /**
 	     * Gibt die Ausgabe des ReportWriters zurück.
 	     */
-	    public String getReportText() {
-	        
-	        return this.reportText;
+
+	    
+	    public String paragraphToHtml(Paragraph p){
+	    	if (p instanceof SimpleParagraph){
+	    		return this.paragraphToHtml((SimpleParagraph) p); 
+	    	}
+	    	else return ""; 
+	    	
 	    }
+	    
+	    
+	    public String paragraphToHtml(SimpleParagraph s) {
+	        return "<p>" + s.toString() + "</p>";
+	      }
+	    
+	    
+	    /**
+	     * HTML Header schreiben
+	     * 
+	     * @return HTML
+	     */
+	    public String getHead() {
+	      StringBuffer buff = new StringBuffer();
+
+	      buff.append("<html><head><title></title></head><body>");
+	      return buff.toString();
+	    }
+	    
+	    
+	    /**
+	     * HTML Trailer schreiben
+	     * 
+	     * @return HTML
+	     */
+	    public String getTrailer() {
+	      return "</body></html>";
+	    }
+	    
+	
 	    
 	    
 	    public void process(AllApplicationsOfUser a) {
 			// zurücksetzen des Ausgabe-Strings
 			this.resetReportText();
 			
+			//StringBuffer erzeugen
 			StringBuffer buff = new StringBuffer(); 
 			
 			buff.append("<h2>" + a.getTitle() + "</h2>"); 
-			buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");
+			buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
+			//table und tr und td öffnen			
+			buff.append("<table><tr>");
+			buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
+			buff.append("</tr>");
+			buff.append("<tr>" + "<td>" + a.getDatecreated().toString());
+			buff.append("</td></tr>"); 
 			
-			ArrayList<Row> row = a.getRows();
+			ArrayList<Row> rows = a.getRows();
 			
-			// TODO finish method
+			for(int i=0; i<rows.size();i++){
+				Row row = rows.get(i);
+				buff.append("<tr>"); 
+			for(int x=0; x<row.getNumberOfColumns();x++){
+				buff.append("<td>" + row.getColumnAt(x) + "</td");
+			}
+				buff.append("</tr"); 
+			}
 			
+				buff.append("</table"); 
 			this.reportText = buff.toString(); 
 		}
+	    
 	    
 	    
 	    public void process(AllJobPostings a){
@@ -68,4 +119,8 @@ import java.util.ArrayList;
 			//TODO implement here
 		}
 	
+			//TODO Beschreibung
+		public String getReportText(){
+			return this.getHead() + this.reportText + this.getTrailer(); 
+		}
 }
