@@ -26,12 +26,25 @@ public abstract class Report implements Serializable {
 	 * 
 	 */
 	private Date dateCreated = new Date();
-
+		
 	/**
 	 * 
 	 */
 	private Paragraph headerData = null;
-
+	
+	/**
+	 * @return
+	 */
+	public Paragraph getHeaderData() {
+		return this.headerData;
+	}
+	
+	/**
+	 * @return
+	 */
+	public void setHeaderData(Paragraph h){
+		this.headerData = h; 
+	}
 	/**
 	 * @return
 	 */
