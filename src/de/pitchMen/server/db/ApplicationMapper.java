@@ -154,8 +154,8 @@ public class ApplicationMapper {
 	        		Application application = new Application();
 	        		application.setId(rs.getInt("id"));
 	        		application.setText(rs.getString("text"));
-	        		application.getDateCreated();
-	        		application.getRating();
+	        		application.setDateCreated(rs.getDate("dateCreated"));
+	        		
 	        		return application;
 	        		}
 	        	}
@@ -173,10 +173,10 @@ public class ApplicationMapper {
 		 * @throws ClassNotFoundException
 		 * @return ArrayList<JobPosting>
 		 */
-	    public ArrayList<JobPosting> findAll() throws ClassNotFoundException {
+	    public ArrayList<Application> findAll() throws ClassNotFoundException {
 	        Connection con = DBConnection.connection();
 	        
-	        ArrayList<JobPosting> result = new ArrayList<JobPosting>();
+	        ArrayList<Application> result = new ArrayList<Application>();
 	        
 	        try {
 	        	Statement stmt = con.createStatement();
@@ -193,10 +193,9 @@ public class ApplicationMapper {
 	        	Application application = new Application();
         		application.setId(rs.getInt("id"));
         		application.setText(rs.getString("text"));
-        		application.getDateCreated();
-        		application.getRating();
+        		application.setDateCreated(rs.getDate("dateCreated"));
 
-        		result.addElement(application);
+        		result.add(application);
 	        	}
 	        }
 	        catch (SQLException e2) {
@@ -236,7 +235,7 @@ public class ApplicationMapper {
         		application.getDateCreated();
         		application.getRating();
 	        	
-	        	result.addElement(application);
+	        	result.add(application);
 	        	}
 	        }
 	        catch (SQLException e2) {

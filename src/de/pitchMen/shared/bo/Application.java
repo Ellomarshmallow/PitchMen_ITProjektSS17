@@ -25,6 +25,7 @@ public class Application extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 
+	
 	/**
 	 * @return dateCreated
 	 */
@@ -53,6 +54,13 @@ public class Application extends BusinessObject {
 		return this.text;
 	}
 
+	/**
+	 * @param dateCreated
+	 */
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	
 	/**
 	 * @param text
 	 */
@@ -100,5 +108,6 @@ public class Application extends BusinessObject {
 			return false;
 		}
 	}
+
 
 }
