@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.PitchMenAdminAsync;
@@ -31,14 +32,18 @@ public class PitchMen implements EntryPoint {
 	 * die die Aktivitäten der Applikation steuert.
 	 */
 
-	private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
+	// Zeile auskommentiert, da das Interface aktuell nicht lauffähig ist. 
+	//Stand: 03.05.2017 19:00 Uhr - Simon
+	//private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
 	
 	/**
 	 * Initialisierung eines <code>ReportGenerator</code>-Objekts ist nötig, 
 	 * um einen zentralen ReportGenerator nutzen zu können.
 	 */
 
-	private final ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
+	// Zeile auskommentiert, da das Interface aktuell nicht lauffähig ist. 
+	//Stand: 03.05.2017 19:00 Uhr - Simon
+	//private final ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 
 
 	/**
@@ -102,48 +107,23 @@ public class PitchMen implements EntryPoint {
 			
 		});
 				
-//		// Die Projektmarktplatz-Seite laden, wenn marketplaceBtn geklickt wird
-//		marketplaceBtn.addClickHandler(new ClickHandler() {
-//
-//			@Override
-//			public void onClick(ClickEvent event) {
+		/*
+		 *  Einen report laden, wenn der reportBtn geklickt wird. Aktuell ist das der Report
+		 *  ShowAllJobPostings. Dieser wiederum implementiert Reportgenerator und PitchMenAdmin,
+		 *  beide aktuell noch nicht funktionsfähig. Durch auskommentieren dieses Aufrufs
+		 *  bleibt die GUI aktuell compilierfähig. Auskommentierung kann zum Testen und final
+		 *  nach Fertigstellung der beiden Interfaces entfernt werden.
+		 *  Stand: 03.05.2017 19:00 Uhr - Simon
+		 */
+		reportBtn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
 //				RootPanel.get("content").clear();
-//				//RootPanel.get("content").add(marketplaceText);
-//			}
-//			
-//		});
-//		
-//		// Die Ausschreibungs-Seite laden, wenn jobPostingBtn geklickt wird
-//		jobPostingBtn.addClickHandler(new ClickHandler() {
-//
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				RootPanel.get("content").clear();
-//				//RootPanel.get("content").add(jobPostingText);
-//			}
-//						
-//		});
-//		
-//		// Die Partnerprofil-Seite laden, wenn partnerProfileBtn geklickt wird
-//				partnerProfileBtn.addClickHandler(new ClickHandler() {
-//
-//					@Override
-//					public void onClick(ClickEvent event) {
-//						RootPanel.get("content").clear();
-//						RootPanel.get("content").add(partnerProfileText);
-//					}
-//								
-//				});
-//				
-//				// Die Bewerbungen laden, wenn applicationBtn geklickt wird
-//				applicationBtn.addClickHandler(new ClickHandler() {
-//
-//					@Override
-//					public void onClick(ClickEvent event) {
-//						RootPanel.get("content").clear();
-//						RootPanel.get("content").add(applicationText);
-//					}
-//								
-//				});
+//				VerticalPanel report = (VerticalPanel) new ShowAllJobPostings();
+//				RootPanel.get("content").add(report);
+			}
+			
+		});
 	}
 }

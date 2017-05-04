@@ -17,19 +17,20 @@ import java.util.ArrayList;
 	public class HTMLReportWriter extends ReportWriter {
 
 	    /**
-	     * 
+	     * Dieser String wird später die Ausgabe des ReportWriters
+	     * enthalten. Er wird leer deklariert.
 	     */
 	    private String reportText = "";
 
 	    /**
-	     * @return
+	     * Setzt die Ausgabe des ReportWriters zurück.
 	     */
 	    public void resetReportText() {
 	     this.reportText = ""; 
 	    }
 
 	    /**
-	     * @return
+	     * Gibt die Ausgabe des ReportWriters zurück.
 	     */
 	    public String getReportText() {
 	        
@@ -38,15 +39,17 @@ import java.util.ArrayList;
 	    
 	    
 	    public void process(AllApplicationsOfUser a) {
-			
+			// zurücksetzen des Ausgabe-Strings
 			this.resetReportText();
 			
 			StringBuffer buff = new StringBuffer(); 
 			
-			buff.append(a.getTitle()); 
-			buff.append(a.getDatecreated().toString());
+			buff.append("<h2>" + a.getTitle() + "</h2>"); 
+			buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");
 			
-			ArrayList<Row> row = a.getRows(); 
+			ArrayList<Row> row = a.getRows();
+			
+			// TODO finish method
 			
 			this.reportText = buff.toString(); 
 		}

@@ -24,29 +24,29 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-    void AllJobPostings(AsyncCallback<AllJobPostings> callback);
+    void showAllJobPostings(AsyncCallback<AllJobPostings> callback);
 	/**
 	 * 
 	 */
-	void AllJobPostingsMatchingPartnerProfileOfUser(Person p, AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser> callback);
+	void showAllJobPostingsMatchingPartnerProfileOfUser(Person p, AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser> callback);
 	/**
 	 * 
 	 */
-	void AllApplicationsOfUser(Person p, AsyncCallback<AllApplicationsOfUser> callback);
+	void showAllApplicationsOfUser(Person p, AsyncCallback<AllApplicationsOfUser> callback);
 	/**
 	 * 
 	 */
-	void ProjectInterweavingsWithParticipationsAndApplications(Person p, AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications> callback);
+	void showProjectInterweavingsWithParticipationsAndApplications(Person p, AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications> callback);
 	/**
 	 * 
 	 */
-	void FanInJobPostingsOfUser(Person p, AsyncCallback<FanInJobPostingsOfUser> callback);
+	void showFanInJobPostingsOfUser(Person p, AsyncCallback<FanInJobPostingsOfUser> callback);
 	/**
 	 * 
 	 */
-	void FanOutApplicationsOfUser(Person p, AsyncCallback<FanOutApplicationsOfUser> callback);
+	void showFanOutApplicationsOfUser(Person p, AsyncCallback<FanOutApplicationsOfUser> callback);
 	/**
 	 * 
 	 */
-	void ApplicationsRelatedToJobPostingsOfUser(JobPosting j, AsyncCallback<ApplicationsRelatedToJobPostingsOfUser> callback);
+	void showApplicationsRelatedToJobPostingsOfUser(JobPosting j, AsyncCallback<ApplicationsRelatedToJobPostingsOfUser> callback);
 }
