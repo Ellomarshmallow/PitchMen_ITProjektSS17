@@ -4,7 +4,6 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 import de.pitchMen.shared.bo.Person;
-import de.pitchMen.shared.bo.Project;
 
 /**
  * Bildet Person-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
