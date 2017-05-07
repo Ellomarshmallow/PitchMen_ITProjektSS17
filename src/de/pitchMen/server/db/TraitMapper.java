@@ -1,6 +1,4 @@
 package de.pitchMen.server.db;
-
-import java.sql.*;
 /**
  * Die Klasse TraitMapper bildet Trait-Objekte auf einer relationalen Datenbank ab. 
  * Ebenfalls ist es möglich aus den Datenbank-Tupel Java-Objekte zur erzeugen. 
@@ -9,9 +7,11 @@ import java.sql.*;
  * 
  * @author Lars
  */
+import java.sql.*;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Vector;
-
 import de.pitchMen.shared.bo.Trait;
 
 public class TraitMapper {
@@ -54,7 +54,7 @@ public class TraitMapper {
 	 * Fügt ein Trait-Objekt der Datenbank hinzu.
 	 * 
 	 * @param trait
-	 * @return
+	 * @return trait
 	 */
 	public Trait insert(Trait trait) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -234,9 +234,9 @@ public class TraitMapper {
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
-				trait.setId(rs.getInt("ID"));
-				trait.setName(rs.getString("NAME"));
-				trait.setValue(rs.getString("VALUE"));
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
 
 				result.add(trait);
 			}
