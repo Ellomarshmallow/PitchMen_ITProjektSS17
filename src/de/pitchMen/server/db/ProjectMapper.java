@@ -3,7 +3,6 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 import de.pitchMen.shared.bo.Project;
-import de.pitchMen.shared.bo.Rating;
 
 /**
  * Bildet Project-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
