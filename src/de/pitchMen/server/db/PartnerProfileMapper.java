@@ -2,9 +2,8 @@ package de.pitchMen.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Person;
+
 
 /**
  * Bildet PartnerProfile-Objekte auf eine relationale Datenbank ab. Ebenfalls
