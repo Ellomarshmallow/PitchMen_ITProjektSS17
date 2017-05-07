@@ -41,7 +41,7 @@ public class MarketplaceMapper {
 
 	public static MarketplaceMapper marketplaceMapper() {
 		if (marketplaceMapper == null){
-			marketplaceMapper = new CompanyMapper();
+			marketplaceMapper = new MarketplaceMapper();
 		}
 		return marketplaceMapper;
 	}

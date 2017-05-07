@@ -186,7 +186,7 @@ public class JobPostingMapper {
 			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
 			 * 
 			 */		        	
-	       	if (rs.next()) {
+	       	while (rs.next()) {
 	       		JobPosting jobPosting = new JobPosting();
 	       		jobPosting.setId(rs.getInt("id"));
 	       		jobPosting.setTitle(rs.getString("title"));
@@ -224,7 +224,7 @@ public class JobPostingMapper {
 			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
 			 * 
 			 */		        	
-	       	if (rs.next()) {
+	       	while (rs.next()) {
 	       		JobPosting jobPosting = new JobPosting();
 	       		jobPosting.setId(rs.getInt("id"));
 	       		jobPosting.setTitle(rs.getString("title"));
