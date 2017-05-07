@@ -274,9 +274,9 @@ public class TraitMapper {
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
-				trait.setId(rs.getInt("ID"));
-				trait.setName(rs.getString("NAME"));
-				trait.setValue(rs.getString("VALUE"));
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
 
 				result.add(trait);
 			}

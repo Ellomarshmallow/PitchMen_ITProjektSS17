@@ -3,7 +3,7 @@ package de.pitchMen.server.db;
 /**
  * Bildet Team-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
- * @author
+ * @author Lars
  */
 
 import java.sql.*;
@@ -92,12 +92,12 @@ public class TeamMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE team SET name='" + team.getName() + "', value= '" + team.getDescription()
+			stmt.executeUpdate("UPDATE team SET name='" + team.getName() + "', description= '" + team.getDescription()
 					+ "' WHERE id= " + team.getId());
 		}
 
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert und wo im Code es passiert ist.
 		 * 
@@ -123,7 +123,7 @@ public class TeamMapper {
 			stmt.executeUpdate("DELETE FROM team WHERE id=" + team.getId());
 		}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -211,13 +211,13 @@ public class TeamMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, value FROM team WHERE name LIKE '" + name + "' ORDER BY id");
+					.executeQuery("SELECT id, name, description FROM team WHERE name LIKE '" + name + "' ORDER BY id");
 
 			while (rs.next()) {
 				Team team = new Team();
-				team.setId(rs.getInt("ID"));
-				team.setName(rs.getString("NAME"));
-				team.setDescription(rs.getString("VALUE"));
+				team.setId(rs.getInt("id"));
+				team.setName(rs.getString("name"));
+				team.setDescription(rs.getString("value"));
 
 				result.add(team);
 			}
