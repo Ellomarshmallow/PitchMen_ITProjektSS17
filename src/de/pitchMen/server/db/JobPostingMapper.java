@@ -1,9 +1,10 @@
 package de.pitchMen.server.db;
 
 import java.sql.*;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
-
-import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 
 
