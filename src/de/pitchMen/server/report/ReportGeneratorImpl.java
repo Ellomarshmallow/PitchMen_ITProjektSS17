@@ -1,11 +1,23 @@
 package de.pitchMen.server.report;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllJobPostings;
+import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
+import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.FanInJobPostingsOfUser;
+import de.pitchMen.shared.report.FanOutApplicationsOfUser;
+import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
+import de.pitchMen.shared.report.Row;
+import de.pitchMen.shared.report.SimpleReport;
 
 /**
  * Implemetierungsklasse des Interface ReportGenerator.  Sie enthält die Applikationslogik, stellt die Zusammenhänge konstistent dar und ist zuständig für einen geordneten Ablauf.
@@ -15,8 +27,8 @@ import de.pitchMen.shared.ReportGenerator;
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
 
 	private static final long serialVersionUID = 1L;
-	private PitchMenAdminImpl administration = null;
-
+	//private PitchMenAdminImpl administration = null;
+	private ReportGeneratorImpl reportadmin = null;
 	public ReportGeneratorImpl() throws IllegalArgumentException{}
 
 
@@ -26,9 +38,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 Ein ReportGeneratorImpl-Objekt instantiiert für seinen Eigenbedarf eine
 		 * PitchMenAdministration-Instanz.
 		 */
-		PitchMenAdminImpl a = new PitchMenAdminImpl();
+		ReportGeneratorImpl a = new ReportGeneratorImpl();
 		a.init();
-		administration = a;	
+		reportadmin = a;	
 	}
 
 	/**
@@ -36,9 +48,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * 
 	 * @return das BankVerwaltungsobjekt
 	 */
-	protected PitchMenAdmin getPitchMenAdmin() {
+	/*protected PitchMenAdmin getPitchMenAdmin() {
 		return this.administration;
-	}
+	}*/
 
 	 /**
 	   * HinzufÃ¼gen des Report-Impressums. Diese Methode ist aus den
@@ -48,17 +60,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	   * 
 	   * @param r der um das Impressum zu erweiternde Report.
 	   */
-	
-	 protected void addImprint(Report r) {
+	// AUSKOMMENTIERT WEIL FÜR TEST NOCH NICHT NOTWENDIG
+	/* protected void addImprint(Report r) {
 		    /*
 		     * Das Impressum soll wesentliche Informationen Ã¼ber die Bank enthalten.
 		     */
-		    Bank bank = this.administration.getBank();
+		   /* Bank bank = this.administration.getBank();
 
 		    /*
 		     * Das Imressum soll mehrzeilig sein.
 		     */
-		    CompositeParagraph imprint = new CompositeParagraph();
+		   /* CompositeParagraph imprint = new CompositeParagraph();
 
 		    imprint.addSubParagraph(new SimpleParagraph(bank.getName()));
 		    imprint.addSubParagraph(new SimpleParagraph(bank.getStreet()));
@@ -68,7 +80,75 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		    // Das eigentliche HinzufÃ¼gen des Impressums zum Report.
 		    r.setImprint(imprint);
 
-		  }
+		  }*/
+
+
+	@Override
+	public AllJobPostings showAllJobPostings() throws IllegalArgumentException {
+		if (reportadmin == null) {
+		return null;
+		}
+		AllJobPostings result = new AllJobPostings();
+		
+		result.setTitle("Alle Job Postings");
+		
+		result.setDatecreated(new Date());
+		
+		ArrayList<AllJobPostings> allJobPostings = reportadmin.showAllJobPostings();
+		
+		for (AllJobPostings c : allJobPostings) {
+		SimpleReport AllPostings = new SimpleReport();
+		Row Posting = new Row();
+		Posting.addColumn();
+		
+			
+		}
+	}
+
+
+	@Override
+	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(Person p)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(
+			Person p) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public FanInJobPostingsOfUser showFanInJobPostingsOfUser(Person p) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public FanOutApplicationsOfUser showFanOutApplicationsOfUser(Person p) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(JobPosting j)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * Default constructor
