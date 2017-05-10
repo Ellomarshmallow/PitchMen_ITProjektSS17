@@ -1,10 +1,21 @@
 package de.pitchMen.shared;
 
+import java.util.ArrayList;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
+
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.Participation;
+import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Rating;
+import de.pitchMen.shared.bo.Trait;
 
 public interface PitchMenAdminAsync extends RemoteService {
 
-
+	void init(AsyncCallback<Void> callback);
     /**
      * Fügt ein Project-Objekt zur ArrayList projects hinzu.
      * 
@@ -12,7 +23,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param project  
      * @return
      */
-    public void addProject(Project project );
+    void addProject(Project p, AsyncCallback<Project> callback);
 
     /**
      * Fügt ein PartnerProfile-Objekt zur ArrayList partnerprofiles hinzu.
@@ -21,7 +32,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param trait 
      * @return
      */
-    public void addTrait(Trait trait);
+    public void addTrait(Trait t, AsyncCallback<Trait> callback);
 
     /**
      * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
@@ -30,7 +41,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param jobPosting  
      * @return
      */
-    public void addJobPosting(JobPosting jobPosting );
+    public void addJobPosting(JobPosting j, AsyncCallback<JobPosting> callback);
 
     /**
      * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
@@ -39,7 +50,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param marketplace 
      * @return
      */
-    public void addMarketplace(Marketplace marketplace);
+    public void addMarketplace(Marketplace m, AsyncCallback<Marketplace> callback);
 
     /**
      * Erstellt ein neues Marketplace-Objekt.
@@ -49,7 +60,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * 
      * @return neues marketplace Objekt
      */
-    public Marketplace createMarketplace();
+    public Marketplace createMarketplace(Marketplace m, AsyncCallback<Marketplace> callback);
 
     /**
      * Erstellt ein neues Project-Objekt.
@@ -57,7 +68,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      *  @return das neu erstellte Project-Objekt
      * @return
      */
-    public void createProject();
+    public void createProject(Project p,  AsyncCallback<Project> callback);
 
     /**
      * Erstellt ein neues Trait-Objekt.
@@ -65,7 +76,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      *  @return das neu erstellte Trait-Objekt
      * @return
      */
-    public void createTrait();
+    public void createTrait(Trait t,  AsyncCallback<Trait> callback);
 
     /**
      * Löscht ein Trait-Objekt aus der ArrayList traits.
@@ -74,7 +85,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param trait 
      * @return
      */
-    public void deleteTrait(Trait trait);
+    public void deleteTrait(Trait trait,  AsyncCallback<Trait> callback);
 
     /**
      * Löscht das PartnerProfile-Objekt.
@@ -82,7 +93,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      *  @param das zu löschende PartnerProfil-Objekt
      * @return
      */
-    public void deletePartnerProfile();
+    public void deletePartnerProfile(PartnerProfile pp,  AsyncCallback<PartnerProfile> callback);
 
     /**
      * Löscht das Rating-Objekt.
@@ -90,7 +101,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      *  @param das zu löschende Rating-Objekt
      * @return
      */
-    public void deleteRating();
+    public void deleteRating(Rating r,  AsyncCallback<Rating> callback);
 
     /**
      * Löscht das JobPosting-Objekt.
@@ -99,7 +110,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param jobPosting  
      * @return
      */
-    public void deleteJobPosting(JobPosting jobPosting );
+    public void deleteJobPosting(JobPosting j, AsyncCallback<JobPosting> callback );
 
     /**
      * Löscht das Participation-Objekt.
@@ -108,7 +119,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param participation  
      * @return
      */
-    public void deleteParticipation(Participation participation );
+    public void deleteParticipation(Participation pa,  AsyncCallback<Participation> callback);
 
     /**
      * Löscht das Project-Objekt.
@@ -117,7 +128,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param project 
      * @return
      */
-    public void deleteProject(Project project);
+    public void deleteProject(Project p,  AsyncCallback<Project> callback);
 
     /**
      * Löscht ein Marketplace-Objekt aus der ArrayList marketplaces.
@@ -126,17 +137,17 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param marketplace 
      * @return
      */
-    public void deleteMarketplace(Marketplace marketplace);
+    public void deleteMarketplace(Marketplace m,  AsyncCallback<Marketplace> callback);
 
     /**
      * @return
      */
-    public void getMarketplaces();
+    public void getMarketplaces(Marketplace m,  AsyncCallback<Marketplace> callback);
 
     /**
      * @param value 
      * @return
      */
-    public void setMarketplaces(ArrayList<Marketplace> value);
+    public void setMarketplaces(Marketplace m,  AsyncCallback<Marketplace> callback);
 
 }
