@@ -20,7 +20,7 @@ public class PartnerProfile extends BusinessObject {
 
 	public OrganisationUnit OrganisationUnit = null;
 
-	public JobPosting JobPosting = null;
+	public JobPosting jobPosting = null;
 
 	/**
 	 * @return

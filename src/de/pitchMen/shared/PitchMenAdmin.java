@@ -1,14 +1,18 @@
 package de.pitchMen.shared;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.OrganisationUnit;
 import de.pitchMen.shared.bo.Participation;
+import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Rating;
 import de.pitchMen.shared.bo.Trait;
 
 /**
@@ -79,7 +83,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neues marketplace Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public void createMarketplace(Marketplace m) throws IllegalArgumentException;
+	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
 	
 
 	/**
@@ -106,7 +110,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	
-	public void setMarketplaces(ArrayList<Marketplace> value) throws IllegalArgumentException;
+	public void setMarketplaces(Marketplace marketplace) throws IllegalArgumentException;
 
 
 
@@ -131,7 +135,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	
-	public Trait createTrait() throws IllegalArgumentException;
+	public Trait createTrait(String name, String value) throws IllegalArgumentException;
 
 	/**
 	 * Löscht ein Trait-Objekt aus der ArrayList traits.
@@ -165,16 +169,34 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
-
+	
+	/**
+	 * erstellt ein neues JobPosting-Objekt
+	 * 
+	 *  @param das zu löschende JobPosting-Objekt
+	 * @param jobPosting  
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile) throws IllegalArgumentException;
 // --------------------- PARTNERPROFILES --------------------------------------------------
 	/**
 	 * Löscht das PartnerProfile-Objekt.
 	 * 
-	 *  @param das zu löschende PartnerProfil-Objekt
+	 *  @param das zu erstellende PartnerProfile-Objekt
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public void deletePartnerProfile() throws IllegalArgumentException;
+	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
+	/**
+	 * erstellt ein neues partnerProfile-Objekt
+	 * 
+	 *  @param das zu -Objekt
+	 * @param jobPosting  
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile createPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit, Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting) throws IllegalArgumentException;
 
 	
 	// ------------------------ RATING -------------------------------------------------------
@@ -185,7 +207,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteRating() throws IllegalArgumentException;
+	public void deleteRating(Rating rating) throws IllegalArgumentException;
 
 	// --------------------------- PARTICIPATION ---------------------------------------------
 	/**
@@ -196,6 +218,6 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteParticipation(Participation participation ) throws IllegalArgumentException;
+	public void deleteParticipation(Participation participation) throws IllegalArgumentException;
 
 }
