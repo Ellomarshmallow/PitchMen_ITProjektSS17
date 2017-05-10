@@ -54,6 +54,11 @@ public class HomePage extends BasicContent {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				/*
+				 * Mit dem Ausdruck HomePage.this wird auf das aktuell
+				 * aufrufende Objekt der äußeren Klasse referenziert, dem
+				 * der Text hinzugefügt weden soll.
+				 */
 				HomePage.this.add(
 						new HTML("<div class='item'><h3>Test-Item</h3><p>Beschreibender Text, "
 								+ "der etwas länger ist und hoffentlich schön aussieht.</p></div>"));
