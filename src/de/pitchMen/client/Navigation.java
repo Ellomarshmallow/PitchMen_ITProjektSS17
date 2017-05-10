@@ -64,6 +64,7 @@ public class Navigation extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			HomePage homePage = new HomePage();
+			RootPanel.get("content").clear();
 			RootPanel.get("content").add(homePage);
 		}
 		
@@ -75,13 +76,15 @@ public class Navigation extends VerticalPanel {
 	 *  ClickHandler und behandelt den Fall, dass ein Nutzer
 	 *  auf den Marketplaces-Button klickt.
 	 *  
-	 * @author Simon
+	 * @author Leon
 	 */
 	private class MarketplacesClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			ShowMarketplaces marketPlace = new ShowMarketplaces();
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(marketPlace);
 			
 		}
 		
@@ -99,7 +102,8 @@ public class Navigation extends VerticalPanel {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+
+			RootPanel.get("content").clear();
 			
 		}
 		
@@ -129,14 +133,16 @@ public class Navigation extends VerticalPanel {
 	 *  ClickHandler und behandelt den Fall, dass ein Nutzer
 	 *  auf den Help-Button klickt.
 	 *  
-	 * @author Simon
+	 * @author Leon
 	 */
 	private class HelpClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
 			
+			ShowHelp sh = new ShowHelp(); 
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(sh);
 		}
 		
 	}
