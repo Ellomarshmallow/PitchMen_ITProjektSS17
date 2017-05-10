@@ -2,6 +2,8 @@ package de.pitchMen.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Rating;
 
 /**
@@ -51,9 +53,10 @@ public class RatingMapper {
 	 * Fügt ein Rating-Objekt der Datenbank hinzu.
 	 * 
 	 * @param rating
+	 * @param application
 	 * @return trait
 	 */
-	public Rating insert(Rating rating) throws ClassNotFoundException {
+	public Rating insert(Rating rating, Application application) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -71,8 +74,8 @@ public class RatingMapper {
 			 * SQL-Anweisung zum Einfügen des neuen Rating-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO rating (id, statement, score)" + "VALUES (" + rating.getId() + ", '"
-					+ rating.getStatement() + "', '" + rating.getScore() + "')");
+			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" + "VALUES (" + rating.getId() + ", '"
+					+ rating.getStatement() + "', '" + rating.getScore() + "', '" + application.getId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -128,7 +131,7 @@ public class RatingMapper {
 	 * Findet ein Rating-Objekt anhand der übergebenen Id in der Datenbank.
 	 * 
 	 * @param id
-	 * 
+	 * @return rating
 	 */
 	public Rating findById(int id) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -149,6 +152,7 @@ public class RatingMapper {
 				rating.setId(rs.getInt("id"));
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
+				
 				return rating;
 			}
 
@@ -192,7 +196,7 @@ public class RatingMapper {
 	 * Datenbank.
 	 * 
 	 * @param score
-	 * @return
+	 * @return result
 	 */
 	public ArrayList<Rating> findByScore(float score) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
