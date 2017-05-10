@@ -23,7 +23,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param project  
      * @return
      */
-    void addProject(Project p, AsyncCallback<Project> callback);
+    void createProject(Marketplace marketplace, AsyncCallback<Project> callback);
 
     /**
      * Fügt ein PartnerProfile-Objekt zur ArrayList partnerprofiles hinzu.
@@ -32,7 +32,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param trait 
      * @return
      */
-    public void addTrait(Trait t, AsyncCallback<Trait> callback);
+    public void addTrait(PartnerProfile partnerprofile, AsyncCallback<Trait> callback);
 
     /**
      * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
@@ -68,7 +68,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      *  @return das neu erstellte Project-Objekt
      * @return
      */
-    public void createProject(Project p,  AsyncCallback<Project> callback);
+    public void addProject(Project p,  AsyncCallback<Void> callback);
 
     /**
      * Erstellt ein neues Trait-Objekt.
@@ -128,7 +128,7 @@ public interface PitchMenAdminAsync extends RemoteService {
      * @param project 
      * @return
      */
-    public void deleteProject(Project p,  AsyncCallback<Project> callback);
+    public void deleteProject(Project p,  AsyncCallback<Void> callback);
 
     /**
      * Löscht ein Marketplace-Objekt aus der ArrayList marketplaces.

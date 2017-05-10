@@ -28,6 +28,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void init() throws IllegalArgumentException;
+	
+	// ------------------- PROJECTS -----------------------------------------------------------------
 	/**
 	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
 	 * 
@@ -36,27 +38,27 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return ein fertiges projekt Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public addProject(Project project) throws IllegalArgumentException;
+	public Project createProject (Marketplace marketplace) throws IllegalArgumentException;
 
 	/**
-	 * Fügt ein PartnerProfile-Objekt zur ArrayList partnerprofiles hinzu.
+	 * Erstellt ein neues Project-Objekt.
 	 * 
-	 *  @param das hinzuzufügende PartnerProfile-Objekt
-	 * @param trait 
-	 * @return ein fertiges Trait Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public void addTrait(Trait trait) throws IllegalArgumentException;
-
-	/**
-	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
-	 * 
-	 *  @param das hinzuzufügende JobPosting-Objekt
-	 * @param jobPosting  
+	 *  @return das neu erstellte Project-Objekt
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public void addJobPosting(JobPosting jobPosting ) throws IllegalArgumentException;
+	public void addProject(Project project) throws IllegalArgumentException;
+	/**
+	 * Löscht das Project-Objekt.
+	 * 
+	 *  @param das zu löschende Project-Objekt
+	 * @param project 
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteProject(Project project) throws IllegalArgumentException;
+
+	// --------------------------- MARKETPLACE ----------------------------------------------------------
 
 	/**
 	 * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
@@ -78,15 +80,48 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void createMarketplace(Marketplace m) throws IllegalArgumentException;
+	
 
 	/**
-	 * Erstellt ein neues Project-Objekt.
+	 * Löscht ein Marketplace-Objekt aus der ArrayList marketplaces.
 	 * 
-	 *  @return das neu erstellte Project-Objekt
+	 *  @param das zu löschende Marketplace-Objekt
+	 * @param marketplace 
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public Project createProject() throws IllegalArgumentException;
+	
+	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException;
+
+	/**
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	
+	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
+
+	/**
+	 * @param value 
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	
+	public void setMarketplaces(ArrayList<Marketplace> value) throws IllegalArgumentException;
+
+
+
+	// -------------------------- TRAITS -------------------------------------------------------------------
+
+	/**
+	 * Fügt ein PartnerProfile-Objekt zur ArrayList partnerprofiles hinzu.
+	 * 
+	 *  @param das hinzuzufügende PartnerProfile-Objekt
+	 * @param trait 
+	 * @return ein fertiges Trait Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public void addTrait(Trait trait) throws IllegalArgumentException;
+
 
 	/**
 	 * Erstellt ein neues Trait-Objekt.
@@ -95,6 +130,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
+	
 	public Trait createTrait() throws IllegalArgumentException;
 
 	/**
@@ -107,6 +143,30 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public void deleteTrait(Trait trait) throws IllegalArgumentException;
 
+	
+	// ---------------------JOBPOSTINGS ---------------------------------------------
+
+	/**
+	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
+	 * 
+	 *  @param das hinzuzufügende JobPosting-Objekt
+	 * @param jobPosting  
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public void addJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+	
+	/**
+	 * Löscht das JobPosting-Objekt.
+	 * 
+	 *  @param das zu löschende JobPosting-Objekt
+	 * @param jobPosting  
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+
+// --------------------- PARTNERPROFILES --------------------------------------------------
 	/**
 	 * Löscht das PartnerProfile-Objekt.
 	 * 
@@ -116,6 +176,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public void deletePartnerProfile() throws IllegalArgumentException;
 
+	
+	// ------------------------ RATING -------------------------------------------------------
 	/**
 	 * Löscht das Rating-Objekt.
 	 * 
@@ -125,16 +187,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public void deleteRating() throws IllegalArgumentException;
 
-	/**
-	 * Löscht das JobPosting-Objekt.
-	 * 
-	 *  @param das zu löschende JobPosting-Objekt
-	 * @param jobPosting  
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteJobPosting(JobPosting jobPosting ) throws IllegalArgumentException;
-
+	// --------------------------- PARTICIPATION ---------------------------------------------
 	/**
 	 * Löscht das Participation-Objekt.
 	 * 
@@ -144,38 +197,5 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteParticipation(Participation participation ) throws IllegalArgumentException;
-
-	/**
-	 * Löscht das Project-Objekt.
-	 * 
-	 *  @param das zu löschende Project-Objekt
-	 * @param project 
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteProject(Project project) throws IllegalArgumentException;
-
-	/**
-	 * Löscht ein Marketplace-Objekt aus der ArrayList marketplaces.
-	 * 
-	 *  @param das zu löschende Marketplace-Objekt
-	 * @param marketplace 
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException;
-
-	/**
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
-
-	/**
-	 * @param value 
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public void setMarketplaces(ArrayList<Marketplace> value) throws IllegalArgumentException;
 
 }
