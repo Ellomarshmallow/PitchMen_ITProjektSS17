@@ -2,6 +2,7 @@ package de.pitchMen.server;
 
 import java.util.*;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.shared.ArrayList;
@@ -33,6 +34,8 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 
     private Trait trait = null;
 
+    
+    
     /**
      * @param project 
      * @return
