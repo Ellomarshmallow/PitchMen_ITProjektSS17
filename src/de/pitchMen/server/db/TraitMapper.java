@@ -1,4 +1,11 @@
 package de.pitchMen.server.db;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Trait;
+
 /**
  * Die Klasse TraitMapper bildet Trait-Objekte auf einer relationalen Datenbank ab. 
  * Ebenfalls ist es möglich aus den Datenbank-Tupel Java-Objekte zur erzeugen. 
@@ -7,13 +14,6 @@ package de.pitchMen.server.db;
  * 
  * @author Lars
  */
-import java.sql.*;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import de.pitchMen.shared.bo.Trait;
-
 public class TraitMapper {
 
 	/**
@@ -54,9 +54,10 @@ public class TraitMapper {
 	 * Fügt ein Trait-Objekt der Datenbank hinzu.
 	 * 
 	 * @param trait
+	 * @param partnerProfile
 	 * @return trait
 	 */
-	public Trait insert(Trait trait) throws ClassNotFoundException {
+	public Trait insert(Trait trait, PartnerProfile partnerProfile) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -73,8 +74,8 @@ public class TraitMapper {
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Traits in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO trait (id, name, value)" + "VALUES (" + trait.getId() + ", '"
-					+ trait.getName() + "', '" + trait.getValue() + "')");
+			stmt.executeUpdate("INSERT INTO trait (id, name, value, partnerProfile_id)" + "VALUES (" + trait.getId() + ", '"
+					+ trait.getName() + "', '" + trait.getValue() + "', '" + partnerProfile.getId() +"')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -142,7 +143,7 @@ public class TraitMapper {
 	 * Findet ein Trait-Objekt anhand der übergebenen Id in der Datenbank.
 	 * 
 	 * @param id
-	 * @return
+	 * @return trait
 	 */
 	public Trait findById(int id) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -163,6 +164,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
+				
 				return trait;
 			}
 
@@ -175,7 +177,7 @@ public class TraitMapper {
 	/**
 	 * Findet alle Trait-Objekte in der Datenbank.
 	 * 
-	 * @return result
+	 * @return ArrayList<Trait>
 	 */
 	public ArrayList<Trait> findAll() throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -213,7 +215,7 @@ public class TraitMapper {
 	 * Findet Trait-Objekte anhand des übergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
-	 * @return result
+	 * @return ArrayList<Trait>
 	 */
 	public ArrayList<Trait> findByName(String name) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -252,7 +254,7 @@ public class TraitMapper {
 	 * Datenbank.
 	 * 
 	 * @param value
-	 * @return
+	 * @return ArrayList<Trait>
 	 */
 	public ArrayList<Trait> findByValue(String value) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();

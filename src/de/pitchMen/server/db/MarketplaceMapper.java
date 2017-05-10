@@ -1,11 +1,12 @@
 package de.pitchMen.server.db;
 
 import java.sql.*;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
+
+import de.pitchMen.shared.bo.Company;
 import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.bo.Team;
 
 /**
 * Die Klasse MarketplaceMapper bildet Marketplace-Objekte auf einer relationale Datenbank ab. 
@@ -34,7 +35,7 @@ public class MarketplaceMapper {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit sichergestellt, 
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Es wird somit sichergestellt, 
 	 * dass nur eine einzige Instanz der CompanyMapper existiert.
 	 * 
 	 * @return marketplaceMapper
@@ -52,10 +53,13 @@ public class MarketplaceMapper {
 	* Und gibt das korrigierte Marketplace-Objekt zurück.
 	* 
 	* @param marketplace 
+	* @param person
+	* @param team
+	* @param company
 	* @return marketplace
 	* @throws ClassNotFoundException 
 	*/
-	public Marketplace insert(Marketplace marketplace) throws ClassNotFoundException  {
+	public Marketplace insert(Marketplace marketplace, Person person, Team team, Company company) throws ClassNotFoundException  {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -72,8 +76,9 @@ public class MarketplaceMapper {
 				/**
 				 * Ausführen der Einfügeoperation
 				 */
-				stmt.executeUpdate("INSERT INTO marketplace (id, description, title)"
-				 + "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'" + marketplace.getTitle() + "')");
+				stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id, team_id, company_id)"
+				 + "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'" + marketplace.getTitle() 
+				 + "' ,'" + person.getId() + "' ,'" + team.getId() + "' ,'" + company.getId() + "')");
 			}
 		} 
 		catch (SQLException e2) {
@@ -120,8 +125,7 @@ public class MarketplaceMapper {
         try {
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("DELETE FROM marketplace "
-				+ "WHERE id=" + marketplace.getId());				
+			stmt.executeUpdate("DELETE FROM marketplace " + "WHERE id=" + marketplace.getId());				
 			} 
 		
         catch (SQLException e2) {
@@ -134,6 +138,7 @@ public class MarketplaceMapper {
      * 
      * @param id 
      * @throws ClassNotFoundException
+     * @return marketplace
      */
 	public Marketplace findById(int id) throws ClassNotFoundException {
 		 Connection con = DBConnection.connection();
@@ -223,7 +228,7 @@ public class MarketplaceMapper {
 			Statement stmt = con.createStatement();
 			
 			ResultSet rs = stmt.executeQuery("SELECT id, description, title FROM marketplace "
-					+ "WHERE title LIKE " + title	+ "ORDER BY id");				
+					+ "WHERE title LIKE " + title + "ORDER BY id");				
 			
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
