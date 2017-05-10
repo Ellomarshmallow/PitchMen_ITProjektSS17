@@ -15,7 +15,6 @@ import de.pitchMen.shared.bo.Application;
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende 
  * Methoden (Speichern, Suchen, Löschen, Bearbeiten).
  * 
- * @author Heike
  *
  */
 
@@ -35,9 +34,9 @@ public class ApplicationMapper {
 	
 	/**
 	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit sichergestellt, 
-	 * dass nur eine einzige Instanz der CompanyMapper existiert.
+	 * dass nur eine einzige Instanz der ApplicationMappers existiert.
 	 * 
-	 * @return companyMapper
+	 * @return applicationMapper
 	 */
 	public static ApplicationMapper applicationMapper() {
 		if (applicationMapper == null) {
@@ -48,7 +47,7 @@ public class ApplicationMapper {
 		
 	/**
 	 * Fügt ein Application-Objekt der Datenbank hinzu. 
-	 * Und gibt das korrigierte Customerobjekt zurück. 
+	 * Und gibt das korrigierte Application-Objekt zurück. 
 	 * 
 	 * @param application
 	 * @return application
@@ -134,7 +133,7 @@ public class ApplicationMapper {
 		 * 
 		 * @param id
 	 	 * @throws ClassNotFoundException 
-		 * @return application
+		 * 
 		 */
 	    public Application findById(int id) throws ClassNotFoundException {
 	        Connection con = DBConnection.connection();

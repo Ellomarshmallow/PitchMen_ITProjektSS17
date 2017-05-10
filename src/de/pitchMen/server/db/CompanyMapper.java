@@ -135,7 +135,7 @@ public class CompanyMapper {
 	 * 
 	 * @param id
  	 * @throws ClassNotFoundException 
-	 * @return company
+	 * 
 	 */
 	public Company findById(int id) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
