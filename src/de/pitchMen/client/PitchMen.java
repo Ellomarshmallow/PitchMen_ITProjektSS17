@@ -50,62 +50,13 @@ public class PitchMen implements EntryPoint {
 	 * Die Einstiegspunkt-Methode.
 	 */
 	public void onModuleLoad() {
-		// VerticalPanel zur Darstellung der Navigationselemente
-		VerticalPanel navPanel = new VerticalPanel();
-				
-		// Erstellung der Navigations-Buttons
-		final Button homeBtn = new Button("Startseite");
-		final Button marketplaceBtn = new Button("Projektmarktplätze");
-		final Button myApplicationsBtn = new Button("Meine Bewerbungen");
-		final Button myPartnerProfileBtn = new Button("Mein Partnerprofil");
-		final Button reportBtn = new Button("Berichte");
-		final Button helpBtn	= new Button("Hilfe");
-		final Content homeContent = new Content("Startseite", "Hier erfahren Sie mehr über PitchMen und wie man es benutzt.",2);
-			
-		// Die Navigations-Buttons dem navPanel hinzufügen
-		navPanel.add(homeBtn);
-		navPanel.add(marketplaceBtn);
-		navPanel.add(myApplicationsBtn);
-		navPanel.add(myPartnerProfileBtn);
-		navPanel.add(reportBtn);
-		navPanel.add(helpBtn);
-		
-		// Beispiel-Inhalte für homeContent
-		Button createBtn = new Button("Anlegen");
-		Button editBtn = new Button("Bearbeiten");
-		Button deleteBtn = new Button("Löschen");
-		homeContent.addTopBarButton(createBtn);
-		homeContent.addTopBarButton(editBtn);
-		homeContent.addTopBarButton(deleteBtn);
+		/*
+		 *  Navigation-Objekt zur Darstellung der Navigationselemente
+		 */
+		Navigation navigation = new Navigation();
 		
 		// Das navPanel der Seite im Bereich der id "nav" hinzufügen 
-		RootPanel.get("nav").add(navPanel);
-		
-		// Default homeContent im Bereich der id "content" hinzufügen
-		RootPanel.get("content").add(homeContent);
-		
-		// Die Startseite laden, wenn homeBtn geklickt wird
-		homeBtn.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(homeContent);
-			}
-			
-		});
-		
-		// füge neues Grid-Element hinzu, wenn createBtn geklickt wird
-		createBtn.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				homeContent.addToGrid(
-						new HTML("<div class='item'><h3>Test-Item</h3><p>Beschreibender Text, "
-								+ "der etwas länger ist und hoffentlich schön aussieht.</p></div>"));
-			}
-			
-		});
+		RootPanel.get("nav").add(navigation);
 				
 		/*
 		 *  Einen report laden, wenn der reportBtn geklickt wird. Aktuell ist das der Report
@@ -115,15 +66,15 @@ public class PitchMen implements EntryPoint {
 		 *  nach Fertigstellung der beiden Interfaces entfernt werden.
 		 *  Stand: 03.05.2017 19:00 Uhr - Simon
 		 */
-		reportBtn.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
+//		reportBtn.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
 //				RootPanel.get("content").clear();
 //				VerticalPanel report = (VerticalPanel) new ShowAllJobPostings();
 //				RootPanel.get("content").add(report);
-			}
-			
-		});
+//			}
+//			
+//		});
 	}
 }
