@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.server.db.MarketplaceMapper;
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.bo.Project;
 import de.pitchMen.shared.bo.Trait;
@@ -37,36 +38,10 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	private Trait trait = null;
 
 	/**
-	 * @param project
-	 * @return
+	 * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
+	 * Datenbank abgleicht.
 	 */
-	public void addProject(Project project) {
-		// TODO implement here
-	}
-
-	/**
-	 * @param trait
-	 * @return
-	 */
-	public void addTrait(Trait trait) {
-		// TODO implement here
-	}
-
-	/**
-	 * @param marketplace
-	 * @return
-	 */
-	public void addMarketplace(Marketplace marketplace) {
-		// TODO implement here
-	}
-
-	/**
-	 * @param trait
-	 * @return
-	 */
-	public void deleteTrait(Trait trait) {
-		// TODO implement here
-	}
+	private MarketplaceMapper marketplaceMapper = null;
 
 	/**
 	 * @return
@@ -79,22 +54,6 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	 * @return
 	 */
 	public void deleteRating() {
-		// TODO implement here
-	}
-
-	/**
-	 * @param project
-	 * @return
-	 */
-	public void deleteProject(Project project) {
-		// TODO implement here
-	}
-
-	/**
-	 * @param marketplace
-	 * @return
-	 */
-	public void deleteMarketplace(Marketplace marketplace) {
 		// TODO implement here
 	}
 
@@ -135,45 +94,14 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	}
 
 	@Override
-	public ArrayList<Marketplace> getMarketplaces() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setMarketplaces(ArrayList<Marketplace> value) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Marketplace createMarketplace() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Project createProject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Trait createTrait() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ArrayList<Marketplace> getMarketplaces() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setMarketplaces(ArrayList<Marketplace> value) {
-		// TODO Auto-generated method stub
-
+		return this.marketplaceMapper.findAll();
 	}
 
 	@Override
@@ -186,19 +114,19 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	@Override
 	public void addProject(de.pitchMen.shared.bo.Project project) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteProject(de.pitchMen.shared.bo.Project project) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void addMarketplace(de.pitchMen.shared.bo.Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -211,19 +139,19 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	@Override
 	public void deleteMarketplace(de.pitchMen.shared.bo.Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setMarketplaces(de.pitchMen.shared.bo.Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void addTrait(de.pitchMen.shared.bo.Trait trait) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -235,7 +163,7 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	@Override
 	public void deleteTrait(de.pitchMen.shared.bo.Trait trait) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -248,7 +176,7 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -262,7 +190,7 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
