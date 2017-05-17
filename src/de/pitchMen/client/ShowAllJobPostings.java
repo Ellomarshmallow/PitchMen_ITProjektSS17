@@ -35,7 +35,6 @@ public class ShowAllJobPostings extends VerticalPanel {
 		@Override
 		public void onSuccess(AllJobPostings report) {
 			HTMLReportWriter writer = new HTMLReportWriter();
-			//@Simon, hier muss die Methode process(AllJobpostings a) aufgerufen werden
 			writer.process(report);
 	        parent.add(new HTML(writer.getReportText()));
 		}
