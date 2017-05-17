@@ -2,14 +2,19 @@ package de.pitchMen.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import de.pitchMen.shared.bo.Company;
+import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.bo.Team;
 
 
 /**
  * Bildet PartnerProfile-Objekte auf eine relationale Datenbank ab. Ebenfalls
  * ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
- * @author
+ * @author Lars
  */
 
 public class PartnerProfileMapper {
@@ -29,11 +34,10 @@ public class PartnerProfileMapper {
 	 */
 
 	protected PartnerProfileMapper() {
-
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
 	 * dass nur eine einzige Instanz der PartnerProfileMapper-Klasse existiert.
 	 * Aufgerufen wird die Klasse somit über
 	 * PartnerProfileMapper.partnerProfileMapper() und nicht über den
@@ -54,10 +58,14 @@ public class PartnerProfileMapper {
 	 * Fügt ein PartnerProfile-Objekt der Datenbank hinzu.
 	 * 
 	 * @param partnerProfile
+	 * @param company
+	 * @param team
+	 * @param person
+	 * @param jobPosting
 	 * @throws ClassNotFoundException
 	 * @return partnerProfile
 	 */
-	public PartnerProfile insert(PartnerProfile partnerProfile) throws ClassNotFoundException {
+	public PartnerProfile insert(PartnerProfile partnerProfile, Company company, Team team, Person person, JobPosting jobPosting) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -75,9 +83,11 @@ public class PartnerProfileMapper {
 			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged) VALUES ("
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id, team_id, "
+					+ "person_id, jobPosting_id) VALUES ("
 					+ partnerProfile.getId() + ", '" + partnerProfile.getDateCreated() + "', '"
-					+ partnerProfile.getDateChanged() + "')");
+					+ partnerProfile.getDateChanged() + ", '" + company.getId() + ", '" 
+					+ team.getId() + ", '" + person.getId() + ", '" + jobPosting.getId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -134,7 +144,7 @@ public class PartnerProfileMapper {
 	 * 
 	 * @param id
 	 * @throws ClassNotFoundException
-	 * @return null
+	 * @return partnerProfil
 	 */
 	public PartnerProfile findById(int id) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -155,6 +165,7 @@ public class PartnerProfileMapper {
 				partnerProfile.setId(rs.getInt("id"));
 				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
 				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				
 				return partnerProfile;
 			}
 
@@ -167,7 +178,7 @@ public class PartnerProfileMapper {
 	/**
 	 * Findet alle PartnerProfile-Objekte in der Datenbank.
 	 * 
-	 * @return result
+	 * @return ArrayList<PartnerProfile>
 	 * @throws ClassNotFoundException
 	 */
 	public ArrayList<PartnerProfile> findAll() throws ClassNotFoundException {

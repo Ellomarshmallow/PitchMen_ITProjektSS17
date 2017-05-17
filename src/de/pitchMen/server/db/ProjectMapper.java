@@ -2,6 +2,9 @@ package de.pitchMen.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
 
 /**
@@ -31,7 +34,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
 	 * dass nur eine einzige Instanz der ProjectMapper-Klasse existiert.
 	 * Aufgerufen wird die Klasse somit über ProjectMapper.projectMapper() und
 	 * nicht über den New-Operator.
@@ -51,9 +54,12 @@ public class ProjectMapper {
 	 * Fügt ein Project-Objekt der Datenbank hinzu.
 	 * 
 	 * @param project
+	 * @param marketplace
+	 * @param person
+	 * 
 	 * @return project
 	 */
-	public Project insert(Project project) throws ClassNotFoundException {
+	public Project insert(Project project, Marketplace marketplace, Person person) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -71,9 +77,10 @@ public class ProjectMapper {
 			 * SQL-Anweisung zum Einfügen des neuen Project-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO project (id, title, description, dateOpened, dateClosed)" + "VALUES ("
+			stmt.executeUpdate("INSERT INTO project (id, title, description, dateOpened, dateClosed, marketplace_id, person_id)" + "VALUES ("
 					+ project.getId() + ", '" + project.getTitle() + "', '" + project.getDescription() + "', '"
-					+ project.getDateOpened() + "', '" + project.getDateClosed() + "')");
+					+ project.getDateOpened() + "', '" + project.getDateClosed() + "', '"
+					+ marketplace.getId() + "', '" + person.getId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -109,7 +116,6 @@ public class ProjectMapper {
 	 * Löscht ein Project-Objekt aus der Datenbank.
 	 * 
 	 * @param project
-	 * @return
 	 */
 	public void delete(Project project) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -128,8 +134,8 @@ public class ProjectMapper {
 	/**
 	 * Findet ein Project-Objekt anhand der übergebenen ID in der Datenbank.
 	 * 
-	 * @param id
-	 * @return
+	 * @param id 
+	 * @return person
 	 */
 	public Project findById(int id) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -153,6 +159,7 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
+				
 				return project;
 			}
 
@@ -166,7 +173,7 @@ public class ProjectMapper {
 	/**
 	 * Findet alle Project-Objekte in der Datenbank.
 	 * 
-	 * @return
+	 * @return ArrayList<Project>
 	 */
 	public ArrayList<Project> findAll() throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -200,7 +207,7 @@ public class ProjectMapper {
 	 * Datenbank.
 	 * 
 	 * @param dateOpened
-	 * @return
+	 * @return ArrayList<Project>
 	 */
 	public ArrayList<Project> findByDateOpened(Date dateOpened) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -235,7 +242,7 @@ public class ProjectMapper {
 	 * Datenbank.
 	 * 
 	 * @param dateClosed
-	 * @return
+	 * @return ArrayList<Project>
 	 */
 	public ArrayList<Project> findByDateClosed(Date dateClosed) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -269,7 +276,7 @@ public class ProjectMapper {
 	 * Findet ein Project-Objekt anhand des übergebenen Titels in der Datenbank.
 	 * 
 	 * @param title
-	 * @return result
+	 * @return ArrayList<Project>
 	 */
 	public ArrayList<Project> findByTitle(String title) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
