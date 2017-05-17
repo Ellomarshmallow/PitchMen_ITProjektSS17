@@ -30,11 +30,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PitchMenAdminImpl() throws IllegalArgumentException{
 	}
 
-	private ArrayList<Marketplace> marketplaces = null;
-
-	private Project project = null;
-
-	private Trait trait = null;
+	
 	private MarketplaceMapper marketplaceMapper = null;
 	private static final long serialVersionUID = 1L;
 	
