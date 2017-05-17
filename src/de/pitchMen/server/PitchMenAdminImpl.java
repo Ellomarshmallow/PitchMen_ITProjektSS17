@@ -23,7 +23,7 @@ import de.pitchMen.shared.bo.Rating;
  * 
  * @author
  */
-private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenAdmin {
+public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenAdmin {
 
 	/**
 	 * Default constructor
@@ -37,6 +37,19 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 
 	private Trait trait = null;
 
+	private static final long serialVersionUID = 1L;
+	
+	  @Override
+	  public void init() throws IllegalArgumentException {
+	      /*
+	       * Ganz wesentlich ist, dass die BankAdministration einen vollständigen Satz
+	       * von Mappern besitzt, mit deren Hilfe sie dann mit der Datenbank
+	       * kommunizieren kann.
+	       */
+	      this.marketplaceMapper = MarketplaceMapper.marketplaceMapper();
+	      
+	    }
+	  
 	/**
 	 * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
 	 * Datenbank abgleicht.
@@ -64,23 +77,13 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	}
 
 	@Override
-	public Marketplace createMarketplace() {
+	public Marketplace createMarketplace(String title, String describtion) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Project createProject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Trait createTrait() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	
 	@Override
 	public void deleteJobPosting(JobPosting jobPosting) {
 		// TODO Auto-generated method stub
@@ -93,75 +96,70 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 
 	}
 
-	@Override
+	/*@Override
 	public void setMarketplaces(ArrayList<Marketplace> value) {
-		// TODO Auto-generated method stub
+		
+	// TODO Auto-generated method stub
 
-	}
+	}*/ 
 
 	@Override
-	public ArrayList<Marketplace> getMarketplaces() {
+	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException{
 		return this.marketplaceMapper.findAll();
 	}
 
 	@Override
-	public de.pitchMen.shared.bo.Project createProject(de.pitchMen.shared.bo.Marketplace marketplace)
+	public Project createProject(Marketplace marketplace)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addProject(de.pitchMen.shared.bo.Project project) throws IllegalArgumentException {
+	public void addProject(Project project) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deleteProject(de.pitchMen.shared.bo.Project project) throws IllegalArgumentException {
+	public void deleteProject(Project project) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void addMarketplace(de.pitchMen.shared.bo.Marketplace marketplace) throws IllegalArgumentException {
+	public void addMarketplace(Marketplace marketplace) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	
+	@Override
+	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public de.pitchMen.shared.bo.Marketplace createMarketplace(String title, String description)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteMarketplace(de.pitchMen.shared.bo.Marketplace marketplace) throws IllegalArgumentException {
+	public void setMarketplaces(Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void setMarketplaces(de.pitchMen.shared.bo.Marketplace marketplace) throws IllegalArgumentException {
+	public void addTrait(Trait trait) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void addTrait(de.pitchMen.shared.bo.Trait trait) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public de.pitchMen.shared.bo.Trait createTrait(String name, String value) throws IllegalArgumentException {
+	public Trait createTrait(String name, String value) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteTrait(de.pitchMen.shared.bo.Trait trait) throws IllegalArgumentException {
+	public void deleteTrait(Trait trait) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
@@ -180,7 +178,7 @@ private class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMen
 	}
 
 	@Override
-	public PartnerProfile createPartnerProfile(java.util.ArrayList<de.pitchMen.shared.bo.Trait> traits,
+	public PartnerProfile createPartnerProfile(ArrayList<Trait> traits,
 			OrganisationUnit organisationUnit, Date dateCreated, Date dateChanged, PartnerProfile partnerprofile,
 			JobPosting jobPosting) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
