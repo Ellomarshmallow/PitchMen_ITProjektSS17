@@ -157,7 +157,7 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
-//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
+				//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
 				
 				return application;
 			}
@@ -232,8 +232,50 @@ public class ApplicationMapper {
 				Application application = new Application();
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
-				application.getDateCreated();
-				application.getRating();
+				application.setDateCreated(rs.getDate("dateCreated"));
+
+				result.add(application);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * Eine JOIN-Klausel wird verwendet, um Zeilen aus zwei oder mehr Tabellen zu kombinieren,
+	 * basierend auf einer verwandten Spalte zwischen ihnen. 
+	 * LEFT JOIN: Gib alle Datensätze aus der linken Tabelle und die abgestimmten Datensätze aus der rechten Tabelle zurück.
+	 * 
+	 * @throws ClassNotFoundException
+	 * @return ArryList<Application>
+	 */
+	public ArrayList<Application> findAllAsJoin() throws ClassNotFoundException {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Application> result = new ArrayList<Application>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT Application.id, Application.text, "
+					+ "Application.dateCreated, Rating.id, Rating.statement, Rating.scoure "
+					+ "FROM application LEFT JOIN Rating ON Application.id = Rating.id "
+					+ "ORDER BY Application.id");
+
+			/**
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
+			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * ein Objekt umgewandelt.
+			 * 
+			 */
+			while (rs.next()) {
+				Application application = new Application();
+				application.setId(rs.getInt("id"));
+				application.setText(rs.getString("text"));
+				application.setDateCreated(rs.getDate("dateCreated"));
+				rating.setId(rs.getInt("id"));
+				rating.setStatement(rs.getString("statement"));
+				rating.setScore(rs.getFloat("score"));
 
 				result.add(application);
 			}
