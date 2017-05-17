@@ -105,7 +105,16 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException{
-		return this.marketplaceMapper.findAll();
+		try { 
+			return this.marketplaceMapper.findAll();
+		}
+		catch (ClassNotFoundException e){
+			
+			e.printStackTrace();
+			
+		}
+		return marketplaces;
+		
 	}
 
 	@Override
