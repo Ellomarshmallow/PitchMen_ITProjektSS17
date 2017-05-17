@@ -35,13 +35,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	private Project project = null;
 
 	private Trait trait = null;
-
+	private MarketplaceMapper marketplaceMapper = null;
 	private static final long serialVersionUID = 1L;
 	
 	  @Override
 	  public void init() throws IllegalArgumentException {
 	      /*
-	       * Ganz wesentlich ist, dass die BankAdministration einen vollständigen Satz
+	       * Ganz wesentlich ist, dass die PitchMenAdministration einen vollständigen Satz
 	       * von Mappern besitzt, mit deren Hilfe sie dann mit der Datenbank
 	       * kommunizieren kann.
 	       */
@@ -53,7 +53,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
 	 * Datenbank abgleicht.
 	 */
-	private MarketplaceMapper marketplaceMapper = null;
+
 
 	/**
 	 * @return
