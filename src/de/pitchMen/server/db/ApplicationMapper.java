@@ -257,10 +257,10 @@ public class ApplicationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT Application.id, Application.text, "
-					+ "Application.dateCreated, Rating.id, Rating.statement, Rating.scoure "
-					+ "FROM application LEFT JOIN Rating ON Application.id = Rating.id "
-					+ "ORDER BY Application.id");
+			ResultSet rs = stmt.executeQuery("SELECT application.id, application.text, "
+					+ "application.dateCreated, rating.id, rating.statement, rating.score " 
+					+ "FROM application LEFT JOIN rating ON application.id = rating.id "
+					+ "ORDER BY application.id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -269,15 +269,15 @@ public class ApplicationMapper {
 			 * 
 			 */
 			while (rs.next()) {
-				Application application = new Application();
-				application.setId(rs.getInt("id"));
-				application.setText(rs.getString("text"));
-				application.setDateCreated(rs.getDate("dateCreated"));
-				rating.setId(rs.getInt("id"));
-				rating.setStatement(rs.getString("statement"));
-				rating.setScore(rs.getFloat("score"));
+				ArrayList<String> applicationRating = new ArrayList<String>();
+				applicationRating.add("application.id");
+				applicationRating.add("application.text");
+				applicationRating.add("application.dateCreated");
+				applicationRating.add("rating.id");
+				applicationRating.add("rating.statement");
+				applicationRating.add("rating.score");
 
-				result.add(application);
+			
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
