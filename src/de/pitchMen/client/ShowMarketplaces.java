@@ -54,7 +54,7 @@ public class ShowMarketplaces extends BasicContent {
 				for (Marketplace m : marketplaces){
 				
 					
-					this.content.add(new HTML("Marktplatz " + m.getId() + ":" +m.getTitle() + m.getDescription() + m.getId()));
+					this.content.add(new HTML("Marktplatz " + m.getId() + ":" +m.getTitle() + m.getDescription()));
 			
 				}
 					
