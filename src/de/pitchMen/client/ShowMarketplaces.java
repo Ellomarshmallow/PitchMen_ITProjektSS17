@@ -30,16 +30,16 @@ public class ShowMarketplaces extends BasicContent {
 	protected void run(){
 		this.add(new HTML("<h3>Was sind Projekte</h3>"));
 		
-		PitchMenAdminAsync verwaltung = ClientsideSettings.getPitchMenAdmin(); 
-		verwaltung.getMarketplaces(new GetMarketplaceCallback(this));
+		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin(); 
+		pitchmenadmin.getMarketplaces(new GetMarketplacesCallback(this));
 	}
 	
 	
-	class GetMarketplaceCallback implements AsyncCallback<ArrayList<Marketplace>>{
+	class GetMarketplacesCallback implements AsyncCallback<ArrayList<Marketplace>>{
 		
 		private BasicContent content = null; 
 		
-		public GetMarketplaceCallback (BasicContent content){
+		public GetMarketplacesCallback (BasicContent content){
 			this.content = content; 
 		}
 		
@@ -48,20 +48,19 @@ public class ShowMarketplaces extends BasicContent {
 		       }
 		
 		
-		public void onSuccess(ArrayList<Marketplace> marketplace){			
-			if(marketplace != null){			
+		public void onSuccess(ArrayList<Marketplace> marketplaces){			
+			if(marketplaces != null){			
 				
-				for (Marketplace m : marketplace){
+				for (Marketplace m : marketplaces){
+				
 					
-					this.content.add(new HTML("ALle Plätze: " +m.getTitle() + m.getDescription() + m.getId()));
+					this.content.add(new HTML("Marktplatz " + m.getId() + ":" +m.getTitle() + m.getDescription() + m.getId()));
 			
 				}
 					
 			}
 			
-		
-		
-			
+					
 			
 		}
 		
