@@ -2,7 +2,6 @@ package de.pitchMen.server;
 
 import java.util.*;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.shared.bo.Marketplace;
@@ -28,7 +27,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	/**
 	 * Default constructor
 	 */
-	private PitchMenAdminImpl() {
+	public PitchMenAdminImpl() throws IllegalArgumentException{
 	}
 
 	private ArrayList<Marketplace> marketplaces = null;
