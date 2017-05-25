@@ -1,8 +1,8 @@
 package de.pitchMen.server.db;
 
-
 import java.sql.*;
 import java.util.ArrayList;
+
 import de.pitchMen.shared.bo.Person;
 
 /**
@@ -129,7 +129,7 @@ public class PersonMapper {
      * Findet ein Person-Objekt anhand der übergebenen Id in der Datenbank.
      * 
      * @param id 
-     * @return null
+     * @return person
      */
     public Person findById(int id) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -152,6 +152,7 @@ public class PersonMapper {
 				person.setName(rs.getString("name"));
 				person.setDescription(rs.getString("description"));
 				person.setFirstName(rs.getString("firstName"));
+				
 				return person;
 			}
 
@@ -193,7 +194,7 @@ public class PersonMapper {
      * Findet Person-Objekte anhand des übergebenen Namens in der Datenbank.
      * 
      * @param name 
-     * @return
+     * @return result
      */
     public ArrayList<Person> findByName(String name) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -222,7 +223,7 @@ public class PersonMapper {
      * Findet ein Person-Objekt anhand des übergebenen Vornamens in der Datenbank.
      * 
      * @param firstName 
-     * @return
+     * @return result
      */
     public ArrayList<Person> findByFirstName(String firstName)throws ClassNotFoundException {
 		Connection con = DBConnection.connection();

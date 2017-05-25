@@ -1,10 +1,8 @@
 package de.pitchMen.server.db;
 
 import java.sql.*;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
+
 import de.pitchMen.shared.bo.Company;
 
 /**
@@ -135,7 +133,7 @@ public class CompanyMapper {
 	 * 
 	 * @param id
  	 * @throws ClassNotFoundException 
-	 * 
+	 * @return company
 	 */
 	public Company findById(int id) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();

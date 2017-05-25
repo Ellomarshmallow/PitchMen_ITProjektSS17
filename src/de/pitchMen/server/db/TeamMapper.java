@@ -8,6 +8,7 @@ package de.pitchMen.server.db;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import de.pitchMen.shared.bo.Team;
 
 
@@ -138,6 +139,7 @@ public class TeamMapper {
 	 * Findet ein Team-Objekt anhand der übergebenen Id in der Datenbank.
 	 * 
 	 * @param id
+	 * @return team
 	 * 
 	 */
 	public Team findById(int id) throws ClassNotFoundException {
@@ -171,7 +173,7 @@ public class TeamMapper {
 	/**
 	 * Findet alle Team-Objekte in der Datenbank.
 	 * 
-	 * @return result
+	 * @return ArrayList<Team>
 	 */
 	public ArrayList<Team> findAll() throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
@@ -201,7 +203,7 @@ public class TeamMapper {
 	 * Findet Team-Objekte anhand des übergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
-	 * @return result
+	 * @return ArrayList<Team>
 	 */
 	public ArrayList<Team> findByName(String name) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
