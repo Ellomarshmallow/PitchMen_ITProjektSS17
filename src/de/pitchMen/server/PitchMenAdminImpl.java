@@ -242,4 +242,28 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	@Override
+	public ArrayList<Project> getProject() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setProject(Project project) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
