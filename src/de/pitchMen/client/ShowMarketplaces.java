@@ -14,7 +14,7 @@ import de.pitchMen.shared.bo.Marketplace;
  * Klasse {@link BasicContent}. Sie dient der Darstellung
  * der Marktplätze
  * 
- * @author Leon
+ * @author Leon Schelle
  */
 
 public class ShowMarketplaces extends BasicContent {
