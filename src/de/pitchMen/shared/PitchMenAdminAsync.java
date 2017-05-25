@@ -21,7 +21,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
 	 * 
-	 *  @param das hinzuzufügende Project-Objekt
+	 * @param das hinzuzufügende Project-Objekt
 	 * @param project  
 	 * @return
 	 */
@@ -30,7 +30,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Fügt ein PartnerProfile-Objekt zur ArrayList partnerprofiles hinzu.
 	 * 
-	 *  @param das hinzuzufügende PartnerProfile-Objekt
+	 * @param das hinzuzufügende PartnerProfile-Objekt
 	 * @param trait 
 	 * @return
 	 */
@@ -39,7 +39,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
 	 * 
-	 *  @param das hinzuzufügende JobPosting-Objekt
+	 * @param das hinzuzufügende JobPosting-Objekt
 	 * @param jobPosting  
 	 * @return
 	 */
@@ -48,7 +48,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
 	 * 
-	 *  @param das hinzuzufügende Marketplace-Objekt
+	 * @param das hinzuzufügende Marketplace-Objekt
 	 * @param marketplace 
 	 * @return
 	 */
@@ -57,7 +57,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Erstellt ein neues Marketplace-Objekt.
 	 * 
-	 *  @return das neu erstellte Marketplace-Objekt
+	 * @return das neu erstellte Marketplace-Objekt
 	 * @return Erstellt einen neuen marketplace.
 	 * 
 	 * @return neues marketplace Objekt
@@ -67,7 +67,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * erstellt ein neues partnerProfile-Objekt
 	 * 
-	 *  @param das zu -Objekt
+	 * @param das zu -Objekt
 	 * @param jobPosting  
 	 * @return
 	 * @throws IllegalArgumentException
@@ -78,7 +78,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Erstellt ein neues Project-Objekt.
 	 * 
-	 *  @return das neu erstellte Project-Objekt
+	 * @return das neu erstellte Project-Objekt
 	 * @return
 	 */
 	void addProject(Project p,  AsyncCallback<Void> callback);
@@ -86,7 +86,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Erstellt ein neues Trait-Objekt.
 	 * 
-	 *  @return das neu erstellte Trait-Objekt
+	 * @return das neu erstellte Trait-Objekt
 	 * @return
 	 */
 	void createTrait(String name, String value,  AsyncCallback<Trait> callback);
@@ -94,7 +94,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Löscht ein Trait-Objekt aus der ArrayList traits.
 	 * 
-	 *  @param das zu löschende Trait-Objekt
+	 * @param das zu löschende Trait-Objekt
 	 * @param trait 
 	 * @return
 	 */
@@ -111,7 +111,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Löscht das Rating-Objekt.
 	 * 
-	 *  @param das zu löschende Rating-Objekt
+	 * @param das zu löschende Rating-Objekt
 	 * @return
 	 */
 	void deleteRating(Rating rating,  AsyncCallback<Void> callback);
@@ -127,7 +127,7 @@ public interface PitchMenAdminAsync {
 	/**
 	 * erstellt ein neues JobPosting-Objekt
 	 * 
-	 *  @param das zu löschende JobPosting-Objekt
+	 * @param das zu löschende JobPosting-Objekt
 	 * @param jobPosting  
 	 * @return
 	 * @throws IllegalArgumentException
@@ -136,16 +136,20 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Löscht das Participation-Objekt.
 	 * 
-	 *  @param das zu löschende Participation-Objekt
+	 * @param das zu löschende Participation-Objekt
 	 * @param participation  
 	 * @return
 	 */
+	public void getJobPosting(AsyncCallback<ArrayList<JobPosting>> callback);
+	
+	public void setJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
+	
 	void deleteParticipation(Participation participation,  AsyncCallback<Void> callback);
 
 	/**
 	 * Löscht das Project-Objekt.
 	 * 
-	 *  @param das zu löschende Project-Objekt
+	 * @param das zu löschende Project-Objekt
 	 * @param project 
 	 * @return
 	 */
@@ -154,10 +158,15 @@ public interface PitchMenAdminAsync {
 	/**
 	 * Löscht ein Marketplace-Objekt aus der ArrayList marketplaces.
 	 * 
-	 *  @param das zu löschende Marketplace-Objekt
+	 * @param das zu löschende Marketplace-Objekt
 	 * @param marketplace 
 	 * @return
 	 */
+	
+	public void getProject(AsyncCallback<ArrayList<Project>> callback);
+	
+	public void setProject(Project p, AsyncCallback<Void> callback);
+	
 	void deleteMarketplace(Marketplace m,  AsyncCallback<Void> callback);
 
 	/**

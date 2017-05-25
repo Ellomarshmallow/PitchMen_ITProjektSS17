@@ -3,6 +3,7 @@ package de.pitchMen.shared;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -65,6 +66,10 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteProject(Project project) throws IllegalArgumentException;
+	
+	public ArrayList<Project> getProject() throws IllegalArgumentException;
+	
+	public void setProject(Project project) throws IllegalArgumentException;
 
 	// --------------------------- MARKETPLACE
 
@@ -186,6 +191,10 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile)
 			throws IllegalArgumentException;
+	
+	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException;
+	
+	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
 	// --------------------- PARTNERPROFILES
 	/**
