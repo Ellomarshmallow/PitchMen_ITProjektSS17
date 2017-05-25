@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
+import de.pitchMen.server.*;
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
 import de.pitchMen.shared.bo.JobPosting;
@@ -28,7 +28,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	private static final long serialVersionUID = 1L;
 	//private PitchMenAdminImpl administration = null;
-	private ReportGeneratorImpl reportadmin = null;
+	private PitchMenAdmin pitchMenAdmin = null;
 	public ReportGeneratorImpl() throws IllegalArgumentException{}
 
 
@@ -38,9 +38,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 Ein ReportGeneratorImpl-Objekt instantiiert für seinen Eigenbedarf eine
 		 * PitchMenAdministration-Instanz.
 		 */
-		ReportGeneratorImpl a = new ReportGeneratorImpl();
+		PitchMenAdminImpl a = new PitchMenAdminImpl();
 		a.init();
-		reportadmin = a;	
+		pitchMenAdmin = a;	
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	@Override
 	public AllJobPostings showAllJobPostings() throws IllegalArgumentException {
-		if (reportadmin == null) {
+		if (pitchMenAdmin == null) {
 		return null;
 		}
 		AllJobPostings result = new AllJobPostings();
@@ -94,7 +94,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		result.setDatecreated(new Date());
 		
-		ArrayList<AllJobPostings> allJobPostings = reportadmin.showAllJobPostings();
+		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.showAllJobPostings();
 		
 		for (AllJobPostings c : allJobPostings) {
 		SimpleReport AllPostings = new SimpleReport();
