@@ -1,3 +1,4 @@
+
 package de.pitchMen.server.report;
 
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.Column;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
 import de.pitchMen.shared.report.Row;
+import de.pitchMen.shared.report.SimpleParagraph;
 import de.pitchMen.shared.report.SimpleReport;
 
 /**
@@ -48,9 +51,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * 
 	 * @return das BankVerwaltungsobjekt
 	 */
-	/*protected PitchMenAdmin getPitchMenAdmin() {
-		return this.administration;
-	}*/
+	protected PitchMenAdmin getPitchMenAdmin() {
+		return this.pitchMenAdmin;
+	}
 
 	 /**
 	   * HinzufÃ¼gen des Report-Impressums. Diese Methode ist aus den
@@ -82,24 +85,38 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		  }*/
 
-
+/**
+ * Methode zum Erstellen des Reports für alle JobPostings
+ */
+ 
 	@Override
-	public AllJobPostings showAllJobPostings() throws IllegalArgumentException {
+	public AllJobPostings showAllJobPostings(JobPosting j) throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
 		return null;
 		}
+		//zu befüllenden Report erstellen
 		AllJobPostings result = new AllJobPostings();
 		
 		result.setTitle("Alle Job Postings");
 		
 		result.setDatecreated(new Date());
 		
-		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.showAllJobPostings();
+		SimpleParagraph recruiter = new SimpleParagraph(j.getRecruiter().getFirstName());
+		
+		SimpleParagraph title = new SimpleParagraph(j.getTitle());
+		
+		SimpleParagraph deadline = new SimpleParagraph(j.getDeadline().toString());
+		
+		
+		
+		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.getJobPosting();
 		
 		for (AllJobPostings c : allJobPostings) {
-		SimpleReport AllPostings = new SimpleReport();
-		Row Posting = new Row();
-		Posting.addColumn();
+		//SimpleReport AllPostings = new SimpleReport();
+		Row posting = new Row();
+		posting.addCo
+		lumn(new Column().setValue(c.getTitle()));
+				
 		
 			
 		}

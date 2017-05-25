@@ -29,7 +29,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract AllJobPostings showAllJobPostings() throws IllegalArgumentException;
+	public abstract AllJobPostings showAllJobPostings(JobPosting j) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
