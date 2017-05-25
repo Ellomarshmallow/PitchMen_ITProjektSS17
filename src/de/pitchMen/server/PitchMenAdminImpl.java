@@ -113,13 +113,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void addJobPosting(JobPosting jobPosting) {
+	public void addJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void deleteJobPosting(JobPosting jobPosting) {
+	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
@@ -143,7 +143,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public Marketplace createMarketplace(String title, String describtion) {
+	public Marketplace createMarketplace(String title, String describtion) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -226,7 +226,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void deleteParticipation(Participation participation) {
+	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
