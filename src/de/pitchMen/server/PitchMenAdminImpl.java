@@ -2,6 +2,7 @@ package de.pitchMen.server;
 
 import java.util.*;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.shared.bo.Marketplace;
@@ -30,14 +31,18 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PitchMenAdminImpl() throws IllegalArgumentException{
 	}
 
-	
-	private MarketplaceMapper marketplaceMapper = null;
+	private ArrayList<Marketplace> marketplaces = null;
+
+	private Project project = null;
+
+	private Trait trait = null;
+
 	private static final long serialVersionUID = 1L;
 	
 	  @Override
 	  public void init() throws IllegalArgumentException {
 	      /*
-	       * Ganz wesentlich ist, dass die PitchMenAdministration einen vollständigen Satz
+	       * Ganz wesentlich ist, dass die PitchMenAdmin einen vollständigen Satz
 	       * von Mappern besitzt, mit deren Hilfe sie dann mit der Datenbank
 	       * kommunizieren kann.
 	       */
@@ -49,7 +54,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
 	 * Datenbank abgleicht.
 	 */
-
+	 private MarketplaceMapper marketplaceMapper = null;
 
 	/**
 	 * @return
@@ -100,6 +105,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException{
+		
 		try { 
 			return this.marketplaceMapper.findAll();
 		}
@@ -108,7 +114,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 			e.printStackTrace();
 			
 		}
-		return marketplaces;
+		return null;
 		
 	}
 
