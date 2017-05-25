@@ -27,9 +27,7 @@ public class ShowMarketplaces extends BasicContent {
 		return "Wählen Sie einen Marktplatz aus und sehen Sie sich die darin enthaltenen Projekte an"; 
 	}
 	
-	protected void run(){
-		this.add(new HTML("<h3>Was sind Projekte</h3>"));
-		
+	protected void run(){		
 		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin(); 
 		pitchmenadmin.getMarketplaces(new GetMarketplacesCallback(this));
 	}
@@ -44,7 +42,7 @@ public class ShowMarketplaces extends BasicContent {
 		}
 		
 		public void onFailure(Throwable caught) {
-		      this.content.add(new HTML("Fehler: " + caught.getMessage()));
+		      this.content.add(new HTML("Fehler beim RPC-Aufruf: " + caught.getMessage()));
 		       }
 		
 		
@@ -54,7 +52,7 @@ public class ShowMarketplaces extends BasicContent {
 				for (Marketplace m : marketplaces){
 				
 					
-					this.content.add(new HTML("Marktplatz " + m.getId() + ":" +m.getTitle() + m.getDescription() + m.getId()));
+					this.content.add(new HTML("<p>Marktplatz " + m.getId() + ": <em>" +m.getTitle() + "</em><br />" + m.getDescription() + "</p>"));
 			
 				}
 					
