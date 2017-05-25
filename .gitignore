@@ -53,3 +53,4 @@ war/WEB-INF/classes/
 /.settings
 /.gwt
 /.dbeaver-data-sources.xml
+/build/
