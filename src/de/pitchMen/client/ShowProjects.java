@@ -7,8 +7,18 @@ import com.google.gwt.user.client.ui.HTML;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Project;
 
+
+/** Die Klasse <code> ShowProjects </code> erweitert die abstrakte Klasse 
+ * {@link BasicContent}. Die Klasse dient der Darstellung der Projekte.
+ * 
+ *    @author Leon Schelle
+ *    **/
+
 public class ShowProjects extends BasicContent {
 	@Override
+	/** Die abstrakten Methoden getHeadLine und getDescription
+	 * aus der Superklasse BasicContent werden hier überschrieben.**/
+	
 	protected String getHeadline() {
 
 		return "Alle Projekte in diesem Marktplatz";
@@ -17,12 +27,14 @@ public class ShowProjects extends BasicContent {
 	protected String getDescription() {
 		return "Wählen Sie ein Projekt aus und sehen Sie sich die darin enthaltenen Ausschreibungen an";
 	}
-
+	
+	/** Implementierung der Methode run(), welche in der Superklasse BasicContent 
+    in der onLoad() Methode aufgerufen wird**/
+	
 	protected void run() {
 
 		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin();
-		// TODO: getProjects muss noch geschrieben werden
-		pitchmenadmin.getProjects(new GetProjectsCallback(this));
+		pitchmenadmin.getProject(new GetProjectsCallback(this));
 
 		class GetProjectsCallback implements AsyncCallback<ArrayList<Project>> {
 
