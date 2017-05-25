@@ -112,20 +112,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * @return
-	 */
-	public void deletePartnerProfile() {
-		// TODO implement here
-	}
-
-	/**
-	 * @return
-	 */
-	public void deleteRating() {
-		// TODO implement here
-	}
-
 	@Override
 	public void addJobPosting(JobPosting jobPosting) {
 		// TODO Auto-generated method stub
@@ -133,42 +119,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public Marketplace createMarketplace(String title, String describtion) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void deleteJobPosting(JobPosting jobPosting) {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteParticipation(Participation participation) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * @Override public void setMarketplaces(ArrayList<Marketplace> value) {
-	 * 
-	 * // TODO Auto-generated method stub
-	 * 
-	 * }
-	 */
-
-	@Override
-	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
-
-		try {
-			return this.marketplaceMapper.findAll();
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-
-		}
-		return null;
 
 	}
 
@@ -191,6 +143,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
+	public Marketplace createMarketplace(String title, String describtion) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public void addMarketplace(Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
@@ -205,6 +163,20 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void setMarketplaces(Marketplace marketplace) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
+
+		try {
+			return this.marketplaceMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
 
 	}
 
@@ -249,6 +221,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteParticipation(Participation participation) {
 		// TODO Auto-generated method stub
 
 	}
