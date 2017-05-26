@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 
+import de.pitchMen.client.elements.GridElement;
+import de.pitchMen.client.elements.PitchMenGrid;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Marketplace;
 
@@ -33,7 +35,7 @@ public class ShowMarketplaces extends BasicContent {
 	}
 	
 	
-	class GetMarketplacesCallback implements AsyncCallback<ArrayList<Marketplace>>{
+	class GetMarketplacesCallback implements AsyncCallback<ArrayList<Marketplace>> {
 		
 		private BasicContent content = null; 
 		
@@ -42,29 +44,42 @@ public class ShowMarketplaces extends BasicContent {
 		}
 		
 		public void onFailure(Throwable caught) {
-		      this.content.add(new HTML("Fehler beim RPC-Aufruf: " + caught.getMessage()));
-		       }
-		
+			this.content.add(new HTML("Fehler beim RPC-Aufruf: " + caught.getMessage()));
+		}	
 		
 		public void onSuccess(ArrayList<Marketplace> marketplaces){			
-			if(marketplaces != null){			
+			if(marketplaces != null){
 				
-				for (Marketplace m : marketplaces){
+				// lokale Variable numOfRows definieren
+				int numOfRows = 0;
 				
-				this.content.add(new HTML("<p>Marktplatz " + m.getId() + ": <em>" +m.getTitle() + "</em><br />" + m.getDescription() + "</p>"));
-			
+				// Bestimmung der benötigten Zahl an Reihen
+				if(marketplaces.size() < 3) {
+					numOfRows = 1;
+				} else if(marketplaces.size() % 3 == 0) {
+					numOfRows = marketplaces.size() / 3;
+				} else if(marketplaces.size() % 3 == 1) {
+					numOfRows = Math.round(marketplaces.size() / 3) + 1;
+				} else {
+					numOfRows = Math.round(marketplaces.size() / 3);
 				}
+				
+				PitchMenGrid marketplaceGrid = new PitchMenGrid(numOfRows);
+				
+				for (Marketplace marketplace : marketplaces){
 					
-			}
-			
+					GridElement gridElement = new GridElement(marketplace);
 					
+					marketplaceGrid.addGridElement(gridElement);
+					
+				}
+				
+				this.content.add(marketplaceGrid);
+					
+			}					
 			
-		}
-		
+		}		
 		
 	}
 	
-	
-	
-
 }
