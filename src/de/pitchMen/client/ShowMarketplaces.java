@@ -16,7 +16,7 @@ import de.pitchMen.shared.bo.Marketplace;
  * Klasse {@link BasicContent}. Sie dient der Darstellung
  * der Marktplätze
  * 
- * @author Leon
+ * @author Leon Schelle
  */
 
 public class ShowMarketplaces extends BasicContent {
@@ -29,7 +29,7 @@ public class ShowMarketplaces extends BasicContent {
 		return "Wählen Sie einen Marktplatz aus und sehen Sie sich die darin enthaltenen Projekte an"; 
 	}
 	
-	protected void run(){		
+	protected void run(){
 		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin(); 
 		pitchmenadmin.getMarketplaces(new GetMarketplacesCallback(this));
 	}
@@ -45,11 +45,10 @@ public class ShowMarketplaces extends BasicContent {
 		
 		public void onFailure(Throwable caught) {
 			this.content.add(new HTML("Fehler beim RPC-Aufruf: " + caught.getMessage()));
-		}	
+		}
 		
 		public void onSuccess(ArrayList<Marketplace> marketplaces){			
 			if(marketplaces != null){
-				
 				// lokale Variable numOfRows definieren
 				int numOfRows = 0;
 				
