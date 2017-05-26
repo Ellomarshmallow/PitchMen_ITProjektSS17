@@ -7,14 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.pitchMen.shared.bo.JobPosting;
-import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.OrganisationUnit;
-import de.pitchMen.shared.bo.Participation;
-import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Project;
-import de.pitchMen.shared.bo.Rating;
-import de.pitchMen.shared.bo.Trait;
+import de.pitchMen.shared.bo.*;
 
 /**
  * Schnittstelle für die RPC-Fähige Klasse PitchMenAdminImpl.
@@ -66,9 +59,9 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteProject(Project project) throws IllegalArgumentException;
-	
+
 	public ArrayList<Project> getProject() throws IllegalArgumentException;
-	
+
 	public void setProject(Project project) throws IllegalArgumentException;
 
 	// --------------------------- MARKETPLACE
@@ -191,9 +184,9 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile)
 			throws IllegalArgumentException;
-	
+
 	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException;
-	
+
 	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
 	// --------------------- PARTNERPROFILES
