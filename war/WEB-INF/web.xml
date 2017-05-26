@@ -4,32 +4,21 @@
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
-         
+
+<!-- Servlets -->
+ <!--   <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>de.pitchMen.server.GreetingServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/pitchmen/greet</url-pattern>
+  </servlet-mapping> -->
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>PitchMen.html</welcome-file>
   </welcome-file-list>
 
-<!-- PitchMenAdmin-Servlet -->
-  <servlet>
-    <servlet-name>pitchMenAdminImpl</servlet-name>
-    <servlet-class>de.pitchMen.server.PitchMenAdminImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>pitchMenAdminImpl</servlet-name>
-    <url-pattern>/pitchmen/pitchmenadmin</url-pattern>
-  </servlet-mapping>
-
-<!-- ReportGenerator-Servlet -->  
-  <!--<servlet>
-    <servlet-name>reportGeneratorServlet</servlet-name>
-    <servlet-class>de.pitchMen.server.ReportGeneratorImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>reportGeneratorServlet</servlet-name>
-    <url-pattern>/pitchmen/reportgenerator</url-pattern>
-  </servlet-mapping>-->
-  
 </web-app>
