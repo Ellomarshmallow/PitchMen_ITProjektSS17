@@ -14,7 +14,7 @@ import de.pitchMen.shared.bo.*;
  * Applikationslogik, stellt die Zusammenh�nge konstistent dar und ist
  * zust�ndig f�r einen geordneten Ablauf.
  * 
- * @author
+ * @author Eleonora Renz
  */
 public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenAdmin {
 
@@ -115,7 +115,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PROJECT
 
 	@Override
-	public Project createProject(Marketplace marketplace) throws IllegalArgumentException {
+	public Project createProject(Project project) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -128,6 +128,18 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<Project> getProject() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setProject(Project project) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
@@ -213,6 +225,18 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	@Override
+	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
 	// --------------------------- PARTNERPROFILE
 	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
@@ -240,30 +264,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public ArrayList<Project> getProject() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
