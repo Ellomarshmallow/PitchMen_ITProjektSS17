@@ -3,7 +3,6 @@ package de.pitchMen.shared;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -32,13 +31,11 @@ public interface PitchMenAdmin extends RemoteService {
 	/**
 	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
 	 * 
-	 * @param marketplace
-	 *            das hinzuzufügende Project-Objekt
-	 * @param project
 	 * @return ein fertiges Project-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Project createProject(Project project) throws IllegalArgumentException;
+	public Project createProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException;
 
 	/**
 	 * Erstellt ein neues Project-Objekt.
@@ -63,20 +60,21 @@ public interface PitchMenAdmin extends RemoteService {
 	// --------------------------- MARKETPLACE
 
 	/**
+	 * Erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return neues Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace createMarketplace(String title, String description,
+			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects) throws IllegalArgumentException;
+
+	/**
 	 * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
 	 * 
 	 * @param marketplace
 	 * @throws IllegalArgumentException
 	 */
 	public void addMarketplace(Marketplace marketplace) throws IllegalArgumentException;
-
-	/**
-	 * Erstellt ein neues Marketplace-Objekt.
-	 * 
-	 * @return neues Marketplace-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
 
 	/**
 	 * Löscht ein Marketplace-Objekt aus der ArrayList marketplaces.
@@ -88,7 +86,6 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException;
 
 	/**
-	 * 
 	 * @throws IllegalArgumentException
 	 */
 
@@ -104,15 +101,6 @@ public interface PitchMenAdmin extends RemoteService {
 	// -------------------------- TRAITS
 
 	/**
-	 * Fügt ein Trait-Objekt zur ArrayList traits hinzu.
-	 * 
-	 * @param trait
-	 * @return ein fertiges Trait Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public void addTrait(Trait trait) throws IllegalArgumentException;
-
-	/**
 	 * Erstellt ein neues Trait-Objekt.
 	 * 
 	 * @return das neu erstellte Trait-Objekt
@@ -120,6 +108,15 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 
 	public Trait createTrait(String name, String value) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Trait-Objekt zur ArrayList traits hinzu.
+	 * 
+	 * @param trait
+	 * @return ein fertiges Trait Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public void addTrait(Trait trait) throws IllegalArgumentException;
 
 	/**
 	 * Löscht ein Trait-Objekt aus der ArrayList traits.
@@ -130,6 +127,15 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteTrait(Trait trait) throws IllegalArgumentException;
 
 	// ---------------------JOBPOSTINGS
+
+	/**
+	 * Erstellt ein neues JobPosting-Objekt
+	 * 
+	 * @param jobPosting
+	 * @throws IllegalArgumentException
+	 */
+	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
+			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
@@ -147,36 +153,28 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
-	/**
-	 * erstellt ein neues JobPosting-Objekt
-	 * 
-	 * @param jobPosting
-	 * @throws IllegalArgumentException
-	 */
-	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile)
-			throws IllegalArgumentException;
-
 	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException;
 
 	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
 	// --------------------- PARTNERPROFILES
+
+	/**
+	 * Erstellt ein neues partnerProfile-Objekt
+	 * 
+	 * @param partnerProfile
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile createPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
+			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
+			throws IllegalArgumentException;
+
 	/**
 	 * Löscht das PartnerProfile-Objekt.
 	 * 
 	 * @throws IllegalArgumentException
 	 */
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
-
-	/**
-	 * Erstellt ein neues partnerProfile-Objekt
-	 * 
-	 * @param jobPosting
-	 * @throws IllegalArgumentException
-	 */
-	public PartnerProfile createPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
-			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
-			throws IllegalArgumentException;
 
 	// ------------------------ RATING
 

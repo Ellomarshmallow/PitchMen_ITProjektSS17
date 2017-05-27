@@ -19,9 +19,10 @@ public interface PitchMenAdminAsync {
 
 	// ---------- MARKETPLACE
 
-	void addMarketplace(Marketplace marketplace, AsyncCallback<Void> callback);
+	void createMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
+			ArrayList<Project> projects, AsyncCallback<Marketplace> callback);
 
-	void createMarketplace(String title, String description, AsyncCallback<Marketplace> callback);
+	void addMarketplace(Marketplace marketplace, AsyncCallback<Void> callback);
 
 	void deleteMarketplace(Marketplace m, AsyncCallback<Void> callback);
 
@@ -31,11 +32,12 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PROJECT
 
-	void createProject(Project project, AsyncCallback<Project> callback);
-
-	void deleteProject(Project p, AsyncCallback<Void> callback);
+	void createProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation, AsyncCallback<Project> callback);
 
 	void addProject(Project p, AsyncCallback<Void> callback);
+
+	void deleteProject(Project p, AsyncCallback<Void> callback);
 
 	void getProject(AsyncCallback<ArrayList<Project>> callback);
 
@@ -43,16 +45,16 @@ public interface PitchMenAdminAsync {
 
 	// ---------- JOBPOSTING
 
+	void createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile, Person recruiter,
+			ArrayList<Application> applications, AsyncCallback<JobPosting> callback) throws IllegalArgumentException;
+
 	void addJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
+
+	void deleteJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
 
 	void getJobPosting(AsyncCallback<ArrayList<JobPosting>> callback);
 
 	void setJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
-
-	void deleteJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
-
-	void createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
-			AsyncCallback<JobPosting> callback) throws IllegalArgumentException;
 
 	// ---------- PARTNERPROFILE
 
@@ -64,9 +66,9 @@ public interface PitchMenAdminAsync {
 
 	// ---------- TRAIT
 
-	void addTrait(Trait Trait, AsyncCallback<Void> callback);
-
 	void createTrait(String name, String value, AsyncCallback<Trait> callback);
+
+	void addTrait(Trait Trait, AsyncCallback<Void> callback);
 
 	void deleteTrait(Trait trait, AsyncCallback<Void> callback);
 
