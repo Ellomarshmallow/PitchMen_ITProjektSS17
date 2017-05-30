@@ -6,216 +6,191 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import de.pitchMen.shared.bo.JobPosting;
-import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.OrganisationUnit;
-import de.pitchMen.shared.bo.Participation;
-import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Project;
-import de.pitchMen.shared.bo.Rating;
-import de.pitchMen.shared.bo.Trait;
+import de.pitchMen.shared.bo.*;
 
 /**
- * Schnittstelle für die  RPC-Fähige Klasse PitchMenAdminImpl.
+ * Schnittstelle für die RPC-Fähige Klasse PitchMenAdminImpl.
  * 
- * @author
+ * @author Eleonora Renz
  */
 @RemoteServiceRelativePath("pitchmenadmin")
 public interface PitchMenAdmin extends RemoteService {
 
 	/**
-	 * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von GWT
-	 * RPC zusätzlich zum No Argument Constructor der implementierenden Klasse
-	 * {@link PitchMenAdminImpl} notwendig. Bitte diese Methode direkt nach der
-	 * Instantiierung aufrufen.
+	 * Initialisierung des Objekts. Diese Methode ist vor dem Hintergrund von
+	 * GWT RPC zusätzlich zum No Argument Constructor der implementierenden
+	 * Klasse {@link PitchMenAdminImpl} notwendig. Bitte diese Methode direkt
+	 * nach der Instantiierung aufrufen.
 	 * 
 	 * @throws IllegalArgumentException
 	 */
 	public void init() throws IllegalArgumentException;
-	
-	// ------------------- PROJECTS -----------------------------------------------------------------
-	/**
-	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
-	 * 
-	 *  @param das hinzuzufügende Project-Objekt
-	 * @param project  
-	 * @return ein fertiges projekt Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Project createProject (Marketplace marketplace) throws IllegalArgumentException;
+
+	// ------------------- PROJECTS
 
 	/**
 	 * Erstellt ein neues Project-Objekt.
 	 * 
-	 *  @return das neu erstellte Project-Objekt
-	 * @return
+	 * @return das neu erstellte Project-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Project updateProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
+	 * 
+	 * @return ein fertiges Project-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	public void addProject(Project project) throws IllegalArgumentException;
+
 	/**
 	 * Löscht das Project-Objekt.
 	 * 
-	 *  @param das zu löschende Project-Objekt
-	 * @param project 
-	 * @return
+	 * @param project
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteProject(Project project) throws IllegalArgumentException;
 
-	// --------------------------- MARKETPLACE ----------------------------------------------------------
+	public ArrayList<Project> getProject() throws IllegalArgumentException;
+
+	public void setProject(Project project) throws IllegalArgumentException;
+
+	// --------------------------- MARKETPLACE
+
+	/**
+	 * Erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return neues Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace updateMarketplace(String title, String description,
+			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
 	 * 
-	 *  @param das hinzuzufügende Marketplace-Objekt
-	 * @param marketplace 
-	 * @return
+	 * @param marketplace
 	 * @throws IllegalArgumentException
 	 */
 	public void addMarketplace(Marketplace marketplace) throws IllegalArgumentException;
 
 	/**
-	 * Erstellt ein neues Marketplace-Objekt.
-	 * 
-	 *  @return das neu erstellte Marketplace-Objekt
-	 * @return Erstellt einen neuen marketplace.
-	 * 
-	 * @return neues marketplace Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Marketplace createMarketplace(String title, String description) throws IllegalArgumentException;
-	
-
-	/**
 	 * Löscht ein Marketplace-Objekt aus der ArrayList marketplaces.
-	 * 
-	 *  @param das zu löschende Marketplace-Objekt
-	 * @param marketplace 
-	 * @return
+	 *
+	 * @param marketplace
 	 * @throws IllegalArgumentException
 	 */
-	
+
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException;
 
 	/**
-	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	
+
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
 
 	/**
-	 * @param value 
-	 * @return
+	 * @param marketplace
 	 * @throws IllegalArgumentException
 	 */
-	
+
 	public void setMarketplaces(Marketplace marketplace) throws IllegalArgumentException;
 
-
-
-	// -------------------------- TRAITS -------------------------------------------------------------------
+	// -------------------------- TRAITS
 
 	/**
-	 * Fügt ein PartnerProfile-Objekt zur ArrayList partnerprofiles hinzu.
+	 * Erstellt ein neues Trait-Objekt.
 	 * 
-	 *  @param das hinzuzufügende PartnerProfile-Objekt
-	 * @param trait 
+	 * @return das neu erstellte Trait-Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public Trait updateTrait(String name, String value) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Trait-Objekt zur ArrayList traits hinzu.
+	 * 
+	 * @param trait
 	 * @return ein fertiges Trait Objekt
 	 * @throws IllegalArgumentException
 	 */
 	public void addTrait(Trait trait) throws IllegalArgumentException;
 
-
-	/**
-	 * Erstellt ein neues Trait-Objekt.
-	 * 
-	 *  @return das neu erstellte Trait-Objekt
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	
-	public Trait createTrait(String name, String value) throws IllegalArgumentException;
-
 	/**
 	 * Löscht ein Trait-Objekt aus der ArrayList traits.
 	 * 
-	 *  @param das zu löschende Trait-Objekt
-	 * @param trait 
-	 * @return
+	 * @param trait
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteTrait(Trait trait) throws IllegalArgumentException;
 
-	
-	// ---------------------JOBPOSTINGS ---------------------------------------------
+	// ---------------------JOBPOSTINGS
+
+	/**
+	 * Erstellt ein neues JobPosting-Objekt
+	 * 
+	 * @param jobPosting
+	 * @throws IllegalArgumentException
+	 */
+	public JobPosting updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
+			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
 	 * 
-	 *  @param das hinzuzufügende JobPosting-Objekt
-	 * @param jobPosting  
-	 * @return
+	 * @param jobPosting
 	 * @throws IllegalArgumentException
 	 */
 	public void addJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
-	
+
 	/**
 	 * Löscht das JobPosting-Objekt.
 	 * 
-	 *  @param das zu löschende JobPosting-Objekt
-	 * @param jobPosting  
-	 * @return
+	 * @param jobPosting
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
-	
+
+	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException;
+
+	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+
+	// --------------------- PARTNERPROFILES
+
 	/**
-	 * erstellt ein neues JobPosting-Objekt
+	 * Erstellt ein neues partnerProfile-Objekt
 	 * 
-	 *  @param das zu löschende JobPosting-Objekt
-	 * @param jobPosting  
-	 * @return
+	 * @param partnerProfile
 	 * @throws IllegalArgumentException
 	 */
-	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile) throws IllegalArgumentException;
-// --------------------- PARTNERPROFILES --------------------------------------------------
+	public PartnerProfile updatePartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
+			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
+			throws IllegalArgumentException;
+
 	/**
 	 * Löscht das PartnerProfile-Objekt.
 	 * 
-	 *  @param das zu erstellende PartnerProfile-Objekt
-	 * @return
 	 * @throws IllegalArgumentException
 	 */
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
-	/**
-	 * erstellt ein neues partnerProfile-Objekt
-	 * 
-	 *  @param das zu -Objekt
-	 * @param jobPosting  
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
-	public PartnerProfile createPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit, Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting) throws IllegalArgumentException;
 
-	
-	// ------------------------ RATING -------------------------------------------------------
+	// ------------------------ RATING
+
 	/**
 	 * Löscht das Rating-Objekt.
 	 * 
-	 *  @param das zu löschende Rating-Objekt
-	 * @return
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteRating(Rating rating) throws IllegalArgumentException;
 
-	// --------------------------- PARTICIPATION ---------------------------------------------
+	// --------------------------- PARTICIPATION
+
 	/**
 	 * Löscht das Participation-Objekt.
 	 * 
-	 *  @param das zu löschende Participation-Objekt
-	 * @param participation  
-	 * @return
+	 * @param participation
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException;

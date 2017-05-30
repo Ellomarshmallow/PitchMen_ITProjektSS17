@@ -25,9 +25,9 @@ public class Marketplace extends BusinessObject {
 
 	private ArrayList<Project> projects = null;
 
-	private static final long serialVersionUID = 1L;
-
 	private ArrayList<OrganisationUnit> organisationUnits = null;
+	
+	private static final long serialVersionUID = 1L;
 
 	public void setProject(ArrayList<Project> projects) {
 		this.projects = projects;
@@ -85,7 +85,5 @@ public class Marketplace extends BusinessObject {
 	public void setOrganisationUnits(ArrayList<OrganisationUnit> organisationUnits) {
 		this.organisationUnits = organisationUnits;
 	}
-
-	
 
 }
