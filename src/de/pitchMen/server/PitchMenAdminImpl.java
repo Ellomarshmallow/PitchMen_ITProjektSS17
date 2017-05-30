@@ -121,10 +121,18 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return null;
 	}
 
+	/**
+	 * Speichert ein Projekt
+	 */
 	@Override
 	public void addProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			projectMapper.update(project);
+		} catch (ClassNotFoundException e) {
 
+			e.printStackTrace();
+
+		}
 	}
 
 	@Override
@@ -133,10 +141,36 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Projekte
+	 */
 	@Override
 	public ArrayList<Project> getProject() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			return this.projectMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
 		return null;
+
+	}
+
+	/**
+	 * Auslesen eines Projekts anhand seiner ID
+	 */
+	@Override
+	public Project getProjectByID(int id) throws IllegalArgumentException {
+		try {
+			return this.projectMapper.findById(id);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
 	}
 
 	@Override
@@ -155,9 +189,17 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return null;
 	}
 
+	/**
+	 * Speichert einen Marktplatz
+	 */
 	@Override
 	public void addMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			marketplaceMapper.update(marketplace);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
@@ -173,11 +215,30 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Marktplätze
+	 */
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
 
 		try {
 			return this.marketplaceMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
+
+	/**
+	 * Auslesen eines Marketplatzes anhand seiner ID
+	 */
+	@Override
+	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException {
+		try {
+			return this.marketplaceMapper.findById(id);
 		} catch (ClassNotFoundException e) {
 
 			e.printStackTrace();
@@ -197,7 +258,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void addTrait(Trait trait) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			traitMapper.update(trait);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
@@ -218,7 +284,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void addJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			jobPostingMapper.update(jobPosting);
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		}
 
 	}
 
@@ -228,10 +299,28 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Ausschreibungen
+	 */
 	@Override
-	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException {
+		try {
+			return this.jobPostingMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
 		return null;
+
+	}
+
+	/**
+	 * Auslesen einer Ausschreibung anhand seiner ID
+	 */
+	@Override
+	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException {
+		return this.getJobPostingByID(id);
 	}
 
 	@Override

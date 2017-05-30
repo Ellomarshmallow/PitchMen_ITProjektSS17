@@ -54,6 +54,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteProject(Project project) throws IllegalArgumentException;
 
 	public ArrayList<Project> getProject() throws IllegalArgumentException;
+	
+	public Project getProjectByID(int id) throws IllegalArgumentException;
 
 	public void setProject(Project project) throws IllegalArgumentException;
 
@@ -91,6 +93,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
 
+	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException;
 	/**
 	 * @param marketplace
 	 * @throws IllegalArgumentException
@@ -153,7 +156,9 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
-	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException;
+	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException;
+
+	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
 
 	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
@@ -194,5 +199,4 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException;
-
 }
