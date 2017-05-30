@@ -157,7 +157,7 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
-//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
+				//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
 				
 				return application;
 			}
@@ -232,10 +232,52 @@ public class ApplicationMapper {
 				Application application = new Application();
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
-				application.getDateCreated();
-				application.getRating();
+				application.setDateCreated(rs.getDate("dateCreated"));
 
 				result.add(application);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * Eine JOIN-Klausel wird verwendet, um Zeilen aus zwei oder mehr Tabellen zu kombinieren,
+	 * basierend auf einer verwandten Spalte zwischen ihnen. 
+	 * LEFT JOIN: Gib alle Datensätze aus der linken Tabelle und die abgestimmten Datensätze aus der rechten Tabelle zurück.
+	 * 
+	 * @throws ClassNotFoundException
+	 * @return ArryList<Application>
+	 */
+	public ArrayList<Application> findAllAsJoin() throws ClassNotFoundException {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Application> result = new ArrayList<Application>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT application.id, application.text, "
+					+ "application.dateCreated, rating.id, rating.statement, rating.score " 
+					+ "FROM application LEFT JOIN rating ON application.id = rating.id "
+					+ "ORDER BY application.id");
+
+			/**
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
+			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * ein Objekt umgewandelt.
+			 * 
+			 */
+			while (rs.next()) {
+				ArrayList<String> applicationRating = new ArrayList<String>();
+				applicationRating.add("application.id");
+				applicationRating.add("application.text");
+				applicationRating.add("application.dateCreated");
+				applicationRating.add("rating.id");
+				applicationRating.add("rating.statement");
+				applicationRating.add("rating.score");
+
+			
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
