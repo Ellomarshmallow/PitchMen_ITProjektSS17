@@ -115,7 +115,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PROJECT
 
 	@Override
-	public Project createProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+	public Project updateProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
 			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
@@ -148,7 +148,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- MARKETPLACE
 
 	@Override
-	public Marketplace createMarketplace(String title, String describtion,
+	public Marketplace updateMarketplace(String title, String describtion,
 			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -190,7 +190,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- TRAIT
 
 	@Override
-	public Trait createTrait(String name, String value) throws IllegalArgumentException {
+	public Trait updateTrait(String name, String value) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -210,7 +210,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- JOBPOSTNG
 
 	@Override
-	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
+	public JobPosting updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
 			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
@@ -243,7 +243,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PARTNERPROFILE
 
 	@Override
-	public PartnerProfile createPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
+	public PartnerProfile updatePartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
 			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub

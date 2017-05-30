@@ -29,18 +29,18 @@ public interface PitchMenAdmin extends RemoteService {
 	// ------------------- PROJECTS
 
 	/**
-	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
-	 * 
-	 * @return ein fertiges Project-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Project createProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
-			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException;
-
-	/**
 	 * Erstellt ein neues Project-Objekt.
 	 * 
 	 * @return das neu erstellte Project-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Project updateProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
+	 * 
+	 * @return ein fertiges Project-Objekt
 	 * @throws IllegalArgumentException
 	 */
 	public void addProject(Project project) throws IllegalArgumentException;
@@ -65,7 +65,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neues Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace createMarketplace(String title, String description,
+	public Marketplace updateMarketplace(String title, String description,
 			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects) throws IllegalArgumentException;
 
 	/**
@@ -107,7 +107,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 
-	public Trait createTrait(String name, String value) throws IllegalArgumentException;
+	public Trait updateTrait(String name, String value) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Trait-Objekt zur ArrayList traits hinzu.
@@ -134,7 +134,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param jobPosting
 	 * @throws IllegalArgumentException
 	 */
-	public JobPosting createJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
+	public JobPosting updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
 			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException;
 
 	/**
@@ -165,7 +165,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param partnerProfile
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile createPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
+	public PartnerProfile updatePartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
 			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
 			throws IllegalArgumentException;
 
