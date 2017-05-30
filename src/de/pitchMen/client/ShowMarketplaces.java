@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 
+import de.pitchMen.client.elements.GridElement;
+import de.pitchMen.client.elements.PitchMenGrid;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Marketplace;
 
@@ -14,7 +16,7 @@ import de.pitchMen.shared.bo.Marketplace;
  * Klasse {@link BasicContent}. Sie dient der Darstellung
  * der Marktplätze
  * 
- * @author Leon
+ * @author Leon Schelle
  */
 
 public class ShowMarketplaces extends BasicContent {
@@ -28,14 +30,12 @@ public class ShowMarketplaces extends BasicContent {
 	}
 	
 	protected void run(){
-		this.add(new HTML("<h3>Was sind Projekte</h3>"));
-		
 		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin(); 
 		pitchmenadmin.getMarketplaces(new GetMarketplacesCallback(this));
 	}
 	
 	
-	class GetMarketplacesCallback implements AsyncCallback<ArrayList<Marketplace>>{
+	class GetMarketplacesCallback implements AsyncCallback<ArrayList<Marketplace>> {
 		
 		private BasicContent content = null; 
 		
@@ -44,30 +44,41 @@ public class ShowMarketplaces extends BasicContent {
 		}
 		
 		public void onFailure(Throwable caught) {
-		      this.content.add(new HTML("Fehler: " + caught.getMessage()));
-		       }
-		
-		
-		public void onSuccess(ArrayList<Marketplace> marketplaces){			
-			if(marketplaces != null){			
-				
-				for (Marketplace m : marketplaces){
-				
-					
-					this.content.add(new HTML("Marktplatz " + m.getId() + ":" +m.getTitle() + m.getDescription()));
-			
-				}
-					
-			}
-			
-					
-			
+			this.content.add(new HTML("Fehler beim RPC-Aufruf: " + caught.getMessage()));
 		}
 		
+		public void onSuccess(ArrayList<Marketplace> marketplaces){			
+			if(marketplaces != null){
+				// lokale Variable numOfRows definieren
+				int numOfRows = 0;
+				
+				// Bestimmung der benötigten Zahl an Reihen
+				if(marketplaces.size() < 3) {
+					numOfRows = 1;
+				} else if(marketplaces.size() % 3 == 0) {
+					numOfRows = marketplaces.size() / 3;
+				} else if(marketplaces.size() % 3 == 1) {
+					numOfRows = Math.round(marketplaces.size() / 3) + 1;
+				} else {
+					numOfRows = Math.round(marketplaces.size() / 3);
+				}
+				
+				PitchMenGrid marketplaceGrid = new PitchMenGrid(numOfRows);
+				
+				for (Marketplace marketplace : marketplaces){
+					
+					GridElement gridElement = new GridElement(marketplace);
+					
+					marketplaceGrid.addGridElement(gridElement);
+					
+				}
+				
+				this.content.add(marketplaceGrid);
+					
+			}					
+			
+		}		
 		
 	}
 	
-	
-	
-
 }

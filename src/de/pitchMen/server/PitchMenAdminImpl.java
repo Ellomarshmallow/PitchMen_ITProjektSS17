@@ -28,7 +28,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	/**
 	 * Default constructor
 	 */
-	private PitchMenAdminImpl() {
+	public PitchMenAdminImpl() throws IllegalArgumentException {
 	}
 
 	private ArrayList<Marketplace> marketplaces = null;
@@ -42,7 +42,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	  @Override
 	  public void init() throws IllegalArgumentException {
 	      /*
-	       * Ganz wesentlich ist, dass die BankAdministration einen vollständigen Satz
+	       * Ganz wesentlich ist, dass die PitchMenAdmin einen vollständigen Satz
 	       * von Mappern besitzt, mit deren Hilfe sie dann mit der Datenbank
 	       * kommunizieren kann.
 	       */
@@ -50,11 +50,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	      
 	    }
 	  
-	/**
-	 * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
-	 * Datenbank abgleicht.
-	 */
-	private MarketplaceMapper marketplaceMapper = null;
+	 /**
+	  * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
+	  * Datenbank abgleicht.
+	  */
+	  private MarketplaceMapper marketplaceMapper = null;
 
 	/**
 	 * @return
@@ -105,6 +105,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException{
+		
 		try { 
 			return this.marketplaceMapper.findAll();
 		}
@@ -113,7 +114,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 			e.printStackTrace();
 			
 		}
-		return marketplaces;
+		return null;
 		
 	}
 
