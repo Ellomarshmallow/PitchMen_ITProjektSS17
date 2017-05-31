@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+
+
 import de.pitchMen.shared.bo.*;
 
 /**
@@ -85,5 +87,9 @@ public interface PitchMenAdminAsync {
 	// ---------- PARTICIPATION
 
 	void deleteParticipation(Participation participation, AsyncCallback<Void> callback);
+	
+	// ---------- LOGIN
+	
+	void login(String requestUri, AsyncCallback<Person> async);
 
 }
