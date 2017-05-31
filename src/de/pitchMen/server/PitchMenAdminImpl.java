@@ -452,6 +452,36 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Partnerprofile
+	 */
+	@Override
+	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException {
+		try {
+			return this.partnerProfileMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
+
+	/**
+	 * Auslesen eines Partnerprofiles anhand seiner ID
+	 */
+	@Override
+	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException {
+		try {
+			return this.partnerProfileMapper.findById(id);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	// --------------------------- RATING
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {

@@ -183,6 +183,10 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
+	
+	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException;
+
+	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException;
 
 	// ------------------------ RATING
 

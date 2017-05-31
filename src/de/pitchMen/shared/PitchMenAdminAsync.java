@@ -69,6 +69,10 @@ public interface PitchMenAdminAsync {
 			AsyncCallback<PartnerProfile> callback);
 
 	void deletePartnerProfile(PartnerProfile partnerProfile, AsyncCallback<Void> callback);
+	
+	void getPartnerProfiles(AsyncCallback<ArrayList<PartnerProfile>> callback);
+
+	void getPartnerProfileByID(int id, AsyncCallback<PartnerProfile> callback);
 
 	// ---------- TRAIT
 
