@@ -112,6 +112,65 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	// -------------------------- APPLICATION
+
+	@Override
+	public Application addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateApplication(Application application) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteApplication(Application application) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<Application> getApplications() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Application getApplicationByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// --------------------------- COMPANY
+	
+	@Override
+	public Company addCompany(AsyncCallback<Application> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getCompanyByID(int id, AsyncCallback<Application> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	// --------------------------- PROJECT
 
 	@Override
@@ -445,7 +504,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		// Objekt in der DB speichern.
 		return this.partnerProfileMapper.insert(partnerProfile);
 	}
-	
+
 	@Override
 	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
 		try {
@@ -456,7 +515,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		}
 
 	}
-
 
 	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
@@ -495,7 +553,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	// --------------------------- RATING
-	
+
 	@Override
 	public Rating addRating(String statement, float score) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -505,9 +563,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void updateRating(Rating rating) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -527,12 +585,25 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	// --------------------------- PARTICIPATION
+
+	@Override
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
+			OrganisationUnit associatedApplicant, Project associatedProject) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateParticipation(Participation participation) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
 	@Override
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
-	
 
 	@Override
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
@@ -545,7 +616,5 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }

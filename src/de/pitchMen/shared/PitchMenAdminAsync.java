@@ -17,35 +17,28 @@ public interface PitchMenAdminAsync {
 
 	void init(AsyncCallback<Void> callback);
 
-	// ---------- MARKETPLACE
+	// ---------- APPLICATION
+	
+	void addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating, AsyncCallback<Application> callback);
+	
+	void updateApplication(Application application, AsyncCallback<Void> callback);
+	
+	void deleteApplication(Application application, AsyncCallback<Void> callback);
+	
+	void getApplications(AsyncCallback<ArrayList<Application>> callback);
+	
+	void getApplicationByID(int id, AsyncCallback<Application> callback);
+	
 
-	void addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
-			ArrayList<Project> projects, AsyncCallback<Marketplace> callback);
-
-	void updateMarketplace(Marketplace m, AsyncCallback<Void> callback);
-
-	void deleteMarketplace(Marketplace m, AsyncCallback<Void> callback);
-
-	void getMarketplaces(AsyncCallback<ArrayList<Marketplace>> callback);
-
-	void getMarketplaceByID(int id, AsyncCallback<Marketplace> callback);
-
-	void setMarketplaces(Marketplace m, AsyncCallback<Void> callback);
-
-	// ---------- PROJECT
-
-	void addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
-			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation, AsyncCallback<Project> callback);
-
-	void updateProject(Project p, AsyncCallback<Void> callback);
-
-	void deleteProject(Project p, AsyncCallback<Void> callback);
-
-	void getProject(AsyncCallback<ArrayList<Project>> callback);
-
-	void setProject(Project p, AsyncCallback<Void> callback);
-
-	void getProjectByID(int id, AsyncCallback<Project> callback);
+	// ---------- COMPANY
+	
+	void addCompany(AsyncCallback<Application> callback);
+	
+	void updateCompany(Company company, AsyncCallback<Void> callback);
+	
+	void deleteCompany(Company company, AsyncCallback<Void> callback);
+		
+	void getCompanyByID(int id, AsyncCallback<Application> callback);
 
 	// ---------- JOBPOSTING
 
@@ -62,6 +55,35 @@ public interface PitchMenAdminAsync {
 
 	void setJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
 
+	// ---------- MARKETPLACE
+
+	void addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
+			ArrayList<Project> projects, AsyncCallback<Marketplace> callback);
+
+	void updateMarketplace(Marketplace m, AsyncCallback<Void> callback);
+
+	void deleteMarketplace(Marketplace m, AsyncCallback<Void> callback);
+
+	void getMarketplaces(AsyncCallback<ArrayList<Marketplace>> callback);
+
+	void getMarketplaceByID(int id, AsyncCallback<Marketplace> callback);
+
+	void setMarketplaces(Marketplace m, AsyncCallback<Void> callback);
+
+	// ---------- PARTICIPATION
+
+	void addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
+			OrganisationUnit associatedApplicant, Project associatedProject, AsyncCallback<Participation> callback);
+	// FIXME In Participation ist Project und OrgaUnit 2 mal
+
+	void updateParticipation(Participation participation, AsyncCallback<Void> callback);
+
+	void deleteParticipation(Participation participation, AsyncCallback<Void> callback);
+
+	void getParticipations(AsyncCallback<ArrayList<Participation>> callback);
+
+	void getParticipationByID(int id, AsyncCallback<Participation> callback);
+
 	// ---------- PARTNERPROFILE
 
 	void addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit, Date dateCreated,
@@ -76,17 +98,22 @@ public interface PitchMenAdminAsync {
 
 	void getPartnerProfileByID(int id, AsyncCallback<PartnerProfile> callback);
 
-	// ---------- TRAIT
+	// ---------- PERSON
 
-	void addTrait(String name, String value, AsyncCallback<Trait> callback);
+	// ---------- PROJECT
 
-	void updateTrait(Trait Trait, AsyncCallback<Void> callback);
+	void addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation, AsyncCallback<Project> callback);
 
-	void deleteTrait(Trait trait, AsyncCallback<Void> callback);
+	void updateProject(Project p, AsyncCallback<Void> callback);
 
-	void getTraits(AsyncCallback<ArrayList<Trait>> callback);
+	void deleteProject(Project p, AsyncCallback<Void> callback);
 
-	void getTraitByID(int id, AsyncCallback<Trait> callback);
+	void getProject(AsyncCallback<ArrayList<Project>> callback);
+
+	void setProject(Project p, AsyncCallback<Void> callback);
+
+	void getProjectByID(int id, AsyncCallback<Project> callback);
 
 	// ---------- RATING
 
@@ -100,17 +127,18 @@ public interface PitchMenAdminAsync {
 
 	void getRatingByID(int id, AsyncCallback<Rating> callback);
 
-	// ---------- PARTICIPATION
+	// ---------- TEAM
 
-	void addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
-			OrganisationUnit associatedApplicant, Project associatedProject, AsyncCallback<Participation> callback);
-	// FIXME In Participation ist Project und OrgaUnit 2 mal
+	// ---------- TRAIT
 
-	void updateParticipation(Participation participation, AsyncCallback<Void> callback);
-	
-	void deleteParticipation(Participation participation, AsyncCallback<Void> callback);
+	void addTrait(String name, String value, AsyncCallback<Trait> callback);
 
-	void getParticipations(AsyncCallback<ArrayList<Participation>> callback);
+	void updateTrait(Trait Trait, AsyncCallback<Void> callback);
 
-	void getParticipationByID(int id, AsyncCallback<Participation> callback);
+	void deleteTrait(Trait trait, AsyncCallback<Void> callback);
+
+	void getTraits(AsyncCallback<ArrayList<Trait>> callback);
+
+	void getTraitByID(int id, AsyncCallback<Trait> callback);
+
 }

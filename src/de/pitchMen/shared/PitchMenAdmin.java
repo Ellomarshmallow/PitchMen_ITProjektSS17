@@ -3,6 +3,7 @@ package de.pitchMen.shared;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -25,6 +26,47 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void init() throws IllegalArgumentException;
+
+	// ---------- APPLICATION
+
+	/**
+	 * Erstellt ein neues Application-Objekt.
+	 * 
+	 * @return das neu erstellte Application-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Application addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating)
+			throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Application-Objekt zur ArrayList applications hinzu.
+	 * 
+	 * @return ein fertiges Application-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public void updateApplication(Application application) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Project-Objekt.
+	 * 
+	 * @param application
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteApplication(Application application) throws IllegalArgumentException;
+
+	public ArrayList<Application> getApplications() throws IllegalArgumentException;
+
+	public Application getApplicationByID(int id) throws IllegalArgumentException;
+
+	// ------------------- COMPANY
+
+	public Company addCompany(AsyncCallback<Application> callback) throws IllegalArgumentException;
+
+	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
+
+	void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
+
+	void getCompanyByID(int id, AsyncCallback<Application> callback) throws IllegalArgumentException;
 
 	// ------------------- PROJECTS
 
