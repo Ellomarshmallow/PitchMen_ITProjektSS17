@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.pitchMen.shared.*;
+import de.pitchMen.shared.bo.Person;
 
 /**
  * Diese Klasse enthält Dienste und Eigenschaften, die für Klassen
@@ -14,6 +15,11 @@ import de.pitchMen.shared.*;
  */
 
 public class ClientsideSettings extends CommonSettings {
+	
+	 /**
+	   * currentUser wird gesetzt.
+	   */
+	private static Person currentUser = null;
 	
 	  /**
 	   * Remote Service Proxy. Hiermit wird eine Verbindung mit dem Server-seitgen Dienst
@@ -104,5 +110,13 @@ public class ClientsideSettings extends CommonSettings {
 	    // Rückgabe des ReportGenerator
 	    return reportGenerator;
 	  }
+
+	public static Person getCurrentUser() {
+		return currentUser;
+	}
+
+	public static void setCurrentUser(Person currentUser) {
+		ClientsideSettings.currentUser = currentUser;
+	}
 
 }
