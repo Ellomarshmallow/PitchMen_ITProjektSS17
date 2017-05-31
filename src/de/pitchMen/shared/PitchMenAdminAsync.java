@@ -69,9 +69,9 @@ public interface PitchMenAdminAsync {
 			AsyncCallback<PartnerProfile> callback);
 
 	void updatePartnerProfile(PartnerProfile PartnerProfile, AsyncCallback<Void> callback);
-	
+
 	void deletePartnerProfile(PartnerProfile partnerProfile, AsyncCallback<Void> callback);
-	
+
 	void getPartnerProfiles(AsyncCallback<ArrayList<PartnerProfile>> callback);
 
 	void getPartnerProfileByID(int id, AsyncCallback<PartnerProfile> callback);
@@ -90,10 +90,27 @@ public interface PitchMenAdminAsync {
 
 	// ---------- RATING
 
+	void addRating(String statement, float scrore, AsyncCallback<Rating> callback);
+
+	void updateRating(Rating rating, AsyncCallback<Void> callback);
+
 	void deleteRating(Rating rating, AsyncCallback<Void> callback);
+
+	void getRatings(AsyncCallback<ArrayList<Rating>> callback);
+
+	void getRatingByID(int id, AsyncCallback<Rating> callback);
 
 	// ---------- PARTICIPATION
 
+	void addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
+			OrganisationUnit associatedApplicant, Project associatedProject, AsyncCallback<Participation> callback);
+	// FIXME In Participation ist Project und OrgaUnit 2 mal
+
+	void updateParticipation(Participation participation, AsyncCallback<Void> callback);
+	
 	void deleteParticipation(Participation participation, AsyncCallback<Void> callback);
 
+	void getParticipations(AsyncCallback<ArrayList<Participation>> callback);
+
+	void getParticipationByID(int id, AsyncCallback<Participation> callback);
 }

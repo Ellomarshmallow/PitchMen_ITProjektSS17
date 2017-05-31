@@ -495,10 +495,35 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	// --------------------------- RATING
+	
+	@Override
+	public Rating addRating(String statement, float score) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateRating(Rating rating) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<Rating> getRatings() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rating getRatingByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// --------------------------- PARTICIPATION
@@ -507,5 +532,20 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		// TODO Auto-generated method stub
 
 	}
+	
+
+	@Override
+	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Participation getParticipationByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

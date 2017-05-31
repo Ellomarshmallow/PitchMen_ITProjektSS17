@@ -54,7 +54,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteProject(Project project) throws IllegalArgumentException;
 
 	public ArrayList<Project> getProject() throws IllegalArgumentException;
-	
+
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
 	public void setProject(Project project) throws IllegalArgumentException;
@@ -67,8 +67,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neues Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplace(String title, String description,
-			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects) throws IllegalArgumentException;
+	public Marketplace addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
+			ArrayList<Project> projects) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
@@ -94,6 +94,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
 
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException;
+
 	/**
 	 * @param marketplace
 	 * @throws IllegalArgumentException
@@ -178,13 +179,14 @@ public interface PitchMenAdmin extends RemoteService {
 			throws IllegalArgumentException;
 
 	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
+
 	/**
 	 * Löscht das PartnerProfile-Objekt.
 	 * 
 	 * @throws IllegalArgumentException
 	 */
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
-	
+
 	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException;
 
 	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException;
@@ -192,13 +194,51 @@ public interface PitchMenAdmin extends RemoteService {
 	// ------------------------ RATING
 
 	/**
+	 * Erstellt ein neues Rating-Objekt
+	 * 
+	 * @param rating
+	 * @throws IllegalArgumentException
+	 */
+	public Rating addRating(String statement, float score) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Rating-Objekt zur ArrayList ratings hinzu.
+	 * 
+	 * @param rating
+	 * @throws IllegalArgumentException
+	 */
+	public void updateRating(Rating rating) throws IllegalArgumentException;
+
+	/**
 	 * Löscht das Rating-Objekt.
 	 * 
+	 * @param rating
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteRating(Rating rating) throws IllegalArgumentException;
 
+	public ArrayList<Rating> getRatings() throws IllegalArgumentException;
+
+	public Rating getRatingByID(int id) throws IllegalArgumentException;
+
 	// --------------------------- PARTICIPATION
+
+	/**
+	 * Erstellt ein neues Participation-Objekt
+	 * 
+	 * @param participation
+	 * @throws IllegalArgumentException
+	 */
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
+			OrganisationUnit associatedApplicant, Project associatedProject) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Participation-Objekt zur ArrayList ratings hinzu.
+	 * 
+	 * @param participation
+	 * @throws IllegalArgumentException
+	 */
+	public void updateParticipation(Participation participation) throws IllegalArgumentException;
 
 	/**
 	 * Löscht das Participation-Objekt.
@@ -207,4 +247,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException;
+
+	public ArrayList<Participation> getParticipations() throws IllegalArgumentException;
+
+	public Participation getParticipationByID(int id) throws IllegalArgumentException;
 }
