@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.pitchMen.shared.bo.Person;
 
 /**
- * Bildet Person-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Bildet Person-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es mï¿½glich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * @author Lars
  */
@@ -15,15 +15,15 @@ public class PersonMapper {
 	
 	/**
 	 * Die Klasse PersonMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfï¿½llt werden kann,
+	 * wird zunï¿½chst eine Variable mit dem Schlï¿½sselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 
 	private static PersonMapper personMapper = null;
 
 	/**
-	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschï¿½tzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 
@@ -32,10 +32,10 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafï¿½r,
 	 * dass nur eine einzige Instanz der PersonMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über PersonMapper.personMapper() und
-	 * nicht über den New-Operator.
+	 * Aufgerufen wird die Klasse somit ï¿½ber PersonMapper.personMapper() und
+	 * nicht ï¿½ber den New-Operator.
 	 * 
 	 * @return personMapper
 	 */
@@ -49,7 +49,7 @@ public class PersonMapper {
 	}
 
     /**
-     * Fügt ein Person-Objekt der Datenbank hinzu.
+     * Fï¿½gt ein Person-Objekt der Datenbank hinzu.
      * 
      * @param person 
      * @throws ClassNotFoundException
@@ -61,8 +61,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die
+			 * aktuelle id wird um eins erhï¿½ht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM person");
 
@@ -70,11 +70,11 @@ public class PersonMapper {
 			stmt = con.createStatement();
 
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Person-Tupels in die
+			 * SQL-Anweisung zum Einfï¿½gen des neuen Person-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO person (id, name, description, firstName) VALUES (" + person.getId() + ", '"
-					+ person.getName() + "', '" + person.getDescription() + "', '" + person.getFirstName() + "')");
+			stmt.executeUpdate("INSERT INTO person (id, name, description, firstName, email) VALUES (" + person.getId() + ", '"
+					+ person.getName() + "', '" + person.getDescription() + "', '" + person.getFirstName() + "', '" + person.getEmail() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -107,7 +107,7 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Löscht ein Person-Objekt aus der Datenbank.
+	 * Lï¿½scht ein Person-Objekt aus der Datenbank.
 	 * 
 	 * @param person
 	 */
@@ -126,7 +126,7 @@ public class PersonMapper {
 	}
 
     /**
-     * Findet ein Person-Objekt anhand der übergebenen Id in der Datenbank.
+     * Findet ein Person-Objekt anhand der ï¿½bergebenen Id in der Datenbank.
      * 
      * @param id 
      * @return person
@@ -140,9 +140,9 @@ public class PersonMapper {
 					.executeQuery("SELECT id, name, description, firstName FROM person WHERE id=" + id);
 
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
+			 * Zu einem Primï¿½rschlï¿½ssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel
 			 * ein DB-Tupel gibt.
 			 */
 
@@ -191,7 +191,7 @@ public class PersonMapper {
 	}
 
     /**
-     * Findet Person-Objekte anhand des übergebenen Namens in der Datenbank.
+     * Findet Person-Objekte anhand des ï¿½bergebenen Namens in der Datenbank.
      * 
      * @param name 
      * @return result
@@ -220,7 +220,7 @@ public class PersonMapper {
     }
 
     /**
-     * Findet ein Person-Objekt anhand des übergebenen Vornamens in der Datenbank.
+     * Findet ein Person-Objekt anhand des ï¿½bergebenen Vornamens in der Datenbank.
      * 
      * @param firstName 
      * @return result
@@ -248,5 +248,32 @@ public class PersonMapper {
         return result;
     }
   
+    
+    public Person findByEmail(String email)throws ClassNotFoundException {
+  		Connection con = DBConnection.connection();
+
+  		ArrayList<Person> result = new ArrayList<Person>();
+  		try {
+  			Statement stmt = con.createStatement();
+  			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE email LIKE '" + email + "' ORDER BY id");
+
+  			if (rs.next()) {
+  				Person person = new Person();
+  				person.setId(rs.getInt("id"));
+  				person.setName(rs.getString("name"));
+  				person.setDescription(rs.getString("description"));
+  				person.setFirstName(rs.getString("firstName"));
+  				person.setEmail(rs.getString("email"));
+  				result.add(person);
+  			}
+
+  		} catch (SQLException e2) {
+  			e2.printStackTrace();
+  		}
+          return result;
+          //TODO: Fehler verbessern
+      }
+    
+    
 
 }
