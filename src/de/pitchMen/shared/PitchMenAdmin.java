@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import de.pitchMen.client.LoginInfo;
 import de.pitchMen.shared.bo.*;
 
 /**
@@ -199,4 +200,16 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException;
+	
+	
+	// --------------------------- LOGIN
+	
+	/**
+	 * requestURI ist die url die aufgerufen werden soll, nachdem der Nutzer eingeloggt ist.
+	 */
+	public Person login(String requestUri) throws IllegalArgumentException; 
 }
+
+
+
+
