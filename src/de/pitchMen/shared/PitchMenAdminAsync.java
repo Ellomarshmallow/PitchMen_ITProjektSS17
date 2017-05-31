@@ -68,6 +68,8 @@ public interface PitchMenAdminAsync {
 			Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting,
 			AsyncCallback<PartnerProfile> callback);
 
+	void updatePartnerProfile(PartnerProfile PartnerProfile, AsyncCallback<Void> callback);
+	
 	void deletePartnerProfile(PartnerProfile partnerProfile, AsyncCallback<Void> callback);
 	
 	void getPartnerProfiles(AsyncCallback<ArrayList<PartnerProfile>> callback);

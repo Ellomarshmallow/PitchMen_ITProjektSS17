@@ -177,6 +177,7 @@ public interface PitchMenAdmin extends RemoteService {
 			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
 			throws IllegalArgumentException;
 
+	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
 	/**
 	 * Löscht das PartnerProfile-Objekt.
 	 * 

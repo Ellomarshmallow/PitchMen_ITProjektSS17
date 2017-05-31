@@ -445,6 +445,18 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		// Objekt in der DB speichern.
 		return this.partnerProfileMapper.insert(partnerProfile);
 	}
+	
+	@Override
+	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
+		try {
+			this.partnerProfileMapper.update(partnerProfile);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
 
 	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
