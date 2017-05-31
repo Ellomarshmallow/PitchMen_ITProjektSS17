@@ -117,27 +117,89 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public Project updateProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
 			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Project project = new Project();
+		project.setDateOpened(dateOpened);
+		project.setDateClosed(dateClosed);
+		project.setTitle(title);
+		project.setDescription(description);
+		project.setManager(manager);
+		project.setJobPostings(jobPostings);
+		project.setParticipations(participation);
+
+		/*
+		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
+		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
+		 */
+		project.setId(1);
+
+		return this.projectMapper.insert(project);
 	}
 
+	/**
+	 * Speichert ein Projekt
+	 */
 	@Override
 	public void addProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			projectMapper.update(project);
+		} catch (ClassNotFoundException e) {
 
+			e.printStackTrace();
+
+		}
 	}
 
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 
+		// ArrayList<Projects> projects = this.get
 	}
 
+	/**
+	 * Auslesen aller Projekte
+	 */
 	@Override
 	public ArrayList<Project> getProject() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			return this.projectMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
 		return null;
+
 	}
+
+	/**
+	 * Auslesen eines Projekts anhand seiner ID
+	 */
+	@Override
+	public Project getProjectByID(int id) throws IllegalArgumentException {
+		try {
+			return this.projectMapper.findById(id);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
+
+	/**
+	 * Auslesen aller Projekte der übergeben Person
+	 * 
+	 * @Override public Project getProjectsOf(Person person) throws
+	 *           IllegalArgumentException { try { return this.projectMapper. }
+	 *           catch (ClassNotFoundException e) {
+	 * 
+	 *           e.printStackTrace();
+	 * 
+	 *           } return null;
+	 * 
+	 *           }
+	 */
 
 	@Override
 	public void setProject(Project project) throws IllegalArgumentException {
@@ -148,16 +210,36 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- MARKETPLACE
 
 	@Override
-	public Marketplace updateMarketplace(String title, String describtion,
+	public Marketplace addMarketplace(String title, String description,
 			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Marketplace marketplace = new Marketplace();
+		marketplace.setTitle(title);
+		marketplace.setDescription(description);
+		marketplace.setOrganisationUnits(organisationUnits);
+		marketplace.setProject(projects);
+
+		/*
+		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
+		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
+		 */
+		marketplace.setId(1);
+
+		// Objekt in der DB speichern
+		return this.marketplaceMapper.insert(marketplace, null, null, null);
 	}
 
+	/**
+	 * Speichert einen Marktplatz
+	 */
 	@Override
-	public void addMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public void updateMarketplace(Marketplace marketplace) throws IllegalArgumentException {
+		try {
+			marketplaceMapper.update(marketplace);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
@@ -173,6 +255,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Marktpl�tze
+	 */
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
 
@@ -187,17 +272,48 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen eines Marketplatzes anhand seiner ID
+	 */
+	@Override
+	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException {
+		try {
+			return this.marketplaceMapper.findById(id);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
+
 	// --------------------------- TRAIT
 
 	@Override
 	public Trait updateTrait(String name, String value) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Trait trait = new Trait();
+		trait.setName(name);
+		trait.setValue(value);
+
+		/*
+		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
+		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
+		 */
+		trait.setId(1);
+
+		// Objekt in der DB speichern.
+		return this.traitMapper.in
 	}
 
 	@Override
 	public void addTrait(Trait trait) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			traitMapper.update(trait);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
@@ -210,15 +326,34 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- JOBPOSTNG
 
 	@Override
-	public JobPosting updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
+	public JobPosting updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerProfile,
 			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		JobPosting jobPosting = new JobPosting();
+		jobPosting.setTitle(title);
+		jobPosting.setText(text);
+		jobPosting.setDeadline(deadline);
+		jobPosting.setPartnerProfile(partnerProfile);
+		jobPosting.setRecruiter(recruiter);
+		jobPosting.setApplications(applications);
+
+		/*
+		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
+		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
+		 */
+		jobPosting.setId(1);
+
+		// Objekt in der DB speichern.
+		return this.jobPostingMapper.insert(jobPosting);
 	}
 
 	@Override
 	public void addJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		try {
+			jobPostingMapper.update(jobPosting);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
@@ -228,10 +363,28 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Ausschreibungen
+	 */
 	@Override
-	public ArrayList<JobPosting> getJobPosting() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException {
+		try {
+			return this.jobPostingMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
 		return null;
+
+	}
+
+	/**
+	 * Auslesen einer Ausschreibung anhand seiner ID
+	 */
+	@Override
+	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException {
+		return this.getJobPostingByID(id);
 	}
 
 	@Override
@@ -246,8 +399,20 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PartnerProfile updatePartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
 			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		PartnerProfile partnerProfile = new PartnerProfile();
+		partnerProfile.setTraits(traits);
+		partnerProfile.setDateCreated(dateCreated);
+		partnerProfile.setDateChanged(dateChanged);
+		// weitere ergaenzen
+
+		/*
+		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
+		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
+		 */
+		partnerProfile.setId(1);
+
+		// Objekt in der DB speichern.
+		return this.partnerProfileMapper.insert(partnerProfile);
 	}
 
 	@Override

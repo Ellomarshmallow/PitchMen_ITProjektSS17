@@ -136,6 +136,13 @@ public class Project extends BusinessObject {
 	public Person getManager() {
 		return this.manager;
 	}
+	
+	/**
+	 * @param manager 
+	 */
+	public Person setManager(Person manager) {
+		return this.manager = manager;
+	}
 
 
 
