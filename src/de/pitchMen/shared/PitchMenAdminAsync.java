@@ -27,7 +27,7 @@ public interface PitchMenAdminAsync {
 	void deleteMarketplace(Marketplace m, AsyncCallback<Void> callback);
 
 	void getMarketplaces(AsyncCallback<ArrayList<Marketplace>> callback);
-	
+
 	void getMarketplaceByID(int id, AsyncCallback<Marketplace> callback);
 
 	void setMarketplaces(Marketplace m, AsyncCallback<Void> callback);
@@ -44,7 +44,7 @@ public interface PitchMenAdminAsync {
 	void getProject(AsyncCallback<ArrayList<Project>> callback);
 
 	void setProject(Project p, AsyncCallback<Void> callback);
-	
+
 	void getProjectByID(int id, AsyncCallback<Project> callback);
 
 	// ---------- JOBPOSTING
@@ -57,7 +57,7 @@ public interface PitchMenAdminAsync {
 	void deleteJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
 
 	void getJobPostings(AsyncCallback<ArrayList<JobPosting>> callback);
-	
+
 	void getJobPostingByID(int id, AsyncCallback<JobPosting> callback);
 
 	void setJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
@@ -77,6 +77,10 @@ public interface PitchMenAdminAsync {
 	void updateTrait(Trait Trait, AsyncCallback<Void> callback);
 
 	void deleteTrait(Trait trait, AsyncCallback<Void> callback);
+
+	void getTraits(AsyncCallback<ArrayList<Trait>> callback);
+
+	void getTraitByID(int id, AsyncCallback<Trait> callback);
 
 	// ---------- RATING
 

@@ -322,6 +322,38 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Eigenschaften
+	 */
+	@Override
+	public ArrayList<Trait> getTraits() throws IllegalArgumentException {
+
+		try {
+			return this.traitMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
+
+	/**
+	 * Auslesen einer Eigenschaft anhand seiner ID
+	 */
+	@Override
+	public Trait getTraitByID(int id) throws IllegalArgumentException {
+		try {
+			return this.traitMapper.findById(id);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
 	// --------------------------- JOBPOSTNG
 
 	@Override

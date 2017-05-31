@@ -129,6 +129,9 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public void deleteTrait(Trait trait) throws IllegalArgumentException;
 
+	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
+
+	public Trait getTraitByID(int id) throws IllegalArgumentException;
 	// ---------------------JOBPOSTINGS
 
 	/**
