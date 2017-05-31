@@ -115,7 +115,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PROJECT
 
 	@Override
-	public Project updateProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
 			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException {
 		Project project = new Project();
 		project.setDateOpened(dateOpened);
@@ -139,7 +139,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 * Speichert ein Projekt
 	 */
 	@Override
-	public void addProject(Project project) throws IllegalArgumentException {
+	public void updateProject(Project project) throws IllegalArgumentException {
 		try {
 			projectMapper.update(project);
 		} catch (ClassNotFoundException e) {
@@ -210,9 +210,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- MARKETPLACE
 
 	@Override
-	public Marketplace addMarketplace(String title, String description,
-			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects)
-			throws IllegalArgumentException {
+	public Marketplace addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
+			ArrayList<Project> projects) throws IllegalArgumentException {
 		Marketplace marketplace = new Marketplace();
 		marketplace.setTitle(title);
 		marketplace.setDescription(description);
@@ -291,7 +290,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- TRAIT
 
 	@Override
-	public Trait updateTrait(String name, String value) throws IllegalArgumentException {
+	public Trait addTrait(String name, String value) throws IllegalArgumentException {
 		Trait trait = new Trait();
 		trait.setName(name);
 		trait.setValue(value);
@@ -303,11 +302,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		trait.setId(1);
 
 		// Objekt in der DB speichern.
-		return this.traitMapper.in
+		return this.traitMapper.insert(trait);
 	}
 
 	@Override
-	public void addTrait(Trait trait) throws IllegalArgumentException {
+	public void updateTrait(Trait trait) throws IllegalArgumentException {
 		try {
 			traitMapper.update(trait);
 		} catch (ClassNotFoundException e) {
@@ -326,7 +325,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- JOBPOSTNG
 
 	@Override
-	public JobPosting updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerProfile,
+	public JobPosting addJobPosting(String title, String text, Date deadline, PartnerProfile partnerProfile,
 			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException {
 		JobPosting jobPosting = new JobPosting();
 		jobPosting.setTitle(title);
@@ -347,7 +346,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void addJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
+	public void updateJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
 		try {
 			jobPostingMapper.update(jobPosting);
 		} catch (ClassNotFoundException e) {
@@ -396,7 +395,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PARTNERPROFILE
 
 	@Override
-	public PartnerProfile updatePartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
+	public PartnerProfile addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
 			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();

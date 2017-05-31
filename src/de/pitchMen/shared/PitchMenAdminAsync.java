@@ -19,10 +19,10 @@ public interface PitchMenAdminAsync {
 
 	// ---------- MARKETPLACE
 
-	void updateMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
+	void addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
 			ArrayList<Project> projects, AsyncCallback<Marketplace> callback);
 
-	void addMarketplace(Marketplace m, AsyncCallback<Void> callback);
+	void updateMarketplace(Marketplace m, AsyncCallback<Void> callback);
 
 	void deleteMarketplace(Marketplace m, AsyncCallback<Void> callback);
 
@@ -34,10 +34,10 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PROJECT
 
-	void updateProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+	void addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
 			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation, AsyncCallback<Project> callback);
 
-	void addProject(Project p, AsyncCallback<Void> callback);
+	void updateProject(Project p, AsyncCallback<Void> callback);
 
 	void deleteProject(Project p, AsyncCallback<Void> callback);
 
@@ -49,10 +49,10 @@ public interface PitchMenAdminAsync {
 
 	// ---------- JOBPOSTING
 
-	void updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile, Person recruiter,
+	void addJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile, Person recruiter,
 			ArrayList<Application> applications, AsyncCallback<JobPosting> callback) throws IllegalArgumentException;
 
-	void addJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
+	void updateJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
 
 	void deleteJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
 
@@ -64,7 +64,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PARTNERPROFILE
 
-	void updatePartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit, Date dateCreated,
+	void addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit, Date dateCreated,
 			Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting,
 			AsyncCallback<PartnerProfile> callback);
 
@@ -72,9 +72,9 @@ public interface PitchMenAdminAsync {
 
 	// ---------- TRAIT
 
-	void updateTrait(String name, String value, AsyncCallback<Trait> callback);
+	void addTrait(String name, String value, AsyncCallback<Trait> callback);
 
-	void addTrait(Trait Trait, AsyncCallback<Void> callback);
+	void updateTrait(Trait Trait, AsyncCallback<Void> callback);
 
 	void deleteTrait(Trait trait, AsyncCallback<Void> callback);
 
