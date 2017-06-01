@@ -12,16 +12,24 @@ public class Application extends BusinessObject {
 
 	private Date dateCreated = null;
 
-	private OrganisationUnit applicant = null;
-
+	/**
+	 * Realisierung der Beziehung zu einem jobPosting durch einen
+	    Fremdschl�ssel.
+	 */
+	private int jobPostingId = 0;
+	/**
+	 * Realisierung der Beziehung zu einer partnerprofil durch einen
+	    Fremdschl�ssel.
+	 */
+	private int partnerProfileId= 0;
+	
+	
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
 	 * String verwendet, damit man das Werfen einer NullPointException
 	 * vermeidet.
 	 */
 	private String text = "";
-
-	private Rating rating = null;
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,20 +41,7 @@ public class Application extends BusinessObject {
 		return this.dateCreated;
 	}
 
-	/**
-	 * @return application
-	 */
-	public OrganisationUnit getApplicant() {
-		return this.applicant;
-	}
-
-	/**
-	 * @param applicant
-	 */
-	public void setApplicant(OrganisationUnit applicant) {
-		this.applicant = applicant;
-	}
-
+	
 	/**
 	 * @return text
 	 */
@@ -68,20 +63,7 @@ public class Application extends BusinessObject {
 		this.text = text;
 	}
 
-	/**
-	 * @return rating
-	 */
-	public Rating getRating() {
-		return this.rating;
-	}
-
-	/**
-	 * @param rating
-	 */
-	public void setRating(Rating rating) {
-		this.rating = rating;
-	}
-
+	
 	/**
 	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
 	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
@@ -89,18 +71,18 @@ public class Application extends BusinessObject {
 	 * 
 	 * @param score
 	 * @param statement
-	 */
+	 
 	public void rate(float score, String statement) {
 		Rating rate = new Rating(score, statement);
 		this.setRating(rate);
-	}
+	}*/
 
 	/**
 	 * Überprüft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung
 	 * vorhanden, wird true ausgegeben, wenn nicht, false.
 	 * 
 	 * @return
-	 */
+	 
 	public boolean isRated() {
 		if (this.getRating() != null) {
 			return true;
@@ -108,6 +90,31 @@ public class Application extends BusinessObject {
 			return false;
 		}
 	}
-
+*/
+	
+	/**
+	 * @return jobpostingid
+	 */
+	public int getJobpostingid() {
+		return jobPostingId;
+	}
+	/**
+	 * @param jobpostingid
+	 */
+	public void setJobpostingid(int jobPostingId) {
+		this.jobPostingId = jobPostingId;
+	}
+	/**
+	 * @return partnerprofilid
+	 */
+	public int getPartnerProfileId() {
+		return partnerProfileId;
+	}
+	/**
+	 * @param partnerProfilId
+	 */
+	public void setPartnerprofileId(int partnerProfileId) {
+		this.partnerProfileId = partnerProfileId;
+	}
 
 }

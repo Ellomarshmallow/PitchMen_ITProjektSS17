@@ -14,11 +14,6 @@ public class Person extends OrganisationUnit {
 
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<Project> projects = null;
-
-	private String eMail = ""; 
-
-	
 	private boolean loggedIn = false ; 
 	private String emailAdress = "";
 	private String nickname = "";
@@ -83,26 +78,5 @@ public class Person extends OrganisationUnit {
 		this.firstName = firstName;
 	}
 
-	/**
-	 * @return projects
-	 */
-	public ArrayList<Project> getProjects() {
-		return projects;
-	}
-
-	/**
-	 * @param projects
-	 */
-	public void setProjects(ArrayList<Project> projects) {
-		this.projects = projects;
-	}
-
-	public String getEmail() {
-		return eMail;
-	}
-
-	public void setEmail(String eMail) {
-		this.eMail = eMail;
-	}
 
 }

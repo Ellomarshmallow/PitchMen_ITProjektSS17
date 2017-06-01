@@ -1,6 +1,5 @@
 package de.pitchMen.shared.bo;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -10,30 +9,29 @@ import java.util.Date;
  */ 
 public class PartnerProfile extends BusinessObject {
 
-	private ArrayList<Trait> traits = null;
-
+	
 	private Date dateCreated = null;
 
 	private Date dateChanged = null;
 
 	private static final long serialVersionUID = 1L;
-
-	public OrganisationUnit OrganisationUnit = null;
-
-	public JobPosting jobPosting = null;
-
 	/**
-	 * @return
+	 * Realisierung der Beziehung zu einer Person durch einen
+	    Fremdschlüssel.
 	 */
-	public ArrayList<Trait> getTraits() {
-		return traits;
-	}
+	private int personId = 0;
 	/**
-	 * @return
+	 * Realisierung der Beziehung zu einem Team durch einen
+	    Fremdschlüssel.
 	 */
-	public void setTraits(ArrayList<Trait> traits) {
-		this.traits = traits;
-	}
+	private int teamId = 0;
+	/**
+	 * Realisierung der Beziehung zu eine Unternehmen durch einen
+	    Fremdschlüssel.
+	 */
+	private int companyId = 0;
+	
+
 	/**
 	 * @return
 	 */
@@ -53,24 +51,59 @@ public class PartnerProfile extends BusinessObject {
 	public Date getDateChanged() {
 		return dateChanged;
 	}
-
 	/**
 	 * @return
 	 */
 	public void setDateChanged(Date dateChanged) {
 		this.dateChanged = dateChanged;
 	}
-
+	/**
+	 * @return personId
+	 */
+	public int getPersonId() {
+		return personId;
+	}
+	/**
+	 * @param personId
+	 */
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
+	/**
+	 * @return teamId
+	 */	
+	public int getTeamId() {
+		return teamId;
+	}
+	/**
+	 * @param teamId
+	 */
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
+	/**
+	 * @return companyId
+	 */	
+	public int getCompanyId() {
+		return companyId;
+	}
+	/**
+	 * @param companyId
+	 */
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
+	
 	/**
 	 * Vergleicht das aufrufende PartnerProfile-Objekt mit dem Ã¼bergebenen PartnerProfil-Objekt und ermittelt einen Ãœbereinstimmungswert.
 	 * 
 	 * @param partnerProfile 
 	 * @return
-	 */
+	 
 	public float compareWith(PartnerProfile partnerProfile) {
 		
 		return 0.0f;
-	}
+	}*/
 
 
 

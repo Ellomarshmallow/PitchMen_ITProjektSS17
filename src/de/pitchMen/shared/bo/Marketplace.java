@@ -22,20 +22,28 @@ public class Marketplace extends BusinessObject {
 	 * vermeidet.
 	 */
 	private String description = "";
+	
+	/**
+	 * Realisierung der Beziehung zu einer Person durch einen
+	    Fremdschlüssel.
+	 */
+	private int personId = 0;
+	/**
+	 * Realisierung der Beziehung zu einem Team durch einen
+	    Fremdschlüssel.
+	 */
+	private int teamId = 0;
+	/**
+	 * Realisierung der Beziehung zu eine Unternehmen durch einen
+	    Fremdschlüssel.
+	 */
+	private int companyId = 0;
+	
 
-	private ArrayList<Project> projects = null;
-
-	private ArrayList<OrganisationUnit> organisationUnits = null;
 	
 	private static final long serialVersionUID = 1L;
 
-	public void setProject(ArrayList<Project> projects) {
-		this.projects = projects;
-	}
-
-	public void setParticipant(ArrayList<OrganisationUnit> organisationUnits) {
-		this.setOrganisationUnits(organisationUnits);
-	}
+	
 
 	/**
 	 * @return title
@@ -66,24 +74,40 @@ public class Marketplace extends BusinessObject {
 	}
 
 	/**
-	 * @return projects
+	 * @return personId
 	 */
-	public ArrayList<Project> getProjects() {
-		return this.projects;
+	public int getPersonId() {
+		return personId;
 	}
-
 	/**
-	 * @return organisationUnits
+	 * @param personId
 	 */
-	public ArrayList<OrganisationUnit> getOrganisationUnits() {
-		return organisationUnits;
+	public void setPersonId(int personId) {
+		this.personId = personId;
 	}
-
 	/**
-	 * @param organisationUnits
+	 * @return teamId
+	 */	
+	public int getTeamId() {
+		return teamId;
+	}
+	/**
+	 * @param teamId
 	 */
-	public void setOrganisationUnits(ArrayList<OrganisationUnit> organisationUnits) {
-		this.organisationUnits = organisationUnits;
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
+	/**
+	 * @return companyId
+	 */	
+	public int getCompanyId() {
+		return companyId;
+	}
+	/**
+	 * @param companyId
+	 */
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 
 }
