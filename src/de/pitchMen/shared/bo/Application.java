@@ -41,20 +41,7 @@ public class Application extends BusinessObject {
 		return this.dateCreated;
 	}
 
-	/**
-	 * @return application
-	 */
-	public OrganisationUnit getApplicant() {
-		return this.applicant;
-	}
-
-	/**
-	 * @param applicant
-	 */
-	public void setApplicant(OrganisationUnit applicant) {
-		this.applicant = applicant;
-	}
-
+	
 	/**
 	 * @return text
 	 */
@@ -76,20 +63,7 @@ public class Application extends BusinessObject {
 		this.text = text;
 	}
 
-	/**
-	 * @return rating
-	 */
-	public Rating getRating() {
-		return this.rating;
-	}
-
-	/**
-	 * @param rating
-	 */
-	public void setRating(Rating rating) {
-		this.rating = rating;
-	}
-
+	
 	/**
 	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
 	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
@@ -97,18 +71,18 @@ public class Application extends BusinessObject {
 	 * 
 	 * @param score
 	 * @param statement
-	 */
+	 
 	public void rate(float score, String statement) {
 		Rating rate = new Rating(score, statement);
 		this.setRating(rate);
-	}
+	}*/
 
 	/**
 	 * Überprüft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung
 	 * vorhanden, wird true ausgegeben, wenn nicht, false.
 	 * 
 	 * @return
-	 */
+	 
 	public boolean isRated() {
 		if (this.getRating() != null) {
 			return true;
@@ -116,6 +90,31 @@ public class Application extends BusinessObject {
 			return false;
 		}
 	}
-
+*/
+	
+	/**
+	 * @return jobpostingid
+	 */
+	public int getJobpostingid() {
+		return jobpostingid;
+	}
+	/**
+	 * @param jobpostingid
+	 */
+	public void setJobpostingid(int jobpostingid) {
+		this.jobpostingid = jobpostingid;
+	}
+	/**
+	 * @return partnerprofilid
+	 */
+	public int getPartnerprofilid() {
+		return partnerprofilid;
+	}
+	/**
+	 * @param partnerprofilid
+	 */
+	public void setPartnerprofilid(int partnerprofilid) {
+		this.partnerprofilid = partnerprofilid;
+	}
 
 }
