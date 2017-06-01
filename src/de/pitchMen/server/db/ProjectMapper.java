@@ -160,7 +160,7 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));				
 				
 				return project;
@@ -196,7 +196,7 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
 				
 				result.add(project);
@@ -234,7 +234,7 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
 				
 				result.add(project);
@@ -272,7 +272,7 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
 				
 				result.add(project);
@@ -309,7 +309,7 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
 
 
