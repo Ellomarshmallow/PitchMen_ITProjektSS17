@@ -4,11 +4,9 @@ import java.util.*;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.client.LoginInfo;
 import de.pitchMen.server.db.*;
 import de.pitchMen.shared.*;
 import de.pitchMen.shared.bo.*;
@@ -119,20 +117,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId)
-			throws IllegalArgumentException {
+	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId) {
 		Application application = new Application();
 		application.setDateCreated(dateCreated);
 		application.setText(text);
-		application.setJobpostingid(jobPostingId);
-		application.setPartnerprofileId(partnerProfileId);
+		application.setJobPostingId(jobPostingId);
+		application.setPartnerProfileId(partnerProfileId);
 
-		try {
-			return this.applicationMapper.insert(application);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return this.applicationMapper.insert(application);
+
 	}
 
 	@Override
@@ -198,19 +191,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		project.setPersonId(personId);
 		project.setMarketplaceId(marketplaceId);
 
-		/*
-		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
-		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
-		 */
-		project.setId(1);
-
-		try {
-			return this.projectMapper.insert(project);
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-		}
-		return null;
+		return this.projectMapper.insert(project);
 	}
 
 	/**
@@ -218,13 +199,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public void updateProject(Project project) throws IllegalArgumentException {
-		try {
-			projectMapper.update(project);
-		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
+		projectMapper.update(project);
 
-		}
 	}
 
 	@Override
@@ -238,14 +215,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public ArrayList<Project> getProject() throws IllegalArgumentException {
-		try {
-			return this.projectMapper.findAll();
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.projectMapper.findAll();
 
 	}
 
@@ -254,14 +224,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public Project getProjectByID(int id) throws IllegalArgumentException {
-		try {
-			return this.projectMapper.findById(id);
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.projectMapper.findById(id);
 
 	}
 
@@ -293,17 +256,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		Marketplace marketplace = new Marketplace();
 		marketplace.setTitle(title);
 		marketplace.setDescription(description);
-		marketplace.setOrganisationUnits(organisationUnits);
-		marketplace.setProject(projects);
-
-		/*
-		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
-		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
-		 */
-		marketplace.setId(1);
 
 		// Objekt in der DB speichern
-		return this.marketplaceMapper.insert(marketplace, null, null, null);
+		return this.marketplaceMapper.insert(marketplace);
 	}
 
 	/**
@@ -311,12 +266,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public void updateMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		try {
-			marketplaceMapper.update(marketplace);
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-		}
+		marketplaceMapper.update(marketplace);
 
 	}
 
@@ -338,14 +288,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
 
-		try {
-			return this.marketplaceMapper.findAll();
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.marketplaceMapper.findAll();
 
 	}
 
@@ -354,14 +297,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException {
-		try {
-			return this.marketplaceMapper.findById(id);
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.marketplaceMapper.findById(id);
 
 	}
 
@@ -385,12 +321,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updateTrait(Trait trait) throws IllegalArgumentException {
-		try {
-			traitMapper.update(trait);
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-		}
+		traitMapper.update(trait);
 
 	}
 
@@ -406,14 +337,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException {
 
-		try {
-			return this.traitMapper.findAll();
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.traitMapper.findAll();
 
 	}
 
@@ -422,14 +346,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public Trait getTraitByID(int id) throws IllegalArgumentException {
-		try {
-			return this.traitMapper.findById(id);
-		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.traitMapper.findById(id);
 
 	}
 	// --------------------------- JOBPOSTNG
@@ -444,22 +362,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		jobPosting.setProjectId(projectId);
 
 		// Objekt in der DB speichern.
-		try {
-			return this.jobPostingMapper.insert(jobPosting);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+
+		return this.jobPostingMapper.insert(jobPosting);
+
 	}
 
 	@Override
 	public void updateJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		try {
-			jobPostingMapper.update(jobPosting);
-		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
-		}
+		jobPostingMapper.update(jobPosting);
 
 	}
 
@@ -474,14 +385,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException {
-		try {
-			return this.jobPostingMapper.findAll();
-		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.jobPostingMapper.findAll();
 
 	}
 
@@ -506,7 +411,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
-		partnerProfile.setTraits(traits);
 		partnerProfile.setDateCreated(dateCreated);
 		partnerProfile.setDateChanged(dateChanged);
 		// weitere ergaenzen
@@ -523,12 +427,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
-		try {
-			this.partnerProfileMapper.update(partnerProfile);
-		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
-		}
+		this.partnerProfileMapper.update(partnerProfile);
 
 	}
 
@@ -543,14 +443,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException {
-		try {
-			return this.partnerProfileMapper.findAll();
-		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
-
-		}
-		return null;
+		return this.partnerProfileMapper.findAll();
 
 	}
 
@@ -559,13 +453,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException {
-		try {
-			return this.partnerProfileMapper.findById(id);
-		} catch (ClassNotFoundException e) {
 
-			e.printStackTrace();
-		}
-		return null;
+		return this.partnerProfileMapper.findById(id);
+
 	}
 
 	// --------------------------- RATING
@@ -697,16 +587,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		if (user != null) {
 
 			Person existingPerson = null;
-			try {
-				existingPerson = PersonMapper.personMapper().findByEmail(user.getEmail());
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			existingPerson = PersonMapper.personMapper().findByEmail(user.getEmail());
 
 			if (existingPerson != null) {
 				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
-						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmail());
+						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmailAdress());
 
 				existingPerson.setLoggedIn(true);
 				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
