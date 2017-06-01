@@ -140,7 +140,7 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
 					+ "WHERE id =" + id);
 
 			/**
@@ -155,7 +155,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
-				jobPosting.setProjectID(rs.getInt("project_id"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
 				
 
 				return jobPosting;
@@ -182,7 +182,7 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
 					+ "ORDER BY id");
 
 			/**
@@ -197,7 +197,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
-				jobPosting.setProjectID(rs.getInt("project_id"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
 
 				result.add(jobPosting);
 			}
@@ -223,7 +223,7 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
 					+ "WHERE text LIKE" + text + "ORDER BY id");
 
 			/**
@@ -237,7 +237,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
-				jobPosting.setProjectID(rs.getInt("project_id"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
 				
 				result.add(jobPosting);
 			}
@@ -262,7 +262,7 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
 					+ "WHERE title LIKE" + titel + "ORDER BY id");
 
 			/**
@@ -276,7 +276,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
-				jobPosting.setProjectID(rs.getInt("project_id"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
 				
 				result.add(jobPosting);
 			}
@@ -302,7 +302,7 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
 					+ "WHERE deadline LIKE" + deadline + "ORDER BY id");
 
 			/**
@@ -316,7 +316,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
-				jobPosting.setProjectID(rs.getInt("project_id"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
 				
 				result.add(jobPosting);
 			}
