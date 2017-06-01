@@ -76,7 +76,7 @@ public class ApplicationMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)" + "VALUES ( " + application.getId()
 				+ ", '" + application.getText() + "' ,'" + application.getDateCreated() + "' ,'"
-				+ application.getJobPostingId() + "' ,'" + application.getPartnerProfile() + "')");
+				+ application.getJobPostingId() + "' ,'" + application.getPartnerProfileId() + "')");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -156,7 +156,7 @@ public class ApplicationMapper {
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
-				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
+				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 				//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
 				
 				return application;
@@ -196,7 +196,7 @@ public class ApplicationMapper {
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
-				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
+				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 
 				result.add(application);
 			}
@@ -236,7 +236,7 @@ public class ApplicationMapper {
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
-				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
+				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 
 				result.add(application);
 			}
@@ -278,8 +278,8 @@ public class ApplicationMapper {
 				applicationRating.add("application.id");
 				applicationRating.add("application.text");
 				applicationRating.add("application.dateCreated");
-				applicationRating.add("application.jobPosting_id"));
-				applicationRating.add("application.partnerProfil_id"));
+				applicationRating.add("application.jobPosting_id");
+				applicationRating.add("application.partnerProfil_id");
 				applicationRating.add("rating.id");
 				applicationRating.add("rating.statement");
 				applicationRating.add("rating.score");
