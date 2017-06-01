@@ -21,7 +21,7 @@ public class Application extends BusinessObject {
 	 * Realisierung der Beziehung zu einer partnerprofil durch einen
 	    Fremdschlüssel.
 	 */
-	private int partnerProfilId= 0;
+	private int partnerProfileId= 0;
 	
 	
 	/**
@@ -107,14 +107,14 @@ public class Application extends BusinessObject {
 	/**
 	 * @return partnerprofilid
 	 */
-	public int getPartnerProfilId() {
-		return partnerProfilId;
+	public int getPartnerProfileId() {
+		return partnerProfileId;
 	}
 	/**
 	 * @param partnerProfilId
 	 */
-	public void setPartnerprofilid(int partnerProfilId) {
-		this.partnerProfilId = partnerProfilId;
+	public void setPartnerprofileId(int partnerProfileId) {
+		this.partnerProfileId = partnerProfileId;
 	}
 
 }
