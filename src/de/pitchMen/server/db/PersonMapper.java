@@ -97,7 +97,7 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(
 					"UPDATE person SET name='" + person.getName() + "', description= '" + person.getDescription()
-							+ "', firstName= '" + person.getFirstName() + "' WHERE id= " + person.getId());
+							+ "', firstName= '" + person.getFirstName() + "', email= " + person.getEmail() + "' WHERE id= " + person.getId());
 		}
 
 		catch (SQLException e2) {
@@ -137,7 +137,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, description, firstName FROM person WHERE id=" + id);
+					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE id=" + id);
 
 			/**
 			 * Zu einem Prim�rschl�ssel exisitiert nur max ein Datenbank-Tupel,
@@ -152,6 +152,7 @@ public class PersonMapper {
 				person.setName(rs.getString("name"));
 				person.setDescription(rs.getString("description"));
 				person.setFirstName(rs.getString("firstName"));
+				person.setEmailAdress(rs.getString("email"));
 				
 				return person;
 			}
@@ -173,7 +174,7 @@ public class PersonMapper {
 		ArrayList<Person> result = new ArrayList<Person>();
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName FROM person ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person ORDER BY id");
 		
 			if (rs.next()) {
 				Person person = new Person();
@@ -181,6 +182,8 @@ public class PersonMapper {
 				person.setName(rs.getString("name"));
 				person.setDescription(rs.getString("description"));
 				person.setFirstName(rs.getString("firstName"));
+				person.setEmailAdress(rs.getString("email"));
+
 				result.add(person);
 			}
 
@@ -202,7 +205,7 @@ public class PersonMapper {
 		ArrayList<Person> result = new ArrayList<Person>();
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName FROM person WHERE name LIKE '" + name + "' ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE name LIKE '" + name + "' ORDER BY id");
 
 			if (rs.next()) {
 				Person person = new Person();
@@ -210,6 +213,8 @@ public class PersonMapper {
 				person.setName(rs.getString("name"));
 				person.setDescription(rs.getString("description"));
 				person.setFirstName(rs.getString("firstName"));
+				person.setEmailAdress(rs.getString("email"));
+
 				result.add(person);
 			}
 
@@ -239,6 +244,8 @@ public class PersonMapper {
 				person.setName(rs.getString("name"));
 				person.setDescription(rs.getString("description"));
 				person.setFirstName(rs.getString("firstName"));
+				person.setEmailAdress(rs.getString("email"));
+
 				result.add(person);
 			}
 
@@ -252,7 +259,6 @@ public class PersonMapper {
     public Person findByEmail(String email)throws ClassNotFoundException {
   		Connection con = DBConnection.connection();
 
-  		ArrayList<Person> result = new ArrayList<Person>();
   		try {
   			Statement stmt = con.createStatement();
   			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE email LIKE '" + email + "' ORDER BY id");
@@ -264,14 +270,15 @@ public class PersonMapper {
   				person.setDescription(rs.getString("description"));
   				person.setFirstName(rs.getString("firstName"));
   				person.setEmail(rs.getString("email"));
-  				result.add(person);
+				person.setEmailAdress(rs.getString("email"));
+
+  				return person;
   			}
 
   		} catch (SQLException e2) {
   			e2.printStackTrace();
   		}
-          return result;
-          //TODO: Fehler verbessern
+          return null;
       }
     
     
