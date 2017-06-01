@@ -152,7 +152,8 @@ public class PartnerProfileMapper {
 			Statement stmt = con.createStatement();
 			
 			//Statement ausfüllen und als Query an die Datenbank senden
-			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged FROM partnerProfile WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged, company_id, team_id, "
+					+ "person_id, jobPosting_id FROM partnerProfile WHERE id=" + id);
 
 			/**
 			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
@@ -167,7 +168,11 @@ public class PartnerProfileMapper {
 				partnerProfile.setId(rs.getInt("id"));
 				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
 				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
-				
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setjobPostingId(rs.getInt("jobPosting_id"));
+
 				return partnerProfile;
 			}
 
@@ -191,7 +196,8 @@ public class PartnerProfileMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged FROM partnerProfile ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged, company_id, team_id, "
+					+ "person_id, jobPosting_id FROM partnerProfile ORDER BY id");
 
 			//Für jeden Eintrag wird ein PartnerProfil-Objekt erstellt.
 			if (rs.next()) {
@@ -199,6 +205,10 @@ public class PartnerProfileMapper {
 				partnerProfile.setId(rs.getInt("id"));
 				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
 				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setjobPostingId(rs.getInt("jobPosting_id"));
 				
 				//Hinzufügen des neuen Objekts zur Ergebnis-ArrayList
 				result.add(partnerProfile);
