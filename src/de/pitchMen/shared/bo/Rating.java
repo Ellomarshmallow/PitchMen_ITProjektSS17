@@ -15,10 +15,12 @@ public class Rating extends BusinessObject {
 
 
 	private static final long serialVersionUID = 1L;
-
-
-	public Application Application = null;
-
+	/**
+	 * Realisierung der Beziehung zu einer Bewerbung durch einen
+	    Fremdschlüssel.
+	 */
+	private int applicationId = 0;
+	
 	public Rating (){
 		
 	}
@@ -54,6 +56,18 @@ public class Rating extends BusinessObject {
 	 */
 	public void setScore(float score) {
 		this.score = score;
+	}
+	/**
+	 * @return applicationId
+	 */
+	public int getApplicationId() {
+		return applicationId;
+	}
+	/**
+	 * @param applicationId
+	 */
+	public void setApplicationId(int applicationId) {
+		this.applicationId = applicationId;
 	}
 
 }
