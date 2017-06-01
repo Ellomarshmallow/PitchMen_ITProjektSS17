@@ -31,7 +31,6 @@ public interface PitchMenAdminAsync {
 	
 
 	// ---------- COMPANY
-	//FIXME
 	void addCompany(AsyncCallback<Company> callback);
 	
 	void updateCompany(Company company, AsyncCallback<Void> callback);
@@ -138,7 +137,14 @@ public interface PitchMenAdminAsync {
 	void getRatingByID(int id, AsyncCallback<Rating> callback);
 
 	// ---------- TEAM
+	void addTeam(AsyncCallback<Team> callback);
 
+	void updateTeam(Team team, AsyncCallback<Void> callback);
+
+	void deleteTeam(Team team, AsyncCallback<Void> callback);
+
+	void getTeamByID(int id, AsyncCallback<Team> callback);
+	
 	// ---------- TRAIT
 
 	void addTrait(String name, String value, AsyncCallback<Trait> callback);

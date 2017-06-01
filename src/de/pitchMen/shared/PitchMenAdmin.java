@@ -198,6 +198,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
+
 	// ---------------------JOBPOSTINGS
 
 	/**
@@ -256,6 +257,28 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException;
 
+	// ------------------- Team
+
+	/**
+	 * Erstellt ein neues Team-Objekt.
+	 * 
+	 * @return das neu erstellte Team-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Team addTeam() throws IllegalArgumentException;
+
+	public void updateTeam(Team team) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Team-Objekt.
+	 * 
+	 * @param team
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteTeam(Team team) throws IllegalArgumentException;
+
+	public Team getTeamByID(int id) throws IllegalArgumentException;
+	
 	// ------------------------ RATING
 
 	/**
