@@ -3,11 +3,8 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Company;
-import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Person;
-import de.pitchMen.shared.bo.Team;
+//PersonId, TamId, CompanyID und JobPostingID FK als getter in PartnerProfil.java implementiert
 
 
 /**
@@ -65,7 +62,7 @@ public class PartnerProfileMapper {
 	 * @throws ClassNotFoundException
 	 * @return partnerProfile
 	 */
-	public PartnerProfile insert(PartnerProfile partnerProfile, Company company, Team team, Person person, JobPosting jobPosting) throws ClassNotFoundException {
+	public PartnerProfile insert(PartnerProfile partnerProfile) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -86,8 +83,8 @@ public class PartnerProfileMapper {
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id, team_id, "
 					+ "person_id, jobPosting_id) VALUES ("
 					+ partnerProfile.getId() + ", '" + partnerProfile.getDateCreated() + "', '"
-					+ partnerProfile.getDateChanged() + ", '" + company.getId() + ", '" 
-					+ team.getId() + ", '" + person.getId() + ", '" + jobPosting.getId() + "')");
+					+ partnerProfile.getDateChanged() + ", '" + partnerProfile.getCompanyId() + ", '" 
+					+ partnerProfile.getTeamId() + ", '" + partnerProfile.getPersonId() + ", '" + partnerProfile.getJobPostingId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
