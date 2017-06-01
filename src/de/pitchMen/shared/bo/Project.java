@@ -23,57 +23,20 @@ public class Project extends BusinessObject {
 
 	private String description = "";
 
-
-	private Person manager = null;
-
-
-	private ArrayList<JobPosting> jobPostings = null;
-
-
-	private ArrayList<Participation> participations = null;
-
-
+	
 	private static final long serialVersionUID = 1L;
-
-
-	public Person Manager = null;
-
+	
 	/**
-	 * Auslesen der JobPostings
-	 * @return jobPostings
+	 * Realisierung der Beziehung zu einer Person durch einen
+	    Fremdschlüssel.
 	 */
-
-	public ArrayList<Participation> getParticipations(){
-		return participations;
-	}
-
+	private int personId = 0;
 	/**
-	 * Setzen der participations
-	 * @param participations
-	 */   
-
-	public void setParticipations(ArrayList<Participation> participations){
-		this.participations = participations;
-	}
-
-	/**
-	 * Auslesen der JobPostings
-	 * @return jobPostings
-	 */   
-
-	public ArrayList<JobPosting> getJobPostings(){
-		return jobPostings;
-	}
-
-	/**
-	 * Setzen der JobPostings
-	 * @param jobPostings
-	 */   
-
-	public void setJobPostings(ArrayList<JobPosting> jobPostings){
-		this.jobPostings = jobPostings;
-	}
-
+	 * Realisierung der Beziehung zu einem Marktplatz durch einen
+	    Fremdschlüssel.
+	 */
+	private int marketplaceId = 0;
+	
 	/**
 	 * @return dateOpened
 	 */
@@ -129,20 +92,31 @@ public class Project extends BusinessObject {
 	public void setDescription(String describtion) {
 		this.description = describtion;
 	}
+	/**
+	 * @return personId
+	 */
+	public int getPersonId() {
+		return personId;
+	}
+	/**
+	 * @param personId
+	 */
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
+	/**
+	 * @return marketplaceId
+	 */
+	public int getMarketplaceId() {
+		return marketplaceId;
+	}
+	/**
+	 * @param marketplaceId
+	 */
+	public void setMarketplaceId(int marketplaceId) {
+		this.marketplaceId = marketplaceId;
+	}
 
-	/**
-	 * @return manager
-	 */
-	public Person getManager() {
-		return this.manager;
-	}
-	
-	/**
-	 * @param manager 
-	 */
-	public Person setManager(Person manager) {
-		return this.manager = manager;
-	}
 
 
 

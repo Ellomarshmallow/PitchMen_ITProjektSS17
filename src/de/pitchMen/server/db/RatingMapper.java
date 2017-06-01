@@ -3,8 +3,9 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Rating;
+//ApplicationID FK als getter in Person.java implementiert
+
 
 /**
  * Bildet Rating-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
@@ -56,7 +57,7 @@ public class RatingMapper {
 	 * @param application
 	 * @return trait
 	 */
-	public Rating insert(Rating rating, Application application) throws ClassNotFoundException {
+	public Rating insert(Rating rating) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -75,7 +76,7 @@ public class RatingMapper {
 			 * Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" + "VALUES (" + rating.getId() + ", '"
-					+ rating.getStatement() + "', '" + rating.getScore() + "', '" + application.getId() + "')");
+					+ rating.getStatement() + "', '" + rating.getScore() + "', '" + rating.getApplicationId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -138,7 +139,7 @@ public class RatingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, statement, score FROM rating WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, statement, score, application_id FROM rating WHERE id=" + id);
 
 			/**
 			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
@@ -152,7 +153,8 @@ public class RatingMapper {
 				rating.setId(rs.getInt("id"));
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
-				
+				rating.setApplicationId(rs.getInt("application_id"));
+		
 				return rating;
 			}
 
@@ -174,13 +176,14 @@ public class RatingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, statement, score FROM rating ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, statement, score, application_id FROM rating ORDER BY id");
 
 			while (rs.next()) {
 				Rating rating = new Rating();
 				rating.setId(rs.getInt("id"));
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
+				rating.setApplicationId(rs.getInt("application_id"));
 
 				result.add(rating);
 
@@ -206,13 +209,14 @@ public class RatingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, statement, score FROM rating WHERE score=" + score + " ORDER BY id");
+					.executeQuery("SELECT id, statement, score, application_id FROM rating WHERE score=" + score + " ORDER BY id");
 
 			while (rs.next()) {
 				Rating rating = new Rating();
 				rating.setId(rs.getInt("id"));
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
+				rating.setApplicationId(rs.getInt("application_id"));
 
 				result.add(rating);
 			}

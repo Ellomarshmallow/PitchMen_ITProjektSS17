@@ -3,11 +3,8 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Company;
-import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Person;
-import de.pitchMen.shared.bo.Team;
+//PersonId, TamId, CompanyID und JobPostingID FK als getter in PartnerProfil.java implementiert
 
 
 /**
@@ -65,7 +62,7 @@ public class PartnerProfileMapper {
 	 * @throws ClassNotFoundException
 	 * @return partnerProfile
 	 */
-	public PartnerProfile insert(PartnerProfile partnerProfile, Company company, Team team, Person person, JobPosting jobPosting) throws ClassNotFoundException {
+	public PartnerProfile insert(PartnerProfile partnerProfile) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -86,8 +83,8 @@ public class PartnerProfileMapper {
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id, team_id, "
 					+ "person_id, jobPosting_id) VALUES ("
 					+ partnerProfile.getId() + ", '" + partnerProfile.getDateCreated() + "', '"
-					+ partnerProfile.getDateChanged() + ", '" + company.getId() + ", '" 
-					+ team.getId() + ", '" + person.getId() + ", '" + jobPosting.getId() + "')");
+					+ partnerProfile.getDateChanged() + ", '" + partnerProfile.getCompanyId() + ", '" 
+					+ partnerProfile.getTeamId() + ", '" + partnerProfile.getPersonId() + ", '" + partnerProfile.getJobPostingId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -155,7 +152,8 @@ public class PartnerProfileMapper {
 			Statement stmt = con.createStatement();
 			
 			//Statement ausfüllen und als Query an die Datenbank senden
-			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged FROM partnerProfile WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged, company_id, team_id, "
+					+ "person_id, jobPosting_id FROM partnerProfile WHERE id=" + id);
 
 			/**
 			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
@@ -170,7 +168,11 @@ public class PartnerProfileMapper {
 				partnerProfile.setId(rs.getInt("id"));
 				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
 				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
-				
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setjobPostingId(rs.getInt("jobPosting_id"));
+
 				return partnerProfile;
 			}
 
@@ -194,7 +196,8 @@ public class PartnerProfileMapper {
 		
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged FROM partnerProfile ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged, company_id, team_id, "
+					+ "person_id, jobPosting_id FROM partnerProfile ORDER BY id");
 
 			//Für jeden Eintrag wird ein PartnerProfil-Objekt erstellt.
 			if (rs.next()) {
@@ -202,6 +205,10 @@ public class PartnerProfileMapper {
 				partnerProfile.setId(rs.getInt("id"));
 				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
 				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setjobPostingId(rs.getInt("jobPosting_id"));
 				
 				//Hinzufügen des neuen Objekts zur Ergebnis-ArrayList
 				result.add(partnerProfile);

@@ -3,10 +3,9 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Company;
 import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.Person;
-import de.pitchMen.shared.bo.Team;
+//CompanyID FK, PersonID FK und TeamID FK als getter in Marketplace.java implementiert
+
 
 /**
 * Die Klasse MarketplaceMapper bildet Marketplace-Objekte auf einer relationale Datenbank ab. 
@@ -53,13 +52,10 @@ public class MarketplaceMapper {
 	* Und gibt das korrigierte Marketplace-Objekt zurück.
 	* 
 	* @param marketplace 
-	* @param person
-	* @param team
-	* @param company
 	* @return marketplace
 	* @throws ClassNotFoundException 
 	*/
-	public Marketplace insert(Marketplace marketplace, Person person, Team team, Company company) throws ClassNotFoundException  {
+	public Marketplace insert(Marketplace marketplace) throws ClassNotFoundException  {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -78,7 +74,7 @@ public class MarketplaceMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id, team_id, company_id)"
 				 + "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'" + marketplace.getTitle() 
-				 + "' ,'" + person.getId() + "' ,'" + team.getId() + "' ,'" + company.getId() + "')");
+				 + "' ,'" + marketplace.getPersonId() + "' ,'" + marketplace.getTeamId() + "' ,'" + marketplace.getCompanyId() + "')");
 			}
 		} 
 		catch (SQLException e2) {
@@ -146,7 +142,7 @@ public class MarketplaceMapper {
 	        try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT id, description, title FROM marketplace "
+				ResultSet rs = stmt.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 					+ "WHERE id=" + id);				
 						
 	        /**
@@ -160,6 +156,9 @@ public class MarketplaceMapper {
 				marketplace.setId(rs.getInt("id"));
 				marketplace.setDescription(rs.getString("description"));
 				marketplace.setTitle(rs.getString("title"));
+				marketplace.setCompanyId(rs.getInt("company_id"));
+				marketplace.setPersonId(rs.getInt("person_id"));
+				marketplace.setTeamId(rs.getInt("team_id"));
 				
 				return marketplace;
 			}
@@ -186,7 +185,7 @@ public class MarketplaceMapper {
 	     try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT id, description, title FROM marketplace "
+			ResultSet rs = stmt.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 					+ "ORDER BY id");				
 			
 			/**
@@ -200,6 +199,9 @@ public class MarketplaceMapper {
 				marketplace.setId(rs.getInt("id"));
 				marketplace.setDescription(rs.getString("description"));
 				marketplace.setTitle(rs.getString("title"));
+				marketplace.setCompanyId(rs.getInt("company_id"));
+				marketplace.setPersonId(rs.getInt("person_id"));
+				marketplace.setTeamId(rs.getInt("team_id"));
 				
 				result.add(marketplace);
 			}
@@ -227,7 +229,7 @@ public class MarketplaceMapper {
 	     try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT id, description, title FROM marketplace "
+			ResultSet rs = stmt.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 					+ "WHERE title LIKE " + title + "ORDER BY id");				
 			
 			/**
@@ -240,6 +242,9 @@ public class MarketplaceMapper {
 				marketplace.setId(rs.getInt("id"));
 				marketplace.setDescription(rs.getString("description"));
 				marketplace.setTitle(rs.getString("title"));
+				marketplace.setCompanyId(rs.getInt("company_id"));
+				marketplace.setPersonId(rs.getInt("person_id"));
+				marketplace.setTeamId(rs.getInt("team_id"));
 				
 				result.add(marketplace);
 			}

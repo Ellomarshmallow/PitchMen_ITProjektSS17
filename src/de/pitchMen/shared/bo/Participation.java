@@ -16,18 +16,12 @@ public class Participation extends BusinessObject {
 
 	private float workload = 0.0f;
 
-	private Rating rating = null;
-
-	private OrganisationUnit associatedApplicant = null;
-
-	private Project associatedProject = null;
-
 	private static final long serialVersionUID = 1L;
 
-	public Project project = null;
-
-	public ArrayList<OrganisationUnit> partners = null;
-
+	/**
+	 * TODO ForeignKey Attribute hinzufügen
+	 */
+	
 	/**
 	 * @return dateOpened
 	 */
@@ -70,60 +64,5 @@ public class Participation extends BusinessObject {
 		this.dateClosed = dateClosed;
 	}
 
-	/**
-	 * @return rating
-	 */
-	public Rating getRating() {
-		return this.rating;
-	}
-
-	/**
-	 * @param rating
-	 */
-	public void setRating(Rating rating) {
-		this.rating = rating;
-	}
-
-	/**
-	 * @return associatedApplication
-	 */
-	public OrganisationUnit getAssociatedApplicant() {
-		return this.associatedApplicant;
-	}
-
-	/**
-	 * @param associatedApplicant
-	 */
-	public void setAssociatedApplicant(OrganisationUnit associatedApplicant) {
-		this.associatedApplicant = associatedApplicant;
-	}
-
-	/**
-	 * @return associatedProject
-	 */
-	public Project getAssociatedProject() {
-		return this.associatedProject;
-	}
-
-	/**
-	 * @param associatedProject
-	 */
-	public void setAssociatedProject(Project associatedProject) {
-		this.associatedProject = associatedProject;
-	}
-
-	/**
-	 * @return partners
-	 */
-	public ArrayList<OrganisationUnit> getPartners() {
-		return partners;
-	}
-
-	/**
-	 * @param partners
-	 */
-	public void setPartners(ArrayList<OrganisationUnit> partners) {
-		this.partners = partners;
-	}
-
+	
 }

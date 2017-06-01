@@ -4,8 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.pitchMen.shared.bo.Application;
-import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.JobPosting;
+//PartnerProfileID und JobPostingID FK als getter in Application.java implementiert
+
 
 /**
  * Die Klasse ApplicationMapper bildet Application-Objekte auf einer relationale
@@ -51,12 +51,10 @@ public class ApplicationMapper {
 	 * Application-Objekt zurück.
 	 * 
 	 * @param application
-	 * @param jobPosting
-	 * @param partnerProfile
 	 * @return application
 	 * @throws ClassNotFoundException
 	 */
-	public Application insert(Application application, JobPosting jobPosting, PartnerProfile partnerProfile)
+	public Application insert(Application application)
 			throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
@@ -78,7 +76,7 @@ public class ApplicationMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)" + "VALUES ( " + application.getId()
 				+ ", '" + application.getText() + "' ,'" + application.getDateCreated() + "' ,'"
-				+ jobPosting.getId() + "' ,'" + partnerProfile.getId() + "')");
+				+ application.getJobPostingId() + "' ,'" + application.getPartnerProfile() + "')");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -144,7 +142,7 @@ public class ApplicationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated FROM application " + "WHERE id =" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "WHERE id =" + id);
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -157,6 +155,8 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
 				//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
 				
 				return application;
@@ -182,7 +182,7 @@ public class ApplicationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated FROM application " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -195,6 +195,8 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
 
 				result.add(application);
 			}
@@ -221,7 +223,7 @@ public class ApplicationMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, text, dateCreated FROM application " + "WHERE text LIKE " + text + "ORDER BY id");
+					"SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "WHERE text LIKE " + text + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben. Das
@@ -233,6 +235,8 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
 
 				result.add(application);
 			}
@@ -258,7 +262,8 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT application.id, application.text, "
-					+ "application.dateCreated, rating.id, rating.statement, rating.score " 
+					+ "application.dateCreated, application.jobPosting_id, application.partnerProfil_id "
+					+ "rating.id, rating.statement, rating.score " 
 					+ "FROM application LEFT JOIN rating ON application.id = rating.id "
 					+ "ORDER BY application.id");
 
@@ -273,6 +278,8 @@ public class ApplicationMapper {
 				applicationRating.add("application.id");
 				applicationRating.add("application.text");
 				applicationRating.add("application.dateCreated");
+				applicationRating.add("application.jobPosting_id"));
+				applicationRating.add("application.partnerProfil_id"));
 				applicationRating.add("rating.id");
 				applicationRating.add("rating.statement");
 				applicationRating.add("rating.score");

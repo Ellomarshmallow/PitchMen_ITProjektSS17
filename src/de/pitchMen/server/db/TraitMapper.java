@@ -3,8 +3,8 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Trait;
+//PartnerProfileID FK als getter in Trait.java implementiert
 
 /**
  * Die Klasse TraitMapper bildet Trait-Objekte auf einer relationalen Datenbank ab. 
@@ -57,7 +57,7 @@ public class TraitMapper {
 	 * @param partnerProfile
 	 * @return trait
 	 */
-	public Trait insert(Trait trait, PartnerProfile partnerProfile) throws ClassNotFoundException {
+	public Trait insert(Trait trait) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -75,7 +75,7 @@ public class TraitMapper {
 			 * SQL-Anweisung zum Einfügen des neuen Traits in die Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO trait (id, name, value, partnerProfile_id)" + "VALUES (" + trait.getId() + ", '"
-					+ trait.getName() + "', '" + trait.getValue() + "', '" + partnerProfile.getId() +"')");
+					+ trait.getName() + "', '" + trait.getValue() + "', '" + trait.getPartnerProfileId() +"')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -150,7 +150,7 @@ public class TraitMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name, value FROM trait WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, name, value, partnerProfil_id FROM trait WHERE id=" + id);
 
 			/**
 			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
@@ -164,6 +164,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 				
 				return trait;
 			}
@@ -186,7 +187,7 @@ public class TraitMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id AS ID, name as NAME, value AS VALUE FROM trait ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id AS ID, name as NAME, value AS VALUE, partnerProfil_ID AS PARTNERPROFILID FROM trait ORDER BY id");
 
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -201,6 +202,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("ID"));
 				trait.setName(rs.getString("NAME"));
 				trait.setValue(rs.getString("VALUE"));
+				trait.setPartnerProfileId(rs.getInt("PARTNERPROFILID"));
 
 				result.add(trait);
 
@@ -225,7 +227,7 @@ public class TraitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, value FROM trait WHERE name LIKE '" + name + "' ORDER BY id");
+					.executeQuery("SELECT id, name, value, partnerProfil_id FROM trait WHERE name LIKE '" + name + "' ORDER BY id");
 
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -239,6 +241,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 
 				result.add(trait);
 			}
@@ -264,7 +267,7 @@ public class TraitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, value FROM trait WHERE value LIKE '" + value + "' ORDER BY id");
+					.executeQuery("SELECT id, name, value, partnerProfil_id FROM trait WHERE value LIKE '" + value + "' ORDER BY id");
 
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -279,6 +282,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 
 				result.add(trait);
 			}
