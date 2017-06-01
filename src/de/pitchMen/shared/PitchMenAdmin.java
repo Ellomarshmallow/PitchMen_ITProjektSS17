@@ -59,21 +59,38 @@ public interface PitchMenAdmin extends RemoteService {
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
-	//FIXME
-	public Company addCompany(AsyncCallback<Company> callback) throws IllegalArgumentException;
+	// FIXME
+	public Company addCompany() throws IllegalArgumentException;
 
-	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	public void updateCompany(Company company) throws IllegalArgumentException;
 
-	public void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	public void deleteCompany(Company company) throws IllegalArgumentException;
 
-	public void getCompanyByID(int id, AsyncCallback<Company> callback) throws IllegalArgumentException;
+	public Company getCompanyByID(int id) throws IllegalArgumentException;
 
 	// ------------------- PERSON
-	
-	public Person addPerson(String firstName, ArrayList<Project> projetcs, String eMail) throws IllegalArgumentException;
-	
-	
-	
+
+	/**
+	 * Erstellt ein neues Person-Objekt.
+	 * 
+	 * @return das neu erstellte Person-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Person addPerson(String firstName, ArrayList<Project> projetcs, String eMail)
+			throws IllegalArgumentException;
+
+	public void updatePerson(Person person) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Person-Objekt.
+	 * 
+	 * @param person
+	 * @throws IllegalArgumentException
+	 */
+	public void deletePerson(Person person) throws IllegalArgumentException;
+
+	public Person getPersonByID(int id) throws IllegalArgumentException;
+
 	// ------------------- PROJECTS
 
 	/**
@@ -299,7 +316,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException;
 
 	public Participation getParticipationByID(int id) throws IllegalArgumentException;
-	
-	// --------------------------- LOGIN	
-	public Person login(String requestUri); 
+
+	// --------------------------- LOGIN
+	public Person login(String requestUri);
 }
