@@ -19,9 +19,14 @@ import java.io.Serializable;
 	     */
 	    private String value = "";
 	    
+	    private int intvalue = 0;
+	    
+	    
+	    
 	    public Column() {
 	    }
-	    /**
+	    
+	      /**
 	     * @return
 	     */
 	    
@@ -29,11 +34,15 @@ import java.io.Serializable;
 	    	this.value = s;
 	    }
 	    
+	    public Column(int intvalue){
+	    	this.intvalue = intvalue;
+	    }
 	    
 	    public String toString() {
 	        return this.value;
 	    }
-
+	    
+	 
 	    /**
 	     * @return
 	     */
@@ -47,6 +56,12 @@ import java.io.Serializable;
 	    public void setValue(String v) {
 	    	this.value = v; 
 	    }
+		public int getIntvalue() {
+			return this.intvalue;
+		}
+		public void setIntvalue(int intvalue) {
+			this.intvalue = intvalue;
+		}
 
 	}
 	
