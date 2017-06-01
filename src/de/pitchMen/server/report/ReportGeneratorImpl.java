@@ -3,6 +3,8 @@ package de.pitchMen.server.report;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+
+import com.google.gwt.thirdparty.javascript.jscomp.Result;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.pitchMen.server.*;
 import de.pitchMen.shared.PitchMenAdmin;
@@ -13,10 +15,12 @@ import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.Column;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
 import de.pitchMen.shared.report.Row;
+import de.pitchMen.shared.report.SimpleParagraph;
 import de.pitchMen.shared.report.SimpleReport;
 
 /**
@@ -44,13 +48,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	/**
-	 * Auslesen der zugehörigen BankAdministration (interner Gebrauch).
+	 * Auslesen der zugehörigen PitchMenAdministration (interner Gebrauch).
 	 * 
-	 * @return das BankVerwaltungsobjekt
+	 * @return PitchMenAdmin Objekt
 	 */
-	/*protected PitchMenAdmin getPitchMenAdmin() {
-		return this.administration;
-	}*/
+	protected PitchMenAdmin getPitchMenAdmin() {
+		return this.pitchMenAdmin;
+	}
 
 	 /**
 	   * Hinzufügen des Report-Impressums. Diese Methode ist aus den
@@ -84,25 +88,39 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 
 	@Override
-	public AllJobPostings showAllJobPostings() throws IllegalArgumentException {
+	public AllJobPostings showAllJobPostings(JobPosting jopPosting) throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
 		return null;
 		}
 		AllJobPostings result = new AllJobPostings();
 		
+			
 		result.setTitle("Alle Job Postings");
 		
 		result.setDatecreated(new Date());
 		
-		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.showAllJobPostings();
+				
+		Row headline = new Row(); //Erste Zeile im Report
 		
-		for (AllJobPostings c : allJobPostings) {
-		SimpleReport AllPostings = new SimpleReport();
-		Row Posting = new Row();
-		Posting.addColumn();
+		headline.addColumn(new Column("JobPosting Titel"));
+		headline.addColumn(new Column("JobPosting Text"));
+		headline.addColumn(new Column("dazugeh�riges Projekt"));
 		
+		result.addRow(headline);
+		
+		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
+		
+		for (JobPosting jobPosting : jobPostings) {
+			Row jobPostingZeile = new Row();
 			
+			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
+			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
+			jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
+			
+			result.addRow(jobPostingZeile);
+		
 		}
+		return result;
 	}
 
 
