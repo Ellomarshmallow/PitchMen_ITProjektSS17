@@ -164,7 +164,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
-				trait.setPartnerProfilId(rs.getInt("partnerProfil_id"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 				
 				return trait;
 			}
@@ -202,7 +202,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("ID"));
 				trait.setName(rs.getString("NAME"));
 				trait.setValue(rs.getString("VALUE"));
-				trait.setPartnerProfilId(rs.getInt("PARTNERPROFILID"));
+				trait.setPartnerProfileId(rs.getInt("PARTNERPROFILID"));
 
 				result.add(trait);
 
@@ -241,7 +241,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
-				trait.setPartnerProfilId(rs.getInt("partnerProfil_id"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 
 				result.add(trait);
 			}
@@ -282,7 +282,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
-				trait.setPartnerProfilId(rs.getInt("partnerProfil_id"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil_id"));
 
 				result.add(trait);
 			}
