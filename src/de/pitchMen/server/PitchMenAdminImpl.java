@@ -1,10 +1,14 @@
 package de.pitchMen.server;
 
 import java.util.*;
-
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.LoginInfo;
 import de.pitchMen.server.db.*;
 import de.pitchMen.shared.*;
 import de.pitchMen.shared.bo.*;
@@ -314,7 +318,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	/**
-	 * Auslesen aller Marktplätze
+	 * Auslesen aller Marktplï¿½tze
 	 */
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
@@ -604,6 +608,47 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		// TODO Auto-generated method stub
 
 	}
+	
+	// --------------------------- LOGIN
+	
+	public Person login (String requestUri){
+		
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser(); 
+		Person logInf = new Person();
+		
+		if(user != null){
+			
+			Person existingPerson = null;
+			try {
+				existingPerson = PersonMapper.personMapper().findByEmail(user.getEmail());
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+			if(existingPerson != null){
+				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
+				+ "  Bestehender User: E-Mail  =" + existingPerson.getEmail());
+				
+				existingPerson.setLoggedIn(true);
+				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
+				
+				return existingPerson; 
+				
+			}
+			
+			logInf.setEmailAdress(user.getEmail());
+			logInf.setLoggedIn(true);
+			logInf.setNickname(user.getNickname());
+			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
+		} else {
+			logInf.setLoggedIn(false);
+			logInf.setLoginUrl(userService.createLoginURL(requestUri));
+		}
+		return logInf;
+	}
+	
 
 	@Override
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {

@@ -293,4 +293,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException;
 
 	public Participation getParticipationByID(int id) throws IllegalArgumentException;
+	
+	// --------------------------- LOGIN	
+	public Person login(String requestUri); 
 }

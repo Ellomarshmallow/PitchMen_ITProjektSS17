@@ -147,10 +147,14 @@ public class PartnerProfileMapper {
 	 * @return partnerProfil
 	 */
 	public PartnerProfile findById(int id) throws ClassNotFoundException {
+		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
 		try {
+			//leeres SQL-Statement (JDBC) anlegen
 			Statement stmt = con.createStatement();
+			
+			//Statement ausfüllen und als Query an die Datenbank senden
 			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged FROM partnerProfile WHERE id=" + id);
 
 			/**
@@ -161,6 +165,7 @@ public class PartnerProfileMapper {
 			 */
 
 			if (rs.next()) {
+				//Ergebnis-Tupel in Objekt umwandeln
 				PartnerProfile partnerProfile = new PartnerProfile();
 				partnerProfile.setId(rs.getInt("id"));
 				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
@@ -183,17 +188,22 @@ public class PartnerProfileMapper {
 	 */
 	public ArrayList<PartnerProfile> findAll() throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
-
+		
+		//Ergebnis-ArraList vorbereiten
 		ArrayList<PartnerProfile> result = new ArrayList<PartnerProfile>();
+		
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged FROM partnerProfile ORDER BY id");
 
+			//Für jeden Eintrag wird ein PartnerProfil-Objekt erstellt.
 			if (rs.next()) {
 				PartnerProfile partnerProfile = new PartnerProfile();
 				partnerProfile.setId(rs.getInt("id"));
 				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
 				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				
+				//Hinzufügen des neuen Objekts zur Ergebnis-ArrayList
 				result.add(partnerProfile);
 			}
 
