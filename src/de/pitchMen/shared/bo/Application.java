@@ -16,12 +16,12 @@ public class Application extends BusinessObject {
 	 * Realisierung der Beziehung zu einem jobPosting durch einen
 	    Fremdschlüssel.
 	 */
-	private int jobpostingid = 0;
+	private int jobPostingId = 0;
 	/**
 	 * Realisierung der Beziehung zu einer partnerprofil durch einen
 	    Fremdschlüssel.
 	 */
-	private int partnerprofilid= 0;
+	private int partnerProfilId= 0;
 	
 	
 	/**
@@ -96,25 +96,25 @@ public class Application extends BusinessObject {
 	 * @return jobpostingid
 	 */
 	public int getJobpostingid() {
-		return jobpostingid;
+		return jobPostingId;
 	}
 	/**
 	 * @param jobpostingid
 	 */
-	public void setJobpostingid(int jobpostingid) {
-		this.jobpostingid = jobpostingid;
+	public void setJobpostingid(int jobPostingId) {
+		this.jobPostingId = jobPostingId;
 	}
 	/**
 	 * @return partnerprofilid
 	 */
-	public int getPartnerprofilid() {
-		return partnerprofilid;
+	public int getPartnerProfilId() {
+		return partnerProfilId;
 	}
 	/**
-	 * @param partnerprofilid
+	 * @param partnerProfilId
 	 */
-	public void setPartnerprofilid(int partnerprofilid) {
-		this.partnerprofilid = partnerprofilid;
+	public void setPartnerprofilid(int partnerProfilId) {
+		this.partnerProfilId = partnerProfilId;
 	}
 
 }
