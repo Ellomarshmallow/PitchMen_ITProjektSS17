@@ -119,9 +119,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating)
+	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Application application = new Application();
+		application.setDateCreated(dateCreated);
+		application.setText(text);
+		application.setJobpostingid(jobPostingId);
+		application.setPartnerprofileId(partnerProfileId);
+		
+		try {
+			return this.applicationMapper.insert(application);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -178,19 +188,29 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PROJECT
 
 	@Override
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId, int marketplaceId) throws IllegalArgumentException {
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
+			int marketplaceId) throws IllegalArgumentException {
 		Project project = new Project();
 		project.setDateOpened(dateOpened);
 		project.setDateClosed(dateClosed);
 		project.setTitle(title);
 		project.setDescription(description);
+		project.setPersonId(personId);
+		project.setMarketplaceId(marketplaceId);
 
 		/*
 		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
 		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
 		 */
 		project.setId(1);
-		return this.projectMapper.insert(project, marketplace, person);
+
+		try {
+			return this.projectMapper.insert(project);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

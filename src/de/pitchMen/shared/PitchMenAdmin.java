@@ -35,7 +35,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Application-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Application addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating)
+	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId)
 			throws IllegalArgumentException;
 
 	/**
@@ -99,7 +99,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Project-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId, int marketplaceId) throws IllegalArgumentException;
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
+			int marketplaceId) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
@@ -277,7 +278,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteTeam(Team team) throws IllegalArgumentException;
 
 	public Team getTeamByID(int id) throws IllegalArgumentException;
-	
+
 	// ------------------------ RATING
 
 	/**
