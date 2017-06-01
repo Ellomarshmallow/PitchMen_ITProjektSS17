@@ -116,10 +116,69 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	// -------------------------- APPLICATION
+
+	@Override
+	public Application addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateApplication(Application application) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteApplication(Application application) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<Application> getApplications() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Application getApplicationByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// --------------------------- COMPANY
+	
+	@Override
+	public Company addCompany(AsyncCallback<Application> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getCompanyByID(int id, AsyncCallback<Application> callback) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	// --------------------------- PROJECT
 
 	@Override
-	public Project updateProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
 			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException {
 		Project project = new Project();
 		project.setDateOpened(dateOpened);
@@ -143,7 +202,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 * Speichert ein Projekt
 	 */
 	@Override
-	public void addProject(Project project) throws IllegalArgumentException {
+	public void updateProject(Project project) throws IllegalArgumentException {
 		try {
 			projectMapper.update(project);
 		} catch (ClassNotFoundException e) {
@@ -214,9 +273,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- MARKETPLACE
 
 	@Override
-	public Marketplace addMarketplace(String title, String description,
-			ArrayList<OrganisationUnit> organisationUnits, ArrayList<Project> projects)
-			throws IllegalArgumentException {
+	public Marketplace addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
+			ArrayList<Project> projects) throws IllegalArgumentException {
 		Marketplace marketplace = new Marketplace();
 		marketplace.setTitle(title);
 		marketplace.setDescription(description);
@@ -295,7 +353,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- TRAIT
 
 	@Override
-	public Trait updateTrait(String name, String value) throws IllegalArgumentException {
+	public Trait addTrait(String name, String value) throws IllegalArgumentException {
 		Trait trait = new Trait();
 		trait.setName(name);
 		trait.setValue(value);
@@ -307,11 +365,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		trait.setId(1);
 
 		// Objekt in der DB speichern.
-		return this.traitMapper.in
+		return this.traitMapper.insert(trait);
 	}
 
 	@Override
-	public void addTrait(Trait trait) throws IllegalArgumentException {
+	public void updateTrait(Trait trait) throws IllegalArgumentException {
 		try {
 			traitMapper.update(trait);
 		} catch (ClassNotFoundException e) {
@@ -327,10 +385,42 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	/**
+	 * Auslesen aller Eigenschaften
+	 */
+	@Override
+	public ArrayList<Trait> getTraits() throws IllegalArgumentException {
+
+		try {
+			return this.traitMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
+
+	/**
+	 * Auslesen einer Eigenschaft anhand seiner ID
+	 */
+	@Override
+	public Trait getTraitByID(int id) throws IllegalArgumentException {
+		try {
+			return this.traitMapper.findById(id);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
 	// --------------------------- JOBPOSTNG
 
 	@Override
-	public JobPosting updateJobPosting(String title, String text, Date deadline, PartnerProfile partnerProfile,
+	public JobPosting addJobPosting(String title, String text, Date deadline, PartnerProfile partnerProfile,
 			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException {
 		JobPosting jobPosting = new JobPosting();
 		jobPosting.setTitle(title);
@@ -351,7 +441,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void addJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
+	public void updateJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
 		try {
 			jobPostingMapper.update(jobPosting);
 		} catch (ClassNotFoundException e) {
@@ -400,7 +490,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PARTNERPROFILE
 
 	@Override
-	public PartnerProfile updatePartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
+	public PartnerProfile addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
 			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
@@ -420,19 +510,99 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
+	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
+		try {
+			this.partnerProfileMapper.update(partnerProfile);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Auslesen aller Partnerprofile
+	 */
+	@Override
+	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException {
+		try {
+			return this.partnerProfileMapper.findAll();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+
+		}
+		return null;
+
+	}
+
+	/**
+	 * Auslesen eines Partnerprofiles anhand seiner ID
+	 */
+	@Override
+	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException {
+		try {
+			return this.partnerProfileMapper.findById(id);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	// --------------------------- RATING
+
+	@Override
+	public Rating addRating(String statement, float score) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateRating(Rating rating) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Override
+	public ArrayList<Rating> getRatings() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rating getRatingByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// --------------------------- PARTICIPATION
+
+	@Override
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
+			OrganisationUnit associatedApplicant, Project associatedProject) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateParticipation(Participation participation) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
 	@Override
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -479,5 +649,17 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return logInf;
 	}
 	
+
+	@Override
+	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Participation getParticipationByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
