@@ -119,9 +119,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating)
+	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Application application = new Application();
+		application.setDateCreated(dateCreated);
+		application.setText(text);
+		application.setJobpostingid(jobPostingId);
+		application.setPartnerprofileId(partnerProfileId);
+
+		try {
+			return this.applicationMapper.insert(application);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -150,44 +160,43 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	// --------------------------- COMPANY
-	
+
 	@Override
-	public Company addCompany(AsyncCallback<Application> callback) throws IllegalArgumentException {
+	public Company addCompany() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException {
+	public void updateCompany(Company company) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException {
+	public void deleteCompany(Company company) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void getCompanyByID(int id, AsyncCallback<Application> callback) throws IllegalArgumentException {
+	public Company getCompanyByID(int id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-	
+
 	// --------------------------- PROJECT
 
 	@Override
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
-			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException {
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
+			int marketplaceId) throws IllegalArgumentException {
 		Project project = new Project();
 		project.setDateOpened(dateOpened);
 		project.setDateClosed(dateClosed);
 		project.setTitle(title);
 		project.setDescription(description);
-		project.setManager(manager);
-		project.setJobPostings(jobPostings);
-		project.setParticipations(participation);
+		project.setPersonId(personId);
+		project.setMarketplaceId(marketplaceId);
 
 		/*
 		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
@@ -195,7 +204,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		 */
 		project.setId(1);
 
-		return this.projectMapper.insert(project);
+		try {
+			return this.projectMapper.insert(project);
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -420,24 +435,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- JOBPOSTNG
 
 	@Override
-	public JobPosting addJobPosting(String title, String text, Date deadline, PartnerProfile partnerProfile,
-			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException {
+	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+			throws IllegalArgumentException {
 		JobPosting jobPosting = new JobPosting();
 		jobPosting.setTitle(title);
 		jobPosting.setText(text);
 		jobPosting.setDeadline(deadline);
-		jobPosting.setPartnerProfile(partnerProfile);
-		jobPosting.setRecruiter(recruiter);
-		jobPosting.setApplications(applications);
-
-		/*
-		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
-		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
-		 */
-		jobPosting.setId(1);
+		jobPosting.setProjectId(projectId);
 
 		// Objekt in der DB speichern.
-		return this.jobPostingMapper.insert(jobPosting);
+		try {
+			return this.jobPostingMapper.insert(jobPosting);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -608,47 +620,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		// TODO Auto-generated method stub
 
 	}
-	
-	// --------------------------- LOGIN
-	
-	public Person login (String requestUri){
-		
-		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser(); 
-		Person logInf = new Person();
-		
-		if(user != null){
-			
-			Person existingPerson = null;
-			try {
-				existingPerson = PersonMapper.personMapper().findByEmail(user.getEmail());
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			
-			if(existingPerson != null){
-				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
-				+ "  Bestehender User: E-Mail  =" + existingPerson.getEmail());
-				
-				existingPerson.setLoggedIn(true);
-				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
-				
-				return existingPerson; 
-				
-			}
-			
-			logInf.setEmailAdress(user.getEmail());
-			logInf.setLoggedIn(true);
-			logInf.setNickname(user.getNickname());
-			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
-		} else {
-			logInf.setLoggedIn(false);
-			logInf.setLoginUrl(userService.createLoginURL(requestUri));
-		}
-		return logInf;
-	}
-	
 
 	@Override
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
@@ -660,6 +631,99 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Participation getParticipationByID(int id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	// ------------------------ PERSON
+
+	@Override
+	public Person addPerson(String firstName, ArrayList<Project> projetcs, String eMail)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updatePerson(Person person) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deletePerson(Person person) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Person getPersonByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// --------------------------- TEAM
+
+	@Override
+	public Team addTeam() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateTeam(Team team) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteTeam(Team team) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Team getTeamByID(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// --------------------------- LOGIN
+
+	public Person login(String requestUri) {
+
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		Person logInf = new Person();
+
+		if (user != null) {
+
+			Person existingPerson = null;
+			try {
+				existingPerson = PersonMapper.personMapper().findByEmail(user.getEmail());
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if (existingPerson != null) {
+				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
+						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmail());
+
+				existingPerson.setLoggedIn(true);
+				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
+
+				return existingPerson;
+
+			}
+
+			logInf.setEmailAdress(user.getEmail());
+			logInf.setLoggedIn(true);
+			logInf.setNickname(user.getNickname());
+			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
+		} else {
+			logInf.setLoggedIn(false);
+			logInf.setLoginUrl(userService.createLoginURL(requestUri));
+		}
+		return logInf;
 	}
 
 }

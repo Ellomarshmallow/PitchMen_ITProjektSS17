@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import de.pitchMen.shared.bo.Person;
 
 /**
- * Bildet Person-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Bildet Person-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
+ * möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * @author Lars
  */
 
 public class PersonMapper {
-	
+
 	/**
 	 * Die Klasse PersonMapper wird nur einmal instantiiert
 	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
@@ -50,14 +51,13 @@ public class PersonMapper {
 
 	}
 
-    /**
-     * Fügt ein Person-Objekt der Datenbank hinzu.
-     * 
-     * @param person 
-     * @throws ClassNotFoundException
-     * @return person
-     */
-	public Person insert(Person person) throws ClassNotFoundException {
+	/**
+	 * Fügt ein Person-Objekt der Datenbank hinzu.
+	 * 
+	 * @param person
+	 * @return person
+	 */
+	public Person insert(Person person) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -75,8 +75,9 @@ public class PersonMapper {
 			 * SQL-Anweisung zum Einfügen des neuen Person-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO person (id, name, description, firstName, email) VALUES (" + person.getId() + ", '"
-					+ person.getName() + "', '" + person.getDescription() + "', '" + person.getFirstName() + "', '" + person.getEmailAdress() + "')");
+			stmt.executeUpdate("INSERT INTO person (id, name, description, firstName, email) VALUES (" + person.getId()
+					+ ", '" + person.getName() + "', '" + person.getDescription() + "', '" + person.getFirstName()
+					+ "', '" + person.getEmailAdress() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -88,18 +89,17 @@ public class PersonMapper {
 	 * Aktualisiert ein Person-Objekt in der Datenbank.
 	 * 
 	 * @param person
-	 * @throws ClassNotFoundException
 	 * @return person
 	 */
-	public Person update(Person person) throws ClassNotFoundException {
+	public Person update(Person person) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate(
-					"UPDATE person SET name='" + person.getName() + "', description= '" + person.getDescription()
-							+ "', firstName= '" + person.getFirstName() + "', email= " + person.getEmailAdress() + "' WHERE id= " + person.getId());
+			stmt.executeUpdate("UPDATE person SET name='" + person.getName() + "', description= '"
+					+ person.getDescription() + "', firstName= '" + person.getFirstName() + "', email= "
+					+ person.getEmailAdress() + "' WHERE id= " + person.getId());
 		}
 
 		catch (SQLException e2) {
@@ -113,7 +113,7 @@ public class PersonMapper {
 	 * 
 	 * @param person
 	 */
-	public void delete(Person person) throws ClassNotFoundException {
+	public void delete(Person person) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -127,13 +127,13 @@ public class PersonMapper {
 
 	}
 
-    /**
-     * Findet ein Person-Objekt anhand der Übergebenen Id in der Datenbank.
-     * 
-     * @param id 
-     * @return person
-     */
-    public Person findById(int id) throws ClassNotFoundException {
+	/**
+	 * Findet ein Person-Objekt anhand der Übergebenen Id in der Datenbank.
+	 * 
+	 * @param id
+	 * @return person
+	 */
+	public Person findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -142,10 +142,10 @@ public class PersonMapper {
 					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE id=" + id);
 
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
-			 * ein DB-Tupel gibt.
+			 * Zu einem Primärschlüssel exisitiert nur max ein
+			 * Datenbank-Tupel, somit kann auch nur einer zurückgegeben werden.
+			 * Es wird mit einer IF-Abfragen geprüft, ob es für den
+			 * angefragten Primärschlüssel ein DB-Tupel gibt.
 			 */
 
 			if (rs.next()) {
@@ -155,29 +155,29 @@ public class PersonMapper {
 				person.setDescription(rs.getString("description"));
 				person.setFirstName(rs.getString("firstName"));
 				person.setEmailAdress(rs.getString("email"));
-				
+
 				return person;
 			}
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-        return null;
-    }
+		return null;
+	}
 
 	/**
 	 * Findet alle Person-Objekte in der Datenbank.
 	 * 
 	 * @return result
 	 */
-	public ArrayList<Person> findAll() throws ClassNotFoundException {
+	public ArrayList<Person> findAll() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Person> result = new ArrayList<Person>();
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person ORDER BY id");
-		
+
 			if (rs.next()) {
 				Person person = new Person();
 				person.setId(rs.getInt("id"));
@@ -195,19 +195,21 @@ public class PersonMapper {
 		return result;
 	}
 
-    /**
-     * Findet Person-Objekte anhand des übergebenen Namens in der Datenbank.
-     * 
-     * @param name 
-     * @return result
-     */
-    public ArrayList<Person> findByName(String name) throws ClassNotFoundException {
+	/**
+	 * Findet Person-Objekte anhand des übergebenen Namens in der Datenbank.
+	 * 
+	 * @param name
+	 * @return result
+	 */
+	public ArrayList<Person> findByName(String name) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Person> result = new ArrayList<Person>();
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE name LIKE '" + name + "' ORDER BY id");
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE name LIKE '" + name
+							+ "' ORDER BY id");
 
 			if (rs.next()) {
 				Person person = new Person();
@@ -223,22 +225,24 @@ public class PersonMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-        return result;
-    }
+		return result;
+	}
 
-    /**
-     * Findet ein Person-Objekt anhand des übergebenen Vornamens in der Datenbank.
-     * 
-     * @param firstName 
-     * @return result
-     */
-    public ArrayList<Person> findByFirstName(String firstName)throws ClassNotFoundException {
+	/**
+	 * Findet ein Person-Objekt anhand des übergebenen Vornamens in der
+	 * Datenbank.
+	 * 
+	 * @param firstName
+	 * @return result
+	 */
+	public ArrayList<Person> findByFirstName(String firstName) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Person> result = new ArrayList<Person>();
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName FROM person WHERE name LIKE '" + firstName + "' ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName FROM person WHERE name LIKE '"
+					+ firstName + "' ORDER BY id");
 
 			if (rs.next()) {
 				Person person = new Person();
@@ -254,34 +258,33 @@ public class PersonMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-        return result;
-    }
-  
-    
-    public Person findByEmail(String email)throws ClassNotFoundException {
-  		Connection con = DBConnection.connection();
+		return result;
+	}
 
-  		try {
-  			Statement stmt = con.createStatement();
-  			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE email LIKE '" + email + "' ORDER BY id");
+	public Person findByEmail(String email) {
+		Connection con = DBConnection.connection();
 
-  			if (rs.next()) {
-  				Person person = new Person();
-  				person.setId(rs.getInt("id"));
-  				person.setName(rs.getString("name"));
-  				person.setDescription(rs.getString("description"));
-  				person.setFirstName(rs.getString("firstName"));
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE email LIKE '"
+							+ email + "' ORDER BY id");
+
+			if (rs.next()) {
+				Person person = new Person();
+				person.setId(rs.getInt("id"));
+				person.setName(rs.getString("name"));
+				person.setDescription(rs.getString("description"));
+				person.setFirstName(rs.getString("firstName"));
 				person.setEmailAdress(rs.getString("email"));
 
-  				return person;
-  			}
+				return person;
+			}
 
-  		} catch (SQLException e2) {
-  			e2.printStackTrace();
-  		}
-          return null;
-      }
-    
-    
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
 
 }

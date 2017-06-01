@@ -18,32 +18,31 @@ public interface PitchMenAdminAsync {
 	void init(AsyncCallback<Void> callback);
 
 	// ---------- APPLICATION
-	
-	void addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating, AsyncCallback<Application> callback);
-	
+
+	void addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId,
+			AsyncCallback<Application> callback);
+
 	void updateApplication(Application application, AsyncCallback<Void> callback);
-	
+
 	void deleteApplication(Application application, AsyncCallback<Void> callback);
-	
+
 	void getApplications(AsyncCallback<ArrayList<Application>> callback);
-	
+
 	void getApplicationByID(int id, AsyncCallback<Application> callback);
-	
 
 	// ---------- COMPANY
-	
-	void addCompany(AsyncCallback<Application> callback);
-	
+	void addCompany(AsyncCallback<Company> callback);
+
 	void updateCompany(Company company, AsyncCallback<Void> callback);
-	
+
 	void deleteCompany(Company company, AsyncCallback<Void> callback);
-		
-	void getCompanyByID(int id, AsyncCallback<Application> callback);
+
+	void getCompanyByID(int id, AsyncCallback<Company> callback);
 
 	// ---------- JOBPOSTING
 
-	void addJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile, Person recruiter,
-			ArrayList<Application> applications, AsyncCallback<JobPosting> callback) throws IllegalArgumentException;
+	void addJobPosting(String title, String text, Date deadline, int projectId, AsyncCallback<JobPosting> callback)
+			throws IllegalArgumentException;
 
 	void updateJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);
 
@@ -100,10 +99,18 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PERSON
 
+	void addPerson(String firstName, ArrayList<Project> projetcs, String eMail, AsyncCallback<Person> callback);
+
+	void updatePerson(Person person, AsyncCallback<Void> callback);
+
+	void deletePerson(Person person, AsyncCallback<Void> callback);
+
+	void getPersonByID(int id, AsyncCallback<Person> callback);
+
 	// ---------- PROJECT
 
-	void addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
-			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation, AsyncCallback<Project> callback);
+	void addProject(Date dateOpened, Date dateClosed, String title, String description, int personId, int marketplaceId,
+			AsyncCallback<Project> callback);
 
 	void updateProject(Project p, AsyncCallback<Void> callback);
 
@@ -128,6 +135,13 @@ public interface PitchMenAdminAsync {
 	void getRatingByID(int id, AsyncCallback<Rating> callback);
 
 	// ---------- TEAM
+	void addTeam(AsyncCallback<Team> callback);
+
+	void updateTeam(Team team, AsyncCallback<Void> callback);
+
+	void deleteTeam(Team team, AsyncCallback<Void> callback);
+
+	void getTeamByID(int id, AsyncCallback<Team> callback);
 
 	// ---------- TRAIT
 
@@ -140,8 +154,8 @@ public interface PitchMenAdminAsync {
 	void getTraits(AsyncCallback<ArrayList<Trait>> callback);
 
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
-	
-	// --------------------------- LOGIN	
+
+	// --------------------------- LOGIN
 	void login(String requestUri, AsyncCallback<Person> async);
 
 }

@@ -93,19 +93,19 @@ public class Application extends BusinessObject {
 */
 	
 	/**
-	 * @return jobpostingid
+	 * @return jobpostingId
 	 */
-	public int getJobpostingid() {
+	public int getJobPostingId() {
 		return jobPostingId;
 	}
 	/**
 	 * @param jobpostingid
 	 */
-	public void setJobpostingid(int jobPostingId) {
+	public void setJobPostingId(int jobPostingId) {
 		this.jobPostingId = jobPostingId;
 	}
 	/**
-	 * @return partnerprofilid
+	 * @return partnerProfilId
 	 */
 	public int getPartnerProfileId() {
 		return partnerProfileId;
@@ -113,7 +113,7 @@ public class Application extends BusinessObject {
 	/**
 	 * @param partnerProfilId
 	 */
-	public void setPartnerprofileId(int partnerProfileId) {
+	public void setPartnerProfileId(int partnerProfileId) {
 		this.partnerProfileId = partnerProfileId;
 	}
 

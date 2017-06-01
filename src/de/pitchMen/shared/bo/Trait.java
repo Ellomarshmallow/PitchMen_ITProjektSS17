@@ -57,7 +57,7 @@ public class Trait extends BusinessObject {
 	/**
 	 * @param partnerProfilId
 	 */
-	public void setPartnerprofileId(int partnerProfilId) {
+	public void setPartnerProfileId(int partnerProfilId) {
 		this.partnerProfileId = partnerProfilId;
 	}
 

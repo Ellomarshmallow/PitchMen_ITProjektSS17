@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import de.pitchMen.shared.bo.JobPosting;
 //ProjectID FK als getter in JobPosting.java implementiert
 
-
-
 /**
- * Die Klasse JobPostingMapper bildet JobPosting-Objekte auf einer relationale Datenbank ab. 
- * Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Die Klasse JobPostingMapper bildet JobPosting-Objekte auf einer relationale
+ * Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu
+ * erzeugen.
  * 
- * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende 
+ * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (Speichern, Suchen, Löschen, Bearbeiten).
  * 
  * @author Heike
@@ -21,20 +20,23 @@ import de.pitchMen.shared.bo.JobPosting;
 
 public class JobPostingMapper {
 	/**
-	 * Die Klasse JobPostingMapper wird nur einmal instantiiert (Singelton-Eigenschaft). Die Variable ist
-	 * mit static gekennzeichnet, da sie die einzige Instanz dieser Klasse speichert.
+	 * Die Klasse JobPostingMapper wird nur einmal instantiiert
+	 * (Singelton-Eigenschaft). Die Variable ist mit static gekennzeichnet, da
+	 * sie die einzige Instanz dieser Klasse speichert.
 	 */
 	private static JobPostingMapper jobPostingMapper = null;
 
 	/**
-	 * Ein geschützter Konstrukter verhindert eine neue Instanz dieser Klasse zu erzeugen.
+	 * Ein geschützter Konstrukter verhindert eine neue Instanz dieser Klasse zu
+	 * erzeugen.
 	 */
 	protected JobPostingMapper() {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit sichergestellt, 
-	 * dass nur eine einzige Instanz der JobPostingMapper existiert.
+	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit
+	 * sichergestellt, dass nur eine einzige Instanz der JobPostingMapper
+	 * existiert.
 	 * 
 	 * @return jobPostingMapper
 	 */
@@ -46,21 +48,21 @@ public class JobPostingMapper {
 	}
 
 	/**
-	 * Fügt ein JobPosting-Objekt der Datenbank hinzu.
-	 * Und gibt das korrigierte JobPosting-Objekt zurück. 
+	 * Fügt ein JobPosting-Objekt der Datenbank hinzu. Und gibt das korrigierte
+	 * JobPosting-Objekt zurück.
 	 * 
-	 * @param jobPosting 
+	 * @param jobPosting
 	 * @return jobPosting
-	 * @throws ClassNotFoundException
 	 */
-	public JobPosting insert(JobPosting jobPosting) throws ClassNotFoundException {
+	public JobPosting insert(JobPosting jobPosting) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			/** Abfrage des als letztes hinzugefügten Primärschlüssels des Datensatzes.
-			 * Der aktuelle Primärschlüssel wird um eins erhöht.
+			/**
+			 * Abfrage des als letztes hinzugefügten Primärschlüssels des
+			 * Datensatzes. Der aktuelle Primärschlüssel wird um eins erhöht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM jobPosting");
 
@@ -71,13 +73,12 @@ public class JobPostingMapper {
 				/**
 				 * Ausführen der Einfügeoperation
 				 */
-				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline project_id)"
-						+ "VALUES ( " + jobPosting.getId() + ", '" + jobPosting.getTitle() + "' ,'" 
-						+ jobPosting.getText() + jobPosting.getDeadline() + jobPosting.getProjectId() + "')");
+				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline project_id)" + "VALUES ( "
+						+ jobPosting.getId() + ", '" + jobPosting.getTitle() + "' ,'" + jobPosting.getText()
+						+ jobPosting.getDeadline() + jobPosting.getProjectId() + "')");
 			}
-		}
-		catch (SQLException e2) {
-			e2.printStackTrace();    
+		} catch (SQLException e2) {
+			e2.printStackTrace();
 		}
 		return jobPosting;
 	}
@@ -87,20 +88,19 @@ public class JobPostingMapper {
 	 * 
 	 * @param jobPosting
 	 * @return jobPosting
-	 * @throws ClassNotFoundException
 	 */
-	public JobPosting update(JobPosting jobPosting) throws ClassNotFoundException {
+	public JobPosting update(JobPosting jobPosting) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', "
-					+ "Text='" + jobPosting.getText() + "', " + "deadline='" + jobPosting.getDeadline()  
-					+ "WHERE id=" + jobPosting.getId());
+			stmt.executeUpdate(
+					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + "Text='" + jobPosting.getText()
+							+ "', " + "deadline='" + jobPosting.getDeadline() + "WHERE id=" + jobPosting.getId());
 		}
 
-		catch (SQLException e2){
+		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
@@ -110,10 +110,9 @@ public class JobPostingMapper {
 	/**
 	 * Löscht ein JobPosting-Objekt aus der Datenbank.
 	 * 
-	 * @param jobPosting 
-	 * @throws ClassNotFoundException 
+	 * @param jobPosting
 	 */
-	public void delete(JobPosting jobPosting) throws ClassNotFoundException {
+	public void delete(JobPosting jobPosting) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -130,25 +129,24 @@ public class JobPostingMapper {
 	/**
 	 * Findet ein JobPosting-Objekt anhand der übergebenen Id in der Datenbank.
 	 * 
-	 * @param id 
-	 * @throws ClassNotFoundException 
+	 * @param id
 	 * @return jobPosting
 	 * 
 	 */
-	public JobPosting findById(int id) throws ClassNotFoundException {
+	public JobPosting findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
-					+ "WHERE id =" + id);
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " + "WHERE id =" + id);
 
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
-			 * Es wird geprüft ob ein Ergebnis vorliegt
-			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
+			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * ein Objekt umgewandelt.
 			 * 
-			 */		        	
+			 */
 			if (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
 				jobPosting.setId(rs.getInt("id"));
@@ -156,12 +154,10 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
-				
 
 				return jobPosting;
 			}
-		}
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 			return null;
 		}
@@ -173,24 +169,23 @@ public class JobPostingMapper {
 	 * Findet alle JobPosting-Objekte in der Datenbank.
 	 * 
 	 * @return ArrayList<JobPosting>
-	 * @throws ClassNotFoundException
 	 */
-	public ArrayList<JobPosting> findAll() throws ClassNotFoundException {
+	public ArrayList<JobPosting> findAll() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<JobPosting> result = new ArrayList<JobPosting>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
-					+ "ORDER BY id");
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " + "ORDER BY id");
 
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
-			 * Es wird geprüft ob ein Ergebnis vorliegt
-			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
+			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * ein Objekt umgewandelt.
 			 * 
-			 */		        	
+			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
 				jobPosting.setId(rs.getInt("id"));
@@ -201,36 +196,34 @@ public class JobPostingMapper {
 
 				result.add(jobPosting);
 			}
-		}
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 		return result;
 	}
 
-
 	/**
-	 * Findet ein JobPosting-Objekt anhand des übergebenen Textes in der Datenbank.
+	 * Findet ein JobPosting-Objekt anhand des übergebenen Textes in der
+	 * Datenbank.
 	 * 
-	 * @throws ClassNotFoundException
-	 * @param text 
+	 * @param text
 	 * @return ArrayList<JobPosting>
 	 */
-	public ArrayList<JobPosting> findByText(String text) throws ClassNotFoundException {
+	public ArrayList<JobPosting> findByText(String text) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<JobPosting> result = new ArrayList<JobPosting>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting "
 					+ "WHERE text LIKE" + text + "ORDER BY id");
 
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
-			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das
+			 * Ergebnis-Tupel wird in ein Objekt umgewandelt.
 			 * 
-			 */		        	
+			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
 				jobPosting.setId(rs.getInt("id"));
@@ -238,38 +231,37 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
-				
+
 				result.add(jobPosting);
 			}
-		}
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 		return result;
 	}
 
 	/**
-	 * Findet ein JobPosting-Objekt anhand des übergebenen Titels in der Datenbank.
+	 * Findet ein JobPosting-Objekt anhand des übergebenen Titels in der
+	 * Datenbank.
 	 * 
-	 * @throws ClassNotFoundException
-	 * @param titel 
+	 * @param titel
 	 * @return ArrayList<JobPosting>
 	 */
-	public ArrayList<JobPosting> findByTitel(String titel) throws ClassNotFoundException {
+	public ArrayList<JobPosting> findByTitel(String titel) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<JobPosting> result = new ArrayList<JobPosting>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting "
 					+ "WHERE title LIKE" + titel + "ORDER BY id");
 
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
-			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das
+			 * Ergebnis-Tupel wird in ein Objekt umgewandelt.
 			 * 
-			 */		        	
+			 */
 			if (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
 				jobPosting.setId(rs.getInt("id"));
@@ -277,39 +269,37 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
-				
+
 				result.add(jobPosting);
 			}
-		}
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 		return result;
 	}
 
-
 	/**
-	 * Findet ein JobPosting-Objekt anhand des übergebenen Deadline in der Datenbank.
+	 * Findet ein JobPosting-Objekt anhand des übergebenen Deadline in der
+	 * Datenbank.
 	 * 
-	 * @throws ClassNotFoundException
-	 * @param deadline 
+	 * @param deadline
 	 * @return ArrayList<JobPosting>
 	 */
-	public ArrayList<JobPosting> findByDeadline(String deadline) throws ClassNotFoundException {
+	public ArrayList<JobPosting> findByDeadline(String deadline) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<JobPosting> result = new ArrayList<JobPosting>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " 
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting "
 					+ "WHERE deadline LIKE" + deadline + "ORDER BY id");
 
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben.
-			 * Das Ergebnis-Tupel wird in ein Objekt umgewandelt.
+			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das
+			 * Ergebnis-Tupel wird in ein Objekt umgewandelt.
 			 * 
-			 */		        	
+			 */
 			if (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
 				jobPosting.setId(rs.getInt("id"));
@@ -317,11 +307,10 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
-				
+
 				result.add(jobPosting);
 			}
-		}
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 		return result;

@@ -35,7 +35,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Application-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Application addApplication(Date dateCreated, OrganisationUnit applicant, String text, Rating rating)
+	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId)
 			throws IllegalArgumentException;
 
 	/**
@@ -59,14 +59,37 @@ public interface PitchMenAdmin extends RemoteService {
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
+	// FIXME
+	public Company addCompany() throws IllegalArgumentException;
 
-	public Company addCompany(AsyncCallback<Application> callback) throws IllegalArgumentException;
+	public void updateCompany(Company company) throws IllegalArgumentException;
 
-	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	public void deleteCompany(Company company) throws IllegalArgumentException;
 
-	void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	public Company getCompanyByID(int id) throws IllegalArgumentException;
 
-	void getCompanyByID(int id, AsyncCallback<Application> callback) throws IllegalArgumentException;
+	// ------------------- PERSON
+
+	/**
+	 * Erstellt ein neues Person-Objekt.
+	 * 
+	 * @return das neu erstellte Person-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Person addPerson(String firstName, ArrayList<Project> projetcs, String eMail)
+			throws IllegalArgumentException;
+
+	public void updatePerson(Person person) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Person-Objekt.
+	 * 
+	 * @param person
+	 * @throws IllegalArgumentException
+	 */
+	public void deletePerson(Person person) throws IllegalArgumentException;
+
+	public Person getPersonByID(int id) throws IllegalArgumentException;
 
 	// ------------------- PROJECTS
 
@@ -76,8 +99,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Project-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
-			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException;
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
+			int marketplaceId) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
@@ -175,6 +198,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
+
 	// ---------------------JOBPOSTINGS
 
 	/**
@@ -183,8 +207,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param jobPosting
 	 * @throws IllegalArgumentException
 	 */
-	public JobPosting addJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
-			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException;
+	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
@@ -232,6 +256,28 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException;
 
 	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException;
+
+	// ------------------- Team
+
+	/**
+	 * Erstellt ein neues Team-Objekt.
+	 * 
+	 * @return das neu erstellte Team-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Team addTeam() throws IllegalArgumentException;
+
+	public void updateTeam(Team team) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Team-Objekt.
+	 * 
+	 * @param team
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteTeam(Team team) throws IllegalArgumentException;
+
+	public Team getTeamByID(int id) throws IllegalArgumentException;
 
 	// ------------------------ RATING
 
@@ -293,7 +339,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException;
 
 	public Participation getParticipationByID(int id) throws IllegalArgumentException;
-	
-	// --------------------------- LOGIN	
-	public Person login(String requestUri); 
+
+	// --------------------------- LOGIN
+	public Person login(String requestUri);
 }
