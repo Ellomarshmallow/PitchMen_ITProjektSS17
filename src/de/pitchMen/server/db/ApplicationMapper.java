@@ -142,7 +142,7 @@ public class ApplicationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated FROM application " + "WHERE id =" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "WHERE id =" + id);
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -182,7 +182,7 @@ public class ApplicationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated FROM application " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -223,7 +223,7 @@ public class ApplicationMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, text, dateCreated FROM application " + "WHERE text LIKE " + text + "ORDER BY id");
+					"SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "WHERE text LIKE " + text + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben. Das
@@ -262,7 +262,8 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT application.id, application.text, "
-					+ "application.dateCreated, rating.id, rating.statement, rating.score " 
+					+ "application.dateCreated, application.jobPosting_id, application.partnerProfil_id "
+					+ "rating.id, rating.statement, rating.score " 
 					+ "FROM application LEFT JOIN rating ON application.id = rating.id "
 					+ "ORDER BY application.id");
 
