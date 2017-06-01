@@ -59,14 +59,14 @@ public interface PitchMenAdmin extends RemoteService {
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
-
-	public Company addCompany(AsyncCallback<Application> callback) throws IllegalArgumentException;
+	//FIXME
+	public Company addCompany(AsyncCallback<Company> callback) throws IllegalArgumentException;
 
 	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
 
 	void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
 
-	void getCompanyByID(int id, AsyncCallback<Application> callback) throws IllegalArgumentException;
+	void getCompanyByID(int id, AsyncCallback<Company> callback) throws IllegalArgumentException;
 
 	// ------------------- PROJECTS
 

@@ -32,13 +32,13 @@ public interface PitchMenAdminAsync {
 
 	// ---------- COMPANY
 	
-	void addCompany(AsyncCallback<Application> callback);
+	void addCompany(AsyncCallback<Company> callback);
 	
 	void updateCompany(Company company, AsyncCallback<Void> callback);
 	
 	void deleteCompany(Company company, AsyncCallback<Void> callback);
 		
-	void getCompanyByID(int id, AsyncCallback<Application> callback);
+	void getCompanyByID(int id, AsyncCallback<Company> callback);
 
 	// ---------- JOBPOSTING
 

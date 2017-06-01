@@ -148,7 +148,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- COMPANY
 	
 	@Override
-	public Company addCompany(AsyncCallback<Application> callback) throws IllegalArgumentException {
+	public Company addCompany(AsyncCallback<Company> callback) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -166,7 +166,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void getCompanyByID(int id, AsyncCallback<Application> callback) throws IllegalArgumentException {
+	public void getCompanyByID(int id, AsyncCallback<Company> callback) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
 	}
