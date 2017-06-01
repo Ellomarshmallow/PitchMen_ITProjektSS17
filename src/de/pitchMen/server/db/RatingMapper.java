@@ -139,7 +139,7 @@ public class RatingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, statement, score FROM rating WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, statement, score, application_id FROM rating WHERE id=" + id);
 
 			/**
 			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
@@ -153,7 +153,8 @@ public class RatingMapper {
 				rating.setId(rs.getInt("id"));
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
-				
+				rating.setApplicationId(rs.getInt("application_id"));
+		
 				return rating;
 			}
 
@@ -175,13 +176,14 @@ public class RatingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, statement, score FROM rating ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, statement, score, application_id FROM rating ORDER BY id");
 
 			while (rs.next()) {
 				Rating rating = new Rating();
 				rating.setId(rs.getInt("id"));
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
+				rating.setApplicationId(rs.getInt("application_id"));
 
 				result.add(rating);
 
@@ -207,13 +209,14 @@ public class RatingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, statement, score FROM rating WHERE score=" + score + " ORDER BY id");
+					.executeQuery("SELECT id, statement, score, application_id FROM rating WHERE score=" + score + " ORDER BY id");
 
 			while (rs.next()) {
 				Rating rating = new Rating();
 				rating.setId(rs.getInt("id"));
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
+				rating.setApplicationId(rs.getInt("application_id"));
 
 				result.add(rating);
 			}
