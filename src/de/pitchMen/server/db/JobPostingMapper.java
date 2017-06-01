@@ -4,7 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.pitchMen.shared.bo.JobPosting;
-import de.pitchMen.shared.bo.Project;
+//ProjectID FK als getter in JobPosting.java implementiert
+
 
 
 /**
@@ -49,11 +50,10 @@ public class JobPostingMapper {
 	 * Und gibt das korrigierte JobPosting-Objekt zurück. 
 	 * 
 	 * @param jobPosting 
-	 * @param project
 	 * @return jobPosting
 	 * @throws ClassNotFoundException
 	 */
-	public JobPosting insert(JobPosting jobPosting, Project project) throws ClassNotFoundException {
+	public JobPosting insert(JobPosting jobPosting) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -73,7 +73,7 @@ public class JobPostingMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline project_id)"
 						+ "VALUES ( " + jobPosting.getId() + ", '" + jobPosting.getTitle() + "' ,'" 
-						+ jobPosting.getText() + jobPosting.getDeadline() + project.getId() + "')");
+						+ jobPosting.getText() + jobPosting.getDeadline() + jobPosting.getProjectId() + "')");
 			}
 		}
 		catch (SQLException e2) {
@@ -155,6 +155,8 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectID(rs.getInt("project_id"));
+				
 
 				return jobPosting;
 			}
@@ -195,6 +197,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectID(rs.getInt("project_id"));
 
 				result.add(jobPosting);
 			}
@@ -234,6 +237,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectID(rs.getInt("project_id"));
 				
 				result.add(jobPosting);
 			}
@@ -272,6 +276,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectID(rs.getInt("project_id"));
 				
 				result.add(jobPosting);
 			}
@@ -311,6 +316,7 @@ public class JobPostingMapper {
 				jobPosting.setTitle(rs.getString("title"));
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectID(rs.getInt("project_id"));
 				
 				result.add(jobPosting);
 			}

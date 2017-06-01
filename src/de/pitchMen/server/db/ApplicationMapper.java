@@ -4,8 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.pitchMen.shared.bo.Application;
-import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.JobPosting;
+//PartnerProfileID und JobPostingID FK als getter in Application.java implementiert
+
 
 /**
  * Die Klasse ApplicationMapper bildet Application-Objekte auf einer relationale
@@ -51,12 +51,10 @@ public class ApplicationMapper {
 	 * Application-Objekt zurück.
 	 * 
 	 * @param application
-	 * @param jobPosting
-	 * @param partnerProfile
 	 * @return application
 	 * @throws ClassNotFoundException
 	 */
-	public Application insert(Application application, JobPosting jobPosting, PartnerProfile partnerProfile)
+	public Application insert(Application application)
 			throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
@@ -78,7 +76,7 @@ public class ApplicationMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)" + "VALUES ( " + application.getId()
 				+ ", '" + application.getText() + "' ,'" + application.getDateCreated() + "' ,'"
-				+ jobPosting.getId() + "' ,'" + partnerProfile.getId() + "')");
+				+ application.getJobPostingId() + "' ,'" + application.getPartnerProfile() + "')");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -157,6 +155,8 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
 				//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
 				
 				return application;
@@ -195,6 +195,8 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
 
 				result.add(application);
 			}
@@ -233,6 +235,8 @@ public class ApplicationMapper {
 				application.setId(rs.getInt("id"));
 				application.setText(rs.getString("text"));
 				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfilId(rs.getInt("partnerProfil_id"));
 
 				result.add(application);
 			}
@@ -273,6 +277,8 @@ public class ApplicationMapper {
 				applicationRating.add("application.id");
 				applicationRating.add("application.text");
 				applicationRating.add("application.dateCreated");
+				applicationRating.add("application.jobPosting_id"));
+				applicationRating.add("application.partnerProfil_id"));
 				applicationRating.add("rating.id");
 				applicationRating.add("rating.statement");
 				applicationRating.add("rating.score");
