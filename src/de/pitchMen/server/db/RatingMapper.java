@@ -3,8 +3,9 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Rating;
+//ApplicationID FK als getter in Person.java implementiert
+
 
 /**
  * Bildet Rating-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
@@ -56,7 +57,7 @@ public class RatingMapper {
 	 * @param application
 	 * @return trait
 	 */
-	public Rating insert(Rating rating, Application application) throws ClassNotFoundException {
+	public Rating insert(Rating rating) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -75,7 +76,7 @@ public class RatingMapper {
 			 * Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" + "VALUES (" + rating.getId() + ", '"
-					+ rating.getStatement() + "', '" + rating.getScore() + "', '" + application.getId() + "')");
+					+ rating.getStatement() + "', '" + rating.getScore() + "', '" + rating.getApplicationId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
