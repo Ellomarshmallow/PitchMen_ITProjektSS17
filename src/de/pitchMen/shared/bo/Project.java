@@ -3,7 +3,6 @@ package de.pitchMen.shared.bo;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 /**
  * ReprÃ¤sentiert eine Projekt.
  * 
@@ -11,32 +10,27 @@ import java.util.Date;
  */
 public class Project extends BusinessObject {
 
-
 	private Date dateOpened = null;
-
 
 	private Date dateClosed = null;
 
-
 	private String title = "";
-
 
 	private String description = "";
 
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * Realisierung der Beziehung zu einer Person durch einen
-	    Fremdschlüssel.
+	 * Realisierung der Beziehung zu einer Person durch einen Fremdschlüssel.
 	 */
 	private int personId = 0;
+	
 	/**
 	 * Realisierung der Beziehung zu einem Marktplatz durch einen
-	    Fremdschlüssel.
+	 * Fremdschlüssel.
 	 */
 	private int marketplaceId = 0;
-	
+
 	/**
 	 * @return dateOpened
 	 */
@@ -45,7 +39,7 @@ public class Project extends BusinessObject {
 	}
 
 	/**
-	 * @param dateOpened 
+	 * @param dateOpened
 	 **/
 	public void setDateOpened(Date dateOpened) {
 		this.dateOpened = dateOpened;
@@ -59,7 +53,7 @@ public class Project extends BusinessObject {
 	}
 
 	/**
-	 * @param dateClosed 
+	 * @param dateClosed
 	 */
 	public void setDateClosed(Date dateClosed) {
 		this.dateClosed = dateClosed;
@@ -92,33 +86,33 @@ public class Project extends BusinessObject {
 	public void setDescription(String describtion) {
 		this.description = describtion;
 	}
+
 	/**
 	 * @return personId
 	 */
 	public int getPersonId() {
 		return personId;
 	}
+
 	/**
 	 * @param personId
 	 */
 	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
+
 	/**
 	 * @return marketplaceId
 	 */
 	public int getMarketplaceId() {
 		return marketplaceId;
 	}
+
 	/**
 	 * @param marketplaceId
 	 */
 	public void setMarketplaceId(int marketplaceId) {
 		this.marketplaceId = marketplaceId;
 	}
-
-
-
-
 
 }
