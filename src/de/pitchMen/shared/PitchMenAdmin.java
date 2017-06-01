@@ -64,10 +64,16 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public void updateCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
 
-	void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
+	public void deleteCompany(Company company, AsyncCallback<Void> callback) throws IllegalArgumentException;
 
-	void getCompanyByID(int id, AsyncCallback<Company> callback) throws IllegalArgumentException;
+	public void getCompanyByID(int id, AsyncCallback<Company> callback) throws IllegalArgumentException;
 
+	// ------------------- PERSON
+	
+	public Person addPerson(String firstName, ArrayList<Project> projetcs, String eMail) throws IllegalArgumentException;
+	
+	
+	
 	// ------------------- PROJECTS
 
 	/**
