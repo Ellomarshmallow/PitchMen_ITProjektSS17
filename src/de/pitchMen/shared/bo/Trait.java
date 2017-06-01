@@ -13,6 +13,11 @@ public class Trait extends BusinessObject {
 
 	private String value = "";
 	
+	/**
+	 * Realisierung der Beziehung zu einer partnerprofil durch einen
+	    Fremdschlüssel.
+	 */
+	private int partnerProfileId= 0;
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,5 +48,18 @@ public class Trait extends BusinessObject {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	/**
+	 * @return partnerprofilid
+	 */
+	public int getPartnerProfileId() {
+		return partnerProfileId;
+	}
+	/**
+	 * @param partnerProfilId
+	 */
+	public void setPartnerprofileId(int partnerProfilId) {
+		this.partnerProfileId = partnerProfilId;
+	}
+
 
 }

@@ -10,14 +10,18 @@ import java.util.Date;
  */
 public class JobPosting extends BusinessObject {
 
-	private ArrayList<Application> applications;
-
-	private Person recruiter = null;
+	/**
+	 * Realisierung der Beziehung zu einem Projekt durch einen
+	    Fremdschlüssel.
+	 */
+	private int projectId = 0;
+	
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
 	 * String verwendet, damit man das Werfen einer NullPointException
 	 * vermeidet.
 	 */
+	
 	private String title = "";
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
@@ -28,26 +32,10 @@ public class JobPosting extends BusinessObject {
 
 	private Date deadline = null;
 
-	private PartnerProfile partnerProfile = null;
-
 	private static final long serialVersionUID = 1L;
 
-	// public PartnerProfile PartnerProfile;
-
-	/**
-	 * @return recruiter
-	 */
-	public Person getRecruiter() {
-		return this.recruiter;
-	}
-
-	/**
-	 * @param recruiter
-	 */
-	public void setRecruiter(Person recruiter) {
-		this.recruiter = recruiter;
-	}
-
+	
+		
 	/**
 	 * @return title
 	 */
@@ -91,31 +79,17 @@ public class JobPosting extends BusinessObject {
 	}
 
 	/**
-	 * @return partnerProfile
+	 * @return projectid
 	 */
-	public PartnerProfile getPartnerProfile() {
-		return this.partnerProfile;
+	public int getProjectId() {
+		return projectId;
 	}
-
 	/**
-	 * @param partnerProfile
+	 * @param projectid
 	 */
-	public void setPartnerProfile(PartnerProfile partnerProfile) {
-		this.partnerProfile = partnerProfile;
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
-	/**
-	 * @return applications
-	 */
-	public ArrayList<Application> getApplications() {
-		return this.applications;
-	}
-
-	/**
-	 * @param applications
-	 */
-	public void setApplications(ArrayList<Application> applications) {
-		this.applications = applications;
-	}
-
+	
 }
