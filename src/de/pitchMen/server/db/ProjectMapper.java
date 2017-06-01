@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import de.pitchMen.shared.bo.Project;
 //MarcetplaceId und PersonId FK als getter in Person.java implementiert
 
-
 /**
  * Bildet Project-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
  * möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
@@ -59,7 +58,7 @@ public class ProjectMapper {
 	 * 
 	 * @return project
 	 */
-	public Project insert(Project project) throws ClassNotFoundException {
+	public Project insert(Project project) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -77,10 +76,12 @@ public class ProjectMapper {
 			 * SQL-Anweisung zum Einfügen des neuen Project-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO project (id, title, description, dateOpened, dateClosed, marketplace_id, person_id)" + "VALUES ("
-					+ project.getId() + ", '" + project.getTitle() + "', '" + project.getDescription() + "', '"
-					+ project.getDateOpened() + "', '" + project.getDateClosed() + "', '"
-					+ project.getMarketplaceId() + "', '" + project.getPersonId() + "')");
+			stmt.executeUpdate(
+					"INSERT INTO project (id, title, description, dateOpened, dateClosed, marketplace_id, person_id)"
+							+ "VALUES (" + project.getId() + ", '" + project.getTitle() + "', '"
+							+ project.getDescription() + "', '" + project.getDateOpened() + "', '"
+							+ project.getDateClosed() + "', '" + project.getMarketplaceId() + "', '"
+							+ project.getPersonId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -92,10 +93,9 @@ public class ProjectMapper {
 	 * Aktualisiert ein Project-Objekt in der Datenbank.
 	 * 
 	 * @param project
-	 * @throws ClassNotFoundException
 	 * @return project
 	 */
-	public Project update(Project project) throws ClassNotFoundException {
+	public Project update(Project project) {
 
 		Connection con = DBConnection.connection();
 
@@ -117,7 +117,7 @@ public class ProjectMapper {
 	 * 
 	 * @param project
 	 */
-	public void delete(Project project) throws ClassNotFoundException {
+	public void delete(Project project) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -134,10 +134,10 @@ public class ProjectMapper {
 	/**
 	 * Findet ein Project-Objekt anhand der übergebenen ID in der Datenbank.
 	 * 
-	 * @param id 
+	 * @param id
 	 * @return person
 	 */
-	public Project findById(int id) throws ClassNotFoundException {
+	public Project findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -161,8 +161,8 @@ public class ProjectMapper {
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
-				project.setPersonId(rs.getInt("person_id"));				
-				
+				project.setPersonId(rs.getInt("person_id"));
+
 				return project;
 			}
 
@@ -178,7 +178,7 @@ public class ProjectMapper {
 	 * 
 	 * @return ArrayList<Project>
 	 */
-	public ArrayList<Project> findAll() throws ClassNotFoundException {
+	public ArrayList<Project> findAll() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Project> result = new ArrayList<Project>();
@@ -198,7 +198,7 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-				
+
 				result.add(project);
 
 			}
@@ -215,17 +215,16 @@ public class ProjectMapper {
 	 * @param dateOpened
 	 * @return ArrayList<Project>
 	 */
-	public ArrayList<Project> findByDateOpened(Date dateOpened) throws ClassNotFoundException {
+	public ArrayList<Project> findByDateOpened(Date dateOpened) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Project> result = new ArrayList<Project>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
-					+ " FROM project WHERE dateOpened= '"
-							+ dateOpened + "' ORDER BY id");
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
+							+ " FROM project WHERE dateOpened= '" + dateOpened + "' ORDER BY id");
 
 			while (rs.next()) {
 				Project project = new Project();
@@ -236,7 +235,7 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-				
+
 				result.add(project);
 
 			}
@@ -253,17 +252,16 @@ public class ProjectMapper {
 	 * @param dateClosed
 	 * @return ArrayList<Project>
 	 */
-	public ArrayList<Project> findByDateClosed(Date dateClosed) throws ClassNotFoundException {
+	public ArrayList<Project> findByDateClosed(Date dateClosed) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Project> result = new ArrayList<Project>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
-					+ " FROM project WHERE dateClosed= '"
-							+ dateClosed + "' ORDER BY id");
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
+							+ " FROM project WHERE dateClosed= '" + dateClosed + "' ORDER BY id");
 
 			while (rs.next()) {
 				Project project = new Project();
@@ -274,7 +272,7 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-				
+
 				result.add(project);
 
 			}
@@ -290,17 +288,16 @@ public class ProjectMapper {
 	 * @param title
 	 * @return ArrayList<Project>
 	 */
-	public ArrayList<Project> findByTitle(String title) throws ClassNotFoundException {
+	public ArrayList<Project> findByTitle(String title) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Project> result = new ArrayList<Project>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
-					+ " FROM project WHERE title= '"
-							+ title + "' ORDER BY id");
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
+							+ " FROM project WHERE title= '" + title + "' ORDER BY id");
 
 			while (rs.next()) {
 				Project project = new Project();
@@ -311,7 +308,6 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 
 				result.add(project);
 

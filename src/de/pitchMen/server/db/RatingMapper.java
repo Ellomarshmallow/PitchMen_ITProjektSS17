@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import de.pitchMen.shared.bo.Rating;
 //ApplicationID FK als getter in Person.java implementiert
 
-
 /**
  * Bildet Rating-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
  * möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
@@ -57,7 +56,7 @@ public class RatingMapper {
 	 * @param application
 	 * @return trait
 	 */
-	public Rating insert(Rating rating) throws ClassNotFoundException {
+	public Rating insert(Rating rating) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -75,8 +74,9 @@ public class RatingMapper {
 			 * SQL-Anweisung zum Einfügen des neuen Rating-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" + "VALUES (" + rating.getId() + ", '"
-					+ rating.getStatement() + "', '" + rating.getScore() + "', '" + rating.getApplicationId() + "')");
+			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" + "VALUES (" + rating.getId()
+					+ ", '" + rating.getStatement() + "', '" + rating.getScore() + "', '" + rating.getApplicationId()
+					+ "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -88,10 +88,9 @@ public class RatingMapper {
 	 * Aktualisiert ein Rating-Objekt in der Datenbank.
 	 * 
 	 * @param rating
-	 * @throws ClassNotFoundException
 	 * @return rating
 	 */
-	public Rating update(Rating rating) throws ClassNotFoundException {
+	public Rating update(Rating rating) {
 
 		Connection con = DBConnection.connection();
 
@@ -112,9 +111,8 @@ public class RatingMapper {
 	 * Löscht ein Rating-Objekt aus der Datenbank.
 	 * 
 	 * @param rating
-	 * @throws ClassNotFoundException
 	 */
-	public void delete(Rating rating) throws ClassNotFoundException {
+	public void delete(Rating rating) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -134,7 +132,7 @@ public class RatingMapper {
 	 * @param id
 	 * @return rating
 	 */
-	public Rating findById(int id) throws ClassNotFoundException {
+	public Rating findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -154,7 +152,7 @@ public class RatingMapper {
 				rating.setStatement(rs.getString("statement"));
 				rating.setScore(rs.getFloat("score"));
 				rating.setApplicationId(rs.getInt("application_id"));
-		
+
 				return rating;
 			}
 
@@ -169,7 +167,7 @@ public class RatingMapper {
 	 * 
 	 * @return result
 	 */
-	public ArrayList<Rating> findAll() throws ClassNotFoundException {
+	public ArrayList<Rating> findAll() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Rating> result = new ArrayList<Rating>();
@@ -201,15 +199,15 @@ public class RatingMapper {
 	 * @param score
 	 * @return result
 	 */
-	public ArrayList<Rating> findByScore(float score) throws ClassNotFoundException {
+	public ArrayList<Rating> findByScore(float score) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Rating> result = new ArrayList<Rating>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT id, statement, score, application_id FROM rating WHERE score=" + score + " ORDER BY id");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT id, statement, score, application_id FROM rating WHERE score=" + score + " ORDER BY id");
 
 			while (rs.next()) {
 				Rating rating = new Rating();

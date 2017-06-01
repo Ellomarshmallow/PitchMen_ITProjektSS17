@@ -31,10 +31,9 @@ public class DBConnection {
 	 * Stellt die Verbindung zur Datenbank her.
 	 * 
 	 * @return
-	 * @throws ClassNotFoundException
 	 */
 
-	public static Connection connection() throws ClassNotFoundException {
+	public static Connection connection() {
 		/*
 		 * Herstellung einer DB Verbindung, wenn bisher keine Verbindung besteht
 		 */

@@ -7,10 +7,12 @@ import de.pitchMen.shared.bo.Trait;
 //PartnerProfileID FK als getter in Trait.java implementiert
 
 /**
- * Die Klasse TraitMapper bildet Trait-Objekte auf einer relationalen Datenbank ab. 
- * Ebenfalls ist es möglich aus den Datenbank-Tupel Java-Objekte zur erzeugen. 
+ * Die Klasse TraitMapper bildet Trait-Objekte auf einer relationalen Datenbank
+ * ab. Ebenfalls ist es möglich aus den Datenbank-Tupel Java-Objekte zur
+ * erzeugen.
  * 
- * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende Methoden (Insert, Search, delete, update).
+ * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
+ * Methoden (Insert, Search, delete, update).
  * 
  * @author Lars
  */
@@ -57,7 +59,7 @@ public class TraitMapper {
 	 * @param partnerProfile
 	 * @return trait
 	 */
-	public Trait insert(Trait trait) throws ClassNotFoundException {
+	public Trait insert(Trait trait) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -74,8 +76,9 @@ public class TraitMapper {
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Traits in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO trait (id, name, value, partnerProfile_id)" + "VALUES (" + trait.getId() + ", '"
-					+ trait.getName() + "', '" + trait.getValue() + "', '" + trait.getPartnerProfileId() +"')");
+			stmt.executeUpdate("INSERT INTO trait (id, name, value, partnerProfile_id)" + "VALUES (" + trait.getId()
+					+ ", '" + trait.getName() + "', '" + trait.getValue() + "', '" + trait.getPartnerProfileId()
+					+ "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -87,17 +90,16 @@ public class TraitMapper {
 	 * Aktualisiert ein Trait-Objekt in der Datenbank.
 	 * 
 	 * @param trait
-	 * @throws ClassNotFoundException
 	 * @return trait
 	 */
-	public Trait update(Trait trait) throws ClassNotFoundException {
+	public Trait update(Trait trait) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("UPDATE trait SET name='" + trait.getName() + "', value= '" + trait.getValue()
-			+ "' WHERE id= " + trait.getId());
+					+ "' WHERE id= " + trait.getId());
 		}
 
 		/**
@@ -117,9 +119,8 @@ public class TraitMapper {
 	 * Löscht ein Trait-Objekt aus der Datenbank.
 	 * 
 	 * @param trait
-	 * @throws ClassNotFoundException
 	 */
-	public void delete(Trait trait) throws ClassNotFoundException {
+	public void delete(Trait trait) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -145,7 +146,7 @@ public class TraitMapper {
 	 * @param id
 	 * @return trait
 	 */
-	public Trait findById(int id) throws ClassNotFoundException {
+	public Trait findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -165,7 +166,7 @@ public class TraitMapper {
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
 				trait.setPartnerProfileId(rs.getInt("partnerProfil_id"));
-				
+
 				return trait;
 			}
 
@@ -180,14 +181,15 @@ public class TraitMapper {
 	 * 
 	 * @return ArrayList<Trait>
 	 */
-	public ArrayList<Trait> findAll() throws ClassNotFoundException {
+	public ArrayList<Trait> findAll() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Trait> result = new ArrayList<Trait>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id AS ID, name as NAME, value AS VALUE, partnerProfil_ID AS PARTNERPROFILID FROM trait ORDER BY id");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT id AS ID, name as NAME, value AS VALUE, partnerProfil_ID AS PARTNERPROFILID FROM trait ORDER BY id");
 
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -219,15 +221,15 @@ public class TraitMapper {
 	 * @param name
 	 * @return ArrayList<Trait>
 	 */
-	public ArrayList<Trait> findByName(String name) throws ClassNotFoundException {
+	public ArrayList<Trait> findByName(String name) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Trait> result = new ArrayList<Trait>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, value, partnerProfil_id FROM trait WHERE name LIKE '" + name + "' ORDER BY id");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT id, name, value, partnerProfil_id FROM trait WHERE name LIKE '" + name + "' ORDER BY id");
 
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -259,15 +261,15 @@ public class TraitMapper {
 	 * @param value
 	 * @return ArrayList<Trait>
 	 */
-	public ArrayList<Trait> findByValue(String value) throws ClassNotFoundException {
+	public ArrayList<Trait> findByValue(String value) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Trait> result = new ArrayList<Trait>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, value, partnerProfil_id FROM trait WHERE value LIKE '" + value + "' ORDER BY id");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT id, name, value, partnerProfil_id FROM trait WHERE value LIKE '" + value + "' ORDER BY id");
 
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der

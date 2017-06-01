@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import de.pitchMen.shared.bo.Application;
 //PartnerProfileID und JobPostingID FK als getter in Application.java implementiert
 
-
 /**
  * Die Klasse ApplicationMapper bildet Application-Objekte auf einer relationale
  * Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu
@@ -52,10 +51,8 @@ public class ApplicationMapper {
 	 * 
 	 * @param application
 	 * @return application
-	 * @throws ClassNotFoundException
 	 */
-	public Application insert(Application application)
-			throws ClassNotFoundException {
+	public Application insert(Application application) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -74,9 +71,10 @@ public class ApplicationMapper {
 				/**
 				 * Ausführen der Einfügeoperation
 				 */
-				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)" + "VALUES ( " + application.getId()
-				+ ", '" + application.getText() + "' ,'" + application.getDateCreated() + "' ,'"
-				+ application.getJobPostingId() + "' ,'" + application.getPartnerProfileId() + "')");
+				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)"
+						+ "VALUES ( " + application.getId() + ", '" + application.getText() + "' ,'"
+						+ application.getDateCreated() + "' ,'" + application.getJobPostingId() + "' ,'"
+						+ application.getPartnerProfileId() + "')");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -89,11 +87,9 @@ public class ApplicationMapper {
 	 * Aktualisiert ein Application-Objekt in der Datenbank.
 	 * 
 	 * @param application
-	 * @throws ClassNotFoundException
 	 * @return application
 	 */
-	public Application update(Application application)
-			throws ClassNotFoundException {
+	public Application update(Application application) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -114,9 +110,8 @@ public class ApplicationMapper {
 	 * Löscht ein Application-Objekt aus der Datenbank.
 	 * 
 	 * @param application
-	 * @throws ClassNotFoundException
 	 */
-	public void delete(Application application) throws ClassNotFoundException {
+	public void delete(Application application) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -134,15 +129,16 @@ public class ApplicationMapper {
 	 * Findet ein Application-Objekt anhand der übergebenen Id in der Datenbank.
 	 * 
 	 * @param id
-	 * @throws ClassNotFoundException
 	 * @return application
 	 */
-	public Application findById(int id) throws ClassNotFoundException {
+	public Application findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "WHERE id =" + id);
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application "
+							+ "WHERE id =" + id);
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -157,8 +153,9 @@ public class ApplicationMapper {
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
 				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
-				//Methodenaufruf FindByFK von Rating zur Übergaben des Ratingobjekts			
-				
+				// Methodenaufruf FindByFK von Rating zur Übergaben des
+				// Ratingobjekts
+
 				return application;
 			}
 		} catch (SQLException e2) {
@@ -172,17 +169,17 @@ public class ApplicationMapper {
 	/**
 	 * Findet alle Application-Objekte in der Datenbank.
 	 * 
-	 * @throws ClassNotFoundException
 	 * @return ArrayList<Application>
 	 */
-	public ArrayList<Application> findAll() throws ClassNotFoundException {
+	public ArrayList<Application> findAll() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Application> result = new ArrayList<Application>();
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery(
+					"SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -211,10 +208,9 @@ public class ApplicationMapper {
 	 * Datenbank.
 	 * 
 	 * @param name
-	 * @throws ClassNotFoundException
 	 * @return ArryList<Application>
 	 */
-	public ArrayList<Application> findByText(String text) throws ClassNotFoundException {
+	public ArrayList<Application> findByText(String text) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Application> result = new ArrayList<Application>();
@@ -222,8 +218,9 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 
-			ResultSet rs = stmt.executeQuery(
-					"SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "WHERE text LIKE " + text + "ORDER BY id");
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application "
+							+ "WHERE text LIKE " + text + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben. Das
@@ -245,16 +242,16 @@ public class ApplicationMapper {
 		}
 		return result;
 	}
-	
+
 	/**
-	 * Eine JOIN-Klausel wird verwendet, um Zeilen aus zwei oder mehr Tabellen zu kombinieren,
-	 * basierend auf einer verwandten Spalte zwischen ihnen. 
-	 * LEFT JOIN: Gib alle Datensätze aus der linken Tabelle und die abgestimmten Datensätze aus der rechten Tabelle zurück.
+	 * Eine JOIN-Klausel wird verwendet, um Zeilen aus zwei oder mehr Tabellen
+	 * zu kombinieren, basierend auf einer verwandten Spalte zwischen ihnen.
+	 * LEFT JOIN: Gib alle Datensätze aus der linken Tabelle und die
+	 * abgestimmten Datensätze aus der rechten Tabelle zurück.
 	 * 
-	 * @throws ClassNotFoundException
 	 * @return ArryList<Application>
 	 */
-	public ArrayList<Application> findAllAsJoin() throws ClassNotFoundException {
+	public ArrayList<Application> findAllAsJoin() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Application> result = new ArrayList<Application>();
@@ -263,9 +260,8 @@ public class ApplicationMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT application.id, application.text, "
 					+ "application.dateCreated, application.jobPosting_id, application.partnerProfil_id "
-					+ "rating.id, rating.statement, rating.score " 
-					+ "FROM application LEFT JOIN rating ON application.id = rating.id "
-					+ "ORDER BY application.id");
+					+ "rating.id, rating.statement, rating.score "
+					+ "FROM application LEFT JOIN rating ON application.id = rating.id " + "ORDER BY application.id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -284,7 +280,6 @@ public class ApplicationMapper {
 				applicationRating.add("rating.statement");
 				applicationRating.add("rating.score");
 
-			
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();

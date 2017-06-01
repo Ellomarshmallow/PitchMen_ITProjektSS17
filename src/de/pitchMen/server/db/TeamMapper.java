@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import de.pitchMen.shared.bo.Team;
 
-
 public class TeamMapper {
 
 	/**
@@ -54,7 +53,7 @@ public class TeamMapper {
 	 * @param team
 	 * @return trait
 	 */
-	public Team insert(Team team) throws ClassNotFoundException {
+	public Team insert(Team team) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -84,10 +83,9 @@ public class TeamMapper {
 	 * Aktualisiert ein Team-Objekt in der Datenbank.
 	 * 
 	 * @param team
-	 * @throws ClassNotFoundException
 	 * @return team
 	 */
-	public Team update(Team team) throws ClassNotFoundException {
+	public Team update(Team team) {
 
 		Connection con = DBConnection.connection();
 
@@ -114,9 +112,8 @@ public class TeamMapper {
 	 * Löscht ein Team-Objekt aus der Datenbank.
 	 * 
 	 * @param team
-	 * @throws ClassNotFoundException
 	 */
-	public void delete(Team team) throws ClassNotFoundException {
+	public void delete(Team team) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -142,7 +139,7 @@ public class TeamMapper {
 	 * @return team
 	 * 
 	 */
-	public Team findById(int id) throws ClassNotFoundException {
+	public Team findById(int id) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -175,7 +172,7 @@ public class TeamMapper {
 	 * 
 	 * @return ArrayList<Team>
 	 */
-	public ArrayList<Team> findAll() throws ClassNotFoundException {
+	public ArrayList<Team> findAll() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Team> result = new ArrayList<Team>();
@@ -205,7 +202,7 @@ public class TeamMapper {
 	 * @param name
 	 * @return ArrayList<Team>
 	 */
-	public ArrayList<Team> findByName(String name) throws ClassNotFoundException {
+	public ArrayList<Team> findByName(String name) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Team> result = new ArrayList<Team>();
