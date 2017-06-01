@@ -13,4 +13,17 @@ public class AllJobPostings extends SimpleReport {
      * 
      */
     private static final long serialVersionUID = 1L;
+    
+       
+    private int profilId;
+
+
+	public int getProfilId() {
+		return profilId;
+	}
+
+
+	public void setProfilId(int profilId) {
+		this.profilId = profilId;
+	}
 }
