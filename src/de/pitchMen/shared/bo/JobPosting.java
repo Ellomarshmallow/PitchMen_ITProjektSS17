@@ -14,7 +14,7 @@ public class JobPosting extends BusinessObject {
 	 * Realisierung der Beziehung zu einem Projekt durch einen
 	    Fremdschlüssel.
 	 */
-	private int projectid = 0;
+	private int projectId = 0;
 	
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
@@ -81,14 +81,14 @@ public class JobPosting extends BusinessObject {
 	/**
 	 * @return projectid
 	 */
-	public int getProjectid() {
-		return projectid;
+	public int getProjectId() {
+		return projectId;
 	}
 	/**
 	 * @param projectid
 	 */
-	public void setProjectid(int projectid) {
-		this.projectid = projectid;
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	
