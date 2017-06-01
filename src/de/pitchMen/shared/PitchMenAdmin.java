@@ -99,8 +99,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Project-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
-			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException;
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId, int marketplaceId) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.

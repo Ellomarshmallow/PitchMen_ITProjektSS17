@@ -178,24 +178,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PROJECT
 
 	@Override
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, Person manager,
-			ArrayList<JobPosting> jobPostings, ArrayList<Participation> participation) throws IllegalArgumentException {
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId, int marketplaceId) throws IllegalArgumentException {
 		Project project = new Project();
 		project.setDateOpened(dateOpened);
 		project.setDateClosed(dateClosed);
 		project.setTitle(title);
 		project.setDescription(description);
-		project.setManager(manager);
-		project.setJobPostings(jobPostings);
-		project.setParticipations(participation);
 
 		/*
 		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
 		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
 		 */
 		project.setId(1);
-
-		return this.projectMapper.insert(project);
+		return this.projectMapper.insert(project, marketplace, person);
 	}
 
 	/**
