@@ -3,9 +3,9 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
+//MarcetplaceId und PersonId FK als getter in Person.java implementiert
+
 
 /**
  * Bildet Project-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
@@ -59,7 +59,7 @@ public class ProjectMapper {
 	 * 
 	 * @return project
 	 */
-	public Project insert(Project project, Marketplace marketplace, Person person) throws ClassNotFoundException {
+	public Project insert(Project project) throws ClassNotFoundException {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -80,7 +80,7 @@ public class ProjectMapper {
 			stmt.executeUpdate("INSERT INTO project (id, title, description, dateOpened, dateClosed, marketplace_id, person_id)" + "VALUES ("
 					+ project.getId() + ", '" + project.getTitle() + "', '" + project.getDescription() + "', '"
 					+ project.getDateOpened() + "', '" + project.getDateClosed() + "', '"
-					+ marketplace.getId() + "', '" + person.getId() + "')");
+					+ project.getMarketplaceId() + "', '" + project.getPersonId() + "')");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -159,6 +159,7 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
+				
 				
 				return project;
 			}
