@@ -15,15 +15,15 @@ public class AllJobPostings extends SimpleReport {
     private static final long serialVersionUID = 1L;
     
        
-    private int profilId;
+    private int jopPostingId;
 
 
-	public int getProfilId() {
-		return profilId;
+	public int getJopPostingId() {
+		return jopPostingId;
 	}
 
 
-	public void setProfilId(int profilId) {
-		this.profilId = profilId;
+	public void setJopPostingId(int jopPostingId) {
+		this.jopPostingId = jopPostingId;
 	}
 }
