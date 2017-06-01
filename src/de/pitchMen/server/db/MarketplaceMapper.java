@@ -142,7 +142,7 @@ public class MarketplaceMapper {
 	        try {
 				Statement stmt = con.createStatement();
 				
-				ResultSet rs = stmt.executeQuery("SELECT id, description, title FROM marketplace "
+				ResultSet rs = stmt.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 					+ "WHERE id=" + id);				
 						
 	        /**
@@ -185,7 +185,7 @@ public class MarketplaceMapper {
 	     try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT id, description, title FROM marketplace "
+			ResultSet rs = stmt.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 					+ "ORDER BY id");				
 			
 			/**
@@ -229,7 +229,7 @@ public class MarketplaceMapper {
 	     try {
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT id, description, title FROM marketplace "
+			ResultSet rs = stmt.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 					+ "WHERE title LIKE " + title + "ORDER BY id");				
 			
 			/**
