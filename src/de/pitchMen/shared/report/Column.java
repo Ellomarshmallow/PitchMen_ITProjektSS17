@@ -18,10 +18,18 @@ import java.io.Serializable;
 	     * 
 	     */
 	    private String value = "";
-
+	    
+	    public Column() {
+	    }
 	    /**
 	     * @return
 	     */
+	    
+	    public Column(String s){
+	    	this.value = s;
+	    }
+	    
+	    
 	    public String toString() {
 	        return this.value;
 	    }
