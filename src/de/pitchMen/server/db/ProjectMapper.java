@@ -143,7 +143,8 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, description, dateOpened, dateClosed FROM project WHERE id=" + id);
+					.executeQuery("SELECT id, title, description, dateOpened, dateClosed ,marketplace_id, person_id "
+							+ "FROM project WHERE id=" + id);
 
 			/**
 			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
@@ -159,7 +160,8 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-				
+				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setPersonId(rs.getInt("person_id"));				
 				
 				return project;
 			}
@@ -184,7 +186,8 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, description, dateOpened, dateClosed FROM project ORDER BY id");
+					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
+							+ " FROM project ORDER BY id");
 
 			while (rs.next()) {
 				Project project = new Project();
@@ -193,7 +196,9 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-
+				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setPersonId(rs.getInt("person_id"));
+				
 				result.add(project);
 
 			}
@@ -218,7 +223,8 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, title, description, dateOpened, dateClosed FROM project WHERE dateOpened= '"
+					"SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
+					+ " FROM project WHERE dateOpened= '"
 							+ dateOpened + "' ORDER BY id");
 
 			while (rs.next()) {
@@ -228,7 +234,9 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-
+				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setPersonId(rs.getInt("person_id"));
+				
 				result.add(project);
 
 			}
@@ -253,7 +261,8 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, title, description, dateOpened, dateClosed FROM project WHERE dateClosed= '"
+					"SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
+					+ " FROM project WHERE dateClosed= '"
 							+ dateClosed + "' ORDER BY id");
 
 			while (rs.next()) {
@@ -263,7 +272,9 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
-
+				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setPersonId(rs.getInt("person_id"));
+				
 				result.add(project);
 
 			}
@@ -287,7 +298,8 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, title, description, dateOpened, dateClosed FROM project WHERE title= '"
+					"SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
+					+ " FROM project WHERE title= '"
 							+ title + "' ORDER BY id");
 
 			while (rs.next()) {
@@ -297,6 +309,9 @@ public class ProjectMapper {
 				project.setDescription(rs.getString("description"));
 				project.setDateOpened(rs.getDate("dateOpened"));
 				project.setDateClosed(rs.getDate("dateClosed"));
+				project.setMarketplaceIdId(rs.getInt("marketplace_id"));
+				project.setPersonId(rs.getInt("person_id"));
+
 
 				result.add(project);
 
