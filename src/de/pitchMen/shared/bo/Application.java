@@ -12,16 +12,24 @@ public class Application extends BusinessObject {
 
 	private Date dateCreated = null;
 
-	private OrganisationUnit applicant = null;
-
+	/**
+	 * Realisierung der Beziehung zu einem jobPosting durch einen
+	    Fremdschlüssel.
+	 */
+	private int jobpostingid = 0;
+	/**
+	 * Realisierung der Beziehung zu einer partnerprofil durch einen
+	    Fremdschlüssel.
+	 */
+	private int partnerprofilid= 0;
+	
+	
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
 	 * String verwendet, damit man das Werfen einer NullPointException
 	 * vermeidet.
 	 */
 	private String text = "";
-
-	private Rating rating = null;
 
 	private static final long serialVersionUID = 1L;
 
