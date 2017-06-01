@@ -126,7 +126,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		application.setText(text);
 		application.setJobpostingid(jobPostingId);
 		application.setPartnerprofileId(partnerProfileId);
-		
+
 		try {
 			return this.applicationMapper.insert(application);
 		} catch (ClassNotFoundException e) {
@@ -435,24 +435,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- JOBPOSTNG
 
 	@Override
-	public JobPosting addJobPosting(String title, String text, Date deadline, PartnerProfile partnerProfile,
-			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException {
+	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+			throws IllegalArgumentException {
 		JobPosting jobPosting = new JobPosting();
 		jobPosting.setTitle(title);
 		jobPosting.setText(text);
 		jobPosting.setDeadline(deadline);
-		jobPosting.setPartnerProfile(partnerProfile);
-		jobPosting.setRecruiter(recruiter);
-		jobPosting.setApplications(applications);
-
-		/*
-		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
-		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
-		 */
-		jobPosting.setId(1);
+		jobPosting.setProjectId(projectId);
 
 		// Objekt in der DB speichern.
-		return this.jobPostingMapper.insert(jobPosting);
+		try {
+			return this.jobPostingMapper.insert(jobPosting);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

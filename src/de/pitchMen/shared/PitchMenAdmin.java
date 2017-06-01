@@ -207,8 +207,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param jobPosting
 	 * @throws IllegalArgumentException
 	 */
-	public JobPosting addJobPosting(String title, String text, Date deadline, PartnerProfile partnerprofile,
-			Person recruiter, ArrayList<Application> applications) throws IllegalArgumentException;
+	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
