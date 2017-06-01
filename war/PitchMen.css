@@ -66,9 +66,13 @@ h1 {
 	margin-left: 20px;
 }
 
-#top p {
+#top .gwt-HTML {
 	width: 70%;
 	padding: 20px 30px 20px 0px;
+}
+
+#top p {
+	width: 100%;
 	font-size: 16px;
 	text-align: right;
 }
