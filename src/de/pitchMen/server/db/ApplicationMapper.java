@@ -52,7 +52,7 @@ public class ApplicationMapper {
 	 * @param application
 	 * @return application
 	 */
-	public Application insert(Application application) throws ClassNotFoundException {
+	public Application insert(Application application) {
 		Connection con = DBConnection.connection();
 
 		try {
@@ -89,7 +89,7 @@ public class ApplicationMapper {
 	 * @param application
 	 * @return application
 	 */
-	public Application update(Application application) throws ClassNotFoundException {
+	public Application update(Application application) {
 		Connection con = DBConnection.connection();
 
 		try {
