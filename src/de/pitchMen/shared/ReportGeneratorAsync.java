@@ -24,7 +24,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-    void showAllJobPostings(AsyncCallback<AllJobPostings> callback);
+    void showAllJobPostings(JobPosting jobPosting, AsyncCallback<AllJobPostings> callback);
 	/**
 	 * 
 	 */
