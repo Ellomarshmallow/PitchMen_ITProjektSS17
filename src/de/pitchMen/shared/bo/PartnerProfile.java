@@ -100,13 +100,13 @@ public class PartnerProfile extends BusinessObject {
 	/**
 	 * @return jopPostingId
 	 */	
-	public int getJopPostingId() {
+	public int getJobPostingId() {
 		return jopPostingId;
 	}
 	/**
 	 * @param jopPostingId
 	 */
-	public void setJopPostingId(int jopPostingId) {
+	public void setJobPostingId(int jopPostingId) {
 		this.jopPostingId = jopPostingId;
 	}
 	
