@@ -145,7 +145,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
+	public ArrayList<Application> getApplicationsByPerson(Person p) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return applicationMapper.findByPerson(p);
+		
+	
+		}
+		
+			
 	@Override
 	public Application getApplicationByID(int id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
