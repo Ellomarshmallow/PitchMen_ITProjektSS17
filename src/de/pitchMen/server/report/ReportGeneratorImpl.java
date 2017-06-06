@@ -10,6 +10,7 @@ import de.pitchMen.server.*;
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
 import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
@@ -105,6 +106,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("JobPosting Titel"));
 		headline.addColumn(new Column("JobPosting Text"));
 		headline.addColumn(new Column("dazugehöriges Projekt"));
+		headline.addColumn(new Column("Deadline"));
 		
 		result.addRow(headline);
 		
@@ -116,7 +118,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
-			
+			jobPostingZeile.addColumn(new Column(jobPosting.getDeadline().toString()));
 			result.addRow(jobPostingZeile);
 		
 		}
@@ -125,10 +127,21 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 
 	@Override
-	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(Person p)
+	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(PartnerProfile partnerProfile)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		if (pitchMenAdmin == null) {
+			return null;
+			}
+			JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(jobPostingId);
+			
+			AllJobPostingsMatchingPartnerProfileOfUser result = showAllJobPostingsMatchingPartnerProfileOfUser();
+				
+			result.setTitle("Alle Bewerbungen  ");
+			
+			
+			
+			
+		
 	}
 
 
