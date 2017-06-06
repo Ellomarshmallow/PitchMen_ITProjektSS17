@@ -15,6 +15,11 @@ import com.google.gwt.user.client.ui.Label;
 
 public class Formular extends SimplePanel {
 	
+	// TODO: Die Methode hasPermission() implementieren. Rückgabe eines booleanschen Wertes.
+	// 		 Da der Ersteller des Projektmarktplatzes mehr Buttons hat (löschen bearbeiten)
+	
+	private int Creator;
+
 	
 	private PitchMenAdminAsync pitchMenAdmin = null;
 	
@@ -40,6 +45,23 @@ public class Formular extends SimplePanel {
 	
 	public PitchMenAdminAsync getPitchMenAdmin() {
 		return pitchMenAdmin;
+	}
+	
+	public void setCreator(int creator){
+		this.Creator = creator; 
+	}
+	
+	public int getCreator(){
+		return this.Creator; 
+	}
+	
+	public boolean hasPermission(){
+		if(this.Creator == ClientsideSettings.getCurrentUser().getId()){
+			return true;
+		}
+		else {
+			return false; 
+		}
 	}
 
 	public Formular(){
