@@ -296,7 +296,7 @@ public class ApplicationMapper {
 	 * @return ArryList<Application>
 	 */
 
-	public ArrayList<Application> findByPersonID(int personId) {
+	public ArrayList<Application> findByPersonId(int personId) {
 		Connection con = DBConnection.connection();
 		
 		ArrayList<Application> result = new ArrayList<Application>();
