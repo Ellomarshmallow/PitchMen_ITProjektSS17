@@ -292,6 +292,7 @@ public class ApplicationMapper {
 	 * Bei einer JOIN-Klausel werden Zeilen aus zwei Tabellen zusammengeführt.
 	 * Bei dem INNER JOIN verbundenen Tabellen werden nur die Datensätze
 	 * übernommen / angezeigt die in beiden Tabellen einen Treffer haben.
+	 * Methode u.a. für Aufgabenstellung Nr. 6
 	 * 
 	 * @return ArryList<Application>
 	 */
