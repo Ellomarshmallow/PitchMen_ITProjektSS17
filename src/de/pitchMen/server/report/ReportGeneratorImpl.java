@@ -9,6 +9,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.pitchMen.server.*;
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
+import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
@@ -132,11 +133,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		if (pitchMenAdmin == null) {
 			return null;
 			}
-			JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(jobPostingId);
-			
-			AllJobPostingsMatchingPartnerProfileOfUser result = showAllJobPostingsMatchingPartnerProfileOfUser();
-				
-			result.setTitle("Alle Bewerbungen  ");
+		return null;
+		// TODO Auto-generated method stub
+	
 			
 			
 			
@@ -148,6 +147,33 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+		if (pitchMenAdmin == null) {
+			return null;
+			}
+		AllApplicationsOfUser result = AllApplicationsOfUser();
+		
+		result.setTitle("Alle Bewerbungen eines Nutzers");
+		result.setDatecreated(new Date());
+		
+		Row headline = new Row(); //Erste Zeile im Report
+		
+		headline.addColumn(new Column("Erstellungsdatum"));
+		headline.addColumn(new Column("Bewerbungstext"));
+	
+		
+		result.addRow(headline);
+		
+		ArrayList<Application> applications = PitchMenAdmin.getApplicationsByPerson(p);	
+		for (Application application : applications) {
+			Row applicationsrow = new Row();
+			
+			applicationsrow.addColumn(new Column(application.getDateCreated().toString()));
+			applicationsrow.addColumn(new Column(application.getText()));
+			
+			result.addRow(applicationsrow);
+		
+		}
+		
 		return null;
 	}
 
