@@ -166,7 +166,7 @@ public class PartnerProfileMapper {
 				partnerProfile.setCompanyId(rs.getInt("company_id"));
 				partnerProfile.setTeamId(rs.getInt("team_id"));
 				partnerProfile.setPersonId(rs.getInt("person_id"));
-				partnerProfile.setjobPostingId(rs.getInt("jobPosting_id"));
+				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
 
 				return partnerProfile;
 			}
@@ -202,7 +202,7 @@ public class PartnerProfileMapper {
 				partnerProfile.setCompanyId(rs.getInt("company_id"));
 				partnerProfile.setTeamId(rs.getInt("team_id"));
 				partnerProfile.setPersonId(rs.getInt("person_id"));
-				partnerProfile.setjobPostingId(rs.getInt("jobPosting_id"));
+				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
 
 				// Hinzufügen des neuen Objekts zur Ergebnis-ArrayList
 				result.add(partnerProfile);
