@@ -29,6 +29,8 @@ public interface PitchMenAdminAsync {
 	void getApplications(AsyncCallback<ArrayList<Application>> callback);
 
 	void getApplicationByID(int id, AsyncCallback<Application> callback);
+	
+	void getApplicationsByPerson(Person p, AsyncCallback<ArrayList<Application>> callback);
 
 	// ---------- COMPANY
 	void addCompany(AsyncCallback<Company> callback);

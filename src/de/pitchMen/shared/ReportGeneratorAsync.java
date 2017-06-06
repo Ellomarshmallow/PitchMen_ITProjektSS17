@@ -3,9 +3,11 @@ package de.pitchMen.shared;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
@@ -28,7 +30,11 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showAllJobPostingsMatchingPartnerProfileOfUser(Person p, AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser> callback);
+    void showAllApplicationsToOneJobPostingOfUser(int jobPostingId, AsyncCallback<AllApplicationsToOneJobPostingOfUser> callback);
+    /** 
+	 * 
+	 */
+    void showAllJobPostingsMatchingPartnerProfileOfUser(PartnerProfile partnerProfile, AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser> callback);
 	/**
 	 * 
 	 */
@@ -48,5 +54,5 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showApplicationsRelatedToJobPostingsOfUser(JobPosting j, AsyncCallback<ApplicationsRelatedToJobPostingsOfUser> callback);
+	void showApplicationsRelatedToJobPostingsOfUser(Person p, AsyncCallback<ApplicationsRelatedToJobPostingsOfUser> callback);
 }

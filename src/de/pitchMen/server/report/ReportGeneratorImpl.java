@@ -6,12 +6,17 @@ import java.util.Vector;
 
 import com.google.gwt.thirdparty.javascript.jscomp.Result;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import de.pitchMen.client.PitchMen;
 import de.pitchMen.server.*;
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
+import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
@@ -56,25 +61,25 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return this.pitchMenAdmin;
 	}
 
-	 /**
-	   * Hinzufügen des Report-Impressums. Diese Methode ist aus den
-	   * <code>create...</code>-Methoden ausgegliedert, da jede dieser Methoden
-	   * diese Tätigkeiten redundant auszuführen hätte. Stattdessen rufen die
-	   * <code>create...</code>-Methoden diese Methode auf.
-	   * 
-	   * @param r der um das Impressum zu erweiternde Report.
-	   */
+	/**
+	 * Hinzufügen des Report-Impressums. Diese Methode ist aus den
+	 * <code>create...</code>-Methoden ausgegliedert, da jede dieser Methoden
+	 * diese Tätigkeiten redundant auszuführen hätte. Stattdessen rufen die
+	 * <code>create...</code>-Methoden diese Methode auf.
+	 * 
+	 * @param r der um das Impressum zu erweiternde Report.
+	 */
 	// AUSKOMMENTIERT WEIL F�R TEST NOCH NICHT NOTWENDIG
 	/* protected void addImprint(Report r) {
 		    /*
-		     * Das Impressum soll wesentliche Informationen über die Bank enthalten.
-		     */
-		   /* Bank bank = this.administration.getBank();
+	 * Das Impressum soll wesentliche Informationen über die Bank enthalten.
+	 */
+	/* Bank bank = this.administration.getBank();
 
 		    /*
-		     * Das Imressum soll mehrzeilig sein.
-		     */
-		   /* CompositeParagraph imprint = new CompositeParagraph();
+	 * Das Imressum soll mehrzeilig sein.
+	 */
+	/* CompositeParagraph imprint = new CompositeParagraph();
 
 		    imprint.addSubParagraph(new SimpleParagraph(bank.getName()));
 		    imprint.addSubParagraph(new SimpleParagraph(bank.getStreet()));
@@ -90,51 +95,153 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public AllJobPostings showAllJobPostings(JobPosting jopPosting) throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
-		return null;
+			return null;
 		}
 		AllJobPostings result = new AllJobPostings();
-		
-			
+
+
 		result.setTitle("Alle Job Postings");
-		
+
 		result.setDatecreated(new Date());
-		
-				
+
+
 		Row headline = new Row(); //Erste Zeile im Report
-		
+
 		headline.addColumn(new Column("JobPosting Titel"));
 		headline.addColumn(new Column("JobPosting Text"));
 		headline.addColumn(new Column("dazugeh�riges Projekt"));
-		
+		headline.addColumn(new Column("Deadline"));
+
 		result.addRow(headline);
-		
+
 		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
-		
+
 		for (JobPosting jobPosting : jobPostings) {
 			Row jobPostingZeile = new Row();
-			
+
 			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
-			
+			jobPostingZeile.addColumn(new Column(jobPosting.getDeadline().toString()));
 			result.addRow(jobPostingZeile);
-		
+
 		}
 		return result;
 	}
 
 
 	@Override
-	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(Person p)
+	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(PartnerProfile partnerProfile)
+			throws IllegalArgumentException {
+		if (pitchMenAdmin == null) {
+			return null;
+		}
+		return null;
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return null;
+		if (pitchMenAdmin == null) {
+			return null;
+		}
+		ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
+
+		result.setTitle("Alle Bewerbungen auf eine Ausschreibung des Users");
+		result.setDatecreated(new Date());
+		Row headline = new Row();
+		headline.addColumn(new Column("Erstellungsdatum"));
+		headline.addColumn(new Column("Bewerbungstext"));
+		result.addRow(headline);
+
+		ArrayList<Application> applications = pitchMenAdmin.getApplications();	
+		for (Application a : applications) {
+
+			if(a.getPartnerProfileId() == p.getId()) {};
+			Row applicationsrow = new Row();
+
+			applicationsrow.addColumn(new Column(application.getDateCreated().toString()));
+			applicationsrow.addColumn(new Column(application.getText()));
+
+			result.addRow(applicationsrow);
+		}
+
+
+		return result;
 	}
+	public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
+		if (pitchMenAdmin == null) {
+			return null;
+		}
+		JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(jobPostingId);
+
+		AllApplicationsToOneJobPostingOfUser result = new AllApplicationsToOneJobPostingOfUser();
+
+		result.setTitle("Alle Bewerbungen auf die Ausschreibung " + jobPosting.getTitle() + "mit der ID: " + jobPosting.getId());
+
+		result.setDatecreated(new Date());
+
+		Row headline = new Row();
+
+		headline.addColumn(new Column("Erstellungsdatum"));
+		headline.addColumn(new Column("Bewerbungstext"));
+		result.addRow(headline);
+		//TODO getApplicationsByJobPostingId in PitchmenAdmin implementieren
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByJobPostingId(jobPostingId);
+
+		for(Application a : applications){
+
+			Row applicationRow = new Row();
+
+			applicationRow.addColumn(new Column(a.getDateCreated().toString()));
+			applicationRow.addColumn(new Column(a.getText()));
+
+
+
+			result.addRow(applicationRow);
+		}
+
+		return result;
+	};
+
 
 
 	@Override
 	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		//TODO Fehlersuche
+		if (pitchMenAdmin == null) {
+			return null;
+		}
+		AllApplicationsOfUser result = AllApplicationsOfUser();
+
+		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugeh�rigen Ausschreibungen");
+		result.setDatecreated(new Date());
+
+		Row headline = new Row(); //Erste Zeile im Report
+
+		headline.addColumn(new Column("Erstellungsdatum"));
+		headline.addColumn(new Column("Bewerbungstext"));
+
+
+		result.addRow(headline);
+
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p);	
+		for (Application a : applications) {
+			
+			Application application = pitchMenAdmin.getApplicationByID(a.getJobPostingId());
+			
+			Row applicationsrow = new Row();
+
+
+			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
+			applicationsrow.addColumn(new Column(a.getText()));
+
+			result.addRow(applicationsrow);
+
+		}
+
 		return null;
 	}
 
@@ -161,12 +268,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 
-	@Override
-	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(JobPosting j)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * Default constructor
