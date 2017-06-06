@@ -50,6 +50,7 @@ public class AddMarketplaceForm extends Formular {
 		super.getPitchMenAdmin().addMarketplace(titleBox.getText(), descBox.getText(), 
 				ClientsideSettings.getCurrentUser(), projects, new AddMarketplaceFormCallback(this));
 			// TODO: das projects wird aus der addMarketplace Methode noch entfernt (ellis Aufgabe)
+		super.setCreator(ClientsideSettings.getCurrentUser().getId());
 	}
 
 	

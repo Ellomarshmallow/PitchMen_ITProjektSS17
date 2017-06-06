@@ -55,6 +55,7 @@ public class AddProjectForm extends Formular{
 
 		super.getPitchMenAdmin().addProject(dateOpenedBox.getValue(), dateClosedBox.getValue(), titleBox.getText(), descBox.getText(),
 											ClientsideSettings.getCurrentUser().getId(),MarketplaceID, new AddProjectFormCallback(this));
+		super.setCreator(ClientsideSettings.getCurrentUser().getId());
 	}
 	
 

@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HTML;
 
 import de.pitchMen.shared.bo.Marketplace;
 
-
+//TODO noch Buttons (löschen bearbeiten) hinzufügen falls hasPermission() is true, bei false nur + Btn
 public class MarketplaceForm extends Formular {
 	
 	private int mpID ; 
