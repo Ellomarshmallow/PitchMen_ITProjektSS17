@@ -49,5 +49,5 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showApplicationsRelatedToJobPostingsOfUser(JobPosting j, AsyncCallback<ApplicationsRelatedToJobPostingsOfUser> callback);
+	void showApplicationsRelatedToJobPostingsOfUser(Person p, AsyncCallback<ApplicationsRelatedToJobPostingsOfUser> callback);
 }
