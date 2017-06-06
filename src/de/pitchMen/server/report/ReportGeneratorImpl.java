@@ -14,6 +14,7 @@ import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
@@ -135,8 +136,51 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			}
 		return null;
 		// TODO Auto-generated method stub
+	}
 	
+		public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
+			if (pitchMenAdmin == null) {
+				return null;
+				}
 			
+			
+			
+			
+		};
+	
+	
+	@Override
+		public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p)
+				throws IllegalArgumentException {
+			// TODO Auto-generated method stub
+			if (pitchMenAdmin == null) {
+				return null;
+				}
+			ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
+			
+			result.setTitle("Alle Bewerbungen auf eine Ausschreibung des Users");
+			result.setDatecreated(new Date());
+			Row headline = new Row();
+			headline.addColumn(new Column("Erstellungsdatum"));
+			headline.addColumn(new Column("Bewerbungstext"));
+			result.addRow(headline);
+			
+			ArrayList<Application> applications = pitchMenAdmin.getApplications();	
+			for (Application a : applications) {
+				
+					if(a.getPartnerProfileId() == p.getId()) {};
+				Row applicationsrow = new Row();
+				
+				applicationsrow.addColumn(new Column(application.getDateCreated().toString()));
+				applicationsrow.addColumn(new Column(application.getText()));
+				
+				result.addRow(applicationsrow);
+			}
+			
+			
+			return result;
+		}
+		
 			
 			
 			
@@ -146,7 +190,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	@Override
 	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		//TODO Fehlersuche
 		if (pitchMenAdmin == null) {
 			return null;
 			}
@@ -163,9 +207,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		result.addRow(headline);
 		
-		ArrayList<Application> applications = PitchMenAdmin.getApplicationsByPerson(p);	
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p);	
 		for (Application application : applications) {
 			Row applicationsrow = new Row();
+		
 			
 			applicationsrow.addColumn(new Column(application.getDateCreated().toString()));
 			applicationsrow.addColumn(new Column(application.getText()));
@@ -200,13 +245,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 
-	@Override
-	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(JobPosting j)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	/**
 	 * Default constructor
 	 */
