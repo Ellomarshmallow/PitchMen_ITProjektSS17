@@ -287,4 +287,44 @@ public class ApplicationMapper {
 		return result;
 	}
 
+	/**
+	 * 
+	 * Bei einer JOIN-Klausel werden Zeilen aus zwei Tabellen zusammengeführt.
+	 * Bei dem INNER JOIN verbundenen Tabellen werden nur die Datensätze
+	 * übernommen / angezeigt die in beiden Tabellen einen Treffer haben.
+	 * 
+	 * @return ArryList<Application>
+	 */
+
+	public ArrayList<Application> findByPersonID(int personId) {
+		Connection con = DBConnection.connection();
+		
+		ArrayList<Application> result = new ArrayList<Application>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM application INNER JOIN partnerProfile"
+					+ "ON application.partnerProfil_id = partnerProfile.id WHERE partnerProfile.person_id = "
+					+ personId);
+
+			/**
+			 * Anhand der übergebenen PersonId werden die dazugehörigen
+			 * Application-Tupel (Bewerbungen) aus der Datenbank abgefragt.
+			 */
+
+			while (rs.next()) {
+				Application application = new Application();
+				application.setId(rs.getInt("id"));
+				application.setText(rs.getString("text"));
+				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
+
+				result.add(application);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
 }
