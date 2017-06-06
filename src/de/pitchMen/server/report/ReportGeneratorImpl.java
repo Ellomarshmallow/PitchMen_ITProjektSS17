@@ -142,10 +142,35 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			if (pitchMenAdmin == null) {
 				return null;
 				}
+			JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(jobPostingId);
+			
+			AllApplicationsToOneJobPostingOfUser result = new AllApplicationsToOneJobPostingOfUser();
+			
+			result.setTitle("Alle Bewerbungen auf die Ausschreibung " + jobPosting.getTitle() + "mit der ID: " + jobPosting.getId());
+			
+			result.setDatecreated(new Date());
+			
+			Row headline = new Row();
+			
+			headline.addColumn(new Column("Erstellungsdatum"));
+			headline.addColumn(new Column("Bewerbungstext"));
+			result.addRow(headline);
+															//TODO getApplicationsByJobPostingId in PitchmenAdmin implementieren
+			ArrayList<Application> applications = pitchMenAdmin.getApplicationsByJobPostingId(jobPostingId);
+			
+			for(Application a : applications){
+				
+				Row applicationRow = new Row();
+				
+				applicationRow.addColumn(new Column(a.getDateCreated().toString()));
+				applicationRow.addColumn(new Column(a.getText()));
+				
 			
 			
-			
-			
+			result.addRow(applicationRow);
+			}
+		
+			return result;
 		};
 	
 	
