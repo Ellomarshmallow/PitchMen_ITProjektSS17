@@ -2,6 +2,7 @@ package de.pitchMen.shared;
 
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
@@ -33,7 +34,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(Person p) throws IllegalArgumentException;
+	public abstract AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(PartnerProfile partnerProfile) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
