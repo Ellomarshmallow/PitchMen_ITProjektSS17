@@ -2,9 +2,13 @@ package de.pitchMen.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.TreeViewModel;
+
+import de.pitchMen.client.elements.PitchMenTreeViewModel;
 
 /**
  * Die Klasse <code>Navigation</code> erweitert die
@@ -18,8 +22,39 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Navigation extends VerticalPanel {
 	
+	/* TODO useTreeNavigation-Variable
+	 * 
+	 * Helfer-Variable, um zwischen der alten,
+	 * Button-basierten Navigation und der von Herrn
+	 * Rathke vorgeschlagenen Baum-Navigation hin
+	 * und her zu wechseln. Sollte beizeiten entfernt
+	 * werden.
+	 * Simon, 04.06.2017, 14:10 Uhr
+	 * 
+	 */
+	private boolean useTreeNavigation = true;
 	
+	/**
+	 * Aktuell verzweigt die onLoad()-Methode nur zwischen
+	 * den Methoden onLoadWithButtons() und onLoadWithTree()
+	 * (s. todo Z. 21). Wenn eine Entscheidung bzgl. der
+	 * Darstellung getroffen ist, kann der Inhalt der 
+	 * entsprechenden Methode hier eingefügt und der Inhalt
+	 * der anderen gelöscht werden.
+	 */
 	public void onLoad() {
+		if(this.useTreeNavigation) {
+			this.onLoadWithTree();
+		} else {
+			this.onLoadWithButtons();
+		}
+	}
+	
+	/**
+	 * Wird aufgerufen, wenn die Variable useTreeNavigation
+	 * false ist.
+	 */
+	private void onLoadWithButtons() {
 		/*
 		 * Die folgenden Buttons gibt es in der 
 		 * PitchMen-Navigation:
@@ -49,6 +84,25 @@ public class Navigation extends VerticalPanel {
 		applicationsBtn.addClickHandler(new ApplicationsClickHandler());
 		repGenBtn.addClickHandler(new RepGenClickHandler());
 		helpBtn.addClickHandler(new HelpClickHandler());
+	}
+	
+	/**
+	 * Wird aufgerufen, wenn die Variable useTreeNavigation
+	 * true ist.
+	 */
+	private void onLoadWithTree() {
+		// Modell für den Baum erstellen. 
+		TreeViewModel navTreeModel = new PitchMenTreeViewModel();
+		
+		/*
+		 * Anlegen des Baumes mit dem zuvor definierten TreeViewModel.
+		 * Als zweiter Parameter wird null übergeben, damit wird der 
+		 * Default-Wert für einen Baumknoten festgelegt.  
+		 */
+		CellTree navTree = new CellTree(navTreeModel, null);
+		
+		// Baum wird der Navigation hinzugefügt
+		this.add(navTree);
 	}
 	
 	/**

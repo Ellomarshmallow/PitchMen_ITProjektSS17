@@ -42,10 +42,8 @@ public class MarketplaceCell extends AbstractCell<Marketplace> {
 		 * Spezifische Klassen für das umschließenede div-Element
 		 * ermöglichen später ein einheitliches Design mittels CSS.
 		 */
-		sb.appendHtmlConstant("<div class='cell marketplaceCell'><h3>");
+		sb.appendHtmlConstant("<div class='cell marketplaceCell'><p>");
 		sb.appendEscaped(value.getTitle());
-		sb.appendHtmlConstant("</h3><p>");
-		sb.appendEscaped(value.getDescription());
 		sb.appendHtmlConstant("</p></div>");
 		
 	}
