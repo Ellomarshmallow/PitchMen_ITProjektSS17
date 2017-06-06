@@ -116,13 +116,6 @@ public class GridElement extends VerticalPanel {
 		// Ausgabe des Titels
 		this.add(new HTML("<h4>" + jobPosting.getTitle() + "</h4>"));
 		
-		// Ausgabe des Ausschreibenden
-		this.add(new HTML("<p>Ausgeschrieben von "
-						  + jobPosting.getRecruiter().getFirstName() 
-						  + " "
-						  + jobPosting.getRecruiter().getName()
-						  + "</p>"));
-		
 		// Ausgabe der Bewerbungsfrist
 		this.add(new HTML("<p><small>Bewerbungsfrist: "
 						  + jobPosting.getDeadline().toString()
