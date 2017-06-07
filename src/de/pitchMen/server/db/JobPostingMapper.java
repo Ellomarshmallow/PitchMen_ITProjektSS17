@@ -97,7 +97,8 @@ public class JobPostingMapper {
 
 			stmt.executeUpdate(
 					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + "Text='" + jobPosting.getText()
-							+ "', " + "deadline='" + jobPosting.getDeadline() + "WHERE id=" + jobPosting.getId());
+							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + "status='" 
+							+ jobPosting.getStatus() + "WHERE id=" + jobPosting.getId());
 		}
 
 		catch (SQLException e2) {
@@ -139,7 +140,8 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " + "WHERE id =" + id);
+					.executeQuery("SELECT id, title, text, deadline, projcet_id, "
+							+ "status FROM jobPosting " + "WHERE id =" + id);
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -154,6 +156,7 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
 
 				return jobPosting;
 			}
@@ -178,7 +181,7 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting " + "ORDER BY id");
+					.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting " + "ORDER BY status");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -193,6 +196,7 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
 
 				result.add(jobPosting);
 			}
@@ -216,7 +220,7 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting "
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting "
 					+ "WHERE text LIKE" + text + "ORDER BY id");
 
 			/**
@@ -231,6 +235,7 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
 
 				result.add(jobPosting);
 			}
@@ -254,8 +259,8 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting "
-					+ "WHERE title LIKE" + titel + "ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, "
+					+ "status FROM jobPosting WHERE title LIKE" + titel + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das
@@ -269,6 +274,7 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
 
 				result.add(jobPosting);
 			}
@@ -292,7 +298,7 @@ public class JobPostingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id FROM jobPosting "
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting "
 					+ "WHERE deadline LIKE" + deadline + "ORDER BY id");
 
 			/**
@@ -307,6 +313,7 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
 
 				result.add(jobPosting);
 			}
@@ -349,6 +356,7 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
 
 				result.add(jobPosting);
 			}
@@ -391,6 +399,7 @@ public class JobPostingMapper {
 				jobPosting.setText(rs.getString("text"));
 				jobPosting.setDeadline(rs.getDate("deadline"));
 				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
 
 				result.add(jobPosting);
 			}

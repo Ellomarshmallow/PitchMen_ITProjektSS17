@@ -64,6 +64,9 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+		//	Statement stmt2 = con.createStatement();
+		//	Statement stmt3 = con.createStatement();
+			
 			/**
 			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
 			 * aktuelle id wird um eins erhöht.
@@ -72,6 +75,8 @@ public class ParticipationMapper {
 
 			participation.setId(rs.getInt("maxid") + 1);
 			stmt = con.createStatement();
+		//	stmt2 = con.createStatement();
+		//	stmt3 = con.createStatement();
 
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Participation-Tupels in die
@@ -80,6 +85,12 @@ public class ParticipationMapper {
 			stmt.executeUpdate("INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
 					+ participation.getId() + "', '" + participation.getDateOpened() + "', '"
 					+ participation.getDateClosed());
+			
+		//	stmt2.executeUpdate("INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
+		//			+ participation.getId() + project.getId() + "' WHERE id= " + participation.getId());
+			
+		//	stmt3.executeUpdate("INSERT INTO person_has_participation (person_id, participation_id)" + "VALUES ("
+		//			+ person.getId() + participation.getId());
 		}
 
 		catch (SQLException e2) {

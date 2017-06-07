@@ -31,6 +31,8 @@ public class JobPosting extends BusinessObject {
 	private String text = "";
 
 	private Date deadline = null;
+	
+	private String status = "";
 
 	private static final long serialVersionUID = 1L;
 
@@ -70,6 +72,13 @@ public class JobPosting extends BusinessObject {
 	public Date getDeadline() {
 		return this.deadline;
 	}
+	
+	/**
+	 * @return status
+	 */
+	public String getStatus() {
+		return this.status;
+	}
 
 	/**
 	 * @param deadline
@@ -77,6 +86,14 @@ public class JobPosting extends BusinessObject {
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
+	
+	/**
+	 * @param status
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 
 	/**
 	 * @return projectid

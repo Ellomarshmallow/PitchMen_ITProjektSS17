@@ -35,7 +35,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Application-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId)
+	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId, int partnerProfileId)
 			throws IllegalArgumentException;
 
 	/**
@@ -59,6 +59,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
 
 	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException;
+	
+	public ArrayList<Application> getApplicationsOf(int jobPostingId) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
 
@@ -100,6 +102,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException;
 
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
+	
+	public ArrayList<JobPosting> getJobPostingsOf(int projectId) throws IllegalArgumentException;
 
 	// ------------------- PERSON
 
@@ -123,6 +127,9 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deletePerson(Person person) throws IllegalArgumentException;
 
 	public Person getPersonByID(int id) throws IllegalArgumentException;
+	
+	public ArrayList<Person> getAllPeople() throws IllegalArgumentException;
+
 
 	// ------------------- PROJECTS
 
@@ -155,6 +162,8 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
+	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException;
+	
 	// --------------------------- MARKETPLACE
 
 	/**
@@ -222,6 +231,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
+	
+	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException;
 
 	// --------------------- PARTNERPROFILES
 
@@ -298,6 +309,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Rating> getRatings() throws IllegalArgumentException;
 
 	public Rating getRatingByID(int id) throws IllegalArgumentException;
+	
+	Rating getRatingOf(int applicationId) throws IllegalArgumentException;
 
 	// --------------------------- PARTICIPATION
 
@@ -307,8 +320,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param participation
 	 * @throws IllegalArgumentException
 	 */
-	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
-			OrganisationUnit associatedApplicant, Project associatedProject) throws IllegalArgumentException;
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Participation-Objekt zur ArrayList ratings hinzu.
@@ -333,4 +345,5 @@ public interface PitchMenAdmin extends RemoteService {
 	// --------------------------- LOGIN
 	public Person login(String requestUri);
 
+	
 }

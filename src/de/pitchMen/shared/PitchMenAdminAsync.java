@@ -19,7 +19,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- APPLICATION
 
-	void addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId,
+	void addApplication(Date dateCreated, String text, String status, int jobPostingId, int partnerProfileId,
 			AsyncCallback<Application> callback);
 
 	void updateApplication(Application application, AsyncCallback<Void> callback);
@@ -31,6 +31,8 @@ public interface PitchMenAdminAsync {
 	void getApplicationByID(int id, AsyncCallback<Application> callback);
 
 	void getApplicationsByPerson(int personId, AsyncCallback<ArrayList<Application>> callback);
+	
+	void getApplicationsOf(int jobPostingId, AsyncCallback<ArrayList<Application>> callback);
 
 	// ---------- COMPANY
 	void addCompany(AsyncCallback<Company> callback);
@@ -54,6 +56,8 @@ public interface PitchMenAdminAsync {
 
 	void getJobPostingByID(int id, AsyncCallback<JobPosting> callback);
 
+	void getJobPostingsOf(int projectId, AsyncCallback<ArrayList<JobPosting>> callback);
+
 	// ---------- MARKETPLACE
 
 	void addMarketplace(String title, String description, int personId, int teamId, int companyId,
@@ -69,9 +73,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PARTICIPATION
 
-	void addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
-			OrganisationUnit associatedApplicant, Project associatedProject, AsyncCallback<Participation> callback);
-	// FIXME In Participation ist Project und OrgaUnit 2 mal
+	void addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId, AsyncCallback<Participation> callback);
 
 	void updateParticipation(Participation participation, AsyncCallback<Void> callback);
 
@@ -104,6 +106,8 @@ public interface PitchMenAdminAsync {
 	void deletePerson(Person person, AsyncCallback<Void> callback);
 
 	void getPersonByID(int id, AsyncCallback<Person> callback);
+	
+	void getAllPeople(AsyncCallback<ArrayList<Person>> callback);
 
 	// ---------- PROJECT
 
@@ -117,6 +121,8 @@ public interface PitchMenAdminAsync {
 	void getProject(AsyncCallback<ArrayList<Project>> callback);
 
 	void getProjectByID(int id, AsyncCallback<Project> callback);
+	
+	void getProjectsOf(int marketplaceId, AsyncCallback<ArrayList<Project>> callback);
 
 	// ---------- RATING
 
@@ -129,6 +135,8 @@ public interface PitchMenAdminAsync {
 	void getRatings(AsyncCallback<ArrayList<Rating>> callback);
 
 	void getRatingByID(int id, AsyncCallback<Rating> callback);
+	
+	void getRatingOf(int applicationId, AsyncCallback<Rating> callback);
 
 	// ---------- TEAM
 	void addTeam(AsyncCallback<Team> callback);
@@ -150,6 +158,8 @@ public interface PitchMenAdminAsync {
 	void getTraits(AsyncCallback<ArrayList<Trait>> callback);
 
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
+	
+	void getTraitsOf(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
 
 	// --------------------------- LOGIN
 	void login(String requestUri, AsyncCallback<Person> async);
