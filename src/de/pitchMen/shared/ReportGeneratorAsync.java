@@ -6,9 +6,11 @@ import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllJobPostings;
+import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
+import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
@@ -42,11 +44,19 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
+	void showAllApplicationsOfOneUser(int id, AsyncCallback<AllApplicationsOfOneUser> callback);
+	/**
+	 * 
+	 */
+	void showAllParticipationsOfOneUser(Person p, AsyncCallback<AllParticipationsOfOneUser> callback);
+	/**
+	 * 
+	 */
 	void showProjectInterweavingsWithParticipationsAndApplications(Person p, AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications> callback);
 	/**
 	 * 
 	 */
-	void showFanInJobPostingsOfUser(Person p, AsyncCallback<FanInJobPostingsOfUser> callback);
+	void showFanInJobPostingsOfUser(AsyncCallback<FanInJobPostingsOfUser> callback);
 	/**
 	 * 
 	 */

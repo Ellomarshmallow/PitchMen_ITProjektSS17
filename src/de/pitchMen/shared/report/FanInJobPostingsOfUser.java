@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 
  * @author
  */
-public class FanInJobPostingsOfUser extends CompositeReport implements Serializable {
+public class FanInJobPostingsOfUser extends SimpleReport implements Serializable {
 
 	/**
 	 * 

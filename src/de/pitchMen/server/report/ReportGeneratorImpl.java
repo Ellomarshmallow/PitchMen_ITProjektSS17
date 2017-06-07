@@ -15,10 +15,13 @@ import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
+import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.Column;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
@@ -143,7 +146,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO Fehlersuche
 		if (pitchMenAdmin == null) {
 			return null;
 		}
@@ -154,6 +157,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row headline = new Row();
 		headline.addColumn(new Column("Erstellungsdatum"));
 		headline.addColumn(new Column("Bewerbungstext"));
+		
 		result.addRow(headline);
 
 		ArrayList<Application> applications = pitchMenAdmin.getApplications();	
@@ -210,11 +214,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	@Override
 	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
-		//TODO Fehlersuche
+		
 		if (pitchMenAdmin == null) {
 			return null;
 		}
-		AllApplicationsOfUser result = AllApplicationsOfUser();
+		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugehörigen Ausschreibungen");
 		result.setDatecreated(new Date());
@@ -223,20 +227,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		headline.addColumn(new Column("Erstellungsdatum"));
 		headline.addColumn(new Column("Bewerbungstext"));
-
-
+		headline.addColumn(new Column("Ersteller der Ausschreibung"));
+		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
 		result.addRow(headline);
 
 		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p);	
 		for (Application a : applications) {
 			
+			
 			Application application = pitchMenAdmin.getApplicationByID(a.getJobPostingId());
+			Person jobPoster = pitchMenAdmin.getPersonByID(application.getJobPostingId());
 			
 			Row applicationsrow = new Row();
 
 
 			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationsrow.addColumn(new Column(a.getText()));
+			applicationsrow.addColumn(new Column(jobPoster.getFirstName() + " " + jobPoster.getName()));
+			applicationsrow.addColumn(new Column(jobPoster.getDescription()));
 
 			result.addRow(applicationsrow);
 
@@ -244,20 +252,121 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		return null;
 	}
+	
+	
+	/**
+	 * eventuell unnötig
+	@Override
+	public AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	*/
+	
+	@Override
+	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(Person p) throws IllegalArgumentException {
+		
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		AllParticipationsOfOneUser result = new AllParticipationsOfOneUser();
+		
+		result.setTitle("Report für Alle Beteiligungen eines Nutzers");
+		result.setDatecreated(new Date());
+		
+		Row headline = new Row();
+		
+		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Startdatum"));
+		headline.addColumn(new Column("Enddatum"));
+		headline.addColumn(new Column("Projektbeschreibung"));
+		
+		result.addRow(headline);
+		//TODO getProjectsByPerson in PitchMenAdminImpl erstellen
+		ArrayList<Project> allProjects = pitchMenAdmin.getProjectsByPerson(p);
+		
+		for(Project project : allProjects){
+			
+			Row projectRow = new Row();
+			
+			projectRow.addColumn(new Column(project.getTitle()));
+			projectRow.addColumn(new Column(project.getDateOpened()));
+			projectRow.addColumn(new Column(project.getDateClosed()));
+			projectRow.addColumn(new Column(project.getDescription()));
+			
+			result.addRow(projectRow);
+		}
+		return result;
+	}
 
 
+	
+	
 	@Override
 	public ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(
 			Person p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		ProjectInterweavingsWithParticipationsAndApplications result = new ProjectInterweavingsWithParticipationsAndApplications();
+		
+		result.setTitle("Des Nutzers Projektverflechtungen");
+		result.setDatecreated(new Date());
+		
+		result.addSubReport(this.showAllApplicationsOfUser(p));
+		result.addSubReport(this.showAllParticipationsOfOneUser(p));
+		
+		return result;
 	}
 
 
 	@Override
-	public FanInJobPostingsOfUser showFanInJobPostingsOfUser(Person p) throws IllegalArgumentException {
+	public FanInJobPostingsOfUser showFanInJobPostingsOfUser() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+		
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		FanInJobPostingsOfUser result = new FanInJobPostingsOfUser();
+		
+		result.setTitle("Die FanIn-Analyse");
+		result.setDatecreated(new Date());
+
+		Row headline = new Row();
+		headline.addColumn(new Column("ID"));
+		headline.addColumn(new Column("Person"));
+		headline.addColumn(new Column("Bewerbungsstatus"));
+		
+		result.addRow(headline);
+		
+		//ArrayList<Person> allPersons = pitchMenAdmin.getAllPeople();
+		
+		//for(Person person : allPersons) {
+			
+		ArrayList<Application> allApplications = pitchMenAdmin.getApplications();
+		
+			ArrayList<Application> ongoing = new ArrayList<Application>();
+			ArrayList<Application> declined = new ArrayList<Application>();
+			ArrayList<Application> accepted = new ArrayList<Application>();
+		
+			for(Application ap : allApplications){
+				
+				//TODO If anweisung
+				
+			}
+			
+			
+		//}
+		
+		
 		return null;
+		
+		
+		
 	}
 
 
