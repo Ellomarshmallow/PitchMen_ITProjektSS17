@@ -157,6 +157,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row headline = new Row();
 		headline.addColumn(new Column("Erstellungsdatum"));
 		headline.addColumn(new Column("Bewerbungstext"));
+		
 		result.addRow(headline);
 
 		ArrayList<Application> applications = pitchMenAdmin.getApplications();	
@@ -253,12 +254,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	
+	/**
+	 * eventuell unnötig
 	@Override
 	public AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	*/
 	
 	@Override
 	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(Person p) throws IllegalArgumentException {
@@ -321,9 +324,49 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 
 	@Override
-	public FanInJobPostingsOfUser showFanInJobPostingsOfUser(Person p) throws IllegalArgumentException {
+	public FanInJobPostingsOfUser showFanInJobPostingsOfUser() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+		
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		FanInJobPostingsOfUser result = new FanInJobPostingsOfUser();
+		
+		result.setTitle("Die FanIn-Analyse");
+		result.setDatecreated(new Date());
+
+		Row headline = new Row();
+		headline.addColumn(new Column("ID"));
+		headline.addColumn(new Column("Person"));
+		headline.addColumn(new Column("Bewerbungsstatus"));
+		
+		result.addRow(headline);
+		
+		//ArrayList<Person> allPersons = pitchMenAdmin.getAllPeople();
+		
+		//for(Person person : allPersons) {
+			
+		ArrayList<Application> allApplications = pitchMenAdmin.getApplications();
+		
+			ArrayList<Application> ongoing = new ArrayList<Application>();
+			ArrayList<Application> declined = new ArrayList<Application>();
+			ArrayList<Application> accepted = new ArrayList<Application>();
+		
+			for(Application ap : allApplications){
+				
+				//TODO If anweisung
+				
+			}
+			
+			
+		//}
+		
+		
 		return null;
+		
+		
+		
 	}
 
 
