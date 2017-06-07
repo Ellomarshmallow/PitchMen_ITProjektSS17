@@ -399,8 +399,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public JobPosting getJobPostingOf(int projectId) throws IllegalArgumentException {
-		//FIXME findByProjectId im JobPostingMapper erstellen
-		return this.jobPostingMapper.findByProjectId(projectId);
+		//FIXME findByProject im JobPostingMapper erstellen
+		return this.jobPostingMapper.findByProject(project);
 	}
 	
 	// --------------------------- PARTNERPROFILE
@@ -485,9 +485,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public Rating getRatingOf(int applicationId) throws IllegalArgumentException {
-		//FIXME Methode findByApplicationId im RatingMapper erstellen
-		return this.ratingMapper.findByApplicationId(applicationId);
+	public Rating getRatingOf(Application application) throws IllegalArgumentException {
+		//FIXME Methode findByApplication im RatingMapper erstellen
+		return this.ratingMapper.findByApplication(application);
 	}
 
 	// --------------------------- PARTICIPATION

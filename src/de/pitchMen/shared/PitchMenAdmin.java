@@ -101,7 +101,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
 	
-	public JobPosting getJobPostingOf(int projectId) throws IllegalArgumentException;
+	public JobPosting getJobPostingOf(Project project) throws IllegalArgumentException;
 
 	// ------------------- PERSON
 
@@ -301,7 +301,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Rating getRatingByID(int id) throws IllegalArgumentException;
 	
-	public Rating getRatingOf(int ApplicationId) throws IllegalArgumentException;
+	public Rating getRatingOf(Application application) throws IllegalArgumentException;
 
 	// --------------------------- PARTICIPATION
 
