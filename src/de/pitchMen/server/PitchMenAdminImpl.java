@@ -6,8 +6,6 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hdm.thies.bankProjekt.shared.bo.Account;
-import de.hdm.thies.bankProjekt.shared.bo.Transaction;
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.server.db.*;
 import de.pitchMen.shared.*;
@@ -215,7 +213,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
 		// FIXME Methode getJobPostingsOf erstellen
-		ArrayList<JobPosting> jobPostings = this.getJobPostingsOf();
+		ArrayList<JobPosting> jobPostings = this.getJobPostingsOf(project);
 
 		if (jobPostings != null) {
 			for (JobPosting jobPosting : jobPostings) {
@@ -398,7 +396,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public JobPosting getJobPostingOf(int projectId) throws IllegalArgumentException {
+	public JobPosting getJobPostingOf(Project project) throws IllegalArgumentException {
 		//FIXME findByProject im JobPostingMapper erstellen
 		return this.jobPostingMapper.findByProject(project);
 	}
