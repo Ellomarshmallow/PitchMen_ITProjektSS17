@@ -48,7 +48,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showAllParticipationsOfOneUser(int id, AsyncCallback<AllParticipationsOfOneUser> callback);
+	void showAllParticipationsOfOneUser(Person p, AsyncCallback<AllParticipationsOfOneUser> callback);
 	/**
 	 * 
 	 */

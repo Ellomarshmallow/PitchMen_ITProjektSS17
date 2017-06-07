@@ -53,7 +53,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract AllParticipationsOfOneUser showAllParticipationsOfOneUser (int id)  throws IllegalArgumentException;
+	public abstract AllParticipationsOfOneUser showAllParticipationsOfOneUser (Person p)  throws IllegalArgumentException;
 	/**
 	 * 
 	 */
