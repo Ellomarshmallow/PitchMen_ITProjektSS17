@@ -225,4 +225,46 @@ public class RatingMapper {
 		return result;
 	}
 
+	/**
+	 * DIe Methode findRatingByApplicationId sucht anhand der applicationId alle
+	 * Rating-Tupel aus der Datenbank und speichert diese in ein Rating-Objekt.
+	 * Die Methode ist zur Umsetzung der Anforderung, eine Application zu
+	 * löschen, aber bestehende Beziehungen davor zu löschen
+	 * 
+	 * @param applicationId
+	 * @return Rating
+	 */
+
+	public Rating findRatingByApplicationId(int applicationId) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM rating" + "INNER JOIN application"
+					+ "ON application.id = rating.application_id" + "WHERE application.id = " + applicationId);
+
+			/**
+			 * 
+			 * Zu einer Application besteht maximal ein Rating-Tupel, somit kann
+			 * auch nur einer zurückgegeben werden. Mit der IF-Abfrage wird
+			 * geprüft, ob ein DB-Tupel vorhanden ist und durch rating-Objekt
+			 * zurückgeben, andernfalls wird Null zurückgegeben.
+			 */
+
+			if (rs.next()) {
+				Rating rating = new Rating();
+				rating.setId(rs.getInt("id"));
+				rating.setStatement(rs.getString("statement"));
+				rating.setScore(rs.getFloat("score"));
+				rating.setApplicationId(rs.getInt("application_id"));
+
+				return rating;
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
+
 }
