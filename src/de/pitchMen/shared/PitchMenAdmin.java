@@ -57,7 +57,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Application> getApplications() throws IllegalArgumentException;
 
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
-	
+
 	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
@@ -69,39 +69,37 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteCompany(Company company) throws IllegalArgumentException;
 
 	public Company getCompanyByID(int id) throws IllegalArgumentException;
-	
+
 	// ---------------------JOBPOSTINGS
 
-		/**
-		 * Erstellt ein neues JobPosting-Objekt
-		 * 
-		 * @param jobPosting
-		 * @throws IllegalArgumentException
-		 */
-		public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
-				throws IllegalArgumentException;
+	/**
+	 * Erstellt ein neues JobPosting-Objekt
+	 * 
+	 * @param jobPosting
+	 * @throws IllegalArgumentException
+	 */
+	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+			throws IllegalArgumentException;
 
-		/**
-		 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
-		 * 
-		 * @param jobPosting
-		 * @throws IllegalArgumentException
-		 */
-		public void updateJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+	/**
+	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
+	 * 
+	 * @param jobPosting
+	 * @throws IllegalArgumentException
+	 */
+	public void updateJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
-		/**
-		 * Löscht das JobPosting-Objekt.
-		 * 
-		 * @param jobPosting
-		 * @throws IllegalArgumentException
-		 */
-		public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+	/**
+	 * Löscht das JobPosting-Objekt.
+	 * 
+	 * @param jobPosting
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
-		public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException;
+	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException;
 
-		public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
-
-		public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
 
 	// ------------------- PERSON
 
@@ -111,8 +109,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Person-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl, String logoutUrl)
-			throws IllegalArgumentException;
+	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
+			String logoutUrl) throws IllegalArgumentException;
 
 	public void updatePerson(Person person) throws IllegalArgumentException;
 
@@ -157,8 +155,6 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
-	public void setProject(Project project) throws IllegalArgumentException;
-
 	// --------------------------- MARKETPLACE
 
 	/**
@@ -167,7 +163,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neues Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplace(String title, String description,  int personId, int teamId, int companyId) throws IllegalArgumentException;
+	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
@@ -193,13 +190,6 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
 
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException;
-
-	/**
-	 * @param marketplace
-	 * @throws IllegalArgumentException
-	 */
-
-	public void setMarketplaces(Marketplace marketplace) throws IllegalArgumentException;
 
 	// -------------------------- TRAITS
 
@@ -233,8 +223,6 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
 
-	
-
 	// --------------------- PARTNERPROFILES
 
 	/**
@@ -243,9 +231,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param partnerProfile
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfile(Date dateCreated,
-			Date dateChanged, int personId, int teamId, int companyId, int jobPostingId)
-			throws IllegalArgumentException;
+	public PartnerProfile addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
+			int jobPostingId) throws IllegalArgumentException;
 
 	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
 
@@ -346,5 +333,4 @@ public interface PitchMenAdmin extends RemoteService {
 	// --------------------------- LOGIN
 	public Person login(String requestUri);
 
-	
 }
