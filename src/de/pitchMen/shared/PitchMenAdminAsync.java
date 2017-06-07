@@ -30,7 +30,7 @@ public interface PitchMenAdminAsync {
 
 	void getApplicationByID(int id, AsyncCallback<Application> callback);
 	
-	void getApplicationsByPerson(Person p, AsyncCallback<ArrayList<Application>> callback);
+	void getApplicationsByPerson(int personId, AsyncCallback<ArrayList<Application>> callback);
 
 	// ---------- COMPANY
 	void addCompany(AsyncCallback<Company> callback);

@@ -58,7 +58,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
 	
-	public ArrayList<Application> getApplicationsByPerson(Person p) throws IllegalArgumentException;
+	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
 

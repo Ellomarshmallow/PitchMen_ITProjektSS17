@@ -130,9 +130,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updateApplication(Application application) throws IllegalArgumentException {
-
 		applicationMapper.update(application);
-
 	}
 
 	@Override
@@ -143,29 +141,27 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Application> getApplications() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.applicationMapper.findAll();
 	}
 
 	@Override
-	public ArrayList<Application> getApplicationsByPerson(Person p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return applicationMapper.findByPerson(p);
+	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException {
+		return this.applicationMapper.findByPersonId(personId);
 
 	}
 
 	@Override
 	public Application getApplicationByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.applicationMapper.findById(id);
 	}
 
 	// --------------------------- COMPANY
 
 	@Override
 	public Company addCompany() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Company company = new Company();
+
+		return this.companyMapper.insert(company);
 	}
 
 	@Override
@@ -181,8 +177,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public Company getCompanyByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.companyMapper.findById(id);
 	}
 
 	// --------------------------- PROJECT
@@ -213,7 +208,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
-
+		// TODO
 		// ArrayList<Projects> projects = this.get
 	}
 
@@ -249,12 +244,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 *           }
 	 */
 
-	@Override
-	public void setProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
-	}
-
 	// --------------------------- MARKETPLACE
 
 	@Override
@@ -287,12 +276,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	@Override
-	public void setMarketplaces(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
-	}
-
 	/**
 	 * Auslesen aller Marktpl�tze
 	 */
@@ -319,12 +302,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		Trait trait = new Trait();
 		trait.setName(name);
 		trait.setValue(value);
-
-		/*
-		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
-		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
-		 */
-		trait.setId(1);
 
 		// Objekt in der DB speichern.
 		return this.traitMapper.insert(trait);
@@ -409,12 +386,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.getJobPostingByID(id);
 	}
 
-	@Override
-	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
-	}
-
 	// --------------------------- PARTNERPROFILE
 
 	@Override
@@ -490,14 +461,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Rating> getRatings() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ratingMapper.findAll();
 	}
 
 	@Override
 	public Rating getRatingByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ratingMapper.findById(id);
 	}
 
 	// --------------------------- PARTICIPATION
@@ -517,7 +486,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updateParticipation(Participation participation) throws IllegalArgumentException {
-		// FIXME participationMapper icht auffindbar
+		// FIXME participationMapper nicht auffindbar
 		this.updateParticipation(participation);
 	}
 
@@ -529,13 +498,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// FIXME participationMapper nicht auffindbar
 		return null;
 	}
 
 	@Override
 	public Participation getParticipationByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// FIXME participationMapper nicht auffindbar
 		return null;
 	}
 
@@ -570,8 +539,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public Person getPersonByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.personMapper.findById(id);
 	}
 
 	// --------------------------- TEAM
@@ -596,8 +564,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public Team getTeamByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.teamMapper.findById(id);
 	}
 
 	// --------------------------- LOGIN
