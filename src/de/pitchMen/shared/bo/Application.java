@@ -11,19 +11,20 @@ import java.util.Date;
 public class Application extends BusinessObject {
 
 	private Date dateCreated = null;
+	
+	private String status = "";
 
 	/**
 	 * Realisierung der Beziehung zu einem jobPosting durch einen
-	    Fremdschlüssel.
+	 * Fremdschlüssel.
 	 */
 	private int jobPostingId = 0;
 	/**
 	 * Realisierung der Beziehung zu einer partnerprofil durch einen
-	    Fremdschlüssel.
+	 * Fremdschlüssel.
 	 */
-	private int partnerProfileId= 0;
-	
-	
+	private int partnerProfileId = 0;
+
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
 	 * String verwendet, damit man das Werfen einer NullPointException
@@ -33,7 +34,6 @@ public class Application extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 
-	
 	/**
 	 * @return dateCreated
 	 */
@@ -41,7 +41,6 @@ public class Application extends BusinessObject {
 		return this.dateCreated;
 	}
 
-	
 	/**
 	 * @return text
 	 */
@@ -55,7 +54,7 @@ public class Application extends BusinessObject {
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
+
 	/**
 	 * @param text
 	 */
@@ -63,7 +62,6 @@ public class Application extends BusinessObject {
 		this.text = text;
 	}
 
-	
 	/**
 	 * Bewertet das aufrufende Application-Objekt. HierfÃ¼r werden ein
 	 * Bewertungswert und eine Stellungnahme Ã¼bergeben. Erzeugt ein
@@ -71,50 +69,61 @@ public class Application extends BusinessObject {
 	 * 
 	 * @param score
 	 * @param statement
-	 
-	public void rate(float score, String statement) {
-		Rating rate = new Rating(score, statement);
-		this.setRating(rate);
-	}*/
+	 * 
+	 *            public void rate(float score, String statement) { Rating rate
+	 *            = new Rating(score, statement); this.setRating(rate); }
+	 */
 
 	/**
 	 * ÃœberprÃ¼ft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung
 	 * vorhanden, wird true ausgegeben, wenn nicht, false.
 	 * 
 	 * @return
-	 
-	public boolean isRated() {
-		if (this.getRating() != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-*/
-	
+	 * 
+	 * 		public boolean isRated() { if (this.getRating() != null) { return
+	 *         true; } else { return false; } }
+	 */
+
 	/**
 	 * @return jobpostingId
 	 */
 	public int getJobPostingId() {
 		return jobPostingId;
 	}
+
 	/**
 	 * @param jobpostingid
 	 */
 	public void setJobPostingId(int jobPostingId) {
 		this.jobPostingId = jobPostingId;
 	}
+
 	/**
 	 * @return partnerProfilId
 	 */
 	public int getPartnerProfileId() {
 		return partnerProfileId;
 	}
+
 	/**
 	 * @param partnerProfilId
 	 */
 	public void setPartnerProfileId(int partnerProfileId) {
 		this.partnerProfileId = partnerProfileId;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

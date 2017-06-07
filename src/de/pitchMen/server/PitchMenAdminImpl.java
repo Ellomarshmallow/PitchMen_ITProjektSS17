@@ -59,6 +59,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	private JobPostingMapper jobPostingMapper = null;
 
 	/**
+	 * Referenz auf den DatenbankMapper, der ParticipationObjekte mit der
+	 * Datenbank abgleicht.
+	 */
+	private ParticipationMapper participationMapper = null;
+
+	/*
 	 * Referenz auf den DatenbankMapper, der PartnerProfileobjekte mit der
 	 * Datenbank abgleicht.
 	 */
@@ -117,10 +123,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId) {
+	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId, int partnerProfileId) {
 		Application application = new Application();
 		application.setDateCreated(dateCreated);
 		application.setText(text);
+		application.setStatus(status);
 		application.setJobPostingId(jobPostingId);
 		application.setPartnerProfileId(partnerProfileId);
 
@@ -130,60 +137,63 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updateApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		applicationMapper.update(application);
 	}
 
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Rating rating = this.getRatingOf(application.getId());
 
+		if (rating != null) {
+			this.ratingMapper.delete(rating);
+		}
+
+		this.applicationMapper.delete(application);
 	}
 
 	@Override
 	public ArrayList<Application> getApplications() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.applicationMapper.findAll();
 	}
+
 	@Override
-	public ArrayList<Application> getApplicationsByPerson(Person p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return applicationMapper.findByPerson(p);
-		
-	
-		}
-		
-			
+	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException {
+		return this.applicationMapper.findApplicationByPersonId(personId);
+
+	}
+
 	@Override
 	public Application getApplicationByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.applicationMapper.findById(id);
+	}
+
+	@Override
+	public ArrayList<Application> getApplicationsOf(int jobPostingId) throws IllegalArgumentException {
+		return this.applicationMapper.findApplicationByJobPostingId(jobPostingId);
 	}
 
 	// --------------------------- COMPANY
 
 	@Override
 	public Company addCompany() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Company company = new Company();
+
+		return this.companyMapper.insert(company);
 	}
 
 	@Override
 	public void updateCompany(Company company) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		companyMapper.update(company);
 	}
 
 	@Override
 	public void deleteCompany(Company company) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.companyMapper.delete(company);
 	}
 
 	@Override
 	public Company getCompanyByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.companyMapper.findById(id);
 	}
 
 	// --------------------------- PROJECT
@@ -214,8 +224,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
+		ArrayList<JobPosting> jobPostings = this.getJobPostingsOf(project.getId());
 
-		// ArrayList<Projects> projects = this.get
+		if (jobPostings != null) {
+			for (JobPosting jobPosting : jobPostings) {
+				this.jobPostingMapper.delete(jobPosting);
+			}
+		}
+
+		this.projectMapper.delete(project);
 	}
 
 	/**
@@ -236,34 +253,22 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * Auslesen aller Projekte der übergeben Person
-	 * 
-	 * @Override public Project getProjectsOf(Person person) throws
-	 *           IllegalArgumentException { try { return this.projectMapper. }
-	 *           catch (ClassNotFoundException e) {
-	 * 
-	 *           e.printStackTrace();
-	 * 
-	 *           } return null;
-	 * 
-	 *           }
-	 */
-
 	@Override
-	public void setProject(Project project) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException {
+		return this.projectMapper.findProjectByMarketplaceId(marketplaceId);
 	}
 
 	// --------------------------- MARKETPLACE
 
 	@Override
-	public Marketplace addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
-			ArrayList<Project> projects) throws IllegalArgumentException {
+	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
+			throws IllegalArgumentException {
 		Marketplace marketplace = new Marketplace();
 		marketplace.setTitle(title);
 		marketplace.setDescription(description);
+		marketplace.setPersonId(personId);
+		marketplace.setTeamId(teamId);
+		marketplace.setCompanyId(companyId);
 
 		// Objekt in der DB speichern
 		return this.marketplaceMapper.insert(marketplace);
@@ -280,14 +285,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		ArrayList<Project> projects = this.getProjectsOf(marketplace.getId());
 
-	}
+		if (projects != null) {
+			for (Project project : projects) {
+				this.projectMapper.delete(project);
+			}
+		}
 
-	@Override
-	public void setMarketplaces(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.marketplaceMapper.delete(marketplace);
 	}
 
 	/**
@@ -317,12 +323,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		trait.setName(name);
 		trait.setValue(value);
 
-		/*
-		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
-		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
-		 */
-		trait.setId(1);
-
 		// Objekt in der DB speichern.
 		return this.traitMapper.insert(trait);
 	}
@@ -335,8 +335,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteTrait(Trait trait) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.traitMapper.delete(trait);
 	}
 
 	/**
@@ -357,6 +356,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		return this.traitMapper.findById(id);
 
+	}
+	
+	@Override
+	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException {
+		return this.traitMapper.findTraitByPartnerProfileId(partnerProfileId);
 	}
 	// --------------------------- JOBPOSTNG
 
@@ -384,8 +388,22 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		ArrayList<Application> applications = this.getApplicationsOf(jobPosting.getId());
+		ArrayList<PartnerProfile> partnerProfiles = this.getPartnerProfileOf(jobPosting.getId());
 
+		if (applications != null) {
+			for (Application application : applications) {
+				this.applicationMapper.delete(application);
+			}
+		}
+
+		if (partnerProfiles != null) {
+			for (PartnerProfile partnerProfile : partnerProfiles) {
+				this.partnerProfileMapper.delete(partnerProfile);
+			}
+		}
+
+		this.jobPostingMapper.delete(jobPosting);
 	}
 
 	/**
@@ -403,31 +421,26 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException {
-		return this.getJobPostingByID(id);
+		return this.jobPostingMapper.findById(id);
 	}
 
 	@Override
-	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+	public ArrayList<JobPosting> getJobPostingsOf(int projectId) throws IllegalArgumentException {
+		return this.jobPostingMapper.findJobPostingByProjectId(projectId);
 	}
 
 	// --------------------------- PARTNERPROFILE
 
 	@Override
-	public PartnerProfile addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
-			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
-			throws IllegalArgumentException {
+	public PartnerProfile addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
+			int jobPostingId) throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
 		partnerProfile.setDateCreated(dateCreated);
 		partnerProfile.setDateChanged(dateChanged);
-		// weitere ergaenzen
-
-		/*
-		 * Setzen einer vorläufigen Kundennr. Der insert-Aufruf liefert dann
-		 * ein Objekt, dessen Nummer mit der Datenbank konsistent ist.
-		 */
-		partnerProfile.setId(1);
+		partnerProfile.setCompanyId(companyId);
+		partnerProfile.setPersonId(personId);
+		partnerProfile.setTeamId(teamId);
+		partnerProfile.setJobPostingId(jobPostingId);
 
 		// Objekt in der DB speichern.
 		return this.partnerProfileMapper.insert(partnerProfile);
@@ -442,7 +455,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		ArrayList<Trait> traits = this.getTraitsOf(partnerProfile.getId());
+
+		if (traits != null) {
+			for (Trait trait : traits) {
+				this.traitMapper.delete(trait);
+			}
+		}
+
+		this.partnerProfileMapper.delete(partnerProfile);
 
 	}
 
@@ -466,51 +487,67 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	public ArrayList<PartnerProfile> getPartnerProfileOf(int jobPostingId) {
+
+		return this.partnerProfileMapper.findPartnerProfileByJobPostingId(jobPostingId);
+	}
+
 	// --------------------------- RATING
 
 	@Override
-	public Rating addRating(String statement, float score) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Rating addRating(String statement, float score, int applicationId) throws IllegalArgumentException {
+		Rating rating = new Rating();
+		rating.setStatement(statement);
+		rating.setScore(score);
+		rating.setApplicationId(applicationId);
+
+		return this.ratingMapper.insert(rating);
 	}
 
 	@Override
 	public void updateRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		ratingMapper.update(rating);
 	}
 
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.ratingMapper.delete(rating);
 	}
 
 	@Override
 	public ArrayList<Rating> getRatings() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ratingMapper.findAll();
 	}
 
 	@Override
 	public Rating getRatingByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.ratingMapper.findById(id);
+	}
+
+	@Override
+	public Rating getRatingOf(int applicationId) throws IllegalArgumentException {
+		return this.ratingMapper.findRatingByApplicationId(applicationId);
 	}
 
 	// --------------------------- PARTICIPATION
 
 	@Override
-	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
-			OrganisationUnit associatedApplicant, Project associatedProject) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId)
+			throws IllegalArgumentException {
+		Participation participation = new Participation();
+		participation.setDateClosed(dateClosed);
+		participation.setDateOpened(dateOpened);
+		participation.setWorkload(workload);
+		participation.setPersonId(personId);
+		participation.setProjectId(projectId);
+
+		return this.participationMapper.insert(participation);
+
 	}
 
 	@Override
 	public void updateParticipation(Participation participation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.participationMapper.update(participation);
 	}
 
 	@Override
@@ -521,67 +558,74 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.participationMapper.findAll();
 	}
 
 	@Override
 	public Participation getParticipationByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.participationMapper.findById(id);
 	}
 
 	// ------------------------ PERSON
 
 	@Override
-	public Person addPerson(String firstName, ArrayList<Project> projetcs, String eMail)
-			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
+			String logoutUrl) throws IllegalArgumentException {
+		Person person = new Person();
+
+		person.setFirstName(firstName);
+		person.setLoggedIn(loggedIn);
+		person.setEmailAdress(emailAdress);
+		person.setNickname(nickname);
+		person.setLoginUrl(loginUrl);
+		person.setLogoutUrl(logoutUrl);
+
+		return this.personMapper.insert(person);
+
 	}
 
 	@Override
 	public void updatePerson(Person person) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		personMapper.update(person);
 	}
 
 	@Override
 	public void deletePerson(Person person) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		//TODO Wenn man eine Person loescht muss auch die Beteiligung geloescht werden!!
+		this.personMapper.delete(person);
 	}
 
 	@Override
 	public Person getPersonByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.personMapper.findById(id);
 	}
 
+	@Override
+	public ArrayList<Person> getAllPeople() throws IllegalArgumentException {
+		return this.personMapper.findAll();
+	}
 	// --------------------------- TEAM
 
 	@Override
 	public Team addTeam() throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		Team team = new Team();
+
+		return this.teamMapper.insert(team);
 	}
 
 	@Override
 	public void updateTeam(Team team) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		teamMapper.update(team);
 	}
 
 	@Override
 	public void deleteTeam(Team team) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.teamMapper.delete(team);
 	}
 
 	@Override
 	public Team getTeamByID(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.teamMapper.findById(id);
 	}
 
 	// --------------------------- LOGIN
