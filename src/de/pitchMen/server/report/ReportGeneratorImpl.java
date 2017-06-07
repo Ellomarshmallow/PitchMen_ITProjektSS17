@@ -143,7 +143,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO Fehlersuche
 		if (pitchMenAdmin == null) {
 			return null;
 		}
@@ -210,11 +210,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	@Override
 	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
-		//TODO Fehlersuche
+		
 		if (pitchMenAdmin == null) {
 			return null;
 		}
-		AllApplicationsOfUser result = AllApplicationsOfUser();
+		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugehörigen Ausschreibungen");
 		result.setDatecreated(new Date());
@@ -223,20 +223,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		headline.addColumn(new Column("Erstellungsdatum"));
 		headline.addColumn(new Column("Bewerbungstext"));
-
-
+		headline.addColumn(new Column("Ersteller der Ausschreibung"));
+		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
 		result.addRow(headline);
 
 		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p);	
 		for (Application a : applications) {
 			
+			
 			Application application = pitchMenAdmin.getApplicationByID(a.getJobPostingId());
+			Person jobPoster = pitchMenAdmin.getPersonByID(application.getJobPostingId());
 			
 			Row applicationsrow = new Row();
 
 
 			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationsrow.addColumn(new Column(a.getText()));
+			applicationsrow.addColumn(new Column(jobPoster.getFirstName() + " " + jobPoster.getName()));
+			applicationsrow.addColumn(new Column(jobPoster.getDescription()));
 
 			result.addRow(applicationsrow);
 
@@ -246,6 +250,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 
+	
+	
 	@Override
 	public ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(
 			Person p) throws IllegalArgumentException {
