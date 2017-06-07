@@ -59,7 +59,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
-	// FIXME
+
 	public Company addCompany() throws IllegalArgumentException;
 
 	public void updateCompany(Company company) throws IllegalArgumentException;
@@ -67,6 +67,39 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteCompany(Company company) throws IllegalArgumentException;
 
 	public Company getCompanyByID(int id) throws IllegalArgumentException;
+	
+	// ---------------------JOBPOSTINGS
+
+		/**
+		 * Erstellt ein neues JobPosting-Objekt
+		 * 
+		 * @param jobPosting
+		 * @throws IllegalArgumentException
+		 */
+		public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+				throws IllegalArgumentException;
+
+		/**
+		 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
+		 * 
+		 * @param jobPosting
+		 * @throws IllegalArgumentException
+		 */
+		public void updateJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+
+		/**
+		 * Löscht das JobPosting-Objekt.
+		 * 
+		 * @param jobPosting
+		 * @throws IllegalArgumentException
+		 */
+		public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+
+		public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException;
+
+		public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
+
+		public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
 
 	// ------------------- PERSON
 
@@ -199,38 +232,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
 
-	// ---------------------JOBPOSTINGS
-
-	/**
-	 * Erstellt ein neues JobPosting-Objekt
-	 * 
-	 * @param jobPosting
-	 * @throws IllegalArgumentException
-	 */
-	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
-			throws IllegalArgumentException;
-
-	/**
-	 * Fügt ein JobPosting-Objekt zur ArrayList jobPostings hinzu.
-	 * 
-	 * @param jobPosting
-	 * @throws IllegalArgumentException
-	 */
-	public void updateJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
-
-	/**
-	 * Löscht das JobPosting-Objekt.
-	 * 
-	 * @param jobPosting
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
-
-	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException;
-
-	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
-
-	public void setJobPosting(JobPosting jobPosting) throws IllegalArgumentException;
+	
 
 	// --------------------- PARTNERPROFILES
 
