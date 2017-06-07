@@ -261,8 +261,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	
 	
 	@Override
-	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(int id) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(Person p) throws IllegalArgumentException {
+		
 		if(this.getPitchMenAdmin() == null){
 			return null;
 		}
@@ -280,17 +280,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Projektbeschreibung"));
 		
 		result.addRow(headline);
-		//TODO getParticipationByPersonID in PitchMenAdminImpl erstellen
-		ArrayList<Project> allProjects = pitchMenAdmin.getParticipationByPersonID(pitchMenAdmin.getPersonByID(id));
+		//TODO getProjectsByPerson in PitchMenAdminImpl erstellen
+		ArrayList<Project> allProjects = pitchMenAdmin.getProjectsByPerson(p);
 		
-		for(Project p : allProjects){
+		for(Project project : allProjects){
 			
 			Row projectRow = new Row();
 			
-			projectRow.addColumn(new Column(p.getTitle()));
-			projectRow.addColumn(new Column(p.getDateOpened()));
-			projectRow.addColumn(new Column(p.getDateClosed()));
-			projectRow.addColumn(new Column(p.getDescription()));
+			projectRow.addColumn(new Column(project.getTitle()));
+			projectRow.addColumn(new Column(project.getDateOpened()));
+			projectRow.addColumn(new Column(project.getDateClosed()));
+			projectRow.addColumn(new Column(project.getDescription()));
 			
 			result.addRow(projectRow);
 		}
@@ -303,8 +303,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(
 			Person p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		ProjectInterweavingsWithParticipationsAndApplications result = new ProjectInterweavingsWithParticipationsAndApplications();
+		
+		result.setTitle("Des Nutzers Projektverflechtungen");
+		result.setDatecreated(new Date());
+		
+		result.addSubReport(this.showAllApplicationsOfUser(p));
+		result.addSubReport(this.showAllParticipationsOfOneUser(p));
+		
+		return result;
 	}
 
 
