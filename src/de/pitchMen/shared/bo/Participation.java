@@ -18,9 +18,9 @@ public class Participation extends BusinessObject {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * TODO ForeignKey Attribute hinzufügen
-	 */
+	private int projectId;
+	
+	private int personId;
 	
 	/**
 	 * @return dateOpened
