@@ -3,6 +3,7 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
+import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Trait;
 //PartnerProfileID FK als getter in Trait.java implementiert
 
@@ -295,4 +296,89 @@ public class TraitMapper {
 		return result;
 	}
 
+	/**
+	 * Findet die Eigenschaften passend zur Person-Id, innerhalb der ParterProfile Tabelle. 
+	 * Übergibt ein Trait-Objekt zum Vergleich der Traits mit der ArrayList aus der 
+	 * Methode @seeFindByJobPosting.
+	 * 
+	 * @param person_id
+	 * @return trait
+	 * 
+	 */
+	public Trait findByPersonId(int id) {
+		// DB-Verbindung holen
+		Connection con = DBConnection.connection();
+
+		try {
+			// leeres SQL-Statement (JDBC) anlegen
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die Datenbank senden
+			ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile "
+					+ "INNER JOIN trait ON partnerProfile.id = trait.partnerProfile_id "
+					+ "WHERE person_id =" + id);
+
+			/**
+			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
+			 * DB-Tupel gibt.
+			 */
+
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				Trait trait = new Trait();
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil-id"));
+
+				return trait;
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
+		
+	/**
+	 * Findet alle Eigenschaften die zur JobPosting-Id passen innerhalb der ParterProfile Tabelle. 
+	 * Übergibt eine ArrayList zum Vergleich dieser Eigenschaften mit dem Trait-Objekt aus 
+	 * der Methode @see FindByPerson.
+	 * 
+	 * @param person_id
+	 * @return ArrayList<Trait>
+	 * 
+	 */
+	public ArrayList<Trait> FindByJobPostingId() {
+		Connection con = DBConnection.connection();
+
+		// Ergebnis-ArraList vorbereiten
+		ArrayList<Trait> result = new ArrayList<Trait>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile "
+					+ "INNER JOIN trait ON partnerProfile.jobPosting_id = trait.id");
+
+			// Für jeden Eintrag wird ein PartnerProfil-Objekt erstellt.
+			if (rs.next()) {
+				Trait trait = new Trait();
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfil-id"));
+			
+
+				// Hinzufügen des neuen Objekts zur Ergebnis-ArrayList
+				result.add(trait);
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
 }
