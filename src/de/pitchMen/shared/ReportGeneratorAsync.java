@@ -56,7 +56,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showFanInJobPostingsOfUser(Person p, AsyncCallback<FanInJobPostingsOfUser> callback);
+	void showFanInJobPostingsOfUser(AsyncCallback<FanInJobPostingsOfUser> callback);
 	/**
 	 * 
 	 */
