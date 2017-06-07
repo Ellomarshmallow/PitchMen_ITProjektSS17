@@ -3,7 +3,6 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 //ProjectID FK als getter in JobPosting.java implementiert
 
