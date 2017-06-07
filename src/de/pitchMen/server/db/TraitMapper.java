@@ -3,7 +3,6 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Trait;
 //PartnerProfileID FK als getter in Trait.java implementiert
 
@@ -305,7 +304,7 @@ public class TraitMapper {
 	 * @return trait
 	 * 
 	 */
-	public Trait findByPersonId(int id) {
+	public Trait findPartnerProfielByPersonId(int id) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
@@ -351,7 +350,7 @@ public class TraitMapper {
 	 * @return ArrayList<Trait>
 	 * 
 	 */
-	public ArrayList<Trait> FindByJobPostingId() {
+	public ArrayList<Trait> FindPartnerProfileByJobPostingId() {
 		Connection con = DBConnection.connection();
 
 		// Ergebnis-ArraList vorbereiten
