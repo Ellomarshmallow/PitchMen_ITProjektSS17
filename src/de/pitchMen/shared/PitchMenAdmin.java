@@ -167,8 +167,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neues Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplace(String title, String description, ArrayList<OrganisationUnit> organisationUnits,
-			ArrayList<Project> projects) throws IllegalArgumentException;
+	public Marketplace addMarketplace(String title, String description,  int personId, int teamId, int companyId) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Marketplace-Objekt zur ArrayList marketplaces hinzu.
