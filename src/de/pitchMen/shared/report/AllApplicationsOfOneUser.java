@@ -1,6 +1,6 @@
 package de.pitchMen.shared.report;
 
-public class AllApplicationsOfOneUser {
+public class AllApplicationsOfOneUser extends SimpleReport {
 		/**
 	     * 
 	     */
