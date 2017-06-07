@@ -15,6 +15,7 @@ import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.bo.Project;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
@@ -271,9 +272,29 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		result.setTitle("Report für Alle Beteiligungen eines Nutzers");
 		result.setDatecreated(new Date());
 		
+		Row headline = new Row();
 		
+		headline.addColumn(new Column("Projekt"));
+		headline.addColumn(new Column("Startdatum"));
+		headline.addColumn(new Column("Enddatum"));
+		headline.addColumn(new Column("Projektbeschreibung"));
 		
-		return null;
+		result.addRow(headline);
+		//TODO getParticipationByPersonID in PitchMenAdminImpl erstellen
+		ArrayList<Project> allProjects = pitchMenAdmin.getParticipationByPersonID(pitchMenAdmin.getPersonByID(id));
+		
+		for(Project p : allProjects){
+			
+			Row projectRow = new Row();
+			
+			projectRow.addColumn(new Column(p.getTitle()));
+			projectRow.addColumn(new Column(p.getDateOpened()));
+			projectRow.addColumn(new Column(p.getDateClosed()));
+			projectRow.addColumn(new Column(p.getDescription()));
+			
+			result.addRow(projectRow);
+		}
+		return result;
 	}
 
 
