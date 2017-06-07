@@ -89,22 +89,40 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 			this.marketplaceLDP = new ListDataProvider<Marketplace>();
 			
 			// Abfrage aller Marketplaces über die Applikationsschicht
-			this.pitchMenAdmin.getMarketplaces(new AsyncCallback<ArrayList<Marketplace>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					caught.printStackTrace();
-				}
-
-				@Override
-				public void onSuccess(ArrayList<Marketplace> result) {
-					// Übertragen aller Marketplace-Objekte in den ListDataProvider
-					for(Marketplace marketplace : result) {
-						marketplaceLDP.getList().add(marketplace);
-					}
-				}
-				
-			});
+//			this.pitchMenAdmin.getMarketplaces(new AsyncCallback<ArrayList<Marketplace>>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					caught.printStackTrace();
+//				}
+//
+//				@Override
+//				public void onSuccess(ArrayList<Marketplace> result) {
+//					// Übertragen aller Marketplace-Objekte in den ListDataProvider
+//					for(Marketplace marketplace : result) {
+//						marketplaceLDP.getList().add(marketplace);
+//					}
+//				}
+//				
+//			});
+			
+			ArrayList<Marketplace> dummyMarketplacesArray = new ArrayList<Marketplace>();
+			Marketplace m1 = new Marketplace();
+			m1.setTitle("1. IT und Software");
+			m1.setDescription("Beschreibung Marktplatz 1");
+			Marketplace m2 = new Marketplace();
+			m2.setTitle("2. Haus und Garten");
+			m2.setDescription("Beschreibung Marktplatz 2");
+			Marketplace m3 = new Marketplace();
+			m3.setTitle("3. Küche und Gastro");
+			m3.setDescription("Beschreibung Marktplatz 3");
+			dummyMarketplacesArray.add(m1);
+			dummyMarketplacesArray.add(m2);
+			dummyMarketplacesArray.add(m3);
+			
+			for(Marketplace marketplace : dummyMarketplacesArray) {
+				marketplaceLDP.getList().add(marketplace);
+			}
 			
 			/*
 			 * TODO Abklären was SelectionModel ist
@@ -125,33 +143,33 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		 * geschrieben.
 		 */
 		if(value instanceof Marketplace) {
-			ListDataProvider<Project> projectLDP = new ListDataProvider<Project>();
-			this.projectDataProviders.put((Marketplace) value, projectLDP); 
-			
-			/*
-			 * FIXME Die Methode getProjectsOf(Marketplace m) ist aktuell noch nicht 
-			 * in der PitchMenAdmin bzw. der PitchMenAdminImpl vorhanden. Sie muss 
-			 * hinzugefügt werden, und wenn anders benannt, muss ihr Aufruf an dieser
-			 * Stelle angepasst werden. Wenn die Methode implementiert wurde, in der 
-			 * nächsten Zeile also kein Fehler ausgegeben wird, ist dieses Fixme 
-			 * überflüssig geworden und kann gelöscht werden.
-			 * 
-			 * Simon, 31.05.2017 18:10
-			 */
-			this.pitchMenAdmin.getProjectsOf((Marketplace) value, new AsyncCallback<ArrayList<Project>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					caught.printStackTrace();
-				}
-
-				@Override
-				public void onSuccess(ArrayList<Project> result) {
-					// TODO Methode nach Vorbild BankProjekt (CustomerAccountsTreeViewModel) schreiben
-					
-				}
-				
-			});
+//			ListDataProvider<Project> projectLDP = new ListDataProvider<Project>();
+//			this.projectDataProviders.put((Marketplace) value, projectLDP); 
+//			
+//			/*
+//			 * FIXME Die Methode getProjectsOf(Marketplace m) ist aktuell noch nicht 
+//			 * in der PitchMenAdmin bzw. der PitchMenAdminImpl vorhanden. Sie muss 
+//			 * hinzugefügt werden, und wenn anders benannt, muss ihr Aufruf an dieser
+//			 * Stelle angepasst werden. Wenn die Methode implementiert wurde, in der 
+//			 * nächsten Zeile also kein Fehler ausgegeben wird, ist dieses Fixme 
+//			 * überflüssig geworden und kann gelöscht werden.
+//			 * 
+//			 * Simon, 31.05.2017 18:10
+//			 */
+//			this.pitchMenAdmin.getProjectsOf((Marketplace) value, new AsyncCallback<ArrayList<Project>>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					caught.printStackTrace();
+//				}
+//
+//				@Override
+//				public void onSuccess(ArrayList<Project> result) {
+//					// TODO Methode nach Vorbild BankProjekt (CustomerAccountsTreeViewModel) schreiben
+//					
+//				}
+//				
+//			});
 		}
 		return null;
 	}

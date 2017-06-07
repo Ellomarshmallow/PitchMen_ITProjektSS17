@@ -3,6 +3,7 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
+import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 //ProjectID FK als getter in JobPosting.java implementiert
 
@@ -301,6 +302,48 @@ public class JobPostingMapper {
 			 * 
 			 */
 			if (rs.next()) {
+				JobPosting jobPosting = new JobPosting();
+				jobPosting.setId(rs.getInt("id"));
+				jobPosting.setTitle(rs.getString("title"));
+				jobPosting.setText(rs.getString("text"));
+				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
+
+				result.add(jobPosting);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * 
+	 * Bei einer JOIN-Klausel werden Zeilen aus zwei Tabellen zusammengeführt.
+	 * Bei dem INNER JOIN verbundenen Tabellen werden nur die Datensätze
+	 * übernommen / angezeigt die in beiden Tabellen einen Treffer haben.
+	 * Methode u.a. für Aufgabenstellung Nr. 6
+	 * 
+	 * @return ArryList<JobPosting>
+	 */
+
+	public ArrayList<JobPosting> findByPersonId(int personId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<JobPosting> result = new ArrayList<JobPosting>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM jobPosting " + "INNER JOIN project ON jobPosting.project_id = project.id "
+							+ "WHERE project.person_id =" + personId);
+
+			/**
+			 * Anhand der übergebenen PersonId werden die dazugehörigen
+			 * JobPosting-Tupel (Ausschreibungen) aus der Datenbank abgefragt.
+			 */
+
+			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
 				jobPosting.setId(rs.getInt("id"));
 				jobPosting.setTitle(rs.getString("title"));
