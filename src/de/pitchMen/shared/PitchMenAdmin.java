@@ -103,7 +103,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
 	
-	public ArrayList<JobPosting> getJobPostingsOf(Project project) throws IllegalArgumentException;
+	public ArrayList<JobPosting> getJobPostingsOf(int projectId) throws IllegalArgumentException;
 
 	// ------------------- PERSON
 

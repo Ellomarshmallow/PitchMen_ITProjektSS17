@@ -423,9 +423,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public ArrayList<JobPosting> getJobPostingsOf(Project project) throws IllegalArgumentException {
-		// FIXME findByProject im JobPostingMapper erstellen
-		return this.jobPostingMapper.findByProject(project);
+	public ArrayList<JobPosting> getJobPostingsOf(int projectId) throws IllegalArgumentException {
+		return this.jobPostingMapper.findJobPostingsByProjectId(projectId);
 	}
 
 	// --------------------------- PARTNERPROFILE
