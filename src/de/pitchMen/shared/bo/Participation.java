@@ -64,5 +64,34 @@ public class Participation extends BusinessObject {
 		this.dateClosed = dateClosed;
 	}
 
+	/**
+	 * @return the projectId
+	 */
+	public int getProjectId() {
+		return projectId;
+	}
+
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+
+	/**
+	 * @return the personId
+	 */
+	public int getPersonId() {
+		return personId;
+	}
+
+	/**
+	 * @param personId the personId to set
+	 */
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
+
+
 	
 }
