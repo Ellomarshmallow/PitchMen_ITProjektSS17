@@ -317,5 +317,94 @@ public class ProjectMapper {
 		}
 		return result;
 	}
+	
+	/**
+	 * Die Methode findParticipationByPersonId sucht anhand der übergebenen personId in der Datenbank
+	 * die dazugehörigen Participations (Beteiligungen)-Tupel ab.
+	 * Die Methode dient zur Aufgabenbewältung aus Aufgabe Nummer 7. 
+	 * 
+	 * @param personId
+	 * @return ArrayList<Project>
+	 */
+	
+	public ArrayList<Project> findParticipationByPersonId(int personId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Project> result = new ArrayList<Project>();
+		/**
+		 * Das SQL-Statement sucht anhand des übergebenen Parameters die
+		 * Beteiligungen ab und grouped sie anhand der ProjectId sodass jeder
+		 * EIntrag nur einmal vorkommt
+		 * 
+		 */
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM project " + "INNER JOIN person_has_participation"
+					+ "ON (person_has_participation.person_id = project.person_id)" + "WHERE project.person_id ="
+					+ personId + " GROUP BY project.id;");
+
+			while (rs.next()) {
+				Project project = new Project();
+				project.setId(rs.getInt("id"));
+				project.setTitle(rs.getString("title"));
+				project.setDescription(rs.getString("description"));
+				project.setDateOpened(rs.getDate("dateOpened"));
+				project.setDateClosed(rs.getDate("dateClosed"));
+				project.setMarketplaceId(rs.getInt("marketplace_id"));
+				project.setPersonId(rs.getInt("person_id"));
+
+				result.add(project);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * Die Methode findProjectsByMarketplaceId sucht alle marketPlace-Tupel
+	 * zu der übergebenen marketplaceId in der Datenbank ab und setzt diese in eine ArrayList.
+	 * Die Methode ist zur Umsetzung der Anforderung, ein Marketplace zu löschen, aber davor dazugehörige 
+	 * Tabellen-Beziehungen ebenfalls zu löschen..
+	 * 
+	 * @param marketplaceId
+	 * @return ArrayList<Project>
+	 */
+	
+	public ArrayList<Project> findProjectsByMarketplaceId(int marketplaceId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Project> result = new ArrayList<Project>();
+		/**
+		 * Das SQL-Statement sucht anhand des übergebenen Parameters die
+		 * Projekte ab.
+		 * 
+		 */
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM project"
+					+ "INNER JOIN marketplace"
+					+ "ON marketplace.id = project.marketplace_id"
+					+ "WHERE marketplace.id ="+ marketplaceId);
+
+			while (rs.next()) {
+				Project project = new Project();
+				project.setId(rs.getInt("id"));
+				project.setTitle(rs.getString("title"));
+				project.setDescription(rs.getString("description"));
+				project.setDateOpened(rs.getDate("dateOpened"));
+				project.setDateClosed(rs.getDate("dateClosed"));
+				project.setMarketplaceId(rs.getInt("marketplace_id"));
+				project.setPersonId(rs.getInt("person_id"));
+
+				result.add(project);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
 
 }
