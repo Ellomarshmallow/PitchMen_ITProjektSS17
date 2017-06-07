@@ -254,7 +254,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException {
-		return this.projectMapper.findProjetcByMarketplaceId(marketplaceId);
+		return this.projectMapper.findProjectByMarketplaceId(marketplaceId);
 	}
 
 	// --------------------------- MARKETPLACE
@@ -590,6 +590,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deletePerson(Person person) throws IllegalArgumentException {
+		//TODO Wenn man eine Person loescht muss auch die Beteiligung geloescht werden!!
 		this.personMapper.delete(person);
 	}
 
