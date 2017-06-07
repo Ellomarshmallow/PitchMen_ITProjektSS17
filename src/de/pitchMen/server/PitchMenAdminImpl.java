@@ -170,7 +170,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public ArrayList<Application> getApplicationsOf(JobPosting jobPosting) throws IllegalArgumentException {
 		return this.applicationMapper.findApplicationsByJobPostingId(applicationId);
 	}
-	
+
 	// --------------------------- COMPANY
 
 	@Override
@@ -404,8 +404,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		this.jobPostingMapper.delete(jobPosting);
 	}
 
-
-
 	/**
 	 * Auslesen aller Ausschreibungen
 	 */
@@ -518,8 +516,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public Rating getRatingOf(Application application) throws IllegalArgumentException {
-		// FIXME Methode findByApplication im RatingMapper erstellen
-		return this.ratingMapper.findByApplication(application);
+		return this.ratingMapper.findRatingByApplicationId(applicationId);
 	}
 
 	// --------------------------- PARTICIPATION
