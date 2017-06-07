@@ -160,6 +160,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
 	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException;
+	
 	// --------------------------- MARKETPLACE
 
 	/**
@@ -314,8 +315,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param participation
 	 * @throws IllegalArgumentException
 	 */
-	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
-			OrganisationUnit associatedApplicant, Project associatedProject) throws IllegalArgumentException;
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Participation-Objekt zur ArrayList ratings hinzu.

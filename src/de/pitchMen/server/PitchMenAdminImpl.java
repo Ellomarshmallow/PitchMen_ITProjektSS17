@@ -424,7 +424,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<JobPosting> getJobPostingsOf(int projectId) throws IllegalArgumentException {
-		return this.jobPostingMapper.findJobPostingsByProjectId(projectId);
+		return this.jobPostingMapper.findJobPostingByProjectId(projectId);
 	}
 
 	// --------------------------- PARTNERPROFILE
@@ -521,22 +521,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PARTICIPATION
 
 	@Override
-	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
-			OrganisationUnit associatedApplicant, Project associatedProject) throws IllegalArgumentException {
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId) throws IllegalArgumentException {
 		Participation participation = new Participation();
 		participation.setDateClosed(dateClosed);
 		participation.setDateOpened(dateOpened);
 		participation.setWorkload(workload);
+		participation.setPersonId(personId);
+		participation.setProjectId(projectId);
 
-		// TODO participationMapper nicht aufrufbar
-		return null;
+		return this.participationMapper.insert(participation);
 
 	}
 
 	@Override
 	public void updateParticipation(Participation participation) throws IllegalArgumentException {
-		// FIXME participationMapper nicht auffindbar
-		this.updateParticipation(participation);
+		this.participationMapper.update(participation);
 	}
 
 	@Override
@@ -547,14 +546,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
-		// FIXME participationMapper nicht auffindbar
-		return null;
+		return this.participationMapper.findAll();
 	}
 
 	@Override
 	public Participation getParticipationByID(int id) throws IllegalArgumentException {
-		// FIXME participationMapper nicht auffindbar
-		return null;
+		return this.participationMapper.findById(id);
 	}
 
 	// ------------------------ PERSON

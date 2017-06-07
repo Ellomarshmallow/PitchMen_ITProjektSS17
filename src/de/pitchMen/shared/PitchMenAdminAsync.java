@@ -73,9 +73,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PARTICIPATION
 
-	void addParticipation(Date dateOpened, Date dateClosed, float workload, Rating rating,
-			OrganisationUnit associatedApplicant, Project associatedProject, AsyncCallback<Participation> callback);
-	// FIXME In Participation ist Project und OrgaUnit 2 mal
+	void addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId, AsyncCallback<Participation> callback);
 
 	void updateParticipation(Participation participation, AsyncCallback<Void> callback);
 
