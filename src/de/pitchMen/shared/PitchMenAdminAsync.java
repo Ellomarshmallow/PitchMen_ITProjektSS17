@@ -157,7 +157,7 @@ public interface PitchMenAdminAsync {
 
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
 	
-	void getTraitsOf(int partnerProfileId, AsyncCallback<Trait> callback);
+	void getTraitsOf(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
 
 	// --------------------------- LOGIN
 	void login(String requestUri, AsyncCallback<Person> async);

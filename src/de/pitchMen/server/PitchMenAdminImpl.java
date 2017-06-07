@@ -358,7 +358,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 	
 	@Override
-	public Trait getTraitsOf(int partnerProfileId) throws IllegalArgumentException {
+	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException {
 		return this.traitMapper.findTraitByPartnerProfileId(partnerProfileId);
 	}
 	// --------------------------- JOBPOSTNG
@@ -454,7 +454,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
-		ArrayList<Trait> traits = this.getTraitsOf(partnerPfrofile.getId());
+		ArrayList<Trait> traits = this.getTraitsOf(partnerProfile.getId());
 
 		if (traits != null) {
 			for (Trait trait : traits) {

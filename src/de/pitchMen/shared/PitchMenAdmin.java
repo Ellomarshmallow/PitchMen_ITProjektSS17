@@ -229,7 +229,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
 	
-	public Trait getTraitsOf(int partnerProfileId) throws IllegalArgumentException;
+	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException;
 
 	// --------------------- PARTNERPROFILES
 
