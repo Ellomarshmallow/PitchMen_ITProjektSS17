@@ -130,7 +130,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updateApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+
+		applicationMapper.update(application);
 
 	}
 
@@ -169,8 +170,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updateCompany(Company company) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		companyMapper.update(company);
 	}
 
 	@Override
@@ -479,8 +479,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updateRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		ratingMapper.update(rating);
 	}
 
 	@Override
@@ -510,14 +509,16 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		participation.setDateClosed(dateClosed);
 		participation.setDateOpened(dateOpened);
 		participation.setWorkload(workload);
-		
-		//return this.partipationMapper.insert(participation);
+
+		// TODO participationMapper nicht aufrufbar
+		return null;
+
 	}
 
 	@Override
 	public void updateParticipation(Participation participation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		// FIXME participationMapper icht auffindbar
+		this.updateParticipation(participation);
 	}
 
 	@Override
@@ -544,22 +545,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
 			String logoutUrl) throws IllegalArgumentException {
 		Person person = new Person();
-		
+
 		person.setFirstName(firstName);
 		person.setLoggedIn(loggedIn);
 		person.setEmailAdress(emailAdress);
 		person.setNickname(nickname);
 		person.setLoginUrl(loginUrl);
 		person.setLogoutUrl(logoutUrl);
-		
+
 		return this.personMapper.insert(person);
-		
+
 	}
 
 	@Override
 	public void updatePerson(Person person) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		personMapper.update(person);
 	}
 
 	@Override
@@ -579,14 +579,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public Team addTeam() throws IllegalArgumentException {
 		Team team = new Team();
-		
+
 		return this.teamMapper.insert(team);
 	}
 
 	@Override
 	public void updateTeam(Team team) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		teamMapper.update(team);
 	}
 
 	@Override
