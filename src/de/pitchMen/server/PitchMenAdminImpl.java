@@ -103,9 +103,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void init() throws IllegalArgumentException {
 		/*
-		 * Ganz wesentlich ist, dass die PitchMenAdmin einen vollständigen Satz
-		 * von Mappern besitzt, mit deren Hilfe sie dann mit der Datenbank
-		 * kommunizieren kann.
+		 * Vollständiger Satz von Mappern mit deren Hilfe PitchMenAdminImpl
+		 * dann mit der Datenbank kommunizieren kann.
 		 */
 		this.marketplaceMapper = MarketplaceMapper.marketplaceMapper();
 		this.applicationMapper = ApplicationMapper.applicationMapper();
@@ -553,7 +552,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		// TODO deleteParticipation
 
 	}
 
