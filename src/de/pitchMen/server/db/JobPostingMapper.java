@@ -3,7 +3,6 @@ package de.pitchMen.server.db;
 import java.sql.*;
 import java.util.ArrayList;
 
-import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 //ProjectID FK als getter in JobPosting.java implementiert
 
@@ -358,5 +357,51 @@ public class JobPostingMapper {
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * Die Methode findJobPostingByProjectId sucht alle jobPosting-Tupel
+	 * zu der übergebenen projectId in der Datenbank ab und setzt diese in eine ArrayList.
+	 * Die Methode ist zur Umsetzung der Anforderung, ein Projekt zu löschen, aber davor dazugehörige 
+	 * Tabellen-Beziehungen ebenfalls zu löschen.
+	 * 
+	 * @param projectId
+	 * @return ArrayList<JobPosting>
+	 */
+	public ArrayList<JobPosting> findJobPostingByProjectId(int projectId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<JobPosting> result = new ArrayList<JobPosting>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM jobPosting "
+					+ "INNER JOIN project"
+					+ "ON project.id = jobPosting.project_id "+ projectId);
+
+			/**
+			 * Anhand der übergebenen projectId werden die dazugehörigen
+			 * JobPosting-Tupel (Ausschreibungen) aus der Datenbank abgefragt.
+			 */
+
+			while (rs.next()) {
+				JobPosting jobPosting = new JobPosting();
+				jobPosting.setId(rs.getInt("id"));
+				jobPosting.setTitle(rs.getString("title"));
+				jobPosting.setText(rs.getString("text"));
+				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
+
+				result.add(jobPosting);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
+
 
 }
