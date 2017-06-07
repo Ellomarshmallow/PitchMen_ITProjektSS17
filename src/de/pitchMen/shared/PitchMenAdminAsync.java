@@ -86,9 +86,8 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PARTNERPROFILE
 
-	void addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit, Date dateCreated,
-			Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting,
-			AsyncCallback<PartnerProfile> callback);
+	void addPartnerProfile(Date dateCreated,
+			Date dateChanged, int personId, int teamId, int companyId, int jobPostingId, AsyncCallback<PartnerProfile> callback);
 
 	void updatePartnerProfile(PartnerProfile PartnerProfile, AsyncCallback<Void> callback);
 

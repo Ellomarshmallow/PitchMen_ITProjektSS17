@@ -243,8 +243,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param partnerProfile
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
-			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
+	public PartnerProfile addPartnerProfile(Date dateCreated,
+			Date dateChanged, int personId, int teamId, int companyId, int jobPostingId)
 			throws IllegalArgumentException;
 
 	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;

@@ -414,8 +414,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PARTNERPROFILE
 
 	@Override
-	public PartnerProfile addPartnerProfile(ArrayList<Trait> traits, OrganisationUnit organisationUnit,
-			Date dateCreated, Date dateChanged, PartnerProfile partnerprofile, JobPosting jobPosting)
+	public PartnerProfile addPartnerProfile(Date dateCreated,
+			Date dateChanged, int personId, int teamId, int companyId, int jobPostingId)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
 		partnerProfile.setDateCreated(dateCreated);
