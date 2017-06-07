@@ -96,7 +96,7 @@ public class ApplicationMapper {
 			Statement stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE application SET text='" + application.getText() + "', dateCreated= '"
-					+ application.getDateCreated() + "WHERE id= " + application.getId());
+					+ application.getDateCreated() + application.getStatus() + "WHERE id= " + application.getId());
 		}
 
 		catch (SQLException e2) {
@@ -137,7 +137,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application "
+					.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id, status FROM application "
 							+ "WHERE id =" + id);
 
 			/**
@@ -153,6 +153,7 @@ public class ApplicationMapper {
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
 				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
+				application.setStatus(rs.getString("status"));
 				// Methodenaufruf FindByFK von Rating zur Übergaben des
 				// Ratingobjekts
 
@@ -179,7 +180,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application " + "ORDER BY id");
+					"SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id, status FROM application " + "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -194,6 +195,7 @@ public class ApplicationMapper {
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
 				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
+				application.setStatus(rs.getString("status"));
 
 				result.add(application);
 			}
@@ -219,7 +221,7 @@ public class ApplicationMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id FROM application "
+					.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id, status FROM application "
 							+ "WHERE text LIKE " + text + "ORDER BY id");
 
 			/**
@@ -234,6 +236,7 @@ public class ApplicationMapper {
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
 				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
+				application.setStatus(rs.getString("status"));
 
 				result.add(application);
 			}
@@ -259,7 +262,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT application.id, application.text, "
-					+ "application.dateCreated, application.jobPosting_id, application.partnerProfil_id "
+					+ "application.dateCreated, application.jobPosting_id, application.partnerProfil_id, application.status "
 					+ "rating.id, rating.statement, rating.score "
 					+ "FROM application LEFT JOIN rating ON application.id = rating.id " + "ORDER BY application.id");
 
@@ -276,6 +279,7 @@ public class ApplicationMapper {
 				applicationRating.add("application.dateCreated");
 				applicationRating.add("application.jobPosting_id");
 				applicationRating.add("application.partnerProfil_id");
+				applicationRating.add("application.status");
 				applicationRating.add("rating.id");
 				applicationRating.add("rating.statement");
 				applicationRating.add("rating.score");
@@ -320,6 +324,7 @@ public class ApplicationMapper {
 				application.setDateCreated(rs.getDate("dateCreated"));
 				application.setJobPostingId(rs.getInt("jobPosting_id"));
 				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
+				application.setStatus(rs.getString("status"));
 
 				result.add(application);
 			}
