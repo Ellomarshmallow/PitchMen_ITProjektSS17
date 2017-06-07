@@ -32,7 +32,7 @@ public interface PitchMenAdminAsync {
 
 	void getApplicationsByPerson(int personId, AsyncCallback<ArrayList<Application>> callback);
 	
-	void getApplicationsOf(JobPosting jobPosting, AsyncCallback<ArrayList<Application>> callback);
+	void getApplicationsOf(int jobPostingId, AsyncCallback<ArrayList<Application>> callback);
 
 	// ---------- COMPANY
 	void addCompany(AsyncCallback<Company> callback);
@@ -134,7 +134,7 @@ public interface PitchMenAdminAsync {
 
 	void getRatingByID(int id, AsyncCallback<Rating> callback);
 	
-	void getRatingOf(Application application, AsyncCallback<Rating> callback);
+	void getRatingOf(int applicationId, AsyncCallback<Rating> callback);
 
 	// ---------- TEAM
 	void addTeam(AsyncCallback<Team> callback);
@@ -156,6 +156,8 @@ public interface PitchMenAdminAsync {
 	void getTraits(AsyncCallback<ArrayList<Trait>> callback);
 
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
+	
+	void getTraitsOf(int partnerProfileId, AsyncCallback<Trait> callback);
 
 	// --------------------------- LOGIN
 	void login(String requestUri, AsyncCallback<Person> async);

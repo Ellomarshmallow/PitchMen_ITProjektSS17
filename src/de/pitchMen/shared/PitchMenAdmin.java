@@ -60,7 +60,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException;
 	
-	public ArrayList<Application> getApplicationsOf(JobPosting jobPosting) throws IllegalArgumentException;
+	public ArrayList<Application> getApplicationsOf(int jobPostingId) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
 
@@ -228,6 +228,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
+	
+	public Trait getTraitsOf(int partnerProfileId) throws IllegalArgumentException;
 
 	// --------------------- PARTNERPROFILES
 
@@ -305,7 +307,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Rating getRatingByID(int id) throws IllegalArgumentException;
 	
-	Rating getRatingOf(Application application);
+	Rating getRatingOf(int applicationId) throws IllegalArgumentException;
 
 	// --------------------------- PARTICIPATION
 
@@ -339,7 +341,5 @@ public interface PitchMenAdmin extends RemoteService {
 
 	// --------------------------- LOGIN
 	public Person login(String requestUri);
-
-
 
 }
