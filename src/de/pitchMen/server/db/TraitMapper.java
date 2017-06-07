@@ -305,7 +305,7 @@ public class TraitMapper {
 	 * @return trait
 	 * 
 	 */
-	public Trait findByPerson(int id) {
+	public Trait findByPersonId(int id) {
 		// DB-Verbindung holen
 		Connection con = DBConnection.connection();
 
@@ -351,7 +351,7 @@ public class TraitMapper {
 	 * @return ArrayList<Trait>
 	 * 
 	 */
-	public ArrayList<Trait> FindByJobPosting() {
+	public ArrayList<Trait> FindByJobPostingId() {
 		Connection con = DBConnection.connection();
 
 		// Ergebnis-ArraList vorbereiten
