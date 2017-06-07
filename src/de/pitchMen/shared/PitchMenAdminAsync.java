@@ -106,6 +106,8 @@ public interface PitchMenAdminAsync {
 	void deletePerson(Person person, AsyncCallback<Void> callback);
 
 	void getPersonByID(int id, AsyncCallback<Person> callback);
+	
+	void getAllPeople(AsyncCallback<ArrayList<Person>> callback);
 
 	// ---------- PROJECT
 

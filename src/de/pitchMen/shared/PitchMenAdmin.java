@@ -127,6 +127,9 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deletePerson(Person person) throws IllegalArgumentException;
 
 	public Person getPersonByID(int id) throws IllegalArgumentException;
+	
+	public ArrayList<Person> getAllPeople() throws IllegalArgumentException;
+
 
 	// ------------------- PROJECTS
 
@@ -342,4 +345,5 @@ public interface PitchMenAdmin extends RemoteService {
 	// --------------------------- LOGIN
 	public Person login(String requestUri);
 
+	
 }

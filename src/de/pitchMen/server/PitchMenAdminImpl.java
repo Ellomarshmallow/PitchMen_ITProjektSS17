@@ -600,6 +600,10 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.personMapper.findById(id);
 	}
 
+	@Override
+	public ArrayList<Person> getAllPeople() throws IllegalArgumentException {
+		return this.personMapper.findAll();
+	}
 	// --------------------------- TEAM
 
 	@Override
