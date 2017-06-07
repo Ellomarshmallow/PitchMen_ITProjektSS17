@@ -533,7 +533,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// ------------------------ PERSON
 
 	@Override
-	public Person addPerson(String firstName, ArrayList<Project> projetcs, String eMail)
+	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl, String logoutUrl)
 			throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
