@@ -59,6 +59,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	private JobPostingMapper jobPostingMapper = null;
 
 	/**
+	 * Referenz auf den DatenbankMapper, der ParticipationObjekte mit der
+	 * Datenbank abgleicht.
+	 */
+	private ParticipationMapper participationMapper = null;
+
+	/*
 	 * Referenz auf den DatenbankMapper, der PartnerProfileobjekte mit der
 	 * Datenbank abgleicht.
 	 */
@@ -160,6 +166,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.applicationMapper.findById(id);
 	}
 
+	@Override
+	public ArrayList<Application> getApplicationsOf(JobPosting jobPosting) throws IllegalArgumentException {
+		return this.applicationMapper.findApplicationsByJobPostingId(applicationId);
+	}
+	
 	// --------------------------- COMPANY
 
 	@Override
@@ -242,19 +253,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * Auslesen aller Projekte der übergeben Person
-	 * 
-	 * @Override public Project getProjectsOf(Person person) throws
-	 *           IllegalArgumentException { try { return this.projectMapper. }
-	 *           catch (ClassNotFoundException e) {
-	 * 
-	 *           e.printStackTrace();
-	 * 
-	 *           } return null;
-	 * 
-	 *           }
-	 */
+	@Override
+	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException {
+		// FIXME findByMarketplace im ProjectMapper erstellen
+		return this.projectMapper.findProjetcsByMarketplaceId(marketplaceId);
+	}
 
 	// --------------------------- MARKETPLACE
 
@@ -283,8 +286,16 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		this.marketplaceMapper.delete(marketplace);
+		// FIXME Methode getProjectsOf erstellen
+		ArrayList<Project> projects = this.getProjectsOf(marketplace);
 
+		if (projects != null) {
+			for (Project project : projects) {
+				this.projectMapper.delete(project);
+			}
+		}
+
+		this.marketplaceMapper.delete(marketplace);
 	}
 
 	/**
@@ -374,8 +385,26 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
+		// FIXME Methode getProjectsOf erstellen
+		ArrayList<Application> applications = this.getApplicationsOf(jobPosting);
+		ArrayList<PartnerProfile> partnerProfiles = this.getPartnerProfileOf(jobPosting);
+
+		if (applications != null) {
+			for (Application application : applications) {
+				this.applicationMapper.delete(application);
+			}
+		}
+
+		if (partnerProfiles != null) {
+			for (PartnerProfile partnerProfile : partnerProfiles) {
+				this.partnerProfileMapper.delete(partnerProfile);
+			}
+		}
+
 		this.jobPostingMapper.delete(jobPosting);
 	}
+
+
 
 	/**
 	 * Auslesen aller Ausschreibungen
@@ -397,10 +426,10 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<JobPosting> getJobPostingsOf(Project project) throws IllegalArgumentException {
-		//FIXME findByProject im JobPostingMapper erstellen
+		// FIXME findByProject im JobPostingMapper erstellen
 		return this.jobPostingMapper.findByProject(project);
 	}
-	
+
 	// --------------------------- PARTNERPROFILE
 
 	@Override
@@ -450,6 +479,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
+	public ArrayList<PartnerProfile> getPartnerProfileOf(int jobPostingId) {
+
+		return this.partnerProfileMapper.findPartnerProfileByJobPostingId(jobPostingId);
+	}
+
 	// --------------------------- RATING
 
 	@Override
@@ -484,7 +518,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public Rating getRatingOf(Application application) throws IllegalArgumentException {
-		//FIXME Methode findByApplication im RatingMapper erstellen
+		// FIXME Methode findByApplication im RatingMapper erstellen
 		return this.ratingMapper.findByApplication(application);
 	}
 

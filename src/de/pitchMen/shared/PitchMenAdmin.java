@@ -59,6 +59,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public Application getApplicationByID(int id) throws IllegalArgumentException;
 
 	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException;
+	
+	public ArrayList<Application> getApplicationsOf(JobPosting jobPosting) throws IllegalArgumentException;
 
 	// ------------------- COMPANY
 
@@ -157,6 +159,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
+	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException;
 	// --------------------------- MARKETPLACE
 
 	/**
@@ -336,5 +339,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	// --------------------------- LOGIN
 	public Person login(String requestUri);
+
+
 
 }

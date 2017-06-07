@@ -31,6 +31,8 @@ public interface PitchMenAdminAsync {
 	void getApplicationByID(int id, AsyncCallback<Application> callback);
 
 	void getApplicationsByPerson(int personId, AsyncCallback<ArrayList<Application>> callback);
+	
+	void getApplicationsOf(JobPosting jobPosting, AsyncCallback<ArrayList<Application>> callback);
 
 	// ---------- COMPANY
 	void addCompany(AsyncCallback<Company> callback);
@@ -119,6 +121,8 @@ public interface PitchMenAdminAsync {
 	void getProject(AsyncCallback<ArrayList<Project>> callback);
 
 	void getProjectByID(int id, AsyncCallback<Project> callback);
+	
+	void getProjectsOf(int marketplaceId, AsyncCallback<ArrayList<Project>> callback);
 
 	// ---------- RATING
 
