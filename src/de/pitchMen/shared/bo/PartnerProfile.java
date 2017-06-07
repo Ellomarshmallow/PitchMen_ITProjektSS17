@@ -34,7 +34,7 @@ public class PartnerProfile extends BusinessObject {
 	 * Realisierung der Beziehung zu einem JobPosting durch einen
 	    Fremdschlüssel.
 	 */
-	private int jopPostingId = 0;
+	private int jobPostingId = 0;
 
 	/**
 	 * @return
@@ -98,16 +98,16 @@ public class PartnerProfile extends BusinessObject {
 		this.companyId = companyId;
 	}
 	/**
-	 * @return jopPostingId
+	 * @return jobPostingId
 	 */	
 	public int getJobPostingId() {
-		return jopPostingId;
+		return jobPostingId;
 	}
 	/**
-	 * @param jopPostingId
+	 * @param jobPostingId
 	 */
-	public void setJobPostingId(int jopPostingId) {
-		this.jopPostingId = jopPostingId;
+	public void setJobPostingId(int jobPostingId) {
+		this.jobPostingId = jobPostingId;
 	}
 	
 	/**

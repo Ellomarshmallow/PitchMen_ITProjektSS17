@@ -1,6 +1,7 @@
 package de.pitchMen.shared.report;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
 	 * Implemetierungsklasse des Interface Serializable. Ist die Spalte eines Row-Objekts.  Column-Objekt kann als Kopie z.B. vom Server an den Client übertragen werden.
@@ -21,7 +22,7 @@ import java.io.Serializable;
 	    
 	    private int intvalue = 0;
 	    
-	    
+	    private Date datum = null;
 	    
 	    public Column() {
 	    }
@@ -38,6 +39,9 @@ import java.io.Serializable;
 	    	this.intvalue = intvalue;
 	    }
 	    
+	    public Column(Date datum){
+	    	this.datum = datum;
+	    };
 	    public String toString() {
 	        return this.value;
 	    }
@@ -61,6 +65,14 @@ import java.io.Serializable;
 		}
 		public void setIntvalue(int intvalue) {
 			this.intvalue = intvalue;
+		}
+
+		public Date getDatum() {
+			return datum;
+		}
+
+		public void setDatum(Date datum) {
+			this.datum = datum;
 		}
 
 	}
