@@ -468,7 +468,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- RATING
 
 	@Override
-	public Rating addRating(String statement, float score) throws IllegalArgumentException {
+	public Rating addRating(String statement, float score, int applicationId) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}

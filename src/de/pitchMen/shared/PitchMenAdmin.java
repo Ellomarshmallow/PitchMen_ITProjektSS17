@@ -290,7 +290,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param rating
 	 * @throws IllegalArgumentException
 	 */
-	public Rating addRating(String statement, float score) throws IllegalArgumentException;
+	public Rating addRating(String statement, float score, int applicationId) throws IllegalArgumentException;
 
 	/**
 	 * Fügt ein Rating-Objekt zur ArrayList ratings hinzu.

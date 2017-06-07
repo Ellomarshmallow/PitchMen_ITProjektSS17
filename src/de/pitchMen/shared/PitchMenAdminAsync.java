@@ -125,7 +125,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- RATING
 
-	void addRating(String statement, float scrore, AsyncCallback<Rating> callback);
+	void addRating(String statement, float scrore, int applicationId, AsyncCallback<Rating> callback);
 
 	void updateRating(Rating rating, AsyncCallback<Void> callback);
 
