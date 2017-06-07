@@ -15,10 +15,12 @@ import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
+import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.Column;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
@@ -246,6 +248,31 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		}
 
+		return null;
+	}
+	
+	
+	@Override
+	public AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	@Override
+	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(int id) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		AllParticipationsOfOneUser result = new AllParticipationsOfOneUser();
+		
+		result.setTitle("Report für Alle Beteiligungen eines Nutzers");
+		result.setDatecreated(new Date());
+		
+		
+		
 		return null;
 	}
 
