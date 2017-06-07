@@ -129,6 +129,8 @@ public interface PitchMenAdminAsync {
 	void getRatings(AsyncCallback<ArrayList<Rating>> callback);
 
 	void getRatingByID(int id, AsyncCallback<Rating> callback);
+	
+	void getRatingOf (int applicationId, AsyncCallback<Rating> callback);
 
 	// ---------- TEAM
 	void addTeam(AsyncCallback<Team> callback);

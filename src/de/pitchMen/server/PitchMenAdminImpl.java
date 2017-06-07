@@ -7,6 +7,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.thies.bankProjekt.shared.bo.Account;
+import de.hdm.thies.bankProjekt.shared.bo.Transaction;
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.server.db.*;
 import de.pitchMen.shared.*;
@@ -136,6 +137,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
+		Rating rating = this.getRatingOf(application);
+
+		if (rating != null) {
+			this.ratingMapper.delete(rating);
+		}
+
 		this.applicationMapper.delete(application);
 	}
 
@@ -207,6 +214,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
+		// FIXME Methode getJobPostingsOf erstellen
+		ArrayList<JobPosting> jobPostings = this.getJobPostingsOf();
+
+		if (jobPostings != null) {
+			for (JobPosting jobPosting : jobPostings) {
+				this.jobPostingMapper.delete(jobPosting);
+			}
+		}
+
 		this.projectMapper.delete(project);
 	}
 
@@ -251,7 +267,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setTitle(title);
 		marketplace.setDescription(description);
 		marketplace.setPersonId(personId);
-		;
 		marketplace.setTeamId(teamId);
 		marketplace.setCompanyId(companyId);
 
@@ -461,6 +476,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public Rating getRatingByID(int id) throws IllegalArgumentException {
 		return this.ratingMapper.findById(id);
+	}
+
+	@Override
+	public Rating getRatingOf(int applicationId) throws IllegalArgumentException {
+		//FIXME Methode findByApplicationId im RatingMapper erstellen
+		return this.ratingMapper.findByApplicationId(applicationId);
 	}
 
 	// --------------------------- PARTICIPATION

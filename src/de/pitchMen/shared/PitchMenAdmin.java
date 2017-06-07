@@ -298,6 +298,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Rating> getRatings() throws IllegalArgumentException;
 
 	public Rating getRatingByID(int id) throws IllegalArgumentException;
+	
+	public Rating getRatingOf(int ApplicationId) throws IllegalArgumentException;
 
 	// --------------------------- PARTICIPATION
 
