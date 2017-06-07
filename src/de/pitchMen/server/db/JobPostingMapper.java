@@ -377,7 +377,7 @@ public class JobPostingMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM jobPosting "
 					+ "INNER JOIN project"
-					+ "ON project.id = jobPosting.project_id");
+					+ "ON project.id = jobPosting.project_id "+ projectId);
 
 			/**
 			 * Anhand der übergebenen projectId werden die dazugehörigen
