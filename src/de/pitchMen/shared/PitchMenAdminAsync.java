@@ -45,7 +45,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- JOBPOSTING
 
-	void addJobPosting(String title, String text, Date deadline, int projectId, AsyncCallback<JobPosting> callback)
+	void addJobPosting(String title, String text, String status, Date deadline, int projectId, AsyncCallback<JobPosting> callback)
 			throws IllegalArgumentException;
 
 	void updateJobPosting(JobPosting jobPosting, AsyncCallback<Void> callback);

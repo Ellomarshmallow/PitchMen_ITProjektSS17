@@ -365,11 +365,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- JOBPOSTNG
 
 	@Override
-	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+	public JobPosting addJobPosting(String title, String text, String status, Date deadline, int projectId)
 			throws IllegalArgumentException {
 		JobPosting jobPosting = new JobPosting();
 		jobPosting.setTitle(title);
 		jobPosting.setText(text);
+		jobPosting.setStatus(status);
 		jobPosting.setDeadline(deadline);
 		jobPosting.setProjectId(projectId);
 

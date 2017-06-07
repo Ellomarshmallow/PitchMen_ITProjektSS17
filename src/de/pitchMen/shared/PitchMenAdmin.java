@@ -80,7 +80,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param jobPosting
 	 * @throws IllegalArgumentException
 	 */
-	public JobPosting addJobPosting(String title, String text, Date deadline, int projectId)
+	public JobPosting addJobPosting(String title, String text, String status, Date deadline, int projectId)
 			throws IllegalArgumentException;
 
 	/**
