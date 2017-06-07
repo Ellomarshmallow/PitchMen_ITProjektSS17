@@ -7,7 +7,7 @@ package de.pitchMen.shared.report;
  * 
  * @author
  */
-public class ApplicationsRelatedToJobPostingsOfUser extends CompositeReport {
+public class ApplicationsRelatedToJobPostingsOfUser extends SimpleReport {
 
 
 	/**
