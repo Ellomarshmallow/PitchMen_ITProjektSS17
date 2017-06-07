@@ -53,6 +53,8 @@ public interface PitchMenAdminAsync {
 	void getJobPostings(AsyncCallback<ArrayList<JobPosting>> callback);
 
 	void getJobPostingByID(int id, AsyncCallback<JobPosting> callback);
+	
+	void getJobPostingOf (int projectId, AsyncCallback<JobPosting> callback);
 
 	// ---------- MARKETPLACE
 

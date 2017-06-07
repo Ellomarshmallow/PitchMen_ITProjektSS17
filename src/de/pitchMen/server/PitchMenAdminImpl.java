@@ -394,9 +394,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 */
 	@Override
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException {
-		return this.getJobPostingByID(id);
+		return this.jobPostingMapper.findById(id);
 	}
 
+	@Override
+	public JobPosting getJobPostingOf(int projectId) throws IllegalArgumentException {
+		//FIXME findByProjectId im JobPostingMapper erstellen
+		return this.jobPostingMapper.findByProjectId(projectId);
+	}
+	
 	// --------------------------- PARTNERPROFILE
 
 	@Override
