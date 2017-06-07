@@ -6,6 +6,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.thies.bankProjekt.shared.bo.Account;
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.server.db.*;
 import de.pitchMen.shared.*;
@@ -135,8 +136,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteApplication(Application application) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.applicationMapper.delete(application);
 	}
 
 	@Override
@@ -171,8 +171,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteCompany(Company company) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.companyMapper.delete(company);
 	}
 
 	@Override
@@ -208,8 +207,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteProject(Project project) throws IllegalArgumentException {
-		// TODO
-		// ArrayList<Projects> projects = this.get
+		this.projectMapper.delete(project);
 	}
 
 	/**
@@ -272,7 +270,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		this.marketplaceMapper.delete(marketplace);
 
 	}
 
@@ -315,8 +313,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteTrait(Trait trait) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.traitMapper.delete(trait);
 	}
 
 	/**
@@ -364,8 +361,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.jobPostingMapper.delete(jobPosting);
 	}
 
 	/**
@@ -412,8 +408,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.partnerProfileMapper.delete(partnerProfile);
 	}
 
 	/**
@@ -455,8 +450,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteRating(Rating rating) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.ratingMapper.delete(rating);
 	}
 
 	@Override
@@ -533,8 +527,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deletePerson(Person person) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.personMapper.delete(person);
 	}
 
 	@Override
@@ -558,8 +551,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteTeam(Team team) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-
+		this.teamMapper.delete(team);
 	}
 
 	@Override
