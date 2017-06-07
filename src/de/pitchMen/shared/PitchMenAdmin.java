@@ -301,7 +301,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Rating getRatingByID(int id) throws IllegalArgumentException;
 	
-	public Rating getRatingOf(Application application) throws IllegalArgumentException;
+	Rating getRatingOf(Application application);
 
 	// --------------------------- PARTICIPATION
 
