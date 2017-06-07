@@ -342,24 +342,24 @@ public class TraitMapper {
 	}
 		
 	/**
-	 * Findet alle Eigenschaften die zur JobPosting-Id passen innerhalb der ParterProfile Tabelle. 
-	 * Übergibt eine ArrayList zum Vergleich dieser Eigenschaften mit dem Trait-Objekt aus 
-	 * der Methode @see FindByPerson.
+	 * Findet alle Eigenschaften (Traits) die zu einem Partnerprofil gehören. 
+	 * Ausgegeben wird eine ArrayListe, welche die Trait-Objekte beinhaltet
 	 * 
-	 * @param person_id
+	 * @param partnerProfileId
 	 * @return ArrayList<Trait>
 	 * 
 	 */
-	public ArrayList<Trait> FindPartnerProfileByJobPostingId() {
+	public ArrayList<Trait> findTraitByPartnerProfileId(int partnerProfileId) {
 		Connection con = DBConnection.connection();
 
-		// Ergebnis-ArraList vorbereiten
+		// Ergebnis-ArraLyist vorbereiten
 		ArrayList<Trait> result = new ArrayList<Trait>();
 
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile "
-					+ "INNER JOIN trait ON partnerProfile.jobPosting_id = trait.id");
+					+ "INNER JOIN trait ON partnerProfile.id = trait.partnerProfile_id "
+					+ "WHERE partnerProfileId = " + partnerProfileId);
 
 			// Für jeden Eintrag wird ein PartnerProfil-Objekt erstellt.
 			if (rs.next()) {
@@ -367,7 +367,7 @@ public class TraitMapper {
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
-				trait.setPartnerProfileId(rs.getInt("partnerProfil-id"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfileId"));
 			
 
 				// Hinzufügen des neuen Objekts zur Ergebnis-ArrayList
