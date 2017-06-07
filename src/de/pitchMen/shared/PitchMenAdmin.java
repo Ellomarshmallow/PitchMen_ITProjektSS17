@@ -35,7 +35,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return das neu erstellte Application-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId)
+	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId, int partnerProfileId)
 			throws IllegalArgumentException;
 
 	/**

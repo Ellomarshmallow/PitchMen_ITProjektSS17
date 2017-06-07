@@ -123,10 +123,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, String text, int jobPostingId, int partnerProfileId) {
+	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId, int partnerProfileId) {
 		Application application = new Application();
 		application.setDateCreated(dateCreated);
 		application.setText(text);
+		application.setStatus(status);
 		application.setJobPostingId(jobPostingId);
 		application.setPartnerProfileId(partnerProfileId);
 
