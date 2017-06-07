@@ -14,49 +14,49 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Label;
 
 public class Formular extends SimplePanel {
-	
+
 	// TODO: Die Methode hasPermission() implementieren. Rückgabe eines booleanschen Wertes.
 	// 		 Da der Ersteller des Projektmarktplatzes mehr Buttons hat (löschen bearbeiten)
-	
-	private int Creator;
 
-	
+	private int creator;
+
+
 	private PitchMenAdminAsync pitchMenAdmin = null;
-	
-	private String Title = " " ; 
-	
-	private String Description = " "; 
-	
+
+	private String title = " " ; 
+
+	private String description = " "; 
+
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	public String getDescription() {
-		return Description;
+		return description;
 	}
 
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
-	
+
 	public PitchMenAdminAsync getPitchMenAdmin() {
 		return pitchMenAdmin;
 	}
-	
+
 	public void setCreator(int creator){
-		this.Creator = creator; 
+		this.creator = creator; 
 	}
-	
+
 	public int getCreator(){
-		return this.Creator; 
+		return this.creator; 
 	}
-	
+
 	public boolean hasPermission(){
-		if(this.Creator == ClientsideSettings.getCurrentUser().getId()){
+		if(this.creator == ClientsideSettings.getCurrentUser().getId()){
 			return true;
 		}
 		else {
@@ -69,23 +69,23 @@ public class Formular extends SimplePanel {
 		 * Verbindung zur PitchMenAdministration
 		 */
 		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin();
-	
+
 		/*
 		 * Erstellen eines FormPanels
 		 */
 		FormPanel form = new FormPanel(); 
-		
+
 		/*
 		 * Erstellen und hinzufügen eines VerticalPanels zu dem FormPanel
 		 */
 		VerticalPanel ver = new VerticalPanel(); 
 		form.setWidget(ver);
-		
 
-	
-		 
-		 }
+
+
 
 	}
+
+}
 
 
