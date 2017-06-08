@@ -13,6 +13,8 @@ public class Application extends BusinessObject {
 	private Date dateCreated = null;
 	
 	private String status = "";
+	
+	private Rating rating = null;
 
 	/**
 	 * Realisierung der Beziehung zu einem jobPosting durch einen
@@ -63,28 +65,6 @@ public class Application extends BusinessObject {
 	}
 
 	/**
-	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
-	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
-	 * Rating-Objekt.
-	 * 
-	 * @param score
-	 * @param statement
-	 * 
-	 *            public void rate(float score, String statement) { Rating rate
-	 *            = new Rating(score, statement); this.setRating(rate); }
-	 */
-
-	/**
-	 * Überprüft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung
-	 * vorhanden, wird true ausgegeben, wenn nicht, false.
-	 * 
-	 * @return
-	 * 
-	 * 		public boolean isRated() { if (this.getRating() != null) { return
-	 *         true; } else { return false; } }
-	 */
-
-	/**
 	 * @return jobpostingId
 	 */
 	public int getJobPostingId() {
@@ -124,6 +104,20 @@ public class Application extends BusinessObject {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the rating
+	 */
+	public Rating getRating() {
+		return rating;
+	}
+
+	/**
+	 * @param rating the rating to set
+	 */
+	public void setRating(Rating rating) {
+		this.rating = rating;
 	}
 
 }
