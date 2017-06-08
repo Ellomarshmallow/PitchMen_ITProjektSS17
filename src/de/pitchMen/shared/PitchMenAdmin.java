@@ -298,6 +298,8 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Team getTeamByID(int id) throws IllegalArgumentException;
 
+	public ArrayList<Team> getTeams() throws IllegalArgumentException;
+
 	// ------------------------ RATING
 
 	/**

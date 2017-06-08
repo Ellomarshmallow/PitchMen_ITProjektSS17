@@ -151,6 +151,8 @@ public interface PitchMenAdminAsync {
 	void deleteTeam(Team team, AsyncCallback<Void> callback);
 
 	void getTeamByID(int id, AsyncCallback<Team> callback);
+	
+	void getTeams(AsyncCallback<ArrayList<Team>> callback);
 
 	// ---------- TRAIT
 

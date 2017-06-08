@@ -591,6 +591,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Team getTeamByID(int id) throws IllegalArgumentException {
 		return this.teamMapper.findById(id);
 	}
+	
+	@Override
+	public ArrayList<Team> getTeams() throws IllegalArgumentException {
+		return this.teamMapper.findAll();
+	}
 
 	// --------------------------- TRAIT
 
