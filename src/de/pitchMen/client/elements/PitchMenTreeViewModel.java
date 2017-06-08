@@ -203,8 +203,22 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 	}
 
 	public void setSelectedMarketplace(Marketplace selectedMarketplace) {
-		// TODO vgl. mit BankProjekt
+		/*
+		 *  Wird ein Marktplatz ausgewählt, wird das sowohl
+		 *  dem TreeViewModel als auch dem MarketplaceForm
+		 *  mitgeteilt.
+		 */
 		this.selectedMarketplace = selectedMarketplace;
+		this.marketplaceForm.setSelected(selectedMarketplace);
+		
+		/*
+		 * Gleichzeitig werden die evt. noch vorhandenen Projekte
+		 * und Ausschreibungen, die zuvor angezeigt wurden, entfernt.
+		 */
+		this.selectedProject = null;
+		this.projectForm = null;
+		this.selectedJobPosting = null;
+		this.jobPostingForm = null;	
 		
 	}
 
