@@ -435,6 +435,35 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 			});
 			
 			return new DefaultNodeInfo<Project>(projectLDP, new ProjectCell(), selectionModel, null);
+		} 
+		/*
+		 * Ist der value-Parameter vom Typ Project, wird die 
+		 * darunterliegende Hierarchie-Ebene der zu diesem 
+		 * Projekt gehörenden Ausschreibungen in einen ListDataProvider
+		 * geschrieben.
+		 */
+		if(value instanceof Project) {
+			final ListDataProvider<JobPosting> jobPostingLDP = new ListDataProvider<JobPosting>();
+			this.jobPostingDataProviders.put((Project) value, jobPostingLDP); 			
+			int projectId = ((Project) value).getId();
+			
+			this.pitchMenAdmin.getJobPostingsByProjectId(projectId, new AsyncCallback<ArrayList<JobPosting>>()  {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings.getLogger().severe("Projekte konnten nicht abgefragt werden");
+				}
+
+				@Override
+				public void onSuccess(ArrayList<JobPosting> result) {
+					for(JobPosting project : result) {
+						jobPostingLDP.getList().add(project);
+					}
+				}
+			 	
+			});
+			
+			return new DefaultNodeInfo<JobPosting>(jobPostingLDP, new JobPostingCell(), selectionModel, null);
 		}
 		return null;
 	}
