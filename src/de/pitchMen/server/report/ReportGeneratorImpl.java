@@ -355,7 +355,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 			for(Application ap : allApplications){
 				
-				//TODO If anweisung
+								
+				if(ap.getStatus().equals("laufend")){
+					ongoing.add(ap);
+				}
+				else if(ap.getStatus().equals("abgelehnt")){
+					declined.add(ap);
+				}
+				else if(ap.getStatus().equals("angenommen")){
+					accepted.add(ap);
+				};
+				
+				Row applicationCount = new Row();
+				
+				applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
+				applicationCount.addColumn(new Column(String.valueOf(declined.size())));
+				applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
+				
+				result.addRow(applicationCount);
 				
 			}
 			
@@ -363,7 +380,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//}
 		
 		
-		return null;
+		return result;
 		
 		
 		
