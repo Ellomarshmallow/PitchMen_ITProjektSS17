@@ -174,7 +174,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
 	public ArrayList<Project> getProjectsByMarketplaceId(int marketplaceId) throws IllegalArgumentException;
-	
+
 	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException;
 
 	// --------------------------- MARKETPLACE
@@ -276,6 +276,14 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException;
 
+	public PartnerProfile getPartnerProfileByCompanyId(int companyId) throws IllegalArgumentException;
+
+	public PartnerProfile getPartnerProfileByTeamId(int teamId) throws IllegalArgumentException;
+
+	public PartnerProfile getPartnerProfileByPersonId(int personId) throws IllegalArgumentException;
+
+	public ArrayList<PartnerProfile> getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException;
+
 	// ------------------- Team
 
 	/**
@@ -366,8 +374,12 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException;
 
 	public Participation getParticipationByID(int id) throws IllegalArgumentException;
-	
+
 	public ArrayList<Participation> getParticipationsByPersonId(int personId) throws IllegalArgumentException;
+
+	public ArrayList<Participation> getParticipationsByTeamId(int teamId) throws IllegalArgumentException;
+
+	public ArrayList<Participation> getParticipationsByCompanyId(int companyId) throws IllegalArgumentException;
 
 	// --------------------------- LOGIN
 

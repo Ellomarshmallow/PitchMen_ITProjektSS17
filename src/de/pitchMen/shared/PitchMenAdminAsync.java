@@ -86,8 +86,12 @@ public interface PitchMenAdminAsync {
 	void getParticipations(AsyncCallback<ArrayList<Participation>> callback);
 
 	void getParticipationByID(int id, AsyncCallback<Participation> callback);
-	
+
 	void getParticipationsByPersonId(int personId, AsyncCallback<ArrayList<Participation>> callback);
+
+	void getParticipationsByTeamId(int teamId, AsyncCallback<ArrayList<Participation>> callback);
+
+	void getParticipationsByCompanyId(int companyId, AsyncCallback<ArrayList<Participation>> callback);
 
 	// ---------- PARTNERPROFILE
 
@@ -101,6 +105,14 @@ public interface PitchMenAdminAsync {
 	void getPartnerProfiles(AsyncCallback<ArrayList<PartnerProfile>> callback);
 
 	void getPartnerProfileByID(int id, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileByCompanyId(int companyId, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileByTeamId(int teamId, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfileByPersonId(int personId, AsyncCallback<PartnerProfile> callback);
+
+	void getPartnerProfilesByJobPostingId(int jobPostingId, AsyncCallback<ArrayList<PartnerProfile>> callback);
 
 	// ---------- PERSON
 
@@ -129,7 +141,7 @@ public interface PitchMenAdminAsync {
 	void getProjectByID(int id, AsyncCallback<Project> callback);
 
 	void getProjectsByMarketplaceId(int marketplaceId, AsyncCallback<ArrayList<Project>> callback);
-	
+
 	void getProjectsByPerson(int personId, AsyncCallback<ArrayList<Project>> callback) throws IllegalArgumentException;
 
 	// ---------- RATING
@@ -155,7 +167,7 @@ public interface PitchMenAdminAsync {
 	void deleteTeam(Team team, AsyncCallback<Void> callback);
 
 	void getTeamByID(int id, AsyncCallback<Team> callback);
-	
+
 	void getTeams(AsyncCallback<ArrayList<Team>> callback);
 
 	// ---------- TRAIT

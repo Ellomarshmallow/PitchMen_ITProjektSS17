@@ -365,11 +365,23 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Participation getParticipationByID(int id) throws IllegalArgumentException {
 		return this.participationMapper.findById(id);
 	}
-	
+
 	@Override
 	public ArrayList<Participation> getParticipationsByPersonId(int personId) throws IllegalArgumentException {
-		//TODO im Mapper
+		// TODO im Mapper
 		return this.participationMapper.findParticipationsByPersonId(personId);
+	}
+
+	@Override
+	public ArrayList<Participation> getParticipationsByTeamId(int teamId) throws IllegalArgumentException {
+		// TODO im Mapper
+		return this.participationMapper.findParticipationsByTeamId(teamId);
+	}
+
+	@Override
+	public ArrayList<Participation> getParticipationsByCompanyId(int companyId) throws IllegalArgumentException {
+		// TODO im Mapper
+		return this.participationMapper.findParticipationsByCompanyId(companyId);
 	}
 
 	// --------------------------- PARTNERPROFILE
@@ -430,17 +442,30 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	public ArrayList<PartnerProfile> getPartnerProfileByJobPostingId(int jobPostingId) throws IllegalArgumentException {
+	@Override
+	public ArrayList<PartnerProfile> getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException {
 		// TODO im Mapper
 		return this.partnerProfileMapper.findPartnerProfilesByJobPostingId(jobPostingId);
 	}
 
+	@Override
 	public PartnerProfile getPartnerProfileByPersonId(int personId) throws IllegalArgumentException {
-		//TODO im Mapper
+		// TODO im Mapper
 		return this.participationMapper.findPartnerProfileByPersonId(personId);
 	}
-	
-	
+
+	@Override
+	public PartnerProfile getPartnerProfileByTeamId(int teamId) throws IllegalArgumentException {
+		// TODO im Mapper
+		return this.participationMapper.findPartnerProfileByTeamId(teamId);
+	}
+
+	@Override
+	public PartnerProfile getPartnerProfileByCompanyId(int companyId) throws IllegalArgumentException {
+		// TODO im Mapper
+		return this.participationMapper.findPartnerProfileByCompanyId(companyId);
+	}
+
 	@Override
 	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
 			String logoutUrl) throws IllegalArgumentException {
@@ -472,7 +497,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 				this.participationMapper.delete(participation);
 			}
 		}
-		
+
 		if (partnerProfile != null) {
 			this.partnerProfileMapper.delete(partnerProfile);
 		}
@@ -610,7 +635,22 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteTeam(Team team) throws IllegalArgumentException {
+		ArrayList<Participation> participations = this.getParticipationsByTeamId(team.getId());
+		PartnerProfile partnerProfile = this.getPartnerProfileByTeamId(team.getId());
+
+		if (participations != null) {
+			for (Participation participation : participations) {
+				this.participationMapper.delete(participation);
+			}
+		}
+
+		if (partnerProfile != null) {
+			this.partnerProfileMapper.delete(partnerProfile);
+		}
+
 		this.teamMapper.delete(team);
+	}
+
 	}
 
 	@Override
