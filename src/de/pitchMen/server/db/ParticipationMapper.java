@@ -245,5 +245,124 @@ public class ParticipationMapper {
 		}
 		return result;
 	}
+	
+	/**
+	 * Findet Participation-Objekte anhand des übergebenen personId in der
+	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt werden,
+	 * zu den es jeweils auch ein Gegenstück in der verknüpften Tabelle gibt. 
+	 * Da es möglich ist, dass eine Person mehrere Participations (Beteiligungen) hat, müssen die 
+	 * Participation-Objekte in einer ArrayList gespeichert werden
+	 * 
+	 * @param personId
+	 * @return ArrayList<Participation>
+	 */
+	public ArrayList<Participation> findParticipationsByPersonId(int personId) {
+		Connection con = DBConnection.connection();
 
+		ArrayList<Participation> result = new ArrayList<Participation>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery(
+							"SELECT * FROM participation "
+							+ "INNER JOIN person_has_participation"
+							+ "ON participation.id = person_has_participation.participation_id"
+							+ "WHERE person_has_participation.person_id = " + personId);
+
+			while (rs.next()) {
+				Participation participation = new Participation();
+				participation.setId(rs.getInt("id"));
+				participation.setWorkload(rs.getFloat("workload"));
+				participation.setDateOpened(rs.getDate("dateOpened"));
+				participation.setDateClosed(rs.getDate("dateClosed"));
+
+				result.add(participation);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * Findet Participation-Objekte anhand der übergebenen teamId in der
+	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt werden,
+	 * zu den es jeweils auch ein Gegenstück in der verknüpften Tabelle gibt. 
+	 * Da es möglich ist, dass ein Team mehrere Participations (Beteiligungen) hat, müssen die 
+	 * Participation-Objekte in einer ArrayList gespeichert werden
+	 * 
+	 * @param teamId
+	 * @return ArrayList<Participation>
+	 */
+	public ArrayList<Participation> findParticipationsByTeamId(int teamId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Participation> result = new ArrayList<Participation>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery(
+							"SELECT * FROM participation"
+							+ " INNER JOIN participation_has_team "
+							+ "ON participation.id = participation_has_team.participation_id "
+							+ "WHERE participation_has_team.team_id = " + teamId);
+
+
+			while (rs.next()) {
+				Participation participation = new Participation();
+				participation.setId(rs.getInt("id"));
+				participation.setWorkload(rs.getFloat("workload"));
+				participation.setDateOpened(rs.getDate("dateOpened"));
+				participation.setDateClosed(rs.getDate("dateClosed"));
+
+				result.add(participation);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * Findet Participation-Objekte anhand der übergebenen companyId in der
+	 * Datenbank. 
+	 * Da es möglich ist, dass eine company mehrere Participations (Beteiligungen) hat, müssen die 
+	 * Participation-Objekte in einer ArrayList gespeichert werden
+	 * 
+	 * @param companyId
+	 * @return ArrayList<Participation>
+	 */
+	public ArrayList<Participation> findParticipationsByCompanyId(int companyId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Participation> result = new ArrayList<Participation>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery(
+							"SELECT * FROM participation "
+							+ "INNER JOIN company_has_participation "
+							+ "ON participation.id = company_has_participation.participation_id "
+							+ "WHERE company_has_participation.company_id = " + companyId);
+
+			while (rs.next()) {
+				Participation participation = new Participation();
+				participation.setId(rs.getInt("id"));
+				participation.setWorkload(rs.getFloat("workload"));
+				participation.setDateOpened(rs.getDate("dateOpened"));
+				participation.setDateClosed(rs.getDate("dateClosed"));
+
+				result.add(participation);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
 }
