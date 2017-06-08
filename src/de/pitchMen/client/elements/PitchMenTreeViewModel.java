@@ -463,32 +463,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		this.selectionModel.setSelected(project, true);
 		
 	}
-	
-	/**
-	 * Ein gelöschtes Projekt-Objekt fliegt aus der Baumstruktur.
-	 * Das hat allerdings nichts mit der Löschung von Objekten in der
-	 * Applikations- und Tupeln in der Datenbank-Schicht zu tun. Es ist
-	 * durchaus möglich, dass die Objekte dort nicht "hart" gelöscht,
-	 * sondern nur auf inaktiv gesetzt werden o. ä. Wichtig ist bei 
-	 * dieser Methode insbesondere, dass vor der Löschung des Projekts
-	 * selbst erst noch die ihm untergeordneten Ausschreibungen
-	 * gelöscht werden. Das ist zwar nicht (wie z. B. bei Datenbanken)
-	 * notwendig, der Nachvollziehbarkeit wegen wurde allerdings das
-	 * kaskadierende Löschen so implementiert.
-	 * 
-	 * @param das zu löschende Projekt
-	 */
-	public void deleteProject(Project project, Marketplace marketplace) {
-		// Wenn der Baumknoten noch nicht angelegt wurde, gibt's nicht zu tun
-		// wurde der Baumknoten noch nicht geöffnet und wir brauchen nichts tun.
-		if (!this.projectDataProviders.containsKey(marketplace)) {
-			return;
-		}		
-		
-		projectDataProviders.get(marketplace).getList().remove(project);
-		selectionModel.setSelected(marketplace, true);
-	}
-	
+
 	/**
 	 * Wenn der Nutzer ein Projekt ändert und speichert,
 	 * sollte sich (bei der Änderung des Titels z. B.) auch das
@@ -521,17 +496,91 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		
 	}
 	
+	/**
+	 * Ein gelöschtes Projekt-Objekt fliegt aus der Baumstruktur.
+	 * Das hat allerdings nichts mit der Löschung von Objekten in der
+	 * Applikations- und Tupeln in der Datenbank-Schicht zu tun. Es ist
+	 * durchaus möglich, dass die Objekte dort nicht "hart" gelöscht,
+	 * sondern nur auf inaktiv gesetzt werden o. ä. Wichtig ist bei 
+	 * dieser Methode insbesondere, dass vor der Löschung des Projekts
+	 * selbst erst noch die ihm untergeordneten Ausschreibungen
+	 * gelöscht werden. Das ist zwar nicht (wie z. B. bei Datenbanken)
+	 * notwendig, der Nachvollziehbarkeit wegen wurde allerdings das
+	 * kaskadierende Löschen so implementiert.
+	 * 
+	 * @param das zu löschende Projekt
+	 */
+	public void deleteProject(Project project, Marketplace marketplace) {
+		// Wenn der Baumknoten noch nicht angelegt wurde, gibt's nicht zu tun
+		if (!this.projectDataProviders.containsKey(marketplace)) {
+			return;
+		}		
+		
+		projectDataProviders.get(marketplace).getList().remove(project);
+		selectionModel.setSelected(marketplace, true);
+	}
 	
-	public void addJobPosting(JobPosting jobPosting) {
+	/**
+	 * Füge eine neue Ausschreibung zur Baumstruktur hinzu.
+	 * 
+	 * @param die neue Ausschreibung
+	 * @param das übergeordnete Projekt
+	 */
+	public void addJobPosting(JobPosting jobPosting, Project project) {
+		// Wenn der Baumknoten noch nicht angelegt wurde, gibt's nicht zu tun
+		if(!this.jobPostingDataProviders.containsKey(project)) {
+			return;
+		}
+		// Erstelle ListDataProvider mit Ausschreibungen des ausgewählten Projekts
+		ListDataProvider<JobPosting> jobPostingProvider = this.jobPostingDataProviders.get(project);
+		if(!jobPostingProvider.getList().contains(jobPosting)) {
+			// wenn noch nicht enthalten, füge hinzu
+			jobPostingProvider.getList().add(jobPosting);
+		}
+		// Wähle neu erstelltes Projekt aus
+		this.selectionModel.setSelected(jobPosting, true);
+	}
+	
+	/**
+	 * Wenn der Nutzer eine Ausschreibung ändert und speichert,
+	 * sollte sich (bei der Änderung des Titels z. B.) auch das
+	 * im Baum hinterlegte Objekt aktualisieren. Das wird mit
+	 * <code>updateJobPosting()</code> realisiert.
+	 * 
+	 * @param die upzudatende Ausschreibung
+	 */
+	public void updateJobPosting(final JobPosting jobPosting) {
+		this.pitchMenAdmin.getProjectByID(jobPosting.getProjectId(), new AsyncCallback<Project>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe("Fehler bei der Abfrage des Projektmarktplatzes");
+			}
+
+			@Override
+			public void onSuccess(Project result) {
+				List<JobPosting> jobPostingList = jobPostingDataProviders.get(result).getList();
+				
+				for(int i = 0; i < jobPostingList.size(); i++) {
+					if(jobPosting.getId() == jobPostingList.get(i).getId()) {
+						jobPostingList.set(i, jobPosting);
+						break;
+					}
+				}
+			}
+			
+		});
 		
 	}
 	
-	public void updateJobPosting(JobPosting jobPosting) {
+	public void deleteJobPosting(JobPosting jobPosting, Project project) {
+		// Wenn der Baumknoten noch nicht angelegt wurde, gibt's nicht zu tun
+		if (!this.jobPostingDataProviders.containsKey(project)) {
+			return;
+		}		
 		
-	}
-	
-	public void deleteJobPosting(JobPosting jobPosting) {
-		
+		jobPostingDataProviders.get(project).getList().remove(jobPosting);
+		selectionModel.setSelected(project, true);
 	}
 
 	/**
