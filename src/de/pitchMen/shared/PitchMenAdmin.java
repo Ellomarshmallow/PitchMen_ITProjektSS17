@@ -175,6 +175,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
 	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException;
+	
+	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException;
 
 	// --------------------------- MARKETPLACE
 

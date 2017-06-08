@@ -531,6 +531,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.projectMapper.findProjectByMarketplaceId(marketplaceId);
 	}
 
+	@Override
+	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException {
+		//FIXME Namensgebung der Mapper Methode ist irreführend. 
+		return this.projectMapper.findParticipationByPersonId(personId);
+	}
 	// --------------------------- RATING
 
 	@Override

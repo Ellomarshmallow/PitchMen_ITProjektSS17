@@ -127,6 +127,8 @@ public interface PitchMenAdminAsync {
 	void getProjectByID(int id, AsyncCallback<Project> callback);
 
 	void getProjectsOf(int marketplaceId, AsyncCallback<ArrayList<Project>> callback);
+	
+	void getProjectsByPerson(int personId, AsyncCallback<ArrayList<Project>> callback) throws IllegalArgumentException;
 
 	// ---------- RATING
 
