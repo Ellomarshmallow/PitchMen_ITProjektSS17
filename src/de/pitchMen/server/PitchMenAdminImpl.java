@@ -382,9 +382,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public PartnerProfile getPartnerProfileByPersonId(int personId) throws IllegalArgumentException {
-		return null;
-		// TODO im Mapper
-		// this.partnerProfileMapper.findPartnerProfileByPersonId(personId);
+		return this.partnerProfileMapper.findPartnerProfileByPersonId(personId);
 	}
 
 	@Override
@@ -542,15 +540,14 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void rateApplication(Application application) throws IllegalArgumentException {
-	}
-
-	/**
-	 * // FIXME nicht sicher ob die Methode funktioniert application =
-	 * this.getApplicationByID(application.getId()); Rating rating = new
-	 * Rating(score, statement);
-	 * 
-	 * application.setRating(rating);
-	 * 
+	
+	 // FIXME nicht sicher ob die Methode funktioniert application =
+	 this.getApplicationByID(application.getId()); Rating rating = new
+	 Rating(score, statement);
+	 
+	 application.setRating(rating);
+	 
+	 /**
 	 * }
 	 * 
 	 * 
@@ -617,7 +614,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.teamMapper.findAll();
 	}
 
-	// --------------------------- TRAIT
+	// ------------------------------ TRAIT
 
 	@Override
 	public Trait addTrait(String name, String value) throws IllegalArgumentException {
