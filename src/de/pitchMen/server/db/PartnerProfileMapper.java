@@ -313,10 +313,10 @@ public class PartnerProfileMapper {
 	}
 	
 	/**
-	 * Methode zum Suchen von Partnerprofilen 
+	 * Methode zum Suchen von Partnerprofilen in Bezug zu teamIds um
 	 * bestehende Beziehungen/Datensätze zu löschen
 	 * 
-	 * @param companyId
+	 * @param teamId
 	 * @return partnerProfil
 	 */
 	public PartnerProfile findPartnerProfileByTeamId(int teamId) {
@@ -348,7 +348,7 @@ public class PartnerProfileMapper {
 				partnerProfile.setTeamId(rs.getInt("team_id"));
 				partnerProfile.setPersonId(rs.getInt("person_id"));
 				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
-				//Zurückgegebendes PartnerProfil-Objekt beinhaltet das PartnerProfil zu der companyID
+				//Zurückgegebenes PartnerProfil-Objekt beinhaltet das PartnerProfil zu der teamID
 				return partnerProfile;
 			}
 
