@@ -24,6 +24,7 @@ import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.Column;
+import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
@@ -447,12 +448,28 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		return result;
 		
-		
-	
 	}
 
-
-
+	@Override
+	public FanInAndOutReport showFanInAndOutReport() throws IllegalArgumentException {
+		
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		FanInAndOutReport result = new FanInAndOutReport();
+		
+		result.setTitle("Report für die FanIn bzw FanOut Analyse");
+		result.setDatecreated(new Date());
+		
+		result.addSubReport(this.showFanInJobPostingsOfUser());
+		result.addSubReport(this.showFanOutApplicationsOfUser());
+		
+		
+		return result;
+		
+		
+	}
 	/**
 	 * Default constructor
 	 */
