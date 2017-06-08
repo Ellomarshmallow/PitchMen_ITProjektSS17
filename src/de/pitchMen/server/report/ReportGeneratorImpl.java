@@ -176,7 +176,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		return result;
 	}
-	public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
+	/* public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
 		if (pitchMenAdmin == null) {
 			return null;
 		}
@@ -210,7 +210,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		return result;
 	};
-
+*/
 
 
 	@Override
