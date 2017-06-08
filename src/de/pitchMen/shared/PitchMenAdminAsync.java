@@ -134,7 +134,7 @@ public interface PitchMenAdminAsync {
 
 	void updateProject(Project p, AsyncCallback<Void> callback);
 
-	void deleteProject(Project p, AsyncCallback<Void> callback);
+	void deleteProject(Project project, AsyncCallback<Void> callback);
 
 	void getProject(AsyncCallback<ArrayList<Project>> callback);
 
