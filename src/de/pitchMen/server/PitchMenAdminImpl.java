@@ -20,78 +20,35 @@ import de.pitchMen.shared.bo.*;
  */
 public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenAdmin {
 
-	/**
-	 * Default constructor
-	 */
 	public PitchMenAdminImpl() throws IllegalArgumentException {
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
-	 * Datenbank abgleicht.
+	 * Referenzen auf die DatenbankMapper, die Objekte mit der Datenbank
+	 * abgleicht.
 	 */
 	private MarketplaceMapper marketplaceMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der Applicationobjekte mit der
-	 * Datenbank abgleicht.
-	 */
 	private ApplicationMapper applicationMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der Companyobjekte mit der Datenbank
-	 * abgleicht.
-	 */
 	private CompanyMapper companyMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der JobPostingobjekte mit der Datenbank
-	 * abgleicht.
-	 */
 	private JobPostingMapper jobPostingMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der ParticipationObjekte mit der
-	 * Datenbank abgleicht.
-	 */
 	private ParticipationMapper participationMapper = null;
 
-	/*
-	 * Referenz auf den DatenbankMapper, der PartnerProfileobjekte mit der
-	 * Datenbank abgleicht.
-	 */
 	private PartnerProfileMapper partnerProfileMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der Personobjekte mit der Datenbank
-	 * abgleicht.
-	 */
 	private PersonMapper personMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der Projectobjekte mit der Datenbank
-	 * abgleicht.
-	 */
 	private ProjectMapper projectMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der Ratingobjekte mit der Datenbank
-	 * abgleicht.
-	 */
 	private RatingMapper ratingMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der Teamobjekte mit der Datenbank
-	 * abgleicht.
-	 */
 	private TeamMapper teamMapper = null;
 
-	/**
-	 * Referenz auf den DatenbankMapper, der Traitobjekte mit der Datenbank
-	 * abgleicht.
-	 */
 	private TraitMapper traitMapper = null;
 
 	@Override
@@ -223,8 +180,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		jobPosting.setDeadline(deadline);
 		jobPosting.setProjectId(projectId);
 
-		// Objekt in der DB speichern.
-
 		return this.jobPostingMapper.insert(jobPosting);
 
 	}
@@ -254,9 +209,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		this.jobPostingMapper.delete(jobPosting);
 	}
 
-	/**
-	 * Auslesen aller Ausschreibungen
-	 */
 	@Override
 	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException {
 
@@ -264,9 +216,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * Auslesen einer Ausschreibung anhand seiner ID
-	 */
 	@Override
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException {
 		return this.jobPostingMapper.findById(id);
@@ -289,13 +238,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setTeamId(teamId);
 		marketplace.setCompanyId(companyId);
 
-		// Objekt in der DB speichern
 		return this.marketplaceMapper.insert(marketplace);
 	}
 
-	/**
-	 * Speichert einen Marktplatz
-	 */
 	@Override
 	public void updateMarketplace(Marketplace marketplace) throws IllegalArgumentException {
 		marketplaceMapper.update(marketplace);
@@ -315,9 +260,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		this.marketplaceMapper.delete(marketplace);
 	}
 
-	/**
-	 * Auslesen aller Marktpl�tze
-	 */
 	@Override
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
 
@@ -325,9 +267,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * Auslesen eines Marketplatzes anhand seiner ID
-	 */
 	@Override
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException {
 		return this.marketplaceMapper.findById(id);
@@ -398,7 +337,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		partnerProfile.setTeamId(teamId);
 		partnerProfile.setJobPostingId(jobPostingId);
 
-		// Objekt in der DB speichern.
 		return this.partnerProfileMapper.insert(partnerProfile);
 	}
 
@@ -423,9 +361,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * Auslesen aller Partnerprofile
-	 */
 	@Override
 	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException {
 
@@ -433,9 +368,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * Auslesen eines Partnerprofiles anhand seiner ID
-	 */
 	@Override
 	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException {
 
@@ -530,9 +462,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.projectMapper.insert(project);
 	}
 
-	/**
-	 * Speichert ein Projekt
-	 */
 	@Override
 	public void updateProject(Project project) throws IllegalArgumentException {
 
@@ -553,18 +482,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		this.projectMapper.delete(project);
 	}
 
-	/**
-	 * Auslesen aller Projekte
-	 */
 	@Override
 	public ArrayList<Project> getProject() throws IllegalArgumentException {
 		return this.projectMapper.findAll();
 
 	}
 
-	/**
-	 * Auslesen eines Projekts anhand seiner ID
-	 */
 	@Override
 	public Project getProjectByID(int id) throws IllegalArgumentException {
 		return this.projectMapper.findById(id);
@@ -702,7 +625,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		trait.setName(name);
 		trait.setValue(value);
 
-		// Objekt in der DB speichern.
 		return this.traitMapper.insert(trait);
 	}
 
@@ -717,9 +639,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		this.traitMapper.delete(trait);
 	}
 
-	/**
-	 * Auslesen aller Eigenschaften
-	 */
 	@Override
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException {
 
@@ -727,9 +646,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	/**
-	 * Auslesen einer Eigenschaft anhand seiner ID
-	 */
 	@Override
 	public Trait getTraitByID(int id) throws IllegalArgumentException {
 
