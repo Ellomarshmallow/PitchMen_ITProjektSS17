@@ -60,7 +60,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showFanOutApplicationsOfUser(Person p, AsyncCallback<FanOutApplicationsOfUser> callback);
+	void showFanOutApplicationsOfUser(AsyncCallback<FanOutApplicationsOfUser> callback);
 	/**
 	 * 
 	 */

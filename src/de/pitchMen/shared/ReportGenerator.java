@@ -65,7 +65,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract FanOutApplicationsOfUser showFanOutApplicationsOfUser(Person p) throws IllegalArgumentException;
+	public abstract FanOutApplicationsOfUser showFanOutApplicationsOfUser() throws IllegalArgumentException;
 	/**
 	 * 
 	 */
