@@ -213,5 +213,150 @@ public class PartnerProfileMapper {
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * Findet ein PartnerProfile-Tupel anhand der übergebenen jobPostingId in der
+	 * Datenbank.Anschließend wird es als Java-Objekt in der Variablen partnerProfile 
+	 * vom typ PartnerProfile gespeichert. Methode zum Suchen von Partnerprofilen 
+	 * bestehende Beziehungen/Datensätze zu löschen
+	 * 
+	 * @param jobPostingId
+	 * @return partnerProfil
+	 */
+	public PartnerProfile findPartnerProfileByJobPostingId(int jobPostingId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die Datenbank senden
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM partnerProfile "
+					+ "WHERE jobPosting_id = " + jobPostingId);
+
+			/**
+			 * Zu einer JobPostingId exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
+			 * DB-Tupel gibt.
+			 */
+
+			if (rs.next()) {
+				// Ergebnis-Tupel in Objekt umwandeln
+				PartnerProfile partnerProfile = new PartnerProfile();
+				partnerProfile.setId(rs.getInt("id"));
+				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
+				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
+				//Zurückgegebendes PartnerProfil-Objekt beinhaltet das PartnerProfil zu der jobPosting ID
+				return partnerProfile;
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * Findet ein PartnerProfile-Tupel anhand der übergebenen companyId in der
+	 * Datenbank.Anschließend wird es als Java-Objekt in der Variablen partnerProfile 
+	 * vom typ PartnerProfile gespeichert. Methode zum Suchen von Partnerprofilen 
+	 * bestehende Beziehungen/Datensätze zu löschen
+	 * 
+	 * @param companyId
+	 * @return partnerProfil
+	 */
+	public PartnerProfile findPartnerProfileByCompanyId(int companyId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die Datenbank senden
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM partnerProfile "
+					+ "WHERE company_id = " + companyId);
+
+			/**
+			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * 
+			 */
+
+			if (rs.next()) {
+				// Ergebnis-Tupel in PartnerProfile-Objekt gespeichert.
+				PartnerProfile partnerProfile = new PartnerProfile();
+				partnerProfile.setId(rs.getInt("id"));
+				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
+				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
+				//Zurückgegebendes PartnerProfil-Objekt beinhaltet das PartnerProfil zu der companyID
+				return partnerProfile;
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * Methode zum Suchen von Partnerprofilen 
+	 * bestehende Beziehungen/Datensätze zu löschen
+	 * 
+	 * @param companyId
+	 * @return partnerProfil
+	 */
+	public PartnerProfile findPartnerProfileByTeamId(int teamId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die Datenbank senden
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM partnerProfile "
+					+ "WHERE company_id = " + teamId);
+
+			/**
+			 * Zu einer teamId exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * 
+			 */
+
+			if (rs.next()) {
+				// Ergebnis-Tupel in PartnerProfile-Objekt gespeichert.
+				PartnerProfile partnerProfile = new PartnerProfile();
+				partnerProfile.setId(rs.getInt("id"));
+				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
+				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
+				//Zurückgegebendes PartnerProfil-Objekt beinhaltet das PartnerProfil zu der companyID
+				return partnerProfile;
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
+
 
 }
