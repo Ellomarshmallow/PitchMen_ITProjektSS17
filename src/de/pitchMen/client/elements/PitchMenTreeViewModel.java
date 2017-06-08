@@ -367,6 +367,42 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 			
 		});
 	}
+	
+	public void addMarketplace(Marketplace marktplace) {
+		
+	}
+	
+	public void updateMarketplace(Marketplace marktplace) {
+		
+	}
+	
+	public void deleteMarketplace(Marketplace marktplace) {
+		
+	}
+	
+	public void addProject(Project project) {
+		
+	}
+	
+	public void updateProject(Project project) {
+		
+	}
+	
+	public void deleteProject(Project project) {
+		
+	}
+	
+	public void addJobPosting(JobPosting jobPosting) {
+		
+	}
+	
+	public void updateJobPosting(JobPosting jobPosting) {
+		
+	}
+	
+	public void deleteJobPosting(JobPosting jobPosting) {
+		
+	}
 
 	/**
 	 * Die Methode <code>getNodeInfo()</code> stellt Informationen
