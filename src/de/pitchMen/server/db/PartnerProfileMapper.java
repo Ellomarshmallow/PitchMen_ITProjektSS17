@@ -224,12 +224,12 @@ public class PartnerProfileMapper {
 	 * @param jobPostingId
 	 * @return partnerProfil
 	 */
-	public PartnerProfile findPartnerProfileByjobPostingId(int jobPostingId) {
+	public PartnerProfile findPartnerProfileByJobPostingId(int jobPostingId) {
 		
 		Connection con = DBConnection.connection();
 
 		try {
-			// leeres SQL-Statement (JDBC) anlegen
+			
 			Statement stmt = con.createStatement();
 
 			// Statement ausfüllen und als Query an die Datenbank senden
@@ -254,7 +254,7 @@ public class PartnerProfileMapper {
 				partnerProfile.setTeamId(rs.getInt("team_id"));
 				partnerProfile.setPersonId(rs.getInt("person_id"));
 				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
-
+				//Zurückgegebendes PartnerProfil-Objekt beinhaltet das PartnerProfil zu der jobPosting ID
 				return partnerProfile;
 			}
 
