@@ -1,8 +1,7 @@
 package de.pitchMen.server.db;
 
 import java.sql.*;
-import java.util.*;
-import java.util.Date;
+import java.util.ArrayList;
 
 import de.pitchMen.shared.bo.Participation;
 
@@ -62,45 +61,96 @@ public class ParticipationMapper {
 	 */
 	public Participation insert(Participation participation) {
 		Connection con = DBConnection.connection();
-
+		
 		try {
 			Statement stmt = con.createStatement();
-			Statement stmt2 = con.createStatement();
-		//	Statement stmt3 = con.createStatement();
-			
-			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
-			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM participation");
-
 			participation.setId(rs.getInt("maxid") + 1);
-			stmt = con.createStatement();
-			stmt2 = con.createStatement();
-		//	stmt3 = con.createStatement();
-
+			String insert1 = "INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
+					+ participation.getId() + ", '" + participation.getDateOpened() + "', '"
+					+ participation.getDateClosed() + "'";
+			String insert2 = "INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
+					+ participation.getId() +", " + participation.getProjectId();
+			String insert3 = "INSERT INTO person_has_participation (person_id, participation_id)" + 
+					"VALUES ("+ participation.getPersonId() +", " + participation.getId();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Participation-Tupels in die
-			 * Datenbank
+			 * con.setAutoCommit(false) erlaubt es zwei oder mehrere Statements 
+			 * in einer Gruppe auszuführen und deaktiviert die auto-commit Funktion.
+			 * 
 			 */
+			con.setAutoCommit(false);
 			
-			int participationId = rs.getInt("id");
-			Date participationDate = participation.getDateOpened();
+			/**
+			 * Fügt die oben gespeicherten SQL-Befehle der aktuellen Liste von 
+			 * SQL-Statements dem Statement-Objekt hinzu
+			 */
+			stmt.addBatch(insert1);
+			stmt.addBatch(insert2);
+			stmt.addBatch(insert3);
+			/**
+			 * Bestätigt alle gelisteten in dem Statement-Objekt enthaltenen Statements zur Ausführung in die Datenbank.
+			 * Wenn alle Statements
+			 * Submits a batch of commands to the database for execution 
+			 * and if all commands execute successfully, returns an array of update counts.
+			 */
+			stmt.executeBatch();
+		      con.commit();
 			
-			stmt.executeUpdate("INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
-					+ participationId + "', '" + participation.getDateOpened() + "', '"
-					+ participation.getDateClosed());
-			
-		//	stmt2.executeUpdate("INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
-		//			+ participation.getId() + project.getId() + "' WHERE id= " + participation.getId());
-			
-		//	stmt3.executeUpdate("INSERT INTO person_has_participation (person_id, participation_id)" + "VALUES ("
-		//			+ person.getId() + participation.getId());
 		}
-
-		catch (SQLException e2) {
-			e2.printStackTrace();
-		}
+	
+		
+		
+//		try {
+//			Statement stmt1 = con.createStatement();
+//			Statement stmt2 = con.createStatement();
+//			Statement stmt3 = con.createStatement();
+//			
+//			/**
+//			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
+//			 * aktuelle id wird um eins erhöht.
+//			 */
+//			ResultSet rs = stmt1.executeQuery("SELECT MAX(id) AS maxid FROM participation");
+//
+//			participation.setId(rs.getInt("maxid") + 1);
+//			stmt1 = con.createStatement();
+//			stmt2 = con.createStatement();
+//			stmt3 = con.createStatement();
+//
+//			
+//			
+//			/**
+//			 * SQL-Anweisung zum Einfügen des neuen Participation-Tupels in die
+//			 * Datenbank
+//			 */
+//			
+//			stmt1.executeUpdate("INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
+//					+ participation.getId() + ", '" + participation.getDateOpened() + "', '"
+//					+ participation.getDateClosed() + "'");
+//			
+//			/**
+//			 * Damit die Beziehungstabelle participation_has_project gefüllt werden kann, wird folgendes
+//			 * Statement umgesetzt. Die Klasse Participation stellt dem Mapper die Methode getProjectId() 
+//			 * zur Verfügung. Damit kann das zugehörige Projekt-Objekt nach seiner ID abgefragt und in 
+//			 * die Beziehungstabelle geschrieben werden. 
+//			 */
+//			
+//			stmt2.executeUpdate("INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
+//					+ participation.getId() +", " + participation.getProjectId());
+//			
+//			/**
+//			 * Damit die Beziehungstabelle person_has_participation gefüllt werden kann, wird folgendes
+//			 * Statement umgesetzt. Die Klasse Participation stellt dem Mapper die Methode getPersonId() 
+//			 * zur Verfügung. Damit kann das zugehörige Person-Objekt nach seiner ID abgefragt und 
+//			 * in die Beziehungstabelle geschrieben werden. 
+//			 */
+//			
+//			stmt3.executeUpdate("INSERT INTO person_has_participation (person_id, participation_id)" + 
+//			"VALUES ("+ participation.getPersonId() +", " + participation.getId());
+//		}
+//
+//		catch (SQLException e2) {
+//			e2.printStackTrace();
+//		}
 
 		return participation;
 	}
