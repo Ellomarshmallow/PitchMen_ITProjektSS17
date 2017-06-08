@@ -483,7 +483,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public ArrayList<Project> getProject() throws IllegalArgumentException {
+	public ArrayList<Project> getProjects() throws IllegalArgumentException {
 		return this.projectMapper.findAll();
 
 	}
