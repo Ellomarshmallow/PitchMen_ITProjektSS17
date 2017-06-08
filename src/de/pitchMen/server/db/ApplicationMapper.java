@@ -296,8 +296,11 @@ public class ApplicationMapper {
 	 * Bei einer JOIN-Klausel werden Zeilen aus zwei Tabellen zusammengeführt.
 	 * Bei dem INNER JOIN verbundenen Tabellen werden nur die Datensätze
 	 * übernommen / angezeigt die in beiden Tabellen einen Treffer haben.
-	 * Methode u.a. für Aufgabenstellung Nr. 6
+	 * Methode u.a. für Aufgabenstellung Nr. 6, zusätzlich ist die Methode für das herausfinden, 
+	 * ob Beziehungen zwischen Application und JobPostings bestehen, 
+	 * um Applications löschen zu können.
 	 * 
+	 * @param personId
 	 * @return ArryList<Application>
 	 */
 
