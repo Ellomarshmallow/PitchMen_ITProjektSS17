@@ -160,8 +160,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException {
-		return this.applicationMapper.findApplicationByPersonId(personId);
-
+		//FIXME Namensgebung der Mapper-Methode sehr irreführend. Bitte ändern
+		return this.applicationMapper.findPartnerProfilByPersonId(personId);
 	}
 
 	@Override
@@ -170,10 +170,10 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public ArrayList<Application> getApplicationsOf(int jobPostingId) throws IllegalArgumentException {
-		return this.applicationMapper.findApplicationByJobPostingId(jobPostingId);
+	public ArrayList<Application> getApplicationsByJobPostingId(int jobPostingId) throws IllegalArgumentException {
+		return this.applicationMapper.findApplicationsByJobPostingId(jobPostingId);
 	}
-
+	
 	// --------------------------- COMPANY
 
 	@Override
@@ -426,7 +426,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	public ArrayList<PartnerProfile> getPartnerProfileOf(int jobPostingId) {
 
-		return this.partnerProfileMapper.findPartnerProfileByJobPostingId(jobPostingId);
+		return this.partnerProfileMapper.findPartnerProfilesByJobPostingId(jobPostingId);
 	}
 
 	// ------------------------ PERSON
@@ -528,12 +528,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException {
-		return this.projectMapper.findProjectByMarketplaceId(marketplaceId);
+		return this.projectMapper.findProjectsByMarketplaceId(marketplaceId);
 	}
 
 	@Override
 	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException {
-		//FIXME Namensgebung der Mapper Methode ist irreführend. 
+		//FIXME Namensgebung der Mapper-Methode ist irreführend. 
 		return this.projectMapper.findParticipationByPersonId(personId);
 	}
 	// --------------------------- RATING
@@ -647,7 +647,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException {
-		return this.traitMapper.findTraitByPartnerProfileId(partnerProfileId);
+		return this.traitMapper.findTraitsByPartnerProfileId(partnerProfileId);
 	}
 
 	// --------------------------- LOGIN
