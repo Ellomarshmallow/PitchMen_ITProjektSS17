@@ -7,20 +7,17 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
+import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.Project;
 
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Label;
 
-public class Formular extends SimplePanel {
+public class Formular extends VerticalPanel {
 
-	// TODO: Die Methode hasPermission() implementieren. Rückgabe eines booleanschen Wertes.
-	// 		 Da der Ersteller des Projektmarktplatzes mehr Buttons hat (löschen bearbeiten)
-
-	private int creator;
-
-
+	
 	private PitchMenAdminAsync pitchMenAdmin = null;
 
 	private String title = " " ; 
@@ -47,16 +44,17 @@ public class Formular extends SimplePanel {
 		return pitchMenAdmin;
 	}
 
-	public void setCreator(int creator){
-		this.creator = creator; 
+	public boolean hasPermission(Marketplace selectedMarketplace){
+		if(selectedMarketplace.getPersonId() == ClientsideSettings.getCurrentUser().getId()){
+			return true;
+		}
+		else {
+			return false; 
+		}
 	}
-
-	public int getCreator(){
-		return this.creator; 
-	}
-
-	public boolean hasPermission(){
-		if(this.creator == ClientsideSettings.getCurrentUser().getId()){
+	
+	public boolean hasPermission(Project selectedProject){
+		if(selectedProject.getPersonId() == ClientsideSettings.getCurrentUser().getId()){
 			return true;
 		}
 		else {
