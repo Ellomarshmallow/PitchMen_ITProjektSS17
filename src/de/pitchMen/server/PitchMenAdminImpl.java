@@ -354,8 +354,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
-		// TODO deleteParticipation
-
+		this.participationMapper.delete(participation);
 	}
 
 	@Override
