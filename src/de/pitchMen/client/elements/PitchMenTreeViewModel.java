@@ -1,14 +1,19 @@
 package de.pitchMen.client.elements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.ProvidesKey;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
+import de.pitchMen.shared.bo.BusinessObject;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
@@ -33,10 +38,10 @@ import de.pitchMen.shared.bo.Project;
  */
 
 public class PitchMenTreeViewModel implements TreeViewModel {
-	
+		
 	/**
 	 * Um in der Lage zu sein, Abfragen an die Applikations-
-	 * schicht stellen zu können, ebnötigt PitchMenTreeViewModel
+	 * schicht stellen zu können, benötigt PitchMenTreeViewModel
 	 * Zugriff auf die PitchMenAdmin.
 	 */
 	private PitchMenAdminAsync pitchMenAdmin = null;
@@ -62,12 +67,163 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 	 */
 	private Map<Project, ListDataProvider<JobPosting>> jobPostingDataProviders = null;
 	
+	/*
+	 * Im Baum kann es einen ausgewählten Marktplatz, ein 
+	 * ausgewähltes Projekt und eine ausgewählte Ausschreibung
+	 * geben. 
+	 */
+	private Marketplace selectedMarketplace = null;
+	private Project selectedProject = null;
+	private JobPosting selectedJobPosting = null;
+	
+	/*
+	 * Entsprechend gibt es Formulare, mit deren Hilfe die zuvor
+	 * selektierten Business-Objekte manipuliert werden können.
+	 */
+	private MarketplaceForm marketplaceForm = null;
+	private ProjectForm projectForm = null;
+	private JobPostingForm jobPostingForm = null;
+	
 	/**
-	 * Konstruktor für Instanzen der Klasse.Hier wird z. B.
+	 * Die genestete Klasse <code>BusinessObjectKeyProvider</code>
+	 * dient dazu, Baumknoten des TreeViewModels eindeutige Schlüssel
+	 * auf Basis der in ihnen enthaltenen BusinessObjects 
+	 * zuzuweisen. Auf Basis dieser Schlüssel arbeitet das 
+	 * SelectionModel. Diese Vorgehensweise wurde aus der gleichnamigen
+	 * Klasse im bankProjek (Rathke C., 2016) übernommen. Allerdings
+	 * konnte die Vorgehensweise mit positiven und negativen Integers
+	 * nicht übernommen werden, da es sich nicht um zwei, sondern drei
+	 * Hierarchieebenen handelt. Deshalb wird mit Strings gearbeitet, die 
+	 * sich aus einem einzelnen Buchstaben als Identifier, einem
+	 * Bindestrich und der id des Business-Objekts zusammensetzen.
+	 * 
+	 * @author Simon
+	 */
+	private class BusinessObjectKeyProvider implements ProvidesKey<BusinessObject> {
+
+		@Override
+		public String getKey(BusinessObject bo) {
+			if (bo == null) {
+				/*
+				 *  Wofür dieser Sonderfall gebraucht wird, ist mir aktuell 
+				 *  nicht klar. Übernommen. Simon, 07.06.2017, 20:10 Uhr
+				 */
+				return null;
+			} else if (bo instanceof Marketplace) {
+				// Es handelt sich um ein Marktplatz-Objekt. Präfix M
+				return "M-" + bo.getId();
+			} else if (bo instanceof Project) {
+				// Es handelt sich um ein Projekt-Objekt. Präfix P
+				return "P-" + bo.getId();
+			} else {
+				// Es handelt sich um ein Ausschriebungs-Objekt. Präfix J
+				return "J-" + bo.getId();
+			}
+		}
+		
+	}
+	
+	/**
+	 * Die zuvor lokal definierte Klasse {@link BusinessObjectKeyProvider}
+	 * wird nun als Variable der Klasse {@link PitchMenTreeViewModel} 
+	 * hinzugefügt.
+	 */
+	private BusinessObjectKeyProvider boKeyProvider = null;
+	
+	/**
+	 * Das <code>SingleSelectionObject</code> wird von GWT vordefiniert
+	 * und beschreibt die Auswahl von Objekten im Baum.
+	 */
+	private SingleSelectionModel<BusinessObject> selectionModel = null;
+	
+	/**
+	 * Die genestete Klasse <code>SelectionChangeEventHandler</code>
+	 * dient dazu, Events in Bezug auf den Wechsel einer Auswahl im
+	 * Baum zu bearbeiten. Diese Vorgehensweise wurde aus der gleichnamigen
+	 * Klasse im bankProjek (Rathke C., 2016) übernommen. 
+	 * 
+	 * @author Simon
+	 */
+	private class SelectionChangeEventHandler implements SelectionChangeEvent.Handler {
+
+		@Override
+		public void onSelectionChange(SelectionChangeEvent event) {
+			
+			// Beim Wechsel der Auswahl wird zunächst das ausgewählte Objekt abgefragt
+			BusinessObject selection = selectionModel.getSelectedObject();
+			
+			if (selection instanceof Marketplace) {
+				// Handelt es sich dabei um ein Marktplatz-Objekt, wird dieses gesetzt
+				setSelectedMarketplace((Marketplace) selection);
+			} else if (selection instanceof Project) {
+				// Handelt es sich stattdessen um ein Projekt-Objekt, wird dieses gesetzt
+				setSelectedProject((Project) selection);
+			} else {
+				// Handelt es sich um ein Ausschreibungs-Objekt, wird dieses gesetzt
+				setSelectedJobPosting((JobPosting) selection);
+			}
+			
+		}
+		
+	}
+	
+	/**
+	 * Konstruktor für Instanzen der Klasse. Hier wird z. B.
 	 * die Verbindung zur PitchMenAdministration hergestellt. 
 	 */
 	public PitchMenTreeViewModel() {
 		this.pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
+		boKeyProvider = new BusinessObjectKeyProvider();
+		selectionModel = new SingleSelectionModel<BusinessObject>(boKeyProvider);
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEventHandler());
+		projectDataProviders = new HashMap<Marketplace, ListDataProvider<Project>>();
+		jobPostingDataProviders = new HashMap<Project, ListDataProvider<JobPosting>>();
+	}
+	
+	/*
+	 * Setter für die Formulare
+	 */
+	public void setMarketplaceForm(MarketplaceForm marketplaceForm) {
+		this.marketplaceForm = marketplaceForm;
+	}
+
+	public void setProjectForm(ProjectForm projectForm) {
+		this.projectForm = projectForm;
+	}
+
+	public void setJobPostingForm(JobPostingForm jobPostingForm) {
+		this.jobPostingForm = jobPostingForm;
+	}
+	
+	/*
+	 * Getter und Setter für die selektierten BusinessObjects.
+	 */
+	public Marketplace getSelectedMarketplace() {
+		return selectedMarketplace;
+	}
+
+	public void setSelectedMarketplace(Marketplace selectedMarketplace) {
+		// TODO vgl. mit BankProjekt
+		this.selectedMarketplace = selectedMarketplace;
+		
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		// TODO vgl. mit BankProjekt
+		this.selectedProject = selectedProject;
+	}
+
+	public JobPosting getSelectedJobPosting() {
+		return selectedJobPosting;
+	}
+
+	public void setSelectedJobPosting(JobPosting selectedJobPosting) {
+		// TODO vgl. mit BankProjekt
+		this.selectedJobPosting = selectedJobPosting;
 	}
 
 	/**
@@ -89,40 +245,22 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 			this.marketplaceLDP = new ListDataProvider<Marketplace>();
 			
 			// Abfrage aller Marketplaces über die Applikationsschicht
-//			this.pitchMenAdmin.getMarketplaces(new AsyncCallback<ArrayList<Marketplace>>() {
-//
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					caught.printStackTrace();
-//				}
-//
-//				@Override
-//				public void onSuccess(ArrayList<Marketplace> result) {
-//					// Übertragen aller Marketplace-Objekte in den ListDataProvider
-//					for(Marketplace marketplace : result) {
-//						marketplaceLDP.getList().add(marketplace);
-//					}
-//				}
-//				
-//			});
-			
-			ArrayList<Marketplace> dummyMarketplacesArray = new ArrayList<Marketplace>();
-			Marketplace m1 = new Marketplace();
-			m1.setTitle("1. IT und Software");
-			m1.setDescription("Beschreibung Marktplatz 1");
-			Marketplace m2 = new Marketplace();
-			m2.setTitle("2. Haus und Garten");
-			m2.setDescription("Beschreibung Marktplatz 2");
-			Marketplace m3 = new Marketplace();
-			m3.setTitle("3. Küche und Gastro");
-			m3.setDescription("Beschreibung Marktplatz 3");
-			dummyMarketplacesArray.add(m1);
-			dummyMarketplacesArray.add(m2);
-			dummyMarketplacesArray.add(m3);
-			
-			for(Marketplace marketplace : dummyMarketplacesArray) {
-				marketplaceLDP.getList().add(marketplace);
-			}
+			this.pitchMenAdmin.getMarketplaces(new AsyncCallback<ArrayList<Marketplace>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					caught.printStackTrace();
+				}
+
+				@Override
+				public void onSuccess(ArrayList<Marketplace> result) {
+					// Übertragen aller Marketplace-Objekte in den ListDataProvider
+					for(Marketplace marketplace : result) {
+						marketplaceLDP.getList().add(marketplace);
+					}
+				}
+				
+			});
 			
 			/*
 			 * TODO Abklären was SelectionModel ist
@@ -133,7 +271,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 			 * 
 			 * Simon, 31.05.2017, 17:40
 			 */
-			return new DefaultNodeInfo<Marketplace>(marketplaceLDP, new MarketplaceCell());
+			return new DefaultNodeInfo<Marketplace>(marketplaceLDP, new MarketplaceCell(), selectionModel, null);
 		}
 		
 		/*
@@ -143,33 +281,24 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		 * geschrieben.
 		 */
 		if(value instanceof Marketplace) {
-//			ListDataProvider<Project> projectLDP = new ListDataProvider<Project>();
-//			this.projectDataProviders.put((Marketplace) value, projectLDP); 
-//			
-//			/*
-//			 * FIXME Die Methode getProjectsOf(Marketplace m) ist aktuell noch nicht 
-//			 * in der PitchMenAdmin bzw. der PitchMenAdminImpl vorhanden. Sie muss 
-//			 * hinzugefügt werden, und wenn anders benannt, muss ihr Aufruf an dieser
-//			 * Stelle angepasst werden. Wenn die Methode implementiert wurde, in der 
-//			 * nächsten Zeile also kein Fehler ausgegeben wird, ist dieses Fixme 
-//			 * überflüssig geworden und kann gelöscht werden.
-//			 * 
-//			 * Simon, 31.05.2017 18:10
-//			 */
-//			this.pitchMenAdmin.getProjectsOf((Marketplace) value, new AsyncCallback<ArrayList<Project>>() {
-//
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					caught.printStackTrace();
-//				}
-//
-//				@Override
-//				public void onSuccess(ArrayList<Project> result) {
-//					// TODO Methode nach Vorbild BankProjekt (CustomerAccountsTreeViewModel) schreiben
-//					
-//				}
-//				
-//			});
+			ListDataProvider<Project> projectLDP = new ListDataProvider<Project>();
+			this.projectDataProviders.put((Marketplace) value, projectLDP); 			
+			int marketplaceId = ((Marketplace) value).getId();
+			
+			this.pitchMenAdmin.getProjectsByMarketplaceId(marketplaceId, new AsyncCallback<ArrayList<Project>>()  {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					caught.printStackTrace();
+				}
+
+				@Override
+				public void onSuccess(ArrayList<Project> result) {
+					// TODO Methode nach Vorbild BankProjekt (CustomerAccountsTreeViewModel) schreiben
+					
+				}
+			 	
+			});
 		}
 		return null;
 	}
