@@ -376,7 +376,7 @@ public class JobPostingMapper {
 	 * @param projectId
 	 * @return ArrayList<JobPosting>
 	 */
-	public ArrayList<JobPosting> findJobPostingByProjectId(int projectId) {
+	public ArrayList<JobPosting> findJobPostingsByProjectId(int projectId) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<JobPosting> result = new ArrayList<JobPosting>();
