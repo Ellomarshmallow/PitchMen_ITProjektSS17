@@ -357,6 +357,52 @@ public class PartnerProfileMapper {
 		}
 		return null;
 	}
+	
+	/**
+	 * Methode zum Suchen von Partnerprofilen in Bezug zu personIds um
+	 * bestehende Beziehungen/Datensätze zu löschen
+	 * 
+	 * @param PersonId
+	 * @return partnerProfil
+	 */
+	public PartnerProfile findPartnerProfileByPersonId(int personId) {
+		
+		Connection con = DBConnection.connection();
+
+		try {
+			
+			Statement stmt = con.createStatement();
+
+			// Statement ausfüllen und als Query an die Datenbank senden
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM partnerProfile  "
+					+ "WHERE person_id = " +  personId);
+
+			/**
+			 * Zu einer personId exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * 
+			 */
+
+			if (rs.next()) {
+				// Ergebnis-Tupel in PartnerProfile-Objekt gespeichert.
+				PartnerProfile partnerProfile = new PartnerProfile();
+				partnerProfile.setId(rs.getInt("id"));
+				partnerProfile.setDateCreated(rs.getDate("dateCreated"));
+				partnerProfile.setDateChanged(rs.getDate("dateChanged"));
+				partnerProfile.setCompanyId(rs.getInt("company_id"));
+				partnerProfile.setTeamId(rs.getInt("team_id"));
+				partnerProfile.setPersonId(rs.getInt("person_id"));
+				partnerProfile.setJobPostingId(rs.getInt("jobPosting_id"));
+				//Zurückgegebenes PartnerProfil-Objekt beinhaltet das PartnerProfil zu der PersonID
+				return partnerProfile;
+			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
 
 
 }
