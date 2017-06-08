@@ -75,7 +75,7 @@ public class JobPostingMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline project_id)" + "VALUES ( "
 						+ jobPosting.getId() + ", '" + jobPosting.getTitle() + "' ,'" + jobPosting.getText()
-						+ jobPosting.getDeadline() + jobPosting.getProjectId() + "')");
+						+ "' ,'" + jobPosting.getDeadline() + "' ," + jobPosting.getProjectId() + ")");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -181,7 +181,8 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting " + "ORDER BY status");
+					.executeQuery("SELECT id, title, text, deadline, projcet_id, "
+							+ "status FROM jobPosting ORDER BY status");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -221,7 +222,7 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting "
-					+ "WHERE text LIKE" + text + "ORDER BY id");
+					+ "WHERE text LIKE '" + text + "' ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das
@@ -260,7 +261,7 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, "
-					+ "status FROM jobPosting WHERE title LIKE" + titel + "ORDER BY id");
+					+ "status FROM jobPosting WHERE title LIKE '" + titel + "' ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das
@@ -299,7 +300,7 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting "
-					+ "WHERE deadline LIKE" + deadline + "ORDER BY id");
+					+ "WHERE deadline LIKE '" + deadline + "' ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das
@@ -341,7 +342,9 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM jobPosting " + "INNER JOIN project ON jobPosting.project_id = project.id "
+					"SELECT * FROM jobPosting " + 
+							"INNER JOIN project "
+							+ "ON jobPosting.project_id = project.id "
 							+ "WHERE project.person_id =" + personId);
 
 			/**
@@ -385,7 +388,7 @@ public class JobPostingMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM jobPosting "
 					+ "INNER JOIN project"
-					+ "ON project.id = jobPosting.project_id "+ projectId);
+					+ "ON project.id = jobPosting.project_id WHERE jobPosting.project_id="+ projectId);
 
 			/**
 			 * Anhand der übergebenen projectId werden die dazugehörigen
