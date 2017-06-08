@@ -122,7 +122,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId, int partnerProfileId) {
+	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId,
+			int partnerProfileId) {
 		Application application = new Application();
 		application.setDateCreated(dateCreated);
 		application.setText(text);
@@ -195,172 +196,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.companyMapper.findById(id);
 	}
 
-	// --------------------------- PROJECT
-
-	@Override
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
-			int marketplaceId) throws IllegalArgumentException {
-		Project project = new Project();
-		project.setDateOpened(dateOpened);
-		project.setDateClosed(dateClosed);
-		project.setTitle(title);
-		project.setDescription(description);
-		project.setPersonId(personId);
-		project.setMarketplaceId(marketplaceId);
-
-		return this.projectMapper.insert(project);
-	}
-
-	/**
-	 * Speichert ein Projekt
-	 */
-	@Override
-	public void updateProject(Project project) throws IllegalArgumentException {
-
-		projectMapper.update(project);
-
-	}
-
-	@Override
-	public void deleteProject(Project project) throws IllegalArgumentException {
-		ArrayList<JobPosting> jobPostings = this.getJobPostingsOf(project.getId());
-
-		if (jobPostings != null) {
-			for (JobPosting jobPosting : jobPostings) {
-				this.jobPostingMapper.delete(jobPosting);
-			}
-		}
-
-		this.projectMapper.delete(project);
-	}
-
-	/**
-	 * Auslesen aller Projekte
-	 */
-	@Override
-	public ArrayList<Project> getProject() throws IllegalArgumentException {
-		return this.projectMapper.findAll();
-
-	}
-
-	/**
-	 * Auslesen eines Projekts anhand seiner ID
-	 */
-	@Override
-	public Project getProjectByID(int id) throws IllegalArgumentException {
-		return this.projectMapper.findById(id);
-
-	}
-
-	@Override
-	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException {
-		return this.projectMapper.findProjectByMarketplaceId(marketplaceId);
-	}
-
-	// --------------------------- MARKETPLACE
-
-	@Override
-	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
-			throws IllegalArgumentException {
-		Marketplace marketplace = new Marketplace();
-		marketplace.setTitle(title);
-		marketplace.setDescription(description);
-		marketplace.setPersonId(personId);
-		marketplace.setTeamId(teamId);
-		marketplace.setCompanyId(companyId);
-
-		// Objekt in der DB speichern
-		return this.marketplaceMapper.insert(marketplace);
-	}
-
-	/**
-	 * Speichert einen Marktplatz
-	 */
-	@Override
-	public void updateMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		marketplaceMapper.update(marketplace);
-
-	}
-
-	@Override
-	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		ArrayList<Project> projects = this.getProjectsOf(marketplace.getId());
-
-		if (projects != null) {
-			for (Project project : projects) {
-				this.projectMapper.delete(project);
-			}
-		}
-
-		this.marketplaceMapper.delete(marketplace);
-	}
-
-	/**
-	 * Auslesen aller Marktpl�tze
-	 */
-	@Override
-	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
-
-		return this.marketplaceMapper.findAll();
-
-	}
-
-	/**
-	 * Auslesen eines Marketplatzes anhand seiner ID
-	 */
-	@Override
-	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException {
-		return this.marketplaceMapper.findById(id);
-
-	}
-
-	// --------------------------- TRAIT
-
-	@Override
-	public Trait addTrait(String name, String value) throws IllegalArgumentException {
-		Trait trait = new Trait();
-		trait.setName(name);
-		trait.setValue(value);
-
-		// Objekt in der DB speichern.
-		return this.traitMapper.insert(trait);
-	}
-
-	@Override
-	public void updateTrait(Trait trait) throws IllegalArgumentException {
-		traitMapper.update(trait);
-
-	}
-
-	@Override
-	public void deleteTrait(Trait trait) throws IllegalArgumentException {
-		this.traitMapper.delete(trait);
-	}
-
-	/**
-	 * Auslesen aller Eigenschaften
-	 */
-	@Override
-	public ArrayList<Trait> getTraits() throws IllegalArgumentException {
-
-		return this.traitMapper.findAll();
-
-	}
-
-	/**
-	 * Auslesen einer Eigenschaft anhand seiner ID
-	 */
-	@Override
-	public Trait getTraitByID(int id) throws IllegalArgumentException {
-
-		return this.traitMapper.findById(id);
-
-	}
-	
-	@Override
-	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException {
-		return this.traitMapper.findTraitByPartnerProfileId(partnerProfileId);
-	}
 	// --------------------------- JOBPOSTNG
 
 	@Override
@@ -429,6 +264,100 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.jobPostingMapper.findJobPostingByProjectId(projectId);
 	}
 
+	// --------------------------- MARKETPLACE
+
+	@Override
+	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
+			throws IllegalArgumentException {
+		Marketplace marketplace = new Marketplace();
+		marketplace.setTitle(title);
+		marketplace.setDescription(description);
+		marketplace.setPersonId(personId);
+		marketplace.setTeamId(teamId);
+		marketplace.setCompanyId(companyId);
+
+		// Objekt in der DB speichern
+		return this.marketplaceMapper.insert(marketplace);
+	}
+
+	/**
+	 * Speichert einen Marktplatz
+	 */
+	@Override
+	public void updateMarketplace(Marketplace marketplace) throws IllegalArgumentException {
+		marketplaceMapper.update(marketplace);
+
+	}
+
+	@Override
+	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
+		ArrayList<Project> projects = this.getProjectsOf(marketplace.getId());
+
+		if (projects != null) {
+			for (Project project : projects) {
+				this.projectMapper.delete(project);
+			}
+		}
+
+		this.marketplaceMapper.delete(marketplace);
+	}
+
+	/**
+	 * Auslesen aller Marktpl�tze
+	 */
+	@Override
+	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException {
+
+		return this.marketplaceMapper.findAll();
+
+	}
+
+	/**
+	 * Auslesen eines Marketplatzes anhand seiner ID
+	 */
+	@Override
+	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException {
+		return this.marketplaceMapper.findById(id);
+
+	}
+
+	// --------------------------- PARTICIPATION
+
+	@Override
+	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId)
+			throws IllegalArgumentException {
+		Participation participation = new Participation();
+		participation.setDateClosed(dateClosed);
+		participation.setDateOpened(dateOpened);
+		participation.setWorkload(workload);
+		participation.setPersonId(personId);
+		participation.setProjectId(projectId);
+
+		return this.participationMapper.insert(participation);
+
+	}
+
+	@Override
+	public void updateParticipation(Participation participation) throws IllegalArgumentException {
+		this.participationMapper.update(participation);
+	}
+
+	@Override
+	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
+		// TODO deleteParticipation
+
+	}
+
+	@Override
+	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
+		return this.participationMapper.findAll();
+	}
+
+	@Override
+	public Participation getParticipationByID(int id) throws IllegalArgumentException {
+		return this.participationMapper.findById(id);
+	}
+
 	// --------------------------- PARTNERPROFILE
 
 	@Override
@@ -492,6 +421,108 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.partnerProfileMapper.findPartnerProfileByJobPostingId(jobPostingId);
 	}
 
+	// ------------------------ PERSON
+
+	@Override
+	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
+			String logoutUrl) throws IllegalArgumentException {
+		Person person = new Person();
+
+		person.setFirstName(firstName);
+		person.setLoggedIn(loggedIn);
+		person.setEmailAdress(emailAdress);
+		person.setNickname(nickname);
+		person.setLoginUrl(loginUrl);
+		person.setLogoutUrl(logoutUrl);
+
+		return this.personMapper.insert(person);
+
+	}
+
+	@Override
+	public void updatePerson(Person person) throws IllegalArgumentException {
+		personMapper.update(person);
+	}
+
+	@Override
+	public void deletePerson(Person person) throws IllegalArgumentException {
+		// TODO Wenn man eine Person loescht muss auch die Beteiligung geloescht
+		// werden!!
+		this.personMapper.delete(person);
+	}
+
+	@Override
+	public Person getPersonByID(int id) throws IllegalArgumentException {
+		return this.personMapper.findById(id);
+	}
+
+	@Override
+	public ArrayList<Person> getAllPeople() throws IllegalArgumentException {
+		return this.personMapper.findAll();
+	}
+
+	// --------------------------- PROJECT
+
+	@Override
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
+			int marketplaceId) throws IllegalArgumentException {
+		Project project = new Project();
+		project.setDateOpened(dateOpened);
+		project.setDateClosed(dateClosed);
+		project.setTitle(title);
+		project.setDescription(description);
+		project.setPersonId(personId);
+		project.setMarketplaceId(marketplaceId);
+
+		return this.projectMapper.insert(project);
+	}
+
+	/**
+	 * Speichert ein Projekt
+	 */
+	@Override
+	public void updateProject(Project project) throws IllegalArgumentException {
+
+		projectMapper.update(project);
+
+	}
+
+	@Override
+	public void deleteProject(Project project) throws IllegalArgumentException {
+		ArrayList<JobPosting> jobPostings = this.getJobPostingsOf(project.getId());
+
+		if (jobPostings != null) {
+			for (JobPosting jobPosting : jobPostings) {
+				this.jobPostingMapper.delete(jobPosting);
+			}
+		}
+
+		this.projectMapper.delete(project);
+	}
+
+	/**
+	 * Auslesen aller Projekte
+	 */
+	@Override
+	public ArrayList<Project> getProject() throws IllegalArgumentException {
+		return this.projectMapper.findAll();
+
+	}
+
+	/**
+	 * Auslesen eines Projekts anhand seiner ID
+	 */
+	@Override
+	public Project getProjectByID(int id) throws IllegalArgumentException {
+		return this.projectMapper.findById(id);
+
+	}
+
+	@Override
+	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException {
+		return this.projectMapper.findProjectByMarketplaceId(marketplaceId);
+	}
+
 	// --------------------------- RATING
 
 	@Override
@@ -529,81 +560,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.ratingMapper.findRatingByApplicationId(applicationId);
 	}
 
-	// --------------------------- PARTICIPATION
-
-	@Override
-	public Participation addParticipation(Date dateOpened, Date dateClosed, float workload, int projectId, int personId)
-			throws IllegalArgumentException {
-		Participation participation = new Participation();
-		participation.setDateClosed(dateClosed);
-		participation.setDateOpened(dateOpened);
-		participation.setWorkload(workload);
-		participation.setPersonId(personId);
-		participation.setProjectId(projectId);
-
-		return this.participationMapper.insert(participation);
-
-	}
-
-	@Override
-	public void updateParticipation(Participation participation) throws IllegalArgumentException {
-		this.participationMapper.update(participation);
-	}
-
-	@Override
-	public void deleteParticipation(Participation participation) throws IllegalArgumentException {
-		// TODO deleteParticipation
-
-	}
-
-	@Override
-	public ArrayList<Participation> getParticipations() throws IllegalArgumentException {
-		return this.participationMapper.findAll();
-	}
-
-	@Override
-	public Participation getParticipationByID(int id) throws IllegalArgumentException {
-		return this.participationMapper.findById(id);
-	}
-
-	// ------------------------ PERSON
-
-	@Override
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException {
-		Person person = new Person();
-
-		person.setFirstName(firstName);
-		person.setLoggedIn(loggedIn);
-		person.setEmailAdress(emailAdress);
-		person.setNickname(nickname);
-		person.setLoginUrl(loginUrl);
-		person.setLogoutUrl(logoutUrl);
-
-		return this.personMapper.insert(person);
-
-	}
-
-	@Override
-	public void updatePerson(Person person) throws IllegalArgumentException {
-		personMapper.update(person);
-	}
-
-	@Override
-	public void deletePerson(Person person) throws IllegalArgumentException {
-		//TODO Wenn man eine Person loescht muss auch die Beteiligung geloescht werden!!
-		this.personMapper.delete(person);
-	}
-
-	@Override
-	public Person getPersonByID(int id) throws IllegalArgumentException {
-		return this.personMapper.findById(id);
-	}
-
-	@Override
-	public ArrayList<Person> getAllPeople() throws IllegalArgumentException {
-		return this.personMapper.findAll();
-	}
 	// --------------------------- TEAM
 
 	@Override
@@ -626,6 +582,54 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public Team getTeamByID(int id) throws IllegalArgumentException {
 		return this.teamMapper.findById(id);
+	}
+
+	// --------------------------- TRAIT
+
+	@Override
+	public Trait addTrait(String name, String value) throws IllegalArgumentException {
+		Trait trait = new Trait();
+		trait.setName(name);
+		trait.setValue(value);
+
+		// Objekt in der DB speichern.
+		return this.traitMapper.insert(trait);
+	}
+
+	@Override
+	public void updateTrait(Trait trait) throws IllegalArgumentException {
+		traitMapper.update(trait);
+
+	}
+
+	@Override
+	public void deleteTrait(Trait trait) throws IllegalArgumentException {
+		this.traitMapper.delete(trait);
+	}
+
+	/**
+	 * Auslesen aller Eigenschaften
+	 */
+	@Override
+	public ArrayList<Trait> getTraits() throws IllegalArgumentException {
+
+		return this.traitMapper.findAll();
+
+	}
+
+	/**
+	 * Auslesen einer Eigenschaft anhand seiner ID
+	 */
+	@Override
+	public Trait getTraitByID(int id) throws IllegalArgumentException {
+
+		return this.traitMapper.findById(id);
+
+	}
+
+	@Override
+	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException {
+		return this.traitMapper.findTraitByPartnerProfileId(partnerProfileId);
 	}
 
 	// --------------------------- LOGIN
