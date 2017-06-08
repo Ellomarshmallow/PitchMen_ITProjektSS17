@@ -330,7 +330,7 @@ public class ParticipationMapper {
 	/**
 	 * Findet Participation-Objekte anhand der übergebenen companyId in der
 	 * Datenbank. 
-	 * Da es möglich ist, dass ein Team mehrere Participations (Beteiligungen) hat, müssen die 
+	 * Da es möglich ist, dass eine company mehrere Participations (Beteiligungen) hat, müssen die 
 	 * Participation-Objekte in einer ArrayList gespeichert werden
 	 * 
 	 * @param companyId
@@ -348,7 +348,7 @@ public class ParticipationMapper {
 							"SELECT * FROM participation "
 							+ "INNER JOIN company_has_participation "
 							+ "ON participation.id = company_has_participation.participation_id "
-							+ "WHERE company_has_participation.company_id = 1;" + companyId);
+							+ "WHERE company_has_participation.company_id = " + companyId);
 
 			while (rs.next()) {
 				Participation participation = new Participation();
