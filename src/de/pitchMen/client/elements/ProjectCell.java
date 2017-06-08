@@ -30,13 +30,13 @@ public class ProjectCell extends AbstractCell<Project> {
 		/*
 		 * Der Titel und die Beschreibung eines Projekts werden
 		 * in ein div-Element gerendert. Dabei befindet sich 
-		 * der Titel in einem h4--Element. Spezifische Klassen für 
+		 * der Titel in einem h4-Element. Spezifische Klassen für 
 		 * das umschließenede div-Element ermöglichen später ein 
 		 * einheitliches Design mittels CSS.
 		 */
-		sb.appendHtmlConstant("<div class='cell projectCell'><p>");
+		sb.appendHtmlConstant("<div class='cell projectCell'><h4>");
 		sb.appendEscaped(value.getTitle());
-		sb.appendHtmlConstant("</p></div>");
+		sb.appendHtmlConstant("</h4></div>");
 		
 	}
 
