@@ -59,7 +59,7 @@ public interface PitchMenAdminAsync {
 
 	void getJobPostingByID(int id, AsyncCallback<JobPosting> callback);
 
-	void getJobPostingsOf(int projectId, AsyncCallback<ArrayList<JobPosting>> callback);
+	void getJobPostingsByProjectId(int projectId, AsyncCallback<ArrayList<JobPosting>> callback);
 
 	// ---------- MARKETPLACE
 
@@ -126,7 +126,7 @@ public interface PitchMenAdminAsync {
 
 	void getProjectByID(int id, AsyncCallback<Project> callback);
 
-	void getProjectsOf(int marketplaceId, AsyncCallback<ArrayList<Project>> callback);
+	void getProjectsByMarketplaceId(int marketplaceId, AsyncCallback<ArrayList<Project>> callback);
 	
 	void getProjectsByPerson(int personId, AsyncCallback<ArrayList<Project>> callback) throws IllegalArgumentException;
 
@@ -142,7 +142,7 @@ public interface PitchMenAdminAsync {
 
 	void getRatingByID(int id, AsyncCallback<Rating> callback);
 
-	void getRatingOf(int applicationId, AsyncCallback<Rating> callback);
+	void getRatingByApplicationId(int applicationId, AsyncCallback<Rating> callback);
 
 	// ---------- TEAM
 
@@ -168,7 +168,7 @@ public interface PitchMenAdminAsync {
 
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
 
-	void getTraitsOf(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
+	void getTraitsByPartnerProfileId(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
 
 	// --------------------------- LOGIN
 

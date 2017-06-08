@@ -3,7 +3,6 @@ package de.pitchMen.shared;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -112,7 +111,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
 
-	public ArrayList<JobPosting> getJobPostingsOf(int projectId) throws IllegalArgumentException;
+	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException;
 
 	// ------------------- PERSON
 
@@ -174,7 +173,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Project getProjectByID(int id) throws IllegalArgumentException;
 
-	public ArrayList<Project> getProjectsOf(int marketplaceId) throws IllegalArgumentException;
+	public ArrayList<Project> getProjectsByMarketplaceId(int marketplaceId) throws IllegalArgumentException;
 	
 	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException;
 
@@ -250,7 +249,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
 
-	public ArrayList<Trait> getTraitsOf(int partnerProfileId) throws IllegalArgumentException;
+	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException;
 
 	// --------------------- PARTNERPROFILES
 
@@ -333,7 +332,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Rating getRatingByID(int id) throws IllegalArgumentException;
 
-	Rating getRatingOf(int applicationId) throws IllegalArgumentException;
+	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
 
 	// --------------------------- PARTICIPATION
 
