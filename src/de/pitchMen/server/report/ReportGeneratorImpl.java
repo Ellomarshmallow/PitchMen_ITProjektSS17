@@ -18,7 +18,7 @@ import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
-import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
+//import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
@@ -167,8 +167,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			if(a.getPartnerProfileId() == p.getId()) {};
 			Row applicationsrow = new Row();
 
-			applicationsrow.addColumn(new Column(application.getDateCreated().toString()));
-			applicationsrow.addColumn(new Column(application.getText()));
+			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
+			applicationsrow.addColumn(new Column(a.getText()));
 
 			result.addRow(applicationsrow);
 		}
