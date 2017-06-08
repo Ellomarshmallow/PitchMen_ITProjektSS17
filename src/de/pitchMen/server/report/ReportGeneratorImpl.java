@@ -285,8 +285,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		result.addRow(headline);
 		//TODO getProjectsByPerson in PitchMenAdminImpl erstellen
-		ArrayList<Project> allProjects = pitchMenAdmin.getProj;
-		
+		ArrayList<Project> allProjects = pitchMenAdmin.getProjectsByPerson(p.getId());
 		for(Project project : allProjects){
 			
 			Row projectRow = new Row();
