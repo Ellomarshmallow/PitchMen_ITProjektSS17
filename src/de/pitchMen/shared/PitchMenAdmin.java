@@ -78,7 +78,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public ArrayList<Company> getCompanies() throws IllegalArgumentException;
 
-	// ---------------------JOBPOSTINGS
+	// ---------------------JOBPOSTING
 
 	/**
 	 * Erstellt ein neues JobPosting-Objekt
@@ -112,70 +112,6 @@ public interface PitchMenAdmin extends RemoteService {
 	public JobPosting getJobPostingByID(int id) throws IllegalArgumentException;
 
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException;
-
-	// ------------------- PERSON
-
-	/**
-	 * Erstellt ein neues Person-Objekt.
-	 * 
-	 * @return das neu erstellte Person-Objekt
-	 * @throws IllegalArgumentException
-	 */
-
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException;
-
-	public void updatePerson(Person person) throws IllegalArgumentException;
-
-	/**
-	 * Löscht das Person-Objekt.
-	 * 
-	 * @param person
-	 * @throws IllegalArgumentException
-	 */
-
-	public void deletePerson(Person person) throws IllegalArgumentException;
-
-	public Person getPersonByID(int id) throws IllegalArgumentException;
-
-	public ArrayList<Person> getAllPeople() throws IllegalArgumentException;
-
-	// ------------------- PROJECTS
-
-	/**
-	 * Erstellt ein neues Project-Objekt.
-	 * 
-	 * @return das neu erstellte Project-Objekt
-	 * @throws IllegalArgumentException
-	 */
-
-	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
-			int marketplaceId) throws IllegalArgumentException;
-
-	/**
-	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
-	 * 
-	 * @return ein fertiges Project-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public void updateProject(Project project) throws IllegalArgumentException;
-
-	/**
-	 * Löscht das Project-Objekt.
-	 * 
-	 * @param project
-	 * @throws IllegalArgumentException
-	 */
-
-	public void deleteProject(Project project) throws IllegalArgumentException;
-
-	public ArrayList<Project> getProject() throws IllegalArgumentException;
-
-	public Project getProjectByID(int id) throws IllegalArgumentException;
-
-	public ArrayList<Project> getProjectsByMarketplaceId(int marketplaceId) throws IllegalArgumentException;
-
-	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException;
 
 	// --------------------------- MARKETPLACE
 
@@ -215,133 +151,6 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException;
 
-	// -------------------------- TRAITS
-
-	/**
-	 * Erstellt ein neues Trait-Objekt.
-	 * 
-	 * @return das neu erstellte Trait-Objekt
-	 * @throws IllegalArgumentException
-	 */
-
-	public Trait addTrait(String name, String value) throws IllegalArgumentException;
-
-	/**
-	 * Fügt ein Trait-Objekt zur ArrayList traits hinzu.
-	 * 
-	 * @param trait
-	 * @return ein fertiges Trait Objekt
-	 * @throws IllegalArgumentException
-	 */
-
-	public void updateTrait(Trait trait) throws IllegalArgumentException;
-
-	/**
-	 * Löscht ein Trait-Objekt aus der ArrayList traits.
-	 * 
-	 * @param trait
-	 * @throws IllegalArgumentException
-	 */
-
-	public void deleteTrait(Trait trait) throws IllegalArgumentException;
-
-	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
-
-	public Trait getTraitByID(int id) throws IllegalArgumentException;
-
-	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException;
-
-	// --------------------- PARTNERPROFILE
-
-	/**
-	 * Erstellt ein neues partnerProfile-Objekt
-	 * 
-	 * @param partnerProfile
-	 * @throws IllegalArgumentException
-	 */
-
-	public PartnerProfile addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
-			int jobPostingId) throws IllegalArgumentException;
-
-	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
-
-	/**
-	 * Löscht das PartnerProfile-Objekt.
-	 * 
-	 * @throws IllegalArgumentException
-	 */
-	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
-
-	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException;
-
-	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException;
-
-	public PartnerProfile getPartnerProfileByCompanyId(int companyId) throws IllegalArgumentException;
-
-	public PartnerProfile getPartnerProfileByTeamId(int teamId) throws IllegalArgumentException;
-
-	public PartnerProfile getPartnerProfileByPersonId(int personId) throws IllegalArgumentException;
-
-	public ArrayList<PartnerProfile> getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException;
-
-	// ------------------- Team
-
-	/**
-	 * Erstellt ein neues Team-Objekt.
-	 * 
-	 * @return das neu erstellte Team-Objekt
-	 * @throws IllegalArgumentException
-	 */
-	public Team addTeam() throws IllegalArgumentException;
-
-	public void updateTeam(Team team) throws IllegalArgumentException;
-
-	/**
-	 * Löscht das Team-Objekt.
-	 * 
-	 * @param team
-	 * @throws IllegalArgumentException
-	 */
-
-	public void deleteTeam(Team team) throws IllegalArgumentException;
-
-	public Team getTeamByID(int id) throws IllegalArgumentException;
-
-	public ArrayList<Team> getTeams() throws IllegalArgumentException;
-
-	// ------------------------ RATING
-
-	/**
-	 * Erstellt ein neues Rating-Objekt
-	 * 
-	 * @param rating
-	 * @throws IllegalArgumentException
-	 */
-
-	public Rating addRating(String statement, float score, int applicationId) throws IllegalArgumentException;
-
-	/**
-	 * Fügt ein Rating-Objekt zur ArrayList ratings hinzu.
-	 * 
-	 * @param rating
-	 * @throws IllegalArgumentException
-	 */
-	public void updateRating(Rating rating) throws IllegalArgumentException;
-
-	/**
-	 * Löscht das Rating-Objekt.
-	 * 
-	 * @param rating
-	 * @throws IllegalArgumentException
-	 */
-	public void deleteRating(Rating rating) throws IllegalArgumentException;
-
-	public ArrayList<Rating> getRatings() throws IllegalArgumentException;
-
-	public Rating getRatingByID(int id) throws IllegalArgumentException;
-
-	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
-
 	// --------------------------- PARTICIPATION
 
 	/**
@@ -380,6 +189,197 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Participation> getParticipationsByTeamId(int teamId) throws IllegalArgumentException;
 
 	public ArrayList<Participation> getParticipationsByCompanyId(int companyId) throws IllegalArgumentException;
+
+	// --------------------- PARTNERPROFILE
+
+	/**
+	 * Erstellt ein neues partnerProfile-Objekt
+	 * 
+	 * @param partnerProfile
+	 * @throws IllegalArgumentException
+	 */
+
+	public PartnerProfile addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
+			int jobPostingId) throws IllegalArgumentException;
+
+	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das PartnerProfile-Objekt.
+	 * 
+	 * @throws IllegalArgumentException
+	 */
+	public void deletePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException;
+
+	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException;
+
+	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException;
+
+	public PartnerProfile getPartnerProfileByCompanyId(int companyId) throws IllegalArgumentException;
+
+	public PartnerProfile getPartnerProfileByTeamId(int teamId) throws IllegalArgumentException;
+
+	public PartnerProfile getPartnerProfileByPersonId(int personId) throws IllegalArgumentException;
+
+	public ArrayList<PartnerProfile> getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException;
+
+	// ------------------- PERSON
+
+	/**
+	 * Erstellt ein neues Person-Objekt.
+	 * 
+	 * @return das neu erstellte Person-Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
+			String logoutUrl) throws IllegalArgumentException;
+
+	public void updatePerson(Person person) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Person-Objekt.
+	 * 
+	 * @param person
+	 * @throws IllegalArgumentException
+	 */
+
+	public void deletePerson(Person person) throws IllegalArgumentException;
+
+	public Person getPersonByID(int id) throws IllegalArgumentException;
+
+	public ArrayList<Person> getAllPeople() throws IllegalArgumentException;
+
+	// ------------------- PROJECT
+
+	/**
+	 * Erstellt ein neues Project-Objekt.
+	 * 
+	 * @return das neu erstellte Project-Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public Project addProject(Date dateOpened, Date dateClosed, String title, String description, int personId,
+			int marketplaceId) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Project-Objekt zur ArrayList projects hinzu.
+	 * 
+	 * @return ein fertiges Project-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public void updateProject(Project project) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Project-Objekt.
+	 * 
+	 * @param project
+	 * @throws IllegalArgumentException
+	 */
+
+	public void deleteProject(Project project) throws IllegalArgumentException;
+
+	public ArrayList<Project> getProject() throws IllegalArgumentException;
+
+	public Project getProjectByID(int id) throws IllegalArgumentException;
+
+	public ArrayList<Project> getProjectsByMarketplaceId(int marketplaceId) throws IllegalArgumentException;
+
+	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException;
+
+	// ------------------------ RATING
+
+	/**
+	 * Erstellt ein neues Rating-Objekt
+	 * 
+	 * @param rating
+	 * @throws IllegalArgumentException
+	 */
+
+	public Rating addRating(String statement, float score, int applicationId) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Rating-Objekt zur ArrayList ratings hinzu.
+	 * 
+	 * @param rating
+	 * @throws IllegalArgumentException
+	 */
+	public void updateRating(Rating rating) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Rating-Objekt.
+	 * 
+	 * @param rating
+	 * @throws IllegalArgumentException
+	 */
+	public void deleteRating(Rating rating) throws IllegalArgumentException;
+
+	public ArrayList<Rating> getRatings() throws IllegalArgumentException;
+
+	public Rating getRatingByID(int id) throws IllegalArgumentException;
+
+	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
+
+	// ------------------- Team
+
+	/**
+	 * Erstellt ein neues Team-Objekt.
+	 * 
+	 * @return das neu erstellte Team-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Team addTeam() throws IllegalArgumentException;
+
+	public void updateTeam(Team team) throws IllegalArgumentException;
+
+	/**
+	 * Löscht das Team-Objekt.
+	 * 
+	 * @param team
+	 * @throws IllegalArgumentException
+	 */
+
+	public void deleteTeam(Team team) throws IllegalArgumentException;
+
+	public Team getTeamByID(int id) throws IllegalArgumentException;
+
+	public ArrayList<Team> getTeams() throws IllegalArgumentException;
+
+	// -------------------------- TRAIT
+
+	/**
+	 * Erstellt ein neues Trait-Objekt.
+	 * 
+	 * @return das neu erstellte Trait-Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public Trait addTrait(String name, String value) throws IllegalArgumentException;
+
+	/**
+	 * Fügt ein Trait-Objekt zur ArrayList traits hinzu.
+	 * 
+	 * @param trait
+	 * @return ein fertiges Trait Objekt
+	 * @throws IllegalArgumentException
+	 */
+
+	public void updateTrait(Trait trait) throws IllegalArgumentException;
+
+	/**
+	 * Löscht ein Trait-Objekt aus der ArrayList traits.
+	 * 
+	 * @param trait
+	 * @throws IllegalArgumentException
+	 */
+
+	public void deleteTrait(Trait trait) throws IllegalArgumentException;
+
+	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
+
+	public Trait getTraitByID(int id) throws IllegalArgumentException;
+
+	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException;
 
 	// --------------------------- LOGIN
 
