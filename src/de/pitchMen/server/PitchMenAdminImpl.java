@@ -191,6 +191,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteCompany(Company company) throws IllegalArgumentException {
+		ArrayList<Participation> participations = this.getParticipationsByCompanyId(company.getId());
+		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(company.getId());
+
+		if (participations != null) {
+			for (Participation participation : participations) {
+				this.participationMapper.delete(participation);
+			}
+		}
+
+		if (partnerProfile != null) {
+			this.partnerProfileMapper.delete(partnerProfile);
+		}
+
 		this.companyMapper.delete(company);
 	}
 
@@ -443,7 +456,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public ArrayList<PartnerProfile> getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException {
+	public ArrayList<PartnerProfile> getPartnerProfilesByJobPostingId(int jobPostingId)
+			throws IllegalArgumentException {
 		// TODO im Mapper
 		return this.partnerProfileMapper.findPartnerProfilesByJobPostingId(jobPostingId);
 	}
@@ -502,7 +516,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 			this.partnerProfileMapper.delete(partnerProfile);
 		}
 
-		this.projectMapper.delete(project);
+		this.personMapper.delete(person);
 	}
 
 	@Override
