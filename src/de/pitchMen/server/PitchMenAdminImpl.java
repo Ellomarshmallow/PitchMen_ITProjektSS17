@@ -31,8 +31,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	private Project project = null;
 
 	private Trait trait = null;
+	
+	private Application application;
 
 	private static final long serialVersionUID = 1L;
+
+	private static final String statement = null;
 
 	/**
 	 * Referenz auf den DatenbankMapper, der Marketplaceobjekte mit der
@@ -124,7 +128,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId,
+	public Application addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
 			int partnerProfileId) {
 		Application application = new Application();
 		application.setDateCreated(dateCreated);
@@ -132,6 +136,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		application.setStatus(status);
 		application.setJobPostingId(jobPostingId);
 		application.setPartnerProfileId(partnerProfileId);
+		application.setRating(rating);
 
 		return this.applicationMapper.insert(application);
 
@@ -632,6 +637,39 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException {
 		return this.ratingMapper.findRatingByApplicationId(applicationId);
 	}
+	
+	@Override
+	public void rateApplication(Application application) throws IllegalArgumentException {
+		//FIXME nicht sicher ob die Methode funktioniert
+		application = this.getApplicationByID(application.getId());
+		Rating rating = new Rating(score, statement);
+		
+		application.setRating(rating);
+		
+	}
+
+	/**
+	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
+	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
+	 * Rating-Objekt.
+	 * 
+	 * @param score
+	 * @param statement
+	 * 
+	 *            public void rate(float score, String statement) { Rating rate
+	 *            = new Rating(score, statement); this.setRating(rate); }
+	 */
+
+	/**
+	 * Überprüft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung
+	 * vorhanden, wird true ausgegeben, wenn nicht, false.
+	 * 
+	 * @return
+	 * 
+	 * 		public boolean isRated() { if (this.getRating() != null) { return
+	 *         true; } else { return false; } }
+	 */
+
 
 	// --------------------------- TEAM
 
@@ -663,8 +701,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		}
 
 		this.teamMapper.delete(team);
-	}
-
 	}
 
 	@Override

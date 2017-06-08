@@ -37,7 +37,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 
-	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId,
+	public Application addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
 			int partnerProfileId) throws IllegalArgumentException;
 
 	/**
@@ -319,6 +319,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public Rating getRatingByID(int id) throws IllegalArgumentException;
 
 	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
+	
+	public void rateApplication(Application application) throws IllegalArgumentException;
 
 	// ------------------- Team
 
