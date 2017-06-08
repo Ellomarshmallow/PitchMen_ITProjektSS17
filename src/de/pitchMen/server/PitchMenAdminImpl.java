@@ -102,10 +102,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void init() throws IllegalArgumentException {
+
 		/*
 		 * Vollständiger Satz von Mappern mit deren Hilfe PitchMenAdminImpl
 		 * dann mit der Datenbank kommunizieren kann.
 		 */
+
 		this.marketplaceMapper = MarketplaceMapper.marketplaceMapper();
 		this.applicationMapper = ApplicationMapper.applicationMapper();
 		this.companyMapper = CompanyMapper.companyMapper();
@@ -194,6 +196,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public Company getCompanyByID(int id) throws IllegalArgumentException {
 		return this.companyMapper.findById(id);
+	}
+
+	@Override
+	public ArrayList<Company> getCompanies() throws IllegalArgumentException {
+		return this.companyMapper.findAll();
+
 	}
 
 	// --------------------------- JOBPOSTNG
