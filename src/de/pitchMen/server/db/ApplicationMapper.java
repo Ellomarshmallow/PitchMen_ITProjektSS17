@@ -333,4 +333,53 @@ public class ApplicationMapper {
 		}
 		return result;
 	}
+	
+
+	/**
+	 * 
+	 * Methode ist für das herausfinden, ob Beziehungen zwischen Application und JobPostings bestehen, 
+	 * um Applications löschen zu können. Da zu einem JobPosting (Ausschreibung) mehrere Bewerbungen 
+	 * bestehen können, muss die Rückgabe in einer ArrayList mit den jeweiligen Application-Objekten, erfolgen. 
+	 * 
+	 * @param jobPostingId
+	 * @return ArryList<Application>
+	 */
+
+	public ArrayList<Application> findApplicationByJobPostingId(int jobPostingId) {
+		Connection con = DBConnection.connection();
+		
+		ArrayList<Application> result = new ArrayList<Application>();
+		
+		/**
+		 * Anhand der übergebenen jobPostingId werden die dazugehörigen
+		 * Application-Tupel (Bewerbungen) aus der Datenbank abgefragt.
+		 */
+		
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM application "
+					+ "WHERE jobPosting_id = " + jobPostingId);
+
+		
+		/**
+		 * Die in dem ResultSet gespeicherten DB-Tupel werden in ein Applicationobjekt 
+		 * gespeichert und anschließend das Tupel der ArrayList hinzugefügt.
+		 */
+			while (rs.next()) {
+				Application application = new Application();
+				application.setId(rs.getInt("id"));
+				application.setText(rs.getString("text"));
+				application.setDateCreated(rs.getDate("dateCreated"));
+				application.setJobPostingId(rs.getInt("jobPosting_id"));
+				application.setPartnerProfileId(rs.getInt("partnerProfil_id"));
+				application.setStatus(rs.getString("status"));
+				//hinzufügen des Application-Java Objets der ArrayList result
+				result.add(application);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
 }
