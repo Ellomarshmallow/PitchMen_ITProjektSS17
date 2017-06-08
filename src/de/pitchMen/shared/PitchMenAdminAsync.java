@@ -112,7 +112,7 @@ public interface PitchMenAdminAsync {
 
 	void getPartnerProfileByPersonId(int personId, AsyncCallback<PartnerProfile> callback);
 
-	void getPartnerProfilesByJobPostingId(int jobPostingId, AsyncCallback<ArrayList<PartnerProfile>> callback);
+	void getPartnerProfilesByJobPostingId(int jobPostingId, AsyncCallback<PartnerProfile> callback);
 
 	// ---------- PERSON
 

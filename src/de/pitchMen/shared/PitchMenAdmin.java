@@ -221,7 +221,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public PartnerProfile getPartnerProfileByPersonId(int personId) throws IllegalArgumentException;
 
-	public ArrayList<PartnerProfile> getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException;
+	public PartnerProfile getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException;
 
 	// ------------------- PERSON
 
