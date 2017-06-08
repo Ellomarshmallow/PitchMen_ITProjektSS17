@@ -404,26 +404,17 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 				
 			});
 			
-			/*
-			 * TODO Abklären was SelectionModel ist
-			 * In der Vorlage beim Bankprojekt wird an dieser Stelle ein 
-			 * anderer Konstruktor mit mehr Parametern verwendet, unter anderem
-			 * mit dem selectionModel, das auch in dieser Klasse definiert ist.
-			 * Die Funktion dieses SelesctionModels ist mir noch nicht klar.
-			 * 
-			 * Simon, 31.05.2017, 17:40
-			 */
 			return new DefaultNodeInfo<Marketplace>(marketplaceLDP, new MarketplaceCell(), selectionModel, null);
 		}
 		
 		/*
 		 * Ist der value-Parameter vom Typ Marketplace, wird die 
 		 * darunterliegende Hierarchie-Ebene der zu diesem 
-		 * Marktplatz gehörenden Projekt in einen ListDataProvider
+		 * Marktplatz gehörenden Projekte in einen ListDataProvider
 		 * geschrieben.
 		 */
 		if(value instanceof Marketplace) {
-			ListDataProvider<Project> projectLDP = new ListDataProvider<Project>();
+			final ListDataProvider<Project> projectLDP = new ListDataProvider<Project>();
 			this.projectDataProviders.put((Marketplace) value, projectLDP); 			
 			int marketplaceId = ((Marketplace) value).getId();
 			
@@ -431,16 +422,19 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					caught.printStackTrace();
+					ClientsideSettings.getLogger().severe("Projekte konnten nicht abgefragt werden");
 				}
 
 				@Override
 				public void onSuccess(ArrayList<Project> result) {
-					// TODO Methode nach Vorbild BankProjekt (CustomerAccountsTreeViewModel) schreiben
-					
+					for(Project project : result) {
+						projectLDP.getList().add(project);
+					}
 				}
 			 	
 			});
+			
+			return new DefaultNodeInfo<Project>(projectLDP, new ProjectCell(), selectionModel, null);
 		}
 		return null;
 	}
