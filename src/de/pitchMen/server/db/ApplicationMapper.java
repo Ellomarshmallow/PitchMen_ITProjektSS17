@@ -304,7 +304,7 @@ public class ApplicationMapper {
 	 * @return ArryList<Application>
 	 */
 
-	public ArrayList<Application> findApplicationByPersonId(int personId) {
+	public ArrayList<Application> findApplicationsByPersonId(int personId) {
 		Connection con = DBConnection.connection();
 		
 		ArrayList<Application> result = new ArrayList<Application>();
@@ -348,7 +348,7 @@ public class ApplicationMapper {
 	 * @return ArryList<Application>
 	 */
 
-	public ArrayList<Application> findApplicationByJobPostingId(int jobPostingId) {
+	public ArrayList<Application> findApplicationsByJobPostingId(int jobPostingId) {
 		Connection con = DBConnection.connection();
 		
 		ArrayList<Application> result = new ArrayList<Application>();
