@@ -29,7 +29,7 @@ public class MarketplaceForm extends Formular {
 	public MarketplaceForm(Marketplace marketplace) {
 		super();
 
-
+		//TODO labels noch anzeigen lassen
 
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
