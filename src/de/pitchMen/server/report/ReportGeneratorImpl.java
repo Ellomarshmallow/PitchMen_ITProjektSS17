@@ -232,7 +232,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
 		result.addRow(headline);
 
-		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p);	
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p.getId());	
 		for (Application a : applications) {
 			
 			
