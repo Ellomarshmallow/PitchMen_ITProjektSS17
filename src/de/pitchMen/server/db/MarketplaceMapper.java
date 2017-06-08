@@ -78,8 +78,8 @@ public class MarketplaceMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id, team_id, company_id)"
 						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
-						+ marketplace.getTitle() + "' ,'" + marketplace.getPersonId() + "' ,'" + marketplace.getTeamId()
-						+ "' ,'" + marketplace.getCompanyId() + "')");
+						+ marketplace.getTitle() + "' ," + marketplace.getPersonId() + " ," + marketplace.getTeamId()
+						+ " ," + marketplace.getCompanyId() + ")");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -185,7 +185,8 @@ public class MarketplaceMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, description, title, person_id, team_id, company_id FROM marketplace " + "ORDER BY id");
+					"SELECT id, description, title, person_id, team_id, company_id FROM marketplace " 
+							+ "ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -230,7 +231,7 @@ public class MarketplaceMapper {
 
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
-							+ "WHERE title LIKE " + title + "ORDER BY id");
+							+ "WHERE title LIKE '" + title + "' ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Das

@@ -8,10 +8,11 @@ import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
-import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
+//import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
@@ -32,7 +33,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-    void showAllApplicationsToOneJobPostingOfUser(int jobPostingId, AsyncCallback<AllApplicationsToOneJobPostingOfUser> callback);
+    // evtl für späteren Gebrauch void showAllApplicationsToOneJobPostingOfUser(int jobPostingId, AsyncCallback<AllApplicationsToOneJobPostingOfUser> callback);
     /** 
 	 * 
 	 */
@@ -40,11 +41,15 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
+    void showFanInAndOutReport(AsyncCallback<FanInAndOutReport> callback);
+    /**
+	 * 
+	 */
 	void showAllApplicationsOfUser(Person p, AsyncCallback<AllApplicationsOfUser> callback);
 	/**
 	 * 
 	 */
-	void showAllApplicationsOfOneUser(int id, AsyncCallback<AllApplicationsOfOneUser> callback);
+//	void showAllApplicationsOfOneUser(int id, AsyncCallback<AllApplicationsOfOneUser> callback);
 	/**
 	 * 
 	 */
@@ -60,7 +65,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showFanOutApplicationsOfUser(Person p, AsyncCallback<FanOutApplicationsOfUser> callback);
+	void showFanOutApplicationsOfUser(AsyncCallback<FanOutApplicationsOfUser> callback);
 	/**
 	 * 
 	 */

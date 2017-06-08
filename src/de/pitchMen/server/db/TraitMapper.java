@@ -76,9 +76,10 @@ public class TraitMapper {
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Traits in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO trait (id, name, value, partnerProfile_id)" + "VALUES (" + trait.getId()
-					+ ", '" + trait.getName() + "', '" + trait.getValue() + "', '" + trait.getPartnerProfileId()
-					+ "')");
+			stmt.executeUpdate("INSERT INTO trait (id, name, value, partnerProfile_id)" 
+					+ "VALUES (" + trait.getId()
+					+ ", '" + trait.getName() + "', '" + trait.getValue() + "', " + trait.getPartnerProfileId()
+					+ ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

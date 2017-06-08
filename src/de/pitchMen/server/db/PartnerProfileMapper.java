@@ -80,9 +80,9 @@ public class PartnerProfileMapper {
 			 */
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id, team_id, "
 					+ "person_id, jobPosting_id) VALUES (" + partnerProfile.getId() + ", '"
-					+ partnerProfile.getDateCreated() + "', '" + partnerProfile.getDateChanged() + ", '"
-					+ partnerProfile.getCompanyId() + ", '" + partnerProfile.getTeamId() + ", '"
-					+ partnerProfile.getPersonId() + ", '" + partnerProfile.getJobPostingId() + "')");
+					+ partnerProfile.getDateCreated() + "', '" + partnerProfile.getDateChanged() + "', "
+					+ partnerProfile.getCompanyId() + ", " + partnerProfile.getTeamId() + ", "
+					+ partnerProfile.getPersonId() + ", " + partnerProfile.getJobPostingId() + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

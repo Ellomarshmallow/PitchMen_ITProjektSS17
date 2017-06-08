@@ -54,9 +54,6 @@ public class ParticipationMapper {
 	 * Fügt ein Participation-Objekt der Datenbank hinzu.
 	 * 
 	 * @param participation
-	 * @param marketplace
-	 * @param person
-	 * 
 	 * @return participation
 	 */
 	public Participation insert(Participation participation) {
@@ -64,33 +61,47 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-		//	Statement stmt2 = con.createStatement();
-		//	Statement stmt3 = con.createStatement();
 			
-			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
-			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM participation");
-
+			
 			participation.setId(rs.getInt("maxid") + 1);
-			stmt = con.createStatement();
-		//	stmt2 = con.createStatement();
-		//	stmt3 = con.createStatement();
+			
+			String insert1 = "INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
+					+ participation.getId() + ", '" + participation.getDateOpened() + "', '"
+					+ participation.getDateClosed() + "'";
+			String insert2 = "INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
+					+ participation.getId() + ", " + participation.getProjectId();
+			String insert3 = "INSERT INTO person_has_participation (person_id, participation_id)" + "VALUES ("
+					+ participation.getPersonId() + ", " + participation.getId();
+			/**
+			 * con.setAutoCommit(false) erlaubt es zwei oder mehrere Statements
+			 * in einer Gruppe auszuführen und deaktiviert die auto-commit
+			 * Funktion.
+			 * 
+			 */
+			con.setAutoCommit(false);
 
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Participation-Tupels in die
-			 * Datenbank
+			 * Fügt die oben gespeicherten SQL-Befehle der aktuellen Liste von
+			 * SQL-Statements dem Statement-Objekt hinzu
 			 */
-			stmt.executeUpdate("INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
-					+ participation.getId() + "', '" + participation.getDateOpened() + "', '"
-					+ participation.getDateClosed());
-			
-		//	stmt2.executeUpdate("INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
-		//			+ participation.getId() + project.getId() + "' WHERE id= " + participation.getId());
-			
-		//	stmt3.executeUpdate("INSERT INTO person_has_participation (person_id, participation_id)" + "VALUES ("
-		//			+ person.getId() + participation.getId());
+			stmt.addBatch(insert1);
+			stmt.addBatch(insert2);
+			stmt.addBatch(insert3);
+			/**
+			 * Bestätigt alle gelisteten in dem Statement-Objekt enthaltenen
+			 * Statements zur Ausführung in die Datenbank. Wenn alle Statements
+			 * erfolgreich durchgeführt worden sind, gibt es ein Array mit der
+			 * Anzahl der Updates zurück
+			 */
+			stmt.executeBatch();
+
+			/**
+			 * Durch das deaktivieren des AutoCommits dem Aufruf
+			 * con.setAutoCommit(false), muss das Ausführen des Commits explizit
+			 * gestartet werden
+			 */
+			con.commit();
 		}
 
 		catch (SQLException e2) {
@@ -99,6 +110,70 @@ public class ParticipationMapper {
 
 		return participation;
 	}
+
+	// try {
+	// Statement stmt1 = con.createStatement();
+	// Statement stmt2 = con.createStatement();
+	// Statement stmt3 = con.createStatement();
+	// /**
+	// * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
+	// * aktuelle id wird um eins erhöht.
+	// */
+	// ResultSet rs = stmt1.executeQuery("SELECT MAX(id) AS maxid FROM
+	// participation");
+	//
+	// participation.setId(rs.getInt("maxid") + 1);
+	// stmt1 = con.createStatement();
+	// stmt2 = con.createStatement();
+	// stmt3 = con.createStatement();
+	//
+	//
+	//
+	// /**
+	// * SQL-Anweisung zum Einfügen des neuen Participation-Tupels in die
+	// * Datenbank
+	// */
+	//
+	// stmt1.executeUpdate("INSERT INTO participation (id, workload, dateOpened,
+	// dateClosed)" + "VALUES ("
+	// + participation.getId() + ", '" + participation.getDateOpened() + "', '"
+	// + participation.getDateClosed() + "'");
+	//
+	// /**
+	// * Damit die Beziehungstabelle participation_has_project gefüllt werden
+	// kann, wird folgendes
+	// * Statement umgesetzt. Die Klasse Participation stellt dem Mapper die
+	// Methode getProjectId()
+	// * zur Verfügung. Damit kann das zugehörige Projekt-Objekt nach seiner ID
+	// abgefragt und in
+	// * die Beziehungstabelle geschrieben werden.
+	// */
+	//
+	// stmt2.executeUpdate("INSERT INTO participation_has_project
+	// (participation_id, project_id)" + "VALUES ("
+	// + participation.getId() +", " + participation.getProjectId());
+	//
+	// /**
+	// * Damit die Beziehungstabelle person_has_participation gefüllt werden
+	// kann, wird folgendes
+	// * Statement umgesetzt. Die Klasse Participation stellt dem Mapper die
+	// Methode getPersonId()
+	// * zur Verfügung. Damit kann das zugehörige Person-Objekt nach seiner ID
+	// abgefragt und
+	// * in die Beziehungstabelle geschrieben werden.
+	// */
+	//
+	// stmt3.executeUpdate("INSERT INTO person_has_participation (person_id,
+	// participation_id)" +
+	// "VALUES ("+ participation.getPersonId() +", " + participation.getId());
+	// }
+	//
+	// catch (SQLException e2) {
+	// e2.printStackTrace();
+	// }
+	//
+	// return participation;
+	// }
 
 	/**
 	 * Aktualisiert ein Participation-Objekt in der Datenbank.
@@ -112,7 +187,7 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE participation SET workload= '" + participation.getWorkload() + "' dateOpened= '"
+			stmt.executeUpdate("UPDATE participation SET workload= " + participation.getWorkload() + ", dateOpened= '"
 					+ participation.getDateOpened() + "', dateClosed= '" + participation.getDateClosed()
 					+ "' WHERE id= " + participation.getId());
 		}
@@ -245,12 +320,13 @@ public class ParticipationMapper {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Findet Participation-Objekte anhand des übergebenen personId in der
-	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt werden,
-	 * zu den es jeweils auch ein Gegenstück in der verknüpften Tabelle gibt. 
-	 * Da es möglich ist, dass eine Person mehrere Participations (Beteiligungen) hat, müssen die 
+	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die
+	 * Datensätze zusammengefügt werden, zu den es jeweils auch ein Gegenstück
+	 * in der verknüpften Tabelle gibt. Da es möglich ist, dass eine Person
+	 * mehrere Participations (Beteiligungen) hat, müssen die
 	 * Participation-Objekte in einer ArrayList gespeichert werden
 	 * 
 	 * @param personId
@@ -263,12 +339,10 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery(
-							"SELECT * FROM participation "
-							+ "INNER JOIN person_has_participation"
-							+ "ON participation.id = person_has_participation.participation_id"
-							+ "WHERE person_has_participation.person_id = " + personId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " 
+					+ "INNER JOIN person_has_participation"
+					+ "ON participation.id = person_has_participation.participation_id"
+					+ "WHERE person_has_participation.person_id = " + personId);
 
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -285,13 +359,14 @@ public class ParticipationMapper {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Findet Participation-Objekte anhand der übergebenen teamId in der
-	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt werden,
-	 * zu den es jeweils auch ein Gegenstück in der verknüpften Tabelle gibt. 
-	 * Da es möglich ist, dass ein Team mehrere Participations (Beteiligungen) hat, müssen die 
-	 * Participation-Objekte in einer ArrayList gespeichert werden
+	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die
+	 * Datensätze zusammengefügt werden, zu den es jeweils auch ein Gegenstück
+	 * in der verknüpften Tabelle gibt. Da es möglich ist, dass ein Team mehrere
+	 * Participations (Beteiligungen) hat, müssen die Participation-Objekte in
+	 * einer ArrayList gespeichert werden
 	 * 
 	 * @param teamId
 	 * @return ArrayList<Participation>
@@ -303,13 +378,10 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery(
-							"SELECT * FROM participation"
-							+ " INNER JOIN participation_has_team "
-							+ "ON participation.id = participation_has_team.participation_id "
-							+ "WHERE participation_has_team.team_id = " + teamId);
-
+			ResultSet rs = stmt.executeQuery("SELECT * FROM participation" 
+					+ " INNER JOIN participation_has_team "
+					+ "ON participation.id = participation_has_team.participation_id "
+					+ "WHERE participation_has_team.team_id = " + teamId);
 
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -326,12 +398,12 @@ public class ParticipationMapper {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Findet Participation-Objekte anhand der übergebenen companyId in der
-	 * Datenbank. 
-	 * Da es möglich ist, dass eine company mehrere Participations (Beteiligungen) hat, müssen die 
-	 * Participation-Objekte in einer ArrayList gespeichert werden
+	 * Datenbank. Da es möglich ist, dass eine company mehrere Participations
+	 * (Beteiligungen) hat, müssen die Participation-Objekte in einer ArrayList
+	 * gespeichert werden
 	 * 
 	 * @param companyId
 	 * @return ArrayList<Participation>
@@ -343,12 +415,10 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery(
-							"SELECT * FROM participation "
-							+ "INNER JOIN company_has_participation "
-							+ "ON participation.id = company_has_participation.participation_id "
-							+ "WHERE company_has_participation.company_id = " + companyId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " 
+					+ "INNER JOIN company_has_participation "
+					+ "ON participation.id = company_has_participation.participation_id "
+					+ "WHERE company_has_participation.company_id = " + companyId);
 
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -365,4 +435,5 @@ public class ParticipationMapper {
 		}
 		return result;
 	}
+
 }

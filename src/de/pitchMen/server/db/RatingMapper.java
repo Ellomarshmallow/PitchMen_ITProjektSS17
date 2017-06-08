@@ -74,9 +74,10 @@ public class RatingMapper {
 			 * SQL-Anweisung zum Einfügen des neuen Rating-Tupels in die
 			 * Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" + "VALUES (" + rating.getId()
-					+ ", '" + rating.getStatement() + "', '" + rating.getScore() + "', '" + rating.getApplicationId()
-					+ "')");
+			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" 
+					+ "VALUES (" + rating.getId()
+					+ ", '" + rating.getStatement() + "', " + rating.getScore() + ", " + rating.getApplicationId()
+					+ ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -96,8 +97,8 @@ public class RatingMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE rating SET statement='" + rating.getStatement() + "', score= '"
-					+ rating.getScore() + "' WHERE id= " + rating.getId());
+			stmt.executeUpdate("UPDATE rating SET statement='" + rating.getStatement() + "', score= "
+					+ rating.getScore() + " WHERE id= " + rating.getId());
 		}
 
 		catch (SQLException e2) {
