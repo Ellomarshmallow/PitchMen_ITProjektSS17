@@ -443,17 +443,84 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		this.marketplaceLDP.getList().remove(marketplace);
 	}
 	
-	public void addProject(Project project) {
+	/**
+	 * Füge ein neues Projekt zur Baumstruktur hinzu.
+	 * 
+	 * @param das neue Projekt
+	 */
+	public void addProject(Project project, Marketplace marketplace) {
+		// Wenn der Baumknoten noch nicht angelegt wurde, gibt's nicht zu tun
+		if(!this.projectDataProviders.containsKey(marketplace)) {
+			return;
+		}
+		// Erstelle ListDataProvider mit Projekten des ausgewählten Marktplatzes
+		ListDataProvider<Project> projectProvider = this.projectDataProviders.get(marketplace);
+		if(!projectProvider.getList().contains(project)) {
+			// wenn noch nicht enthalten, füge hinzu
+			projectProvider.getList().add(project);
+		}
+		// Wähle neu erstelltes Projekt aus
+		this.selectionModel.setSelected(project, true);
 		
 	}
 	
-	public void updateProject(Project project) {
+	/**
+	 * Ein gelöschtes Projekt-Objekt fliegt aus der Baumstruktur.
+	 * Das hat allerdings nichts mit der Löschung von Objekten in der
+	 * Applikations- und Tupeln in der Datenbank-Schicht zu tun. Es ist
+	 * durchaus möglich, dass die Objekte dort nicht "hart" gelöscht,
+	 * sondern nur auf inaktiv gesetzt werden o. ä. Wichtig ist bei 
+	 * dieser Methode insbesondere, dass vor der Löschung des Projekts
+	 * selbst erst noch die ihm untergeordneten Ausschreibungen
+	 * gelöscht werden. Das ist zwar nicht (wie z. B. bei Datenbanken)
+	 * notwendig, der Nachvollziehbarkeit wegen wurde allerdings das
+	 * kaskadierende Löschen so implementiert.
+	 * 
+	 * @param das zu löschende Projekt
+	 */
+	public void deleteProject(Project project, Marketplace marketplace) {
+		// Wenn der Baumknoten noch nicht angelegt wurde, gibt's nicht zu tun
+		// wurde der Baumknoten noch nicht geöffnet und wir brauchen nichts tun.
+		if (!this.projectDataProviders.containsKey(marketplace)) {
+			return;
+		}		
+		
+		projectDataProviders.get(marketplace).getList().remove(project);
+		selectionModel.setSelected(marketplace, true);
+	}
+	
+	/**
+	 * Wenn der Nutzer ein Projekt ändert und speichert,
+	 * sollte sich (bei der Änderung des Titels z. B.) auch das
+	 * im Baum hinterlegte Objekt aktualisieren. Das wird mit
+	 * <code>updateProject()</code> realisiert.
+	 * 
+	 * @param das upzudatende Projekt
+	 */
+	public void updateProject(final Project project) {
+		this.pitchMenAdmin.getMarketplaceByID(project.getMarketplaceId(), new AsyncCallback<Marketplace>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe("Fehler bei der Abfrage des Projektmarktplatzes");
+			}
+
+			@Override
+			public void onSuccess(Marketplace result) {
+				List<Project> projectList = projectDataProviders.get(result).getList();
+				
+				for(int i = 0; i < projectList.size(); i++) {
+					if(project.getId() == projectList.get(i).getId()) {
+						projectList.set(i, project);
+						break;
+					}
+				}
+			}
+			
+		});
 		
 	}
 	
-	public void deleteProject(Project project) {
-		
-	}
 	
 	public void addJobPosting(JobPosting jobPosting) {
 		
