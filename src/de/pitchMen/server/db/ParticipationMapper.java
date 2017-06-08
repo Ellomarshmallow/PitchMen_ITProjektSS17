@@ -187,7 +187,7 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE participation SET workload= '" + participation.getWorkload() + "' dateOpened= '"
+			stmt.executeUpdate("UPDATE participation SET workload= " + participation.getWorkload() + ", dateOpened= '"
 					+ participation.getDateOpened() + "', dateClosed= '" + participation.getDateClosed()
 					+ "' WHERE id= " + participation.getId());
 		}
@@ -339,7 +339,8 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " + "INNER JOIN person_has_participation"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " 
+					+ "INNER JOIN person_has_participation"
 					+ "ON participation.id = person_has_participation.participation_id"
 					+ "WHERE person_has_participation.person_id = " + personId);
 
@@ -377,7 +378,8 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM participation" + " INNER JOIN participation_has_team "
+			ResultSet rs = stmt.executeQuery("SELECT * FROM participation" 
+					+ " INNER JOIN participation_has_team "
 					+ "ON participation.id = participation_has_team.participation_id "
 					+ "WHERE participation_has_team.team_id = " + teamId);
 
@@ -413,7 +415,8 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " + "INNER JOIN company_has_participation "
+			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " 
+					+ "INNER JOIN company_has_participation "
 					+ "ON participation.id = company_has_participation.participation_id "
 					+ "WHERE company_has_participation.company_id = " + companyId);
 
