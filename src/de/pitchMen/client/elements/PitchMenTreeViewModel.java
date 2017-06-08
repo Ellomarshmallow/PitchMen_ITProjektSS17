@@ -216,9 +216,9 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		 * und Ausschreibungen, die zuvor angezeigt wurden, entfernt.
 		 */
 		this.selectedProject = null;
-		this.projectForm = null;
+		this.projectForm.setSelected(null);
 		this.selectedJobPosting = null;
-		this.jobPostingForm = null;	
+		this.jobPostingForm.setSelected(null);	
 		
 	}
 
@@ -227,8 +227,48 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 	}
 
 	public void setSelectedProject(Project selectedProject) {
-		// TODO vgl. mit BankProjekt
+		/*
+		 * Die Asuwahl eines Projekts hat die folgenden
+		 * Updates zur Folge:
+		 */
 		this.selectedProject = selectedProject;
+		this.projectForm.setSelected(selectedProject);
+		
+		/*
+		 * Ausschreibungen liegen hierarchisch unter Projekten,
+		 * deshalb wird hier erst einmal kein Element mehr 
+		 * selektiert.
+		 */
+		this.selectedJobPosting = null;
+		this.jobPostingForm.setSelected(null);
+		
+		/*
+		 * Projektmarktplätze liegen hierarchisch über Projekten.
+		 * Deshalb sollte der selektierte Projektmarktplatz 
+		 * auf den aktuellen Stand gebracht werden.
+		 */
+		if(selectedProject != null) {
+			/*
+			 *  Auf Basis des selektierten Projekts soll der entsprechende,
+			 *  darüber liegende Projektmarktplatz selektiert werden.
+			 *  Dies soll nur geschehen, wenn es auch wirklich ein 
+			 *  Projekt-Objekt gibt.
+			 */
+			this.pitchMenAdmin.getMarketplaceByID(this.selectedProject.getMarketplaceId(), new AsyncCallback<Marketplace>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings.getLogger().severe("Ein Fehler bei der Abfrage des Marktplatzes ist aufgetreten");
+				}
+
+				@Override
+				public void onSuccess(Marketplace result) {
+					selectedMarketplace = result;
+					marketplaceForm.setSelected(result);
+				}
+				
+			});
+		}
 	}
 
 	public JobPosting getSelectedJobPosting() {
