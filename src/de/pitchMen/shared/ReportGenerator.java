@@ -6,10 +6,11 @@ import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
-import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
+//import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
@@ -41,7 +42,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException;
+//	public abstract AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException;
 	/**
 	* 
 	*/
@@ -49,7 +50,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException;
+//	public abstract AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
@@ -65,7 +66,11 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract FanOutApplicationsOfUser showFanOutApplicationsOfUser(Person p) throws IllegalArgumentException;
+	public abstract FanOutApplicationsOfUser showFanOutApplicationsOfUser() throws IllegalArgumentException;
+	/**
+	 * 
+	 */
+	public abstract FanInAndOutReport showFanInAndOutReport() throws IllegalArgumentException;
 	/**
 	 * 
 	 */

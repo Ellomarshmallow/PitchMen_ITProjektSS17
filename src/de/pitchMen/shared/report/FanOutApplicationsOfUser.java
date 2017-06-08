@@ -9,7 +9,7 @@ import java.io.Serializable;
 	 * 
 	 * @author
 	 */
-	public class FanOutApplicationsOfUser extends CompositeReport implements Serializable{
+	public class FanOutApplicationsOfUser extends SimpleReport implements Serializable{
 
 	    /**
 	     * 

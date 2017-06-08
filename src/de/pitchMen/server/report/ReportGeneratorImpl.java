@@ -18,12 +18,13 @@ import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
-import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
+//import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.Column;
+import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
@@ -166,8 +167,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			if(a.getPartnerProfileId() == p.getId()) {};
 			Row applicationsrow = new Row();
 
-			applicationsrow.addColumn(new Column(application.getDateCreated().toString()));
-			applicationsrow.addColumn(new Column(application.getText()));
+			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
+			applicationsrow.addColumn(new Column(a.getText()));
 
 			result.addRow(applicationsrow);
 		}
@@ -175,7 +176,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		return result;
 	}
-	public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
+	/* public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
 		if (pitchMenAdmin == null) {
 			return null;
 		}
@@ -209,7 +210,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		return result;
 	};
-
+*/
 
 
 	@Override
@@ -231,7 +232,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
 		result.addRow(headline);
 
-		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p);	
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p.getId());	
 		for (Application a : applications) {
 			
 			
@@ -284,8 +285,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		result.addRow(headline);
 		//TODO getProjectsByPerson in PitchMenAdminImpl erstellen
-		ArrayList<Project> allProjects = pitchMenAdmin.getProjectsByPerson(p);
-		
+		ArrayList<Project> allProjects = pitchMenAdmin.getProjectsByPerson(p.getId());
 		for(Project project : allProjects){
 			
 			Row projectRow = new Row();
@@ -355,7 +355,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 			for(Application ap : allApplications){
 				
-				//TODO If anweisung
+								
+				if(ap.getStatus().equals("laufend")){
+					ongoing.add(ap);
+				}
+				else if(ap.getStatus().equals("abgelehnt")){
+					declined.add(ap);
+				}
+				else if(ap.getStatus().equals("angenommen")){
+					accepted.add(ap);
+				};
+				
+				Row applicationCount = new Row();
+				
+				applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
+				applicationCount.addColumn(new Column(String.valueOf(declined.size())));
+				applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
+				
+				result.addRow(applicationCount);
 				
 			}
 			
@@ -363,7 +380,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//}
 		
 		
-		return null;
+		return result;
 		
 		
 		
@@ -371,13 +388,87 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 
 	@Override
-	public FanOutApplicationsOfUser showFanOutApplicationsOfUser(Person p) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+	public FanOutApplicationsOfUser showFanOutApplicationsOfUser() throws IllegalArgumentException {
+	
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		FanOutApplicationsOfUser  result = new FanOutApplicationsOfUser();
+		
+		result.setTitle("Die FanOut-Analyse");
+		result.setDatecreated(new Date());
+
+		Row headline = new Row();
+		headline.addColumn(new Column("ID"));
+		headline.addColumn(new Column("Person"));
+		headline.addColumn(new Column("laufend"));
+		headline.addColumn(new Column("abgebrochen"));
+		headline.addColumn(new Column("besetzt"));
+		
+		result.addRow(headline);
+		
+		//ArrayList<Person> allPersons = pitchMenAdmin.getAllPeople();
+		
+		//for(Person person : allPersons) {
+			
+		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.getJobPostings();
+		
+			ArrayList<JobPosting> ongoing = new ArrayList<JobPosting>();
+			ArrayList<JobPosting> deleted = new ArrayList<JobPosting>();
+			ArrayList<JobPosting> occupied = new ArrayList<JobPosting>();
+		
+			for(JobPosting j : allJobPostings){
+				
+								
+				if(j.getStatus().equals("laufend")){
+					ongoing.add(j);
+				}
+				else if(j.getStatus().equals("abgelehnt")){
+					deleted.add(j);
+				}
+				else if(j.getStatus().equals("angenommen")){
+					occupied.add(j);
+				};
+				
+				Row jobPostingCount = new Row();
+				
+				jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
+				jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
+				jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
+				
+				result.addRow(jobPostingCount);
+				
+			}
+			
+			
+		//}
+		
+		
+		return result;
+		
 	}
 
-
-
+	@Override
+	public FanInAndOutReport showFanInAndOutReport() throws IllegalArgumentException {
+		
+		if(this.getPitchMenAdmin() == null){
+			return null;
+		}
+		
+		FanInAndOutReport result = new FanInAndOutReport();
+		
+		result.setTitle("Report für die FanIn bzw FanOut Analyse");
+		result.setDatecreated(new Date());
+		
+		result.addSubReport(this.showFanInJobPostingsOfUser());
+		result.addSubReport(this.showFanOutApplicationsOfUser());
+		
+		
+		return result;
+		
+		
+	}
 	/**
 	 * Default constructor
 	 */
