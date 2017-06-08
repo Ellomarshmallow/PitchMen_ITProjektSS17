@@ -8,7 +8,7 @@ import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
-import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
+//import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
