@@ -86,6 +86,8 @@ public interface PitchMenAdminAsync {
 	void getParticipations(AsyncCallback<ArrayList<Participation>> callback);
 
 	void getParticipationByID(int id, AsyncCallback<Participation> callback);
+	
+	void getParticipationsByPersonId(int personId, AsyncCallback<ArrayList<Participation>> callback);
 
 	// ---------- PARTNERPROFILE
 

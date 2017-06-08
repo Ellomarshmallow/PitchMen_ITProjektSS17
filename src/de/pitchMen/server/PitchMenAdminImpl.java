@@ -160,7 +160,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Application> getApplicationsByPerson(int personId) throws IllegalArgumentException {
-		//FIXME Namensgebung der Mapper-Methode sehr irreführend. Bitte ändern
+		// FIXME Namensgebung der Mapper-Methode sehr irreführend. Bitte ändern
 		return this.applicationMapper.findPartnerProfilByPersonId(personId);
 	}
 
@@ -171,10 +171,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Application> getApplicationsByJobPostingId(int jobPostingId) throws IllegalArgumentException {
-		//TODO im Mapper
+		// TODO im Mapper
 		return this.applicationMapper.findApplicationsByJobPostingId(jobPostingId);
 	}
-	
 
 	// --------------------------- COMPANY
 
@@ -366,6 +365,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Participation getParticipationByID(int id) throws IllegalArgumentException {
 		return this.participationMapper.findById(id);
 	}
+	
+	@Override
+	public ArrayList<Participation> getParticipationsByPersonId(int personId) throws IllegalArgumentException {
+		//TODO im Mapper
+		return this.participationMapper.findParticipationsByPersonId(personId);
+	}
 
 	// --------------------------- PARTNERPROFILE
 
@@ -425,13 +430,17 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	}
 
-	public ArrayList<PartnerProfile> getPartnerProfileByJobPostingId(int jobPostingId) {
-		//TODO im Mapper
+	public ArrayList<PartnerProfile> getPartnerProfileByJobPostingId(int jobPostingId) throws IllegalArgumentException {
+		// TODO im Mapper
 		return this.partnerProfileMapper.findPartnerProfilesByJobPostingId(jobPostingId);
 	}
 
-	// ------------------------ PERSON
-
+	public PartnerProfile getPartnerProfileByPersonId(int personId) throws IllegalArgumentException {
+		//TODO im Mapper
+		return this.participationMapper.findPartnerProfileByPersonId(personId);
+	}
+	
+	
 	@Override
 	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
 			String logoutUrl) throws IllegalArgumentException {
@@ -455,9 +464,20 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deletePerson(Person person) throws IllegalArgumentException {
-		// TODO Wenn man eine Person loescht muss auch die Beteiligung geloescht
-		// werden!!
-		this.personMapper.delete(person);
+		ArrayList<Participation> participations = this.getParticipationsByPersonId(person.getId());
+		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(person.getId());
+
+		if (participations != null) {
+			for (Participation participation : participations) {
+				this.participationMapper.delete(participation);
+			}
+		}
+		
+		if (partnerProfile != null) {
+			this.partnerProfileMapper.delete(partnerProfile);
+		}
+
+		this.projectMapper.delete(project);
 	}
 
 	@Override
@@ -534,7 +554,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException {
-		//FIXME Namensgebung der Mapper-Methode ist irreführend. 
+		// FIXME Namensgebung der Mapper-Methode ist irreführend.
 		return this.projectMapper.findParticipationByPersonId(personId);
 	}
 	// --------------------------- RATING
@@ -597,7 +617,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Team getTeamByID(int id) throws IllegalArgumentException {
 		return this.teamMapper.findById(id);
 	}
-	
+
 	@Override
 	public ArrayList<Team> getTeams() throws IllegalArgumentException {
 		return this.teamMapper.findAll();
@@ -648,7 +668,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException {
-		//TODO im Mapper
+		// TODO im Mapper
 		return this.traitMapper.findTraitsByPartnerProfileId(partnerProfileId);
 	}
 

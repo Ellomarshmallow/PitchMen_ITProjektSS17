@@ -251,7 +251,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException;
 
-	// --------------------- PARTNERPROFILES
+	// --------------------- PARTNERPROFILE
 
 	/**
 	 * Erstellt ein neues partnerProfile-Objekt
@@ -366,6 +366,8 @@ public interface PitchMenAdmin extends RemoteService {
 	public ArrayList<Participation> getParticipations() throws IllegalArgumentException;
 
 	public Participation getParticipationByID(int id) throws IllegalArgumentException;
+	
+	public ArrayList<Participation> getParticipationsByPersonId(int personId) throws IllegalArgumentException;
 
 	// --------------------------- LOGIN
 
