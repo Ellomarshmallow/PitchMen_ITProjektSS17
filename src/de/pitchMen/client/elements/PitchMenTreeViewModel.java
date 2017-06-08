@@ -276,8 +276,50 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 	}
 
 	public void setSelectedJobPosting(JobPosting selectedJobPosting) {
-		// TODO vgl. mit BankProjekt
+		/*
+		 * Der Aufruf dieser Methode ändert das aktuell
+		 * selektierte Ausschreibungs-Objekt.
+		 */
 		this.selectedJobPosting = selectedJobPosting;
+		this.jobPostingForm.setSelected(selectedJobPosting);
+		
+		/*
+		 * Gleichzeitig muss das darüberliegende Projekt 
+		 * aktualisiert werden.
+		 */
+		this.pitchMenAdmin.getProjectByID(selectedJobPosting.getProjectId(), new AsyncCallback<Project>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe("Fehler bei der Abfrage des Projekts");
+			}
+
+			@Override
+			public void onSuccess(Project result) {
+				selectedProject = result;
+				projectForm.setSelected(result);
+				
+				/*
+				 * Mitunter muss auch der Marktplatz des Projekts
+				 * aktualisiert werden.
+				 */
+				pitchMenAdmin.getMarketplaceByID(result.getMarketplaceId(), new AsyncCallback<Marketplace>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Ein Fehler bei der Abfrage des Marktplatzes ist aufgetreten");
+					}
+
+					@Override
+					public void onSuccess(Marketplace result) {
+						selectedMarketplace = result;
+						marketplaceForm.setSelected(result);
+					}
+					
+				});
+			}
+			
+		});
 	}
 
 	/**
