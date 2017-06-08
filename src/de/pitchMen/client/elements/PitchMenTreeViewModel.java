@@ -2,6 +2,7 @@ package de.pitchMen.client.elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -368,16 +369,78 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		});
 	}
 	
-	public void addMarketplace(Marketplace marktplace) {
-		
+	/**
+	 * Füge einen neuen Projektmarktplatz zur Baumstruktur
+	 * hinzu.
+	 * 
+	 * @param der neue Projektmarktplatz
+	 */
+	public void addMarketplace(Marketplace marketplace) {
+		this.marketplaceLDP.getList().add(marketplace);
+		// Selektiere den neuen Marktplatz auch direkt
+		this.selectionModel.setSelected(marketplace, true);
 	}
 	
-	public void updateMarketplace(Marketplace marktplace) {
-		
+	/**
+	 * Wenn der Nutzer einen Marktplatz ändert und speichert,
+	 * sollte sich (bei der Änderung des Titels z. B.) auch das
+	 * im Baum hinterlegte Objekt aktualisieren. Das wird mit
+	 * <code>updateMarketplace()</code> realisiert.
+	 * 
+	 * @param der upzudatende Marktplatz
+	 */
+	public void updateMarketplace(Marketplace marketplace) {
+		List<Marketplace> marketplaceList = this.marketplaceLDP.getList();
+		int i = 0;
+		for(Marketplace current : marketplaceList) {
+			if(current.getId() == marketplace.getId()) {
+				marketplaceList.set(i, marketplace);
+				break;
+			} else {
+				i++;
+			}
+		}
+		this.marketplaceLDP.refresh();
 	}
 	
-	public void deleteMarketplace(Marketplace marktplace) {
+	/**
+	 * Ein gelöschtes Marktplatz-Objekt fliegt aus der Baumstruktur.
+	 * Das hat allerdings nichts mit der Löschung von Objekten in der
+	 * Applikations- und Tupeln in der Datenbank-Schicht zu tun. Es ist
+	 * durchaus möglich, dass die Objekte dort nicht "hart" gelöscht,
+	 * sondern nur auf inaktiv gesetzt werden o. ä. Wichtig ist bei 
+	 * dieser Methode insbesondere, dass vor der Löschung des Marktplatzes
+	 * selbst erst noch die ihm untergeordneten Projekte und Ausschreibungen
+	 * gelöscht werden. Das ist zwar nicht (wie z. B. bei Datenbanken)
+	 * notwendig, der Nachvollziehbarkeit wegen wurde allerdings das
+	 * kaskadierende Löschen so implementiert.
+	 * 
+	 * @param der zu löschende Marktplatz
+	 */
+	public void deleteMarketplace(Marketplace marketplace) {		
+		// Abfrage einer Liste aller Projekte, die zu diesem Marktplatz gehören
+		List<Project> projectList = this.projectDataProviders.get(marketplace).getList();
 		
+		/*
+		 * Um alle JobPostings löschen zu können, die sich unterhalb 
+		 * eines Projekts befinden, das sich wiederum unterhalb eines
+		 * zu löschenden Projektmarktplatzes befindet, muss durch die 
+		 * zuvor abgefragte Liste an Projekten iteriert und jeweils das
+		 * aktuelle Project-Objekt als Key auf die Methode 
+		 * remove() angewendet werden. 
+		 */
+		for(Project project : projectList) {
+			this.jobPostingDataProviders.remove(project);
+		}
+		
+		/*
+		 * Dank der Map-Struktur können alle Projekt-ListDataProvider
+		 * durch den Key (den zu löschenden Marktplatz) entfernt werden.
+		 */
+		this.projectDataProviders.remove(marketplace);
+		
+		// Marktplatz aus dem ListDataProvider für Marktplätze entfernen
+		this.marketplaceLDP.getList().remove(marketplace);
 	}
 	
 	public void addProject(Project project) {
