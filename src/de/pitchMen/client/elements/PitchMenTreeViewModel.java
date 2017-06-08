@@ -195,13 +195,24 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		this.jobPostingForm = jobPostingForm;
 	}
 	
-	/*
-	 * Getter und Setter für die selektierten BusinessObjects.
+	/**
+	 * Methode zum Abfragen des aktuell selektierten Projekt-Marktplatzes.
+	 * @return den aktuell selektierten Marktplatz
 	 */
 	public Marketplace getSelectedMarketplace() {
 		return selectedMarketplace;
 	}
 
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Nutzer im Baum einen 
+	 * Projektmarktplatz selektiert. Der Aufruf geschieht dabei durch
+	 * die genestete Klasse {@link SelectionChangeEventHandler}. Da 
+	 * damit die höchste Hierarchie-Stufe angesprochen wird, werden 
+	 * die darunter liegenden Instanzen von Projekten und Ausschreibungen 
+	 * in dieser Methode <code>null</code> gesetzt.
+	 * 
+	 * @param selectedMarketplace, der neu selektierte Projektmarktplatz
+	 */
 	public void setSelectedMarketplace(Marketplace selectedMarketplace) {
 		/*
 		 *  Wird ein Marktplatz ausgewählt, wird das sowohl
@@ -222,10 +233,28 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		
 	}
 
+	/**
+	 * Methode zum Abfragen des aktuell selektierten Projekts.
+	 * @return das aktuell selektierte Projekt
+	 */
 	public Project getSelectedProject() {
 		return selectedProject;
 	}
 
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Nutzer im Baum ein 
+	 * Projekt selektiert. Der Aufruf geschieht dabei durch
+	 * die genestete Klasse {@link SelectionChangeEventHandler}. Da 
+	 * damit die zweithöchste Hierarchie-Stufe angesprochen wird, wird 
+	 * die evt. darunter liegenden Instanz der selektierten Ausschreibung 
+	 * in dieser Methode <code>null</code> gesetzt. Da Marktplätze sich
+	 * hierarchisch allerdings <em>über</em> Projekten befinden, muss
+	 * u. U. der selektierte Projektmarktplatz angepasst werden. Hierfür
+	 * erfolgt in dieser Methode ein <strong>RPC</strong>, um den zum
+	 * Projekt gehörenden Projekt-Marktplatz abzufragen.
+	 * 
+	 * @param selectedProject, das neu selektierte Projekt
+	 */
 	public void setSelectedProject(Project selectedProject) {
 		/*
 		 * Die Asuwahl eines Projekts hat die folgenden
@@ -271,10 +300,27 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		}
 	}
 
+	/**
+	 * Methode zum Abfragen der aktuell selektierten Ausschreibung.
+	 * @return die aktuell selektierte Ausschreibung
+	 */
 	public JobPosting getSelectedJobPosting() {
 		return selectedJobPosting;
 	}
 
+	/**
+	 * Diese Methode wird aufgerufen, wenn der Nutzer im Baum eine 
+	 * Auschreibung selektiert. Der Aufruf geschieht dabei durch
+	 * die genestete Klasse {@link SelectionChangeEventHandler}. Da 
+	 * damit die unterste Hierarchie-Stufe angesprochen wird, muss
+	 * u. U. das selektierte Projekt sowie, darüber liegend, der 
+	 * selektierte Projektmarktplatz angepasst werden. Hierfür
+	 * erfolgt in dieser Methode ein <strong>RPC</strong>, um das zur
+	 * Ausschreibung gehörende Projekt und dann, geschachtelt, den zum
+	 * Projekt gehörenden Projekt-Marktplatz abzufragen.
+	 * 
+	 * @param selectedProject, das neu selektierte Projekt
+	 */
 	public void setSelectedJobPosting(JobPosting selectedJobPosting) {
 		/*
 		 * Der Aufruf dieser Methode ändert das aktuell
