@@ -41,7 +41,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-    void  showFanInAndOutReport(AsyncCallback<FanInAndOutReport> callback);
+    void showFanInAndOutReport(AsyncCallback<FanInAndOutReport> callback);
     /**
 	 * 
 	 */
@@ -49,7 +49,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showAllApplicationsOfOneUser(int id, AsyncCallback<AllApplicationsOfOneUser> callback);
+//	void showAllApplicationsOfOneUser(int id, AsyncCallback<AllApplicationsOfOneUser> callback);
 	/**
 	 * 
 	 */
