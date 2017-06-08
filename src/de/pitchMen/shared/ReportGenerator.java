@@ -10,6 +10,7 @@ import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
@@ -66,6 +67,10 @@ public interface ReportGenerator extends RemoteService {
 	 * 
 	 */
 	public abstract FanOutApplicationsOfUser showFanOutApplicationsOfUser() throws IllegalArgumentException;
+	/**
+	 * 
+	 */
+	public abstract FanInAndOutReport showFanInAndOutReport() throws IllegalArgumentException;
 	/**
 	 * 
 	 */
