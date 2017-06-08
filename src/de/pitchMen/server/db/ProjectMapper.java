@@ -327,7 +327,7 @@ public class ProjectMapper {
 	 * @return ArrayList<Project>
 	 */
 	
-	public ArrayList<Project> findParticipationByPersonId(int personId) {
+	public ArrayList<Project> findProjectsByPersonId(int personId) {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Project> result = new ArrayList<Project>();
