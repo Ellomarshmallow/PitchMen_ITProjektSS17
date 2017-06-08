@@ -1,7 +1,8 @@
 package de.pitchMen.server.db;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.Date;
 
 import de.pitchMen.shared.bo.Participation;
 
@@ -64,7 +65,7 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-		//	Statement stmt2 = con.createStatement();
+			Statement stmt2 = con.createStatement();
 		//	Statement stmt3 = con.createStatement();
 			
 			/**
@@ -75,15 +76,19 @@ public class ParticipationMapper {
 
 			participation.setId(rs.getInt("maxid") + 1);
 			stmt = con.createStatement();
-		//	stmt2 = con.createStatement();
+			stmt2 = con.createStatement();
 		//	stmt3 = con.createStatement();
 
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Participation-Tupels in die
 			 * Datenbank
 			 */
+			
+			int participationId = rs.getInt("id");
+			Date participationDate = participation.getDateOpened();
+			
 			stmt.executeUpdate("INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
-					+ participation.getId() + "', '" + participation.getDateOpened() + "', '"
+					+ participationId + "', '" + participation.getDateOpened() + "', '"
 					+ participation.getDateClosed());
 			
 		//	stmt2.executeUpdate("INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
@@ -365,4 +370,6 @@ public class ParticipationMapper {
 		}
 		return result;
 	}
+	
+
 }
