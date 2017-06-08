@@ -326,4 +326,43 @@ public class ParticipationMapper {
 		}
 		return result;
 	}
+	
+	/**
+	 * Findet Participation-Objekte anhand der übergebenen companyId in der
+	 * Datenbank. 
+	 * Da es möglich ist, dass ein Team mehrere Participations (Beteiligungen) hat, müssen die 
+	 * Participation-Objekte in einer ArrayList gespeichert werden
+	 * 
+	 * @param companyId
+	 * @return ArrayList<Participation>
+	 */
+	public ArrayList<Participation> findParticipationsByCompanyId(int companyId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Participation> result = new ArrayList<Participation>();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery(
+							"SELECT * FROM participation "
+							+ "INNER JOIN company_has_participation "
+							+ "ON participation.id = company_has_participation.participation_id "
+							+ "WHERE company_has_participation.company_id = 1;" + companyId);
+
+			while (rs.next()) {
+				Participation participation = new Participation();
+				participation.setId(rs.getInt("id"));
+				participation.setWorkload(rs.getFloat("workload"));
+				participation.setDateOpened(rs.getDate("dateOpened"));
+				participation.setDateClosed(rs.getDate("dateClosed"));
+
+				result.add(participation);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
 }
