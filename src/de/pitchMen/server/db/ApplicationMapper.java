@@ -73,8 +73,8 @@ public class ApplicationMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)"
 						+ "VALUES ( " + application.getId() + ", '" + application.getText() + "' ,'"
-						+ application.getDateCreated() + "' ,'" + application.getJobPostingId() + "' ,'"
-						+ application.getPartnerProfileId() + "')");
+						+ application.getDateCreated() + "' ," + application.getJobPostingId() + " ,'"
+						+ application.getPartnerProfileId() + ")");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -262,8 +262,8 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT application.id, application.text, "
-					+ "application.dateCreated, application.jobPosting_id, application.partnerProfil_id, application.status "
-					+ "rating.id, rating.statement, rating.score "
+					+ "application.dateCreated, application.jobPosting_id, application.partnerProfil_id, "
+					+ "application.status, rating.id, rating.statement, rating.score "
 					+ "FROM application LEFT JOIN rating ON application.id = rating.id " + "ORDER BY application.id");
 
 			/**

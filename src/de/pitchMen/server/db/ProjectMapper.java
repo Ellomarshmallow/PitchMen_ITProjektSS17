@@ -80,8 +80,8 @@ public class ProjectMapper {
 					"INSERT INTO project (id, title, description, dateOpened, dateClosed, marketplace_id, person_id)"
 							+ "VALUES (" + project.getId() + ", '" + project.getTitle() + "', '"
 							+ project.getDescription() + "', '" + project.getDateOpened() + "', '"
-							+ project.getDateClosed() + "', '" + project.getMarketplaceId() + "', '"
-							+ project.getPersonId() + "')");
+							+ project.getDateClosed() + "', '" + project.getMarketplaceId() + "', "
+							+ project.getPersonId() + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -341,7 +341,7 @@ public class ProjectMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM project " + "INNER JOIN person_has_participation"
 					+ "ON (person_has_participation.person_id = project.person_id)" + "WHERE project.person_id ="
-					+ personId + " GROUP BY project.id;");
+					+ personId + " GROUP BY project.id");
 
 			while (rs.next()) {
 				Project project = new Project();

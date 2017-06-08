@@ -63,8 +63,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
+			 * Abfrage des zuletzt hinzugefuegten Primaerschluessel (id). Die
+			 * aktuelle id wird um eins erhoeht. 
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM person");
 
@@ -98,7 +98,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("UPDATE person SET name='" + person.getName() + "', description= '"
-					+ person.getDescription() + "', firstName= '" + person.getFirstName() + "', email= "
+					+ person.getDescription() + "', firstName= '" + person.getFirstName() + "', email= '"
 					+ person.getEmailAdress() + "' WHERE id= " + person.getId());
 		}
 

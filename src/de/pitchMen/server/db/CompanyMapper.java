@@ -213,7 +213,7 @@ public class CompanyMapper {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, name, description FROM company " + "WHERE name LIKE " + name + "ORDER BY id");
+					"SELECT id, name, description FROM company " + "WHERE name LIKE '" + name + "' ORDER BY id");
 
 			/**
 			 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben. Das
