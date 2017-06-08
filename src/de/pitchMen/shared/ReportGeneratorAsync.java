@@ -32,7 +32,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-    void showAllApplicationsToOneJobPostingOfUser(int jobPostingId, AsyncCallback<AllApplicationsToOneJobPostingOfUser> callback);
+    // evtl für späteren Gebrauch void showAllApplicationsToOneJobPostingOfUser(int jobPostingId, AsyncCallback<AllApplicationsToOneJobPostingOfUser> callback);
     /** 
 	 * 
 	 */
