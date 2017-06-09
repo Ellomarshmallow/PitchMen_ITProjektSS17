@@ -5,24 +5,28 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.elements.AddMarketplaceForm.UpdateMarketplaceCallback;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
 public class AddProjectForm extends Formular{
 
-	Project selectedProject = null;
+	private Project selectedProject = null;
+	private Marketplace selectedMarketplace = null; 
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Projektes:");
-	Label titleBox = new Label();
+	TextBox titleBox = new TextBox();
 	Label descLabel = new Label("Beschreibung des Projektes:");
-	Label descBox = new Label();
+	TextBox descBox = new TextBox();
 	Label fromLabel = new Label("Von:");
 	DatePicker fromBox = new DatePicker();
 	Label toLabel = new Label("Bis:");
@@ -34,35 +38,76 @@ public class AddProjectForm extends Formular{
 		this.selectedProject = selectedProject;
 		this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
 		this.addProject = addProject; 
-		
+		this.selectedMarketplace = pitchMenTreeViewModel.getSelectedMarketplace(); 
+
+		//TODO beim anzeigen der TextBoxes: addProject = true dann alles leer, bei false die vorherigen Daten übernehmen
+
+		//Vertical Panel erstellen
+		VerticalPanel labelsPanel = new VerticalPanel(); 
+		this.add(labelsPanel);
+
+		//labels und Boxen dem Vertical Panel hinzufügen
+		labelsPanel.add(idLabel);
+		labelsPanel.add(titleLabel);
+		labelsPanel.add(titleBox);
+		labelsPanel.add(descLabel);
+		labelsPanel.add(descBox);
+		labelsPanel.add(fromLabel);
+		labelsPanel.add(fromBox);
+		labelsPanel.add(toLabel);
+		labelsPanel.add(toBox);
+
+
+		//HorizontalPanel für die Buttons erstellen
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		this.add(buttonsPanel);	
+
 		Button cancelButton = new Button("Abbrechen" + new ClickHandler(){
 			public void onClick(ClickEvent event){
 				/* Wenn man auf den Cancel Button drückt, wird man auf den angewählten Projektmarktplatz
 				 * zurückgeführt
 				 * */
-				MarketplaceForm mpf = new MarketplaceForm(mpID); 
+				MarketplaceForm mpf = new MarketplaceForm(selectedMarketplace); 
 
 			}
 		}); 
+		buttonsPanel.add(cancelButton);
 
 		Button saveButton = new Button("Speichern" + new ClickHandler(){
 
 			public void onClick(ClickEvent event) {
 
-				AddProjectForm f1 = new AddProjectForm(); 
-				f1.save(mpID);
+				if (Window.confirm("Sind alle Angaben korrekt?")) {
 
+					if(AddProjectForm.this.addProject){
+
+						/* bei Click wird die unten implementierte Methode save()
+						* aufgerufen.
+						*/
+						save();
+						ProjectForm pf = new ProjectForm(getSelectedProject());
+					}
+					else{
+						update();
+						ProjectForm pf = new ProjectForm(getSelectedProject());
+						}
+
+				}
 
 			}
 		});
-
+		buttonsPanel.add(saveButton);
 	}
 
-	public void save(int MarketplaceID){
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
 
-		super.getPitchMenAdmin().addProject(dateOpenedBox.getValue(), dateClosedBox.getValue(), titleBox.getText(), descBox.getText(),
-				ClientsideSettings.getCurrentUser().getId(),MarketplaceID, new AddProjectFormCallback(this));
-		super.setCreator(ClientsideSettings.getCurrentUser().getId());
+	public void save(){
+
+
+		super.getPitchMenAdmin().addProject(fromBox.getValue(), toBox.getValue(), titleBox.getText(), descBox.getText(),
+				ClientsideSettings.getCurrentUser().getId(),selectedProject.getMarketplaceId(), new AddProjectFormCallback(this));
 	}
 
 
@@ -82,10 +127,35 @@ public class AddProjectForm extends Formular{
 		public void onSuccess(Project project){
 
 			Window.alert("erfolgreich gespeichert"); 
-
+			//FIXME der will nen objekt und kein int
+			pitchMenTreeViewModel.addProject(selectedProject, selectedMarketplace);
 		}
 
 	}	
+	// ---------- update Methode
 
+	public void update() {
+		if (selectedProject != null) {
+			selectedProject.setTitle(titleBox.getText());
+			selectedProject.setDescription(descBox.getText());
+			selectedProject.setDateOpened(fromBox.getValue());
+			selectedProject.setDateClosed(toBox.getValue());
+			super.getPitchMenAdmin().updateProject(selectedProject, new UpdateProjectCallback());
+		}}
+
+
+	// ---------- update Callback
+	class UpdateProjectCallback implements AsyncCallback<Void> {
+
+
+		public void onFailure(Throwable caught) {
+			Window.alert("Das Bearbeiten des Projekts ist fehlgeschlagen!");
+
+		}
+
+		public void onSuccess(Void result) {
+			pitchMenTreeViewModel.updateProject(selectedProject);
+		}
+	}
 }
 
