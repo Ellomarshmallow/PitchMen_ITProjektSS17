@@ -30,14 +30,13 @@ public class ParticipationMapper {
 	 * Instanzen dieser Klasse.
 	 */
 	protected ParticipationMapper() {
-
 	}
 
 	/**
 	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
 	 * dass nur eine einzige Instanz der ParticipationMapper-Klasse existiert.
 	 * Aufgerufen wird die Klasse somit über ParticipationMapper.participationMapper() 
-	 * und nicht über den 	 * New-Operator.
+	 * und nicht über den New-Operator.
 	 * 
 	 * @return ParticipationMapper
 	 */
@@ -77,8 +76,7 @@ public class ParticipationMapper {
 					+ participation.getPersonId() + ", " + participation.getId();
 			/**
 			 * con.setAutoCommit(false) erlaubt es zwei oder mehrere Statements
-			 * in einer Gruppe auszuführen und deaktiviert die auto-commit
-			 * Funktion.
+			 * in einer Gruppe auszuführen und deaktiviert die auto-commit Funktion.
 			 * 
 			 */
 			con.setAutoCommit(false);
@@ -98,7 +96,7 @@ public class ParticipationMapper {
 			stmt.executeBatch();
 
 			/**
-			 * Durch das deaktivieren des AutoCommits dem Aufruf
+			 * Durch das Deaktivieren des AutoCommits dem Aufruf
 			 * con.setAutoCommit(false), muss das Ausführen des Commits explizit
 			 * gestartet werden.
 			 */
@@ -121,15 +119,17 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Aktualisieren des Datensatzes Participation in der Datenbank.
+			 */
 			stmt.executeUpdate("UPDATE participation SET workload= " + participation.getWorkload() + ", dateOpened= '"
 					+ participation.getDateOpened() + "', dateClosed= '" + participation.getDateClosed()
 					+ "' WHERE id= " + participation.getId());
 		}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-		 * 
 		 */		
 		catch (SQLException e2) {
 			e2.printStackTrace();
@@ -147,15 +147,17 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Löschen des Datensatzes in der Datenbank.
+			 */
 			stmt.executeUpdate("DELETE FROM participation WHERE id=" + participation.getId());
-		}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
 		 */
-		catch (SQLException e2) {
+		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 	}
@@ -172,6 +174,9 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes in der Datenbank.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, workload, dateOpened, dateClosed FROM participation WHERE id=" + id);
 			/**
@@ -189,10 +194,9 @@ public class ParticipationMapper {
 				return participation;
 			}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-		 * 
 		 */	
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -207,11 +211,16 @@ public class ParticipationMapper {
 	 */
 	public ArrayList<Participation> findAll() {
 		Connection con = DBConnection.connection();
-
+		/**
+		 * Erzeugen einer ArrayList.
+		 */
 		ArrayList<Participation> result = new ArrayList<Participation>();
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, workload, dateOpened, dateClosed FROM participation ORDER BY id");
 			/**
@@ -230,7 +239,7 @@ public class ParticipationMapper {
 				result.add(participation);
 			}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -242,19 +251,23 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Findet Participation-Objekte anhand des übergebenen Start-Datums in der
-	 * Datenbank.
+	 * Findet Participation-Objekte anhand des übergebenen Start-Datums in der Datenbank.
 	 * 
 	 * @param dateOpened
 	 * @return ArrayList<Participation>
 	 */
 	public ArrayList<Participation> findByDateOpened(Date dateOpened) {
 		Connection con = DBConnection.connection();
-
+		/**
+		 * Erzeugen einer ArrayList
+		 */
 		ArrayList<Participation> result = new ArrayList<Participation>();
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden der Datensätze, anahnd des Start-Datums, in der Datenbank, sortiert nach der Id.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, workload, dateOpened, dateClosed FROM participation WHERE dateOpened= '"
 							+ dateOpened + "' ORDER BY id");
@@ -287,7 +300,8 @@ public class ParticipationMapper {
 
 	/**
 	 * Findet Participation-Objekte anhand des übergebenen personId in der
-	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die
+	 * Datenbank. 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die
 	 * Datensätze zusammengefügt werden, zu den es jeweils auch ein Gegenstück
 	 * in der verknüpften Tabelle gibt. Da es möglich ist, dass eine Person
 	 * mehrere Participations (Beteiligungen) hat, müssen die
@@ -303,6 +317,9 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten personId, in der Datenbank.
+			 */
 			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " 
 					+ "INNER JOIN person_has_participation"
 					+ "ON participation.id = person_has_participation.participation_id"
@@ -337,11 +354,12 @@ public class ParticipationMapper {
 
 	/**
 	 * Findet Participation-Objekte anhand der übergebenen teamId in der
-	 * Datenbank. Mit der Inner-Join-Klausel wird erreicht, dass nur die
+	 * Datenbank. 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die
 	 * Datensätze zusammengefügt werden, zu den es jeweils auch ein Gegenstück
 	 * in der verknüpften Tabelle gibt. Da es möglich ist, dass ein Team 
 	 * mehrere Participations (Beteiligungen) hat, müssen die Participation-Objekte in
-	 * einer ArrayList gespeichert werden
+	 * einer ArrayList gespeichert werden.
 	 * 
 	 * @param teamId
 	 * @return ArrayList<Participation>
@@ -353,6 +371,9 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten teamId, in der Datenbank.
+			 */
 			ResultSet rs = stmt.executeQuery("SELECT * FROM participation" 
 					+ " INNER JOIN participation_has_team "
 					+ "ON participation.id = participation_has_team.participation_id "
@@ -400,6 +421,9 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten companyId, in der Datenbank.
+			 */
 			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " 
 					+ "INNER JOIN company_has_participation "
 					+ "ON participation.id = company_has_participation.participation_id "
