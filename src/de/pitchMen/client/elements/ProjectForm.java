@@ -12,8 +12,6 @@ import de.pitchMen.shared.bo.Project;
 
 public class ProjectForm extends Formular {
 
-	// TODO
-
 	private int prID;
 
 	public ProjectForm(int ProjectID) {

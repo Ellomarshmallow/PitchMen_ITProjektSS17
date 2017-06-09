@@ -1,5 +1,7 @@
 package de.pitchMen.client.elements;
 
+import java.awt.TextField;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -10,26 +12,34 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.elements.MarketplaceForm.UpdateMarketplaceCallback;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
 public class AddMarketplaceForm extends Formular {
-
+	
+	PitchMenTreeViewModel pitchMenTreeViewModel = null; 
+	Marketplace selectedMarketplace = null;
+	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Marktplatzes:");
 	TextBox titleBox = new TextBox();
 	Label descLabel = new Label("Beschreibung des Marktplatzes:");
-	TextBox descBox = new TextBox();
-	Label projectLabel = new Label("Name des ersten Projektes: ");
+	TextField descBox = new TextField();
+	boolean addMarketplace = false; 
 
-	public void onLoad() {
-
+	public AddMarketplaceForm(Marketplace selectedMarketplace,PitchMenTreeViewModel pitchMenTreeViewModel,boolean addMarketplace ) {
+		
+			this.selectedMarketplace = selectedMarketplace;
+			this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
+			this.addMarketplace = addMarketplace; 
+		//TODO beim anzeigen der TextBoxes: addMarketplace = true dann alles leer, bei false die vorherigen Daten übernehmen
 		Button cancelButton = new Button("Abbrechen" + new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				/*
-				 * Wenn man auf den Cancel Button drückt, wird man auf den
-				 * ersten Projektmarktplatz der Webseite weitergeleitet.
+				 * Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
+				 * Projektmarktplatz zurückgeführt.
 				 */
-				MarketplaceForm mpf = new MarketplaceForm(1);
+				MarketplaceForm mpf = new MarketplaceForm(AddMarketplaceForm.this.selectedMarketplace);
 
 			}
 		});
@@ -39,11 +49,18 @@ public class AddMarketplaceForm extends Formular {
 			public void onClick(ClickEvent event) {
 
 				if (Window.confirm("Sind alle Angaben korrekt?")) {
-
-					// bei Click wird die unten implementierte Methode save()
-					// aufgerufen.
-					AddMarketplaceForm f1 = new AddMarketplaceForm();
-					f1.save();
+					
+					if(AddMarketplaceForm.this.addMarketplace){
+						
+						// bei Click wird die unten implementierte Methode save()
+						// aufgerufen.
+						save();
+						MarketplaceForm mpf = new MarketplaceForm(AddMarketplaceForm.this.selectedMarketplace);
+					}
+					else{
+						update();
+						MarketplaceForm mpf = new MarketplaceForm(AddMarketplaceForm.this.selectedMarketplace);
+					}
 
 				}
 
@@ -52,15 +69,11 @@ public class AddMarketplaceForm extends Formular {
 
 	}
 
-	// ---------- speichern
+		// ---------- speichern
 	public void save() {
-
+		//FIXME companyID und TeamID
 		super.getPitchMenAdmin().addMarketplace(titleBox.getText(), descBox.getText(),
-				ClientsideSettings.getCurrentUser(), projects, new AddMarketplaceFormCallback(this));
-		// TODO: das projects wird aus der addMarketplace Methode noch entfernt
-		// (ellis Aufgabe)
-		super.setCreator(ClientsideSettings.getCurrentUser().getId());
-		// if (.... UPDATE ??
+				ClientsideSettings.getCurrentUser().getId(), 0, 0, new AddMarketplaceFormCallback(this));
 	}
 
 	class AddMarketplaceFormCallback implements AsyncCallback<Marketplace> {
@@ -80,8 +93,33 @@ public class AddMarketplaceForm extends Formular {
 		public void onSuccess(Marketplace marketplace) {
 
 			Window.alert("erfolgreich gespeichert");
+			pitchMenTreeViewModel.addMarketplace(marketplace); 
 		}
 
 	}
+	
+		// ---------- update Methode
+	
+	public void update() {
+		if (selectedMarketplace != null) {
+			selectedMarketplace.setTitle(titleBox.getText());
+			selectedMarketplace.setDescription(descBox.getText());
+		super.getPitchMenAdmin().updateMarketplace(selectedMarketplace, new UpdateMarketplaceCallback());
+	}}
+
+	
+		// ---------- update Callback
+	 class UpdateMarketplaceCallback implements AsyncCallback<Void> {
+	
+
+	 public void onFailure(Throwable caught) {
+	 Window.alert("Das Löschen des Projektmarktplatzes ist fehlgeschlagen!");
+	
+	 }
+	
+	 public void onSuccess(Void result) {
+		 pitchMenTreeViewModel.updateMarketplace(AddMarketplaceForm.this.selectedMarketplace);
+	 }
+	 }
 
 }

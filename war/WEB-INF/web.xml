@@ -22,7 +22,7 @@
   </servlet-mapping>
 
 <!-- ReportGenerator-Servlet -->  
-  <!--<servlet>
+  <servlet>
     <servlet-name>reportGeneratorServlet</servlet-name>
     <servlet-class>de.pitchMen.server.ReportGeneratorImpl</servlet-class>
   </servlet>
@@ -30,6 +30,6 @@
   <servlet-mapping>
     <servlet-name>reportGeneratorServlet</servlet-name>
     <url-pattern>/pitchmen/reportgenerator</url-pattern>
-  </servlet-mapping>-->
+  </servlet-mapping>
   
 </web-app>

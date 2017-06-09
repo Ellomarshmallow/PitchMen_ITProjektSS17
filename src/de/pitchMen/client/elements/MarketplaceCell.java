@@ -38,13 +38,13 @@ public class MarketplaceCell extends AbstractCell<Marketplace> {
 		/*
 		 * Der Titel und die Beschreibung eines Projektmarktplatzes
 		 * werden in ein div-Element gerendert. Dabei befindet sich 
-		 * der Titel in einem h3-, die Beschreibung in einem p-Element.
-		 * Spezifische Klassen für das umschließenede div-Element
-		 * ermöglichen später ein einheitliches Design mittels CSS.
+		 * der Titel in einem h3-Element. Spezifische Klassen für das 
+		 * umschließenede div-Element ermöglichen später ein 
+		 * einheitliches Design mittels CSS.
 		 */
-		sb.appendHtmlConstant("<div class='cell marketplaceCell'><p>");
+		sb.appendHtmlConstant("<div class='cell marketplaceCell'><h3>");
 		sb.appendEscaped(value.getTitle());
-		sb.appendHtmlConstant("</p></div>");
+		sb.appendHtmlConstant("</h3></div>");
 		
 	}
 
