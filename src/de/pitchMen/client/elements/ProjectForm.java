@@ -6,105 +6,187 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.pitchMen.client.elements.MarketplaceForm.DeleteMarketplaceCallback;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
 public class ProjectForm extends Formular {
 
-	private int prID;
+	/*
+	 * titleBox und descBox sind hier labels, erst beim Erstellen oder
+	 * Bearbeiten ist titleBox eine Textbox und descBox eine TextArea
+	 */
+	Project selectedProject = null;
+	PitchMenTreeViewModel pitchMenTreeViewModel = null;
+	Label idLabel = new Label();
+	Label titleLabel = new Label("Name des Projektes:");
+	Label titleBox = new Label();
+	Label descLabel = new Label("Beschreibung des Projektes:");
+	Label descBox = new Label();
+	Label fromLabel = new Label("Von:");
+	Label fromBox = new Label();
+	Label toLabel = new Label("Bis:");
+	Label toBox = new Label();
 
 	public ProjectForm(int ProjectID) {
 
 		super();
-		this.prID = ProjectID;
 
-		super.getPitchMenAdmin().getProjectByID(this.prID, new ProjectFormCallback(this));
+		// Vertical Panel erstellen
+		VerticalPanel labelsPanel = new VerticalPanel();
+		this.add(labelsPanel);
+
+		// labels und Boxen dem Vertical Panel hinzufügen
+		labelsPanel.add(idLabel);
+		labelsPanel.add(titleLabel);
+		labelsPanel.add(titleBox);
+		labelsPanel.add(descLabel);
+		labelsPanel.add(descBox);
+		labelsPanel.add(fromLabel);
+		labelsPanel.add(fromBox);
+		labelsPanel.add(toLabel);
+		labelsPanel.add(toBox);
+
+		// HorizontalPanel für die Buttons erstellen
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		this.add(buttonsPanel);
+
+		// ---------- Neues Projekt Button, ClickHandler hinzufügen und dem
+		// HorizontalPanel hinzufügen
+		Button addProjectBtn = new Button("+ Neues Projekt hinzufügen");
+		addProjectBtn.addClickHandler(new addProjectClickHandler());
+		buttonsPanel.add(addProjectBtn);
+
+
+		/*
+		 * Wenn die aktuelle UserId gleich der PersonId ist, dann hat dieser die
+		 * Buttons Projekt Löschen, Bearbeiten und Ausschreibung hinzufügen
+		 * zur verfügung. Vgl. hasPermission() in Formular.java
+		 */
+		if (hasPermission(this.selectedProject)) {
+
+			// ---------- Projekt löschen, ClickHandler hinzufügen und dem
+			// HorizontalPanel hinzufügen
+			Button deleteProjectBtn = new Button("- Projekt löschen");
+			deleteProjectBtn.addClickHandler(new deleteProjectClickHandler());
+			buttonsPanel.add(deleteProjectBtn);
+
+			// ---------- Projekt bearbeiten, ClickHandler hinzufügen und dem
+			// HorizontalPanel hinzufügen
+
+			Button updateProjectBtn = new Button("Bearbeiten");
+			updateProjectBtn.addClickHandler(new updateProjectClickHandler());
+			buttonsPanel.add(updateProjectBtn);
+
+			// ---------- Neue Ausschreibung Button, ClickHandler hinzufügen und dem
+			// HorizontalPanel hinzufügen
+			Button addJobPostingBtn = new Button("+ Neue Ausschreibung hinzufügen");
+			addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
+			buttonsPanel.add(addJobPostingBtn);
+		}
+	}
+
+	// ---------- ClickHandler
+
+	// ---------- addProjectClickHandler
+	private class addProjectClickHandler implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+
+			AddProjectForm addProject = new AddProjectForm();
+
+		}
+	}
+	
+	//---------- addJobPostingClickHandler()
+	private class addJobPostingClickHandler implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+
+			AddJobPostingForm addJobposting = new AddJobPostingForm();
+
+		}
+	}
+	// ---------- deleteProjectClickHandler
+	private class deleteProjectClickHandler implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+
+			// bei Click wird die delete() Methode aufgerufen
+
+			if (Window.confirm("Sind Sie sich sicher, dass Sie das löschen wollen?")) {
+				delete();
+			}
+
+		}
+	}
+
+	// ---------- updateProjectClickHandler
+	private class updateProjectClickHandler implements ClickHandler {
+		public void onClick(ClickEvent event) {
+
+			// bei Click wird die update() Methode aufgerufen
+			AddProjectForm updateProject = new AddProjectForm();
+
+		}
+	}
+
+	public void delete() {
+
+		super.getPitchMenAdmin().deleteProject(selectedProject, new DeleteProjectCallback(selectedProject));
 
 	}
 
-	class ProjectFormCallback implements AsyncCallback<Project> {
+	class DeleteProjectCallback implements AsyncCallback<Void> {
 
-		private ProjectForm projectform = null;
+		Project p = null;
 
-		public ProjectFormCallback(ProjectForm projectForm) {
-			this.projectform = projectForm;
+		public DeleteProjectCallback(Project p) {
+			this.p = p;
 		}
 
 		public void onFailure(Throwable caught) {
-
-			this.projectform.add(new HTML("Fehler bei RPC Aufruf:" + caught.getMessage()));
+			Window.alert("Das Löschen des Projekts ist fehlgeschlagen!");
 
 		}
 
-		public void onSuccess(Project project){
-			if (project != null){
-
-				this.projectform.add(new HTML(project.getTitle()));
-				this.projectform.add(new HTML(project.getDescription()));
-
-				Button addJobPostingBtn = new Button("+ Neue Ausschreibung", new ClickHandler(){
-
-
-					public void onClick(ClickEvent event) {
-
-						AddJobPostingForm addJobPosting = new AddJobPostingForm(); 
-
-						addJobPosting.onLoad(prID); 
-						//TODO Klasse AddJobPostingForm mit der Methode onLoad() erstellen.Vgl AddProjectForm
-					}}); 
-
-				//DAS FOLGENDE brauchen wir nur wenn man ein neues Projekt
-				//auch von anderen Projekten aus erstellen möchte, Fehlend: mpID,
-				//							// Neues Projekt Button:
-				//
-				//							Button addProjectBtn = new Button("+ Neues Projekt hinzufügen", new ClickHandler() {
-				//
-				//								public void onClick(ClickEvent event) {
-				//
-				//									AddProjectForm addProject = new AddProjectForm();
-				//
-				//									addProject.onLoad(mpID);
-				//
-				//								}
-				//							});				
-				//					
-
-
-				if(hasPermission()){
-
-					// Projekt löschen
-
-					Button deleteProjectBtn = new Button("- Ausgewähltes Projekt löschen", new ClickHandler(){
-
-
-						public void onClick(ClickEvent event) {
-
-							//bei Click wird die Methode delete()  aufgerufen
-
-							if(Window.confirm("Sind Sie sich sicher, dass Sie das Projekt löschen wollen?")){
-								delete(); 
-								//TODO implement delete() 
-
-							}
-
-						}}); 
-
-					Button updateProjectBtn = new Button("Bearbeiten", new ClickHandler(){
-
-
-						public void onClick(ClickEvent event) {
-
-							//bei Click wird die Methode update()  aufgerufen
-
-
-							update(); 
-							//TODO implement update() 
-
-
-
-						}}); 
-
-				}
-			}}
+		public void onSuccess(Void result) {
+			if (p != null) {
+				setSelectedProject(null);
+				//FIXME deleteProject will einen Marketplace, und kein int
+				pitchMenTreeViewModel.deleteProject(p, p.getMarketplaceId());
+			}
+		}
 	}
+
+	// ----------pitchMenTreeViewModelsetter
+	public void setPitchMenTreeViewModel(PitchMenTreeViewModel pitchMenTreeViewModel) {
+		this.pitchMenTreeViewModel = pitchMenTreeViewModel;
+	}
+
+	
+	
+	// ---------- selectedProject setter
+			public void setSelectedProject(Project p) {
+				if (p != null) {
+					this.selectedProject = p;
+					titleBox.setText(selectedProject.getTitle());
+					descBox.setText(selectedProject.getDescription());
+					fromBox.setText(selectedProject.getDateOpened().toString());
+					toBox.setText(selectedProject.getDateClosed().toString());
+					idLabel.setText(Integer.toString(selectedProject.getId()));
+				} 
+				else {
+					idLabel.setText("");
+					titleBox.setText("");
+					descBox.setText("");
+					fromBox.setText("");
+					toBox.setText("");
+					
+				}
+			}
+}
