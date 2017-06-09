@@ -459,8 +459,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 
-	
-	
+	/**
+	   * Erstellen von <code>ProjectInterweavingsWithParticipationsAndApplications</code>-Objekten.
+	   * 
+	   * @param Personenobjekt bzgl. dessen der Report erstellt werden soll.
+	   * @return der fertige Report
+	   */	
 	@Override
 	public ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(
 			Person p) throws IllegalArgumentException {
@@ -468,15 +472,22 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		if(this.getPitchMenAdmin() == null){
 			return null;
 		}
-		
+		/*
+	     * Zunächst legen wir uns einen leeren Report an.
+	     */
 		ProjectInterweavingsWithParticipationsAndApplications result = new ProjectInterweavingsWithParticipationsAndApplications();
 		
+		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
 		result.setTitle("Des Nutzers Projektverflechtungen");
+		/*
+	     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
 		result.setDatecreated(new Date());
-		
+		//Dieser Report ist ein Composite Report und setzt sich aus dem Report "showAllApplicationsOfUser" und "showAllParticipationsOfOneUser" zusammen
 		result.addSubReport(this.showAllApplicationsOfUser(p));
 		result.addSubReport(this.showAllParticipationsOfOneUser(p));
-		
+		//R�ckgabe des fertigen Reports 
 		return result;
 	}
 
