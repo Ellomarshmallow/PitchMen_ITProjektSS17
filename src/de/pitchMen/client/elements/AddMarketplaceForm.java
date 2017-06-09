@@ -1,18 +1,18 @@
 package de.pitchMen.client.elements;
 
-import java.awt.TextField;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.client.elements.MarketplaceForm.UpdateMarketplaceCallback;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
@@ -24,25 +24,45 @@ public class AddMarketplaceForm extends Formular {
 	Label titleLabel = new Label("Name des Marktplatzes:");
 	TextBox titleBox = new TextBox();
 	Label descLabel = new Label("Beschreibung des Marktplatzes:");
-	TextField descBox = new TextField();
+	TextArea descBox = new TextArea();
 	boolean addMarketplace = false; 
 
+	//FIXME TextArea richtige größe ? 
 	public AddMarketplaceForm(Marketplace selectedMarketplace,PitchMenTreeViewModel pitchMenTreeViewModel,boolean addMarketplace ) {
 		
 			this.selectedMarketplace = selectedMarketplace;
 			this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
 			this.addMarketplace = addMarketplace; 
 		//TODO beim anzeigen der TextBoxes: addMarketplace = true dann alles leer, bei false die vorherigen Daten übernehmen
-		Button cancelButton = new Button("Abbrechen" + new ClickHandler() {
+		
+			//Vertical Panel erstellen
+			VerticalPanel labelsPanel = new VerticalPanel(); 
+			this.add(labelsPanel);
+			
+			//labels und Boxen dem Vertical Panel hinzufügen
+			labelsPanel.add(idLabel);
+			labelsPanel.add(titleLabel);
+			labelsPanel.add(titleBox);
+			labelsPanel.add(descLabel);
+			labelsPanel.add(descBox);
+			
+			//HorizontalPanel für die Buttons erstellen
+			HorizontalPanel buttonsPanel = new HorizontalPanel();
+			this.add(buttonsPanel);	
+				
+			
+			Button cancelButton = new Button("Abbrechen" + new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				/*
 				 * Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
 				 * Projektmarktplatz zurückgeführt.
 				 */
 				MarketplaceForm mpf = new MarketplaceForm(AddMarketplaceForm.this.selectedMarketplace);
-
+				
 			}
 		});
+			buttonsPanel.add(cancelButton);
+			
 		// ---------- Speichern-Button
 		Button saveButton = new Button("Speichern" + new ClickHandler() {
 
@@ -66,7 +86,7 @@ public class AddMarketplaceForm extends Formular {
 
 			}
 		});
-
+			buttonsPanel.add(saveButton);
 	}
 
 		// ---------- speichern

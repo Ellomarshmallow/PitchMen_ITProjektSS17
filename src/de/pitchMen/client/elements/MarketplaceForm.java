@@ -11,13 +11,16 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
-//TODO noch Buttons (löschen bearbeiten) hinzufügen falls hasPermission() is true, bei false nur + Btn
 public class MarketplaceForm extends Formular {
-
+	
+	/* titleBox und descBox sind hier labels, erst beim Erstellen oder Bearbeiten ist titleBox 
+	 * eine Textbox und descBox eine TextArea
+	*/
 	Marketplace selectedMarketplace = null;
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	Label idLabel = new Label();
@@ -29,36 +32,46 @@ public class MarketplaceForm extends Formular {
 	public MarketplaceForm(Marketplace marketplace) {
 		super();
 
-		//TODO labels noch anzeigen lassen
-
+		//Vertical Panel erstellen
+		VerticalPanel labelsPanel = new VerticalPanel(); 
+		this.add(labelsPanel);
+		
+		//labels und Boxen dem Vertical Panel hinzufügen
+		labelsPanel.add(idLabel);
+		labelsPanel.add(titleLabel);
+		labelsPanel.add(titleBox);
+		labelsPanel.add(descLabel);
+		labelsPanel.add(descBox);
+		
+		//HorizontalPanel für die Buttons erstellen
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
-		// ---------- Neuer Projektmarktplatz Button:
+		// ---------- Neuer Projektmarktplatz Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen
 		Button addMarketplaceBtn = new Button("+ Neuer Projektmarktplatz");
 		addMarketplaceBtn.addClickHandler(new addMarketplaceClickHandler());
 		buttonsPanel.add(addMarketplaceBtn);
 
 
-		// ---------- Neues Projekt Button:
+		// ---------- Neues Projekt Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen
 		Button addProjectBtn = new Button("+ Neues Projekt hinzufügen");
 		addProjectBtn.addClickHandler(new addProjectClickHandler());
 		buttonsPanel.add(addProjectBtn);
 
 		/*
-		 * Wenn der aktuelle User gleich dem Ersteller ist, dann hat
-		 * dieser die Buttons Löschen und Bearbeiten zur verfügung.
+		 * Wenn der aktuelle User gleich der PersonId ist, dann hat
+		 * dieser die Buttons Löschen und Bearbeiten zur verfügung. Vgl. hasPermission() in Formular.java
 		 */
 		if (hasPermission(this.selectedMarketplace)) {		
 
 
-			// ---------- Projektmarktplatz löschen
+			// ---------- Projektmarktplatz löschen, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen
 			Button deleteMarketplaceBtn = new Button("- Projektmarktplatz löschen"); 
 			deleteMarketplaceBtn.addClickHandler(new deleteMarketplaceClickHandler());
 			buttonsPanel.add(deleteMarketplaceBtn);
 
 
-			// ---------- Projektmarktplatz bearbeiten
+			// ---------- Projektmarktplatz bearbeiten, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen
 
 			Button updateMarketplaceBtn = new Button("Bearbeiten");
 			updateMarketplaceBtn.addClickHandler(new updateMarketplaceClickHandler());
@@ -84,7 +97,7 @@ public class MarketplaceForm extends Formular {
 			 * da beide ClickHandler ein Objekt vom Typ AddMarketplaceForm erzeugen.
 			 * Der booleansche Wert wird benötigt um festzulegen ob bei dem Click auf
 			 * den saveButton in AddMarketplaceForm.java die save() oder die update() Methode
-			 * verwendet wird.			 * 
+			 * verwendet wird.			 
 			 * addMarketplaceBtn = true
 			 * updateMarketplaceBtn = false
 			*/
@@ -111,8 +124,7 @@ public class MarketplaceForm extends Formular {
 	
 		public void onClick(ClickEvent event) {
 
-			// bei Click wird die Methode delete()
-			// aufgerufen
+			// bei Click wird die delete() Methode  aufgerufen
 
 			if (Window.confirm("Sind Sie sich sicher, dass Sie das löschen wollen?")) {
 				delete();
@@ -127,7 +139,7 @@ public class MarketplaceForm extends Formular {
 	private class updateMarketplaceClickHandler implements ClickHandler{
 	public void onClick(ClickEvent event) {
 
-		// bei Click wird die Methode update() aufgerufen
+		// bei Click wird die update() Methode aufgerufen
 		AddMarketplaceForm addMarketplace = new AddMarketplaceForm(MarketplaceForm.this.selectedMarketplace,MarketplaceForm.this.pitchMenTreeViewModel, false);
 
 	}
