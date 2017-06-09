@@ -6,6 +6,7 @@ import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 //import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
@@ -42,7 +43,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-//	public abstract AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException;
+	public abstract AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException;
 	/**
 	* 
 	*/
@@ -50,7 +51,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-//	public abstract AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException;
+	public abstract AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException;
 	/**
 	 * 
 	 */
