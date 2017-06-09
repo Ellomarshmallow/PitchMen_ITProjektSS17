@@ -188,24 +188,53 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return null;
 		// TODO Auto-generated method stub
 	}
-
+	
+	
+	 /**
+	   * Erstellen von <code>ApplicationsRelatedToJobPostingsOfUser Report</code>-Objekten.
+	   * 
+	   * @param c das Personenobjekt bzgl. dessen der Report erstellt werden soll.
+	   * @return der fertige Report
+	   */
 	@Override
 	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p)
 			throws IllegalArgumentException {
-		// TODO Fehlersuche
+		
 		if (pitchMenAdmin == null) {
 			return null;
 		}
-		ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
-
-		result.setTitle("Alle Bewerbungen auf eine Ausschreibung des Users");
-		result.setDatecreated(new Date());
-		Row headline = new Row();
-		headline.addColumn(new Column("Erstellungsdatum"));
-		headline.addColumn(new Column("Bewerbungstext"));
 		
+		/*
+	     * ZunÃ¤chst legen wir uns einen leeren Report an.
+	     */
+		ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
+		
+		// Jeder Report hat einen Titel (Bezeichnung / Ãœberschrift).
+		result.setTitle("Alle Bewerbungen auf eine Ausschreibung des Users");
+		
+		/*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
+		result.setDatecreated(new Date());
+		
+		/*
+	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+	     * auf dem Report stehen) des Reports. Die Kopfdaten sind einzeilig, daher
+	     * die Verwendung von Rows.
+	     */
+		Row headline = new Row();
+		// Erstellungsdatum der Bewerbung
+		headline.addColumn(new Column("Erstellungsdatum"));
+		// Bewerbungstext der Bewerbung
+		headline.addColumn(new Column("Bewerbungstext"));
+		// HinzufÃ¼gen der zusammengestellten Kopfdaten zu dem Report
 		result.addRow(headline);
-
+		
+		/*
+	     * Nun werden sÃ¤mtliche Bewerbungen ausgelesen und deren Erstellungsdatum und
+	     * Text sukzessive in die Tabelle eingetragen.
+	     */
 		ArrayList<Application> applications = pitchMenAdmin.getApplications();	
 		for (Application a : applications) {
 
@@ -214,11 +243,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationsrow.addColumn(new Column(a.getText()));
-
+			
+			//Hinzufügen der Row zum Result
 			result.addRow(applicationsrow);
 		}
 
-
+		//Rückgabe des fertigen Reports für alle Ausschreibungen
 		return result;
 	}
 	/* public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
