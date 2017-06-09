@@ -544,7 +544,7 @@ public interface PitchMenAdmin extends RemoteService {
 	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
 
 	/**
-	 * Bewertung einer Bewerbung. Wenn die Bewertung einen "scroe" von 1
+	 * Bewertung einer Bewerbung. Wenn die Bewertung einen "score" von 1
 	 * aufweist wird automatisch eine Beteiligung erschaffen. Dadurch ändert
 	 * sich auch automatisch der Status der Bewerbung und der Ausschreibung.
 	 * 
