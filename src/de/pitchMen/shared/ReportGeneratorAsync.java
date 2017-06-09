@@ -8,6 +8,7 @@ import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 //import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
@@ -33,7 +34,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-    // evtl für späteren Gebrauch void showAllApplicationsToOneJobPostingOfUser(int jobPostingId, AsyncCallback<AllApplicationsToOneJobPostingOfUser> callback);
+    void showAllApplicationsToOneJobPostingOfUser(int jobPostingId, AsyncCallback<AllApplicationsToOneJobPostingOfUser> callback);
     /** 
 	 * 
 	 */
@@ -49,7 +50,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-//	void showAllApplicationsOfOneUser(int id, AsyncCallback<AllApplicationsOfOneUser> callback);
+	void showAllApplicationsOfOneUser(int id, AsyncCallback<AllApplicationsOfOneUser> callback);
 	/**
 	 * 
 	 */
