@@ -5,12 +5,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.pitchMen.client.elements.MarketplaceForm.DeleteMarketplaceCallback;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
@@ -20,7 +18,8 @@ public class ProjectForm extends Formular {
 	 * titleBox und descBox sind hier labels, erst beim Erstellen oder
 	 * Bearbeiten ist titleBox eine Textbox und descBox eine TextArea
 	 */
-	Project selectedProject = null;
+	private Marketplace selectedMarketplace = null; 
+	private Project selectedProject = null;
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Projektes:");
@@ -32,10 +31,12 @@ public class ProjectForm extends Formular {
 	Label toLabel = new Label("Bis:");
 	Label toBox = new Label();
 
-	public ProjectForm(int ProjectID) {
-
+	public ProjectForm(Project project) {
+		
+		
 		super();
-
+	 
+		
 		// Vertical Panel erstellen
 		VerticalPanel labelsPanel = new VerticalPanel();
 		this.add(labelsPanel);
@@ -88,16 +89,24 @@ public class ProjectForm extends Formular {
 			addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
 			buttonsPanel.add(addJobPostingBtn);
 		}
+		
+		
 	}
 
+
+	
+
+	
 	// ---------- ClickHandler
+
+
 
 	// ---------- addProjectClickHandler
 	private class addProjectClickHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
 
-			AddProjectForm addProject = new AddProjectForm();
+			AddProjectForm addProject = new AddProjectForm(selectedProject,pitchMenTreeViewModel,true);
 
 		}
 	}
@@ -130,7 +139,7 @@ public class ProjectForm extends Formular {
 		public void onClick(ClickEvent event) {
 
 			// bei Click wird die update() Methode aufgerufen
-			AddProjectForm updateProject = new AddProjectForm();
+			AddProjectForm updateProject = new AddProjectForm(selectedProject,pitchMenTreeViewModel,false);
 
 		}
 	}
@@ -157,8 +166,8 @@ public class ProjectForm extends Formular {
 		public void onSuccess(Void result) {
 			if (p != null) {
 				setSelectedProject(null);
-				//FIXME deleteProject will einen Marketplace, und kein int
-				pitchMenTreeViewModel.deleteProject(p, p.getMarketplaceId());
+			
+				pitchMenTreeViewModel.deleteProject(p, selectedMarketplace);
 			}
 		}
 	}
@@ -188,5 +197,10 @@ public class ProjectForm extends Formular {
 					toBox.setText("");
 					
 				}
+			}
+			
+			// ---------- selectedMarketplace setter
+			public void setSelectedMarketplace(Marketplace m) {
+				this.selectedMarketplace = m; 
 			}
 }

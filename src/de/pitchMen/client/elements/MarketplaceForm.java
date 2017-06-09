@@ -21,7 +21,7 @@ public class MarketplaceForm extends Formular {
 	/* titleBox und descBox sind hier labels, erst beim Erstellen oder Bearbeiten ist titleBox 
 	 * eine Textbox und descBox eine TextArea
 	*/
-	Marketplace selectedMarketplace = null;
+	private Marketplace selectedMarketplace = null;
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Marktplatzes:");
@@ -31,7 +31,9 @@ public class MarketplaceForm extends Formular {
 
 	public MarketplaceForm(Marketplace marketplace) {
 		super();
-
+		
+		this.selectedMarketplace = marketplace; 
+		
 		//Vertical Panel erstellen
 		VerticalPanel labelsPanel = new VerticalPanel(); 
 		this.add(labelsPanel);
@@ -85,7 +87,12 @@ public class MarketplaceForm extends Formular {
 			// ---------- ClickHandler
 
 
-			// ---------- addMarketplaceClickHandler
+			public Marketplace getSelectedMarketplace() {
+		return selectedMarketplace;
+	}
+
+
+	// ---------- addMarketplaceClickHandler
 	private class addMarketplaceClickHandler implements ClickHandler{
 
 		public void onClick(ClickEvent event) {
@@ -101,7 +108,7 @@ public class MarketplaceForm extends Formular {
 			 * addMarketplaceBtn = true
 			 * updateMarketplaceBtn = false
 			*/
-			AddMarketplaceForm addMarketplace = new AddMarketplaceForm(MarketplaceForm.this.selectedMarketplace,MarketplaceForm.this.pitchMenTreeViewModel, true);
+			AddMarketplaceForm addMarketplace = new AddMarketplaceForm(getSelectedMarketplace(),MarketplaceForm.this.pitchMenTreeViewModel, true);
 
 
 		}
@@ -111,8 +118,8 @@ public class MarketplaceForm extends Formular {
 	private class addProjectClickHandler implements ClickHandler{
 
 		public void onClick(ClickEvent event) {
-
-			AddProjectForm addProject = new AddProjectForm();
+			//FIXME selectedProject steht im Konstruktor von AddProjectForm, geht hier aber nicht
+			AddProjectForm addProject = new AddProjectForm( selectedProject,pitchMenTreeViewModel,true);
 
 
 		}
@@ -139,7 +146,7 @@ public class MarketplaceForm extends Formular {
 	public void onClick(ClickEvent event) {
 
 		// bei Click wird die update() Methode aufgerufen
-		AddMarketplaceForm updateMarketplace = new AddMarketplaceForm(MarketplaceForm.this.selectedMarketplace,MarketplaceForm.this.pitchMenTreeViewModel, false);
+		AddMarketplaceForm updateMarketplace = new AddMarketplaceForm(getSelectedMarketplace(),MarketplaceForm.this.pitchMenTreeViewModel, false);
 
 	}
 }
