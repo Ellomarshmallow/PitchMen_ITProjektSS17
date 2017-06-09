@@ -183,7 +183,51 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(PartnerProfile partnerProfile)
 			throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
-			return null;
+						/*
+		     * ZunÃ¤chst legen wir uns einen leeren Report an.
+		     */	
+		AllJobPostingsMatchingPartnerProfileOfUser result = new AllJobPostingsMatchingPartnerProfileOfUser();
+		 
+		// Jeder Report hat einen Titel (Bezeichnung / Ãœberschrift).
+		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil des Benutzers");
+		 /*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
+		result.setDatecreated(new Date());
+		/*
+	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+	     * auf dem Report stehen) des Reports. Die Kopfdaten sind einzeilig, daher
+	     * die Verwendung von Rows.
+	     */
+		Row headline = new Row();
+		
+		headline.addColumn(new Column("JobPosting Titel"));
+		
+		headline.addColumn(new Column("JobPosting Beschreibung"));
+		
+		headline.addColumn(new Column("Dazugehöriges Projekt"));
+		
+		result.addRow(headline);
+		
+		ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
+
+		for(JobPosting jp : allJobPostings){
+			
+			Row jobPostingRow = new Row();
+			
+			jobPostingRow = new Row();
+			
+			jobPostingRow.addColumn(new Column(jp.getTitle()));
+			jobPostingRow.addColumn(new Column(jp.getText()));
+			//FIXME
+		//	jobPostingRow.addColumn(new Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
+			
+			
+			result.addRow(jobPostingRow);
+		}
+		return result;
+			
 		}
 		//Rückgabe des fertigen Reports 
 		return null;
