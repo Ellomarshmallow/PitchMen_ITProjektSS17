@@ -119,7 +119,7 @@ public class MarketplaceForm extends Formular {
 
 		public void onClick(ClickEvent event) {
 			//FIXME selectedProject steht im Konstruktor von AddProjectForm, geht hier aber nicht
-			AddProjectForm addProject = new AddProjectForm( selectedProject,pitchMenTreeViewModel,true);
+			AddProjectForm addProject = new AddProjectForm( null,pitchMenTreeViewModel,true);
 
 
 		}
