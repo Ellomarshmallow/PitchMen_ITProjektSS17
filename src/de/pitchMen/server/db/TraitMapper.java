@@ -379,11 +379,13 @@ public class TraitMapper {
 	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * @param partnerProfileId
-	 * @return trait
+	 * @return ArrayList<Traits>
 	 * 
 	 */
-	public Trait findTraitByPartnerProfileId(int partnerProfileId) {
+	public ArrayList<Trait> findTraitByPartnerProfileId(int partnerProfileId) {
 		Connection con = DBConnection.connection();
+
+		ArrayList<Trait> result = new ArrayList<Trait>();
 
 		try {
 			Statement stmt = con.createStatement();
@@ -394,18 +396,20 @@ public class TraitMapper {
 					+ "INNER JOIN trait ON partnerProfile.id = trait.partnerProfile_id "
 					+ "WHERE partnerProfileId = " + partnerProfileId);
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
-			 * DB-Tupel gibt.
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle trait mit dem übergebenen Wert vorhanden ist,
+			 * muss das Abfragen des ResultSet so oft erfolgen (while-Schleife),
+			 * bis alle Tupel durchlaufen wurden. Die DB-Tupel werden in
+			 * Java-Objekte transformiert und anschließend der ArrayList
+			 * hinzugefügt.
 			 */
-			if (rs.next()) {
+			while (rs.next()) {
 				Trait trait = new Trait();
 				trait.setId(rs.getInt("id"));
 				trait.setName(rs.getString("name"));
 				trait.setValue(rs.getString("value"));
 				trait.setPartnerProfileId(rs.getInt("partnerProfileId"));
-				return trait;
+				result.add(trait);
 			}
 		/**
 		* Das Aufrufen des printStackTrace bietet die Möglichkeit, die
@@ -415,7 +419,7 @@ public class TraitMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-		return null;
+		return result;
 	}
 	
 }
