@@ -24,10 +24,12 @@ import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.Column;
+import de.pitchMen.shared.report.CompositeParagraph;
 import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
+import de.pitchMen.shared.report.Report;
 import de.pitchMen.shared.report.Row;
 import de.pitchMen.shared.report.SimpleParagraph;
 import de.pitchMen.shared.report.SimpleReport;
@@ -41,10 +43,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 	private static final long serialVersionUID = 1L;
 	//private PitchMenAdminImpl administration = null;
+	/**
+	   * Ein ReportGenerator benÃ¶tigt Zugriff auf die PitchMenAdministration, da diese die
+	   * essentiellen Methoden für die Koexistenz von Datenobjekten (vgl.
+	   * bo-Package) bietet.
+	   */
 	private PitchMenAdmin pitchMenAdmin = null;
+	
+	
 	public ReportGeneratorImpl() throws IllegalArgumentException{}
-
-
+	/**
+	   * Seperate Instanzmethode, welche Client-seitig direkt nach GWT.create(Klassenname.class) aufgerufen wird, um eine Initialisierung der Instanz vorzunehmen.
+	   * 
+	   * @see #ReportGeneratorImpl()
+	   */
 	@Override
 	public void init() throws IllegalArgumentException{
 		/**	
@@ -72,18 +84,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * <code>create...</code>-Methoden diese Methode auf.
 	 * 
 	 * @param r der um das Impressum zu erweiternde Report.
-	 */
-	// AUSKOMMENTIERT WEIL FÜR TEST NOCH NICHT NOTWENDIG
-	/* protected void addImprint(Report r) {
-		    /*
-	 * Das Impressum soll wesentliche Informationen Ã¼ber die Bank enthalten.
-	 */
-	/* Bank bank = this.administration.getBank();
-
-		    /*
+	 
+	/**
+	protected void addImprint(Report r) {
+		    
+	 /** Das Impressum soll wesentliche Informationen über den Report enthalten. */
+	 
+	/** Bank bank = this.pitchMenAdmin.getMarketplaceByID(id);*/
+	 /**
 	 * Das Imressum soll mehrzeilig sein.
 	 */
-	/* CompositeParagraph imprint = new CompositeParagraph();
+	/** CompositeParagraph imprint = new CompositeParagraph();
 
 		    imprint.addSubParagraph(new SimpleParagraph(bank.getName()));
 		    imprint.addSubParagraph(new SimpleParagraph(bank.getStreet()));
@@ -93,31 +104,58 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		    // Das eigentliche HinzufÃ¼gen des Impressums zum Report.
 		    r.setImprint(imprint);
 
-		  }*/
-
-
+		  }
+*/
+	 /**
+	   * Erstellen von <code>AllJobPostings Report</code>-Objekten.
+	   * 
+	   * @param c das Ausschreibungsobjekt bzgl. dessen der Report erstellt werden soll.
+	   * @return der fertige Report
+	   */
 	@Override
 	public AllJobPostings showAllJobPostings(JobPosting jopPosting) throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
 			return null;
 		}
+		/*
+	     * ZunÃ¤chst legen wir uns einen leeren Report an.
+	     */
 		AllJobPostings result = new AllJobPostings();
 
-
+		 // Jeder Report hat einen Titel (Bezeichnung / Ãœberschrift).
 		result.setTitle("Alle Job Postings");
-
+		 /*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
 		result.setDatecreated(new Date());
 
-
+		/*
+	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+	     * auf dem Report stehen) des Reports. Die Kopfdaten sind einzeilig, daher
+	     * die Verwendung von Rows.
+	     */
 		Row headline = new Row(); //Erste Zeile im Report
 
+		// Titel der Ausschreibung
 		headline.addColumn(new Column("JobPosting Titel"));
+		
+		// Text der Ausschreibung
 		headline.addColumn(new Column("JobPosting Text"));
+		
+		// das dazugehörige Projekt der Ausschreibung
 		headline.addColumn(new Column("dazugehöriges Projekt"));
+		
+		// Deadline der Ausschreibung
 		headline.addColumn(new Column("Deadline"));
-
+		
+		// HinzufÃ¼gen der zusammengestellten Kopfdaten zu dem Report
 		result.addRow(headline);
 
+		/*
+	     * Nun werden sÃ¤mtliche Ausschreibungen ausgelesen und deren Titel, Text, Projekt und
+	     * Deadline sukzessive in die Tabelle eingetragen.
+	     */
 		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
 
 		for (JobPosting jobPosting : jobPostings) {
@@ -130,6 +168,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			result.addRow(jobPostingZeile);
 
 		}
+		//Rückgabe des fertigen Reports für alle Ausschreibungen
 		return result;
 	}
 
