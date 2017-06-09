@@ -191,6 +191,8 @@ public interface PitchMenAdminAsync {
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
 
 	void getTraitsByPartnerProfileId(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
+	
+	void getJobPostingsMatchingTraits(PartnerProfile pp, AsyncCallback<ArrayList<JobPosting>> callback);
 
 	// --------------------------- LOGIN
 

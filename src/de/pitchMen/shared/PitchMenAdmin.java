@@ -659,6 +659,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException;
+	
+	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) throws IllegalArgumentException;
 
 	// --------------------------- LOGIN
 
