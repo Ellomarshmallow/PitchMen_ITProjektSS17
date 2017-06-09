@@ -387,35 +387,60 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	
-	
+	/* Es ist noch nicht Sicher ob ich diese Klasse brauche. Kann ich erst herausfinden wenn wir testen*/
 	@Override
 	public AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	/**
+	   * Erstellen von <code>AllParticipationsOfOneUser</code>-Objekten.
+	   * 
+	   * @param Personenobjekt bzgl. dessen der Report erstellt werden soll.
+	   * @return der fertige Report
+	   */
 	@Override
 	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(Person p) throws IllegalArgumentException {
 		
 		if(this.getPitchMenAdmin() == null){
 			return null;
 		}
-		
+		/*
+	     * ZunÃ¤chst legen wir uns einen leeren Report an.
+	     */
 		AllParticipationsOfOneUser result = new AllParticipationsOfOneUser();
 		
+		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
 		result.setTitle("Report für Alle Beteiligungen eines Nutzers");
+		
+		/*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
 		result.setDatecreated(new Date());
 		
 		Row headline = new Row();
-		
+
+		/*
+	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+	     * auf dem Report stehen) des Reports. Die Kopfdaten sind einzeilig, daher
+	     * die Verwendung von Rows.
+	     */
+		// Dazugehöriges Projekt
 		headline.addColumn(new Column("Projekt"));
+		// Startdatum des Projekts
 		headline.addColumn(new Column("Startdatum"));
+		// Enddatum des Projekts
 		headline.addColumn(new Column("Enddatum"));
+		// Beschreibung des Projekts
 		headline.addColumn(new Column("Projektbeschreibung"));
 		
 		result.addRow(headline);
-		//TODO getProjectsByPerson in PitchMenAdminImpl erstellen
+		/*
+	     * Nun werden sÃ¤mtliche Projekte ausgelesen und deren Erstellungsdatum, Beschreibung, Titel und
+	     * Text sukzessive in die Tabelle eingetragen.
+	     */
 		ArrayList<Project> allProjects = pitchMenAdmin.getProjectsByPerson(p.getId());
 		for(Project project : allProjects){
 			
@@ -426,8 +451,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			projectRow.addColumn(new Column(project.getDateClosed()));
 			projectRow.addColumn(new Column(project.getDescription()));
 			
+			//Hinzufügen der Row zum Result
 			result.addRow(projectRow);
 		}
+		//Rückgabe des fertigen Reports 
 		return result;
 	}
 
