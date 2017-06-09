@@ -4,11 +4,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import de.pitchMen.shared.bo.Project;
-//MarcetplaceId und PersonId FK als getter in Person.java implementiert
 
 /**
- * Bildet Project-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
+ * Die Klasse ProjectMapper bildet Project-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
  * möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * 
+ * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
+ * Methoden (insert, search, delete, update).
+ * 
  *
  * @author Lars
  */
@@ -20,16 +23,13 @@ public class ProjectMapper {
 	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
-
 	private static ProjectMapper projectMapper = null;
 
 	/**
 	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
-
 	protected ProjectMapper() {
-
 	}
 
 	/**
@@ -40,41 +40,40 @@ public class ProjectMapper {
 	 * 
 	 * @return projectMapper
 	 */
-
 	public static ProjectMapper projectMapper() {
 		if (projectMapper == null) {
 			projectMapper = new ProjectMapper();
 		}
 		return projectMapper;
-
 	}
 
 	/**
 	 * Fügt ein Project-Objekt der Datenbank hinzu.
 	 * 
 	 * @param project
-	 * @param marketplace
-	 * @param person
-	 * 
 	 * @return project
 	 */
 	public Project insert(Project project) {
+		/**
+		 *  DB-Verbindung holen.
+		 */
 		Connection con = DBConnection.connection();
 
 		try {
+			/**
+			 * leeres SQL-Statement (JDBC) anlegen.
+			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
+			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die aktuelle id wird um eins erhöht.
+			 * Statement ausfüllen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM project");
 
 			project.setId(rs.getInt("maxid") + 1);
 			stmt = con.createStatement();
-
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Project-Tupels in die
-			 * Datenbank
+			 * SQL-Anweisung zum Einfügen des neuen Project-Tupels in die Datenbank.
 			 */
 			stmt.executeUpdate(
 					"INSERT INTO project (id, title, description, dateOpened, dateClosed, marketplace_id, person_id)"
@@ -82,7 +81,11 @@ public class ProjectMapper {
 							+ project.getDescription() + "', '" + project.getDateOpened() + "', '"
 							+ project.getDateClosed() + "', '" + project.getMarketplaceId() + "', "
 							+ project.getPersonId() + ")");
-
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -101,11 +104,18 @@ public class ProjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
+			 */
 			stmt.executeUpdate("UPDATE project SET title='" + project.getTitle() + "', description= '"
 					+ project.getDescription() + "', dateOpened= '" + project.getDateOpened() + "', dateClosed= '"
 					+ project.getDateClosed() + "' WHERE id= " + project.getId());
 		}
-
+		/**
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 */
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -122,13 +132,19 @@ public class ProjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 */
 			stmt.executeUpdate("DELETE FROM project WHERE id=" + project.getId());
 		}
-
+		/**
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 */
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -142,17 +158,18 @@ public class ProjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, description, dateOpened, dateClosed ,marketplace_id, person_id "
 							+ "FROM project WHERE id=" + id);
-
 			/**
 			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
 			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
 			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
 			 * ein DB-Tupel gibt.
 			 */
-
 			if (rs.next()) {
 				Project project = new Project();
 				project.setId(rs.getInt("id"));
@@ -162,10 +179,13 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 				return project;
 			}
-
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -185,10 +205,19 @@ public class ProjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
 							+ " FROM project ORDER BY id");
-
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
+			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
+			 * Die DB-Tupel werden in Java-Objekte transformiert und
+			 * anschließend der ArrayList hinzugefügt.
+			 */
 			while (rs.next()) {
 				Project project = new Project();
 				project.setId(rs.getInt("id"));
@@ -198,10 +227,13 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 				result.add(project);
-
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -209,8 +241,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Findet Project-Objekte anhand des übergebenen Start-Datums in der
-	 * Datenbank.
+	 * Findet Project-Objekte anhand des übergebenen Start-Datums in der Datenbank.
 	 * 
 	 * @param dateOpened
 	 * @return ArrayList<Project>
@@ -222,10 +253,19 @@ public class ProjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach dem gesuchten Datum, in der Datenbank, sortiert nach der Id.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
 							+ " FROM project WHERE dateOpened= '" + dateOpened + "' ORDER BY id");
-
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
+			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
+			 * Die DB-Tupel werden in Java-Objekte transformiert und
+			 * anschließend der ArrayList hinzugefügt.
+			 */
 			while (rs.next()) {
 				Project project = new Project();
 				project.setId(rs.getInt("id"));
@@ -235,10 +275,13 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 				result.add(project);
-
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -259,10 +302,19 @@ public class ProjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach dem gesuchten Datum, in der Datenbank, sortiert nach der Id.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
 							+ " FROM project WHERE dateClosed= '" + dateClosed + "' ORDER BY id");
-
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
+			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
+			 * Die DB-Tupel werden in Java-Objekte transformiert und
+			 * anschließend der ArrayList hinzugefügt.
+			 */
 			while (rs.next()) {
 				Project project = new Project();
 				project.setId(rs.getInt("id"));
@@ -272,10 +324,13 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 				result.add(project);
-
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -295,10 +350,19 @@ public class ProjectMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach dem gesuchten Titel, in der Datenbank, sortiert nach der Id.
+			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, description, dateOpened, dateClosed, marketplace_id, person_id"
 							+ " FROM project WHERE title= '" + title + "' ORDER BY id");
-
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
+			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
+			 * Die DB-Tupel werden in Java-Objekte transformiert und
+			 * anschließend der ArrayList hinzugefügt.
+			 */
 			while (rs.next()) {
 				Project project = new Project();
 				project.setId(rs.getInt("id"));
@@ -308,10 +372,13 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 				result.add(project);
-
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -319,14 +386,18 @@ public class ProjectMapper {
 	}
 	
 	/**
-	 * Die Methode findParticipationByPersonId sucht anhand der übergebenen personId in der Datenbank
-	 * die dazugehörigen Participations (Beteiligungen)-Tupel ab.
+	 * Die Methode findProjectsByPersonId sucht anhand der übergebenen personId in der Datenbank
+	 * die dazugehörigen Project-Tupel ab.
 	 * Die Methode dient zur Aufgabenbewältung aus Aufgabe Nummer 7. 
-	 * 
+	 *
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
+	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
+	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 *  
 	 * @param personId
 	 * @return ArrayList<Project>
 	 */
-	
 	public ArrayList<Project> findProjectsByPersonId(int personId) {
 		Connection con = DBConnection.connection();
 
@@ -334,15 +405,23 @@ public class ProjectMapper {
 		/**
 		 * Das SQL-Statement sucht anhand des übergebenen Parameters die
 		 * Beteiligungen ab und grouped sie anhand der ProjectId sodass jeder
-		 * EIntrag nur einmal vorkommt
-		 * 
+		 * Eintrag nur einmal vorkommt.
 		 */
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten PersonenId, in der Datenbank.
+			 */
 			ResultSet rs = stmt.executeQuery("SELECT * FROM project " + "INNER JOIN person_has_participation"
 					+ "ON (person_has_participation.person_id = project.person_id)" + "WHERE project.person_id ="
 					+ personId + " GROUP BY project.id");
-
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
+			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
+			 * Die DB-Tupel werden in Java-Objekte transformiert und
+			 * anschließend der ArrayList hinzugefügt.
+			 */
 			while (rs.next()) {
 				Project project = new Project();
 				project.setId(rs.getInt("id"));
@@ -352,10 +431,13 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 				result.add(project);
-
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -363,15 +445,19 @@ public class ProjectMapper {
 	}
 	
 	/**
-	 * Die Methode findProjectsByMarketplaceId sucht alle marketPlace-Tupel
+	 * Die Methode findProjectsByMarketplaceId sucht alle marketplace-Tupel
 	 * zu der übergebenen marketplaceId in der Datenbank ab und setzt diese in eine ArrayList.
 	 * Die Methode ist zur Umsetzung der Anforderung, ein Marketplace zu löschen, aber davor dazugehörige 
-	 * Tabellen-Beziehungen ebenfalls zu löschen..
+	 * Tabellen-Beziehungen ebenfalls zu löschen.
 	 * 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
+	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
+	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 *   
 	 * @param marketplaceId
 	 * @return ArrayList<Project>
 	 */
-	
 	public ArrayList<Project> findProjectsByMarketplaceId(int marketplaceId) {
 		Connection con = DBConnection.connection();
 
@@ -379,15 +465,23 @@ public class ProjectMapper {
 		/**
 		 * Das SQL-Statement sucht anhand des übergebenen Parameters die
 		 * Projekte ab.
-		 * 
 		 */
 		try {
 			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten marketplaceId, in der Datenbank.
+			 */
 			ResultSet rs = stmt.executeQuery("SELECT * FROM project"
 					+ "INNER JOIN marketplace"
 					+ "ON marketplace.id = project.marketplace_id"
 					+ "WHERE marketplace.id ="+ marketplaceId);
-
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
+			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
+			 * Die DB-Tupel werden in Java-Objekte transformiert und
+			 * anschließend der ArrayList hinzugefügt.
+			 */
 			while (rs.next()) {
 				Project project = new Project();
 				project.setId(rs.getInt("id"));
@@ -397,10 +491,13 @@ public class ProjectMapper {
 				project.setDateClosed(rs.getDate("dateClosed"));
 				project.setMarketplaceId(rs.getInt("marketplace_id"));
 				project.setPersonId(rs.getInt("person_id"));
-
 				result.add(project);
-
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
