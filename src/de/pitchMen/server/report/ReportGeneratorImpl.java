@@ -172,13 +172,19 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return result;
 	}
 
-
+	 /**
+	   * Erstellen von <code>AllJobPostingsMatchinPartnerProfileofUser Report</code>-Objekten.
+	   * 
+	   * @param c das Partnerprofilobjekt bzgl. dessen der Report erstellt werden soll.
+	   * @return der fertige Report
+	   */
 	@Override
 	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(PartnerProfile partnerProfile)
 			throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
 			return null;
 		}
+		//Rückgabe des fertigen Reports für alle Ausschreibungen
 		return null;
 		// TODO Auto-generated method stub
 	}
