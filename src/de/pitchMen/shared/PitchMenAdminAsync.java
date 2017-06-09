@@ -164,8 +164,6 @@ public interface PitchMenAdminAsync {
 
 	void rateApplication(float score, String statement, int applicationId, int personId, int projectId, AsyncCallback<Void> callback);
 	
-	void setRating(Rating rating, AsyncCallback<Void> callback);
-
 	// ---------- TEAM
 
 	void addTeam(AsyncCallback<Team> callback);

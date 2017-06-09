@@ -189,8 +189,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException;
-	
-	//TODO Kommentar
+
+	// TODO Kommentar
 	public String changeJobPostingStatus(JobPosting jobPosting, String status) throws IllegalArgumentException;
 
 	// ---------------------------------------- MARKETPLACE
@@ -550,9 +550,6 @@ public interface PitchMenAdmin extends RemoteService {
 	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
 
 	void rateApplication(float score, String statement, int applicationId, int personId, int projectId);
-
-	// TODO Kommentar schreiben
-	public void setRating(Rating rating) throws IllegalArgumentException;
 
 	// ---------------------------------------- TEAM
 
