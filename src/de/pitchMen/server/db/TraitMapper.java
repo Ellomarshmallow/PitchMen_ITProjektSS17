@@ -111,7 +111,6 @@ public class TraitMapper {
 		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-		 * 
 		 */
 		catch (SQLException e2) {
 			e2.printStackTrace();
@@ -137,7 +136,6 @@ public class TraitMapper {
 		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-		 * 
 		 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -177,7 +175,6 @@ public class TraitMapper {
 		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-		 * 
 		 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -333,7 +330,7 @@ public class TraitMapper {
 	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
 	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 * 
-	 * @param person_id
+	 * @param id
 	 * @return trait
 	 */
 	public Trait findPartnerProfielByPersonId(int id) {
