@@ -543,9 +543,20 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
 
-	// TODO Kommentar schreiben
+	/**
+	 * // TODO Kommentar schreiben
+	 * 
+	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
+	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
+	 * Rating-Objekt.
+	 * 
+	 * @param score
+	 * @param statement
+	 * 
+	 */
 	public void rateApplication(float score, String statement, int applicationId) throws IllegalArgumentException;
-	
+
+	// TODO Kommentar schreiben
 	public void setRating(Rating rating) throws IllegalArgumentException;
 
 	// ---------------------------------------- TEAM

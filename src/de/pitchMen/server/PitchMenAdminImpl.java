@@ -548,7 +548,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		if (score == 1) {
 			Participation participation = new Participation();
-			participation.setPersonId(personId);
+			Application application = this.getApplicationByID(applicationId);
+			JobPosting jobPosting = this.getPersonByID(id);
+			participation.setPersonId(application.ge);
 			participation.setProjectId(projectId);
 		}
 
@@ -560,15 +562,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	/**
-	 * }
-	 * 
-	 * 
-	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
-	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
-	 * Rating-Objekt.
-	 * 
-	 * @param score
-	 * @param statement
 	 * 
 	 *            public void rate(float score, String statement, int
 	 *            applicationId) { Rating rate = new Rating(score, statement);
