@@ -18,6 +18,7 @@ import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
+import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 //import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
@@ -184,9 +185,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		if (pitchMenAdmin == null) {
 			return null;
 		}
-		//Rückgabe des fertigen Reports für alle Ausschreibungen
+		//Rückgabe des fertigen Reports 
 		return null;
-		// TODO Auto-generated method stub
+		// TODO Methode noch zu erledigen!
 	}
 	
 	
@@ -210,7 +211,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
 		
 		// Jeder Report hat einen Titel (Bezeichnung / Ãœberschrift).
-		result.setTitle("Alle Bewerbungen auf eine Ausschreibung des Users");
+		result.setTitle("Alle Bewerbungen auf Ausschreibungen des Users");
 		
 		/*
 	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
@@ -248,44 +249,72 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			result.addRow(applicationsrow);
 		}
 
-		//Rückgabe des fertigen Reports für alle Ausschreibungen
+		//Rückgabe des fertigen Reports
 		return result;
 	}
-	/* public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
+	
+	
+	 /**
+	   * Erstellen von <code>AllApplicationsToOneJobPostingOfUser Report</code>-Objekten.
+	   * 
+	   * @param jobPostingId der ForeignKey anhand dessenn der Report erstellt werden soll.
+	   * @return der fertige Report
+	   */
+	 public AllApplicationsToOneJobPostingOfUser showAllApplicationsToOneJobPostingOfUser(int jobPostingId) throws IllegalArgumentException{
 		if (pitchMenAdmin == null) {
 			return null;
 		}
 		JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(jobPostingId);
-
+		/*
+	     * ZunÃ¤chst legen wir uns einen leeren Report an.
+	     */
 		AllApplicationsToOneJobPostingOfUser result = new AllApplicationsToOneJobPostingOfUser();
-
+		
+		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) in welchem der Titel der Ausschreibung
+		sowie die ID der Ausschreibung festehalten werden.*/
 		result.setTitle("Alle Bewerbungen auf die Ausschreibung " + jobPosting.getTitle() + "mit der ID: " + jobPosting.getId());
-
+		
+		/*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
 		result.setDatecreated(new Date());
 
 		Row headline = new Row();
-
+		/*
+	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+	     * auf dem Report stehen) des Reports. Die Kopfdaten sind einzeilig, daher
+	     * die Verwendung von Rows.
+	     */
+		// Erstellungsdatum der Bewerbung
 		headline.addColumn(new Column("Erstellungsdatum"));
+		// Text der Bewerbung
 		headline.addColumn(new Column("Bewerbungstext"));
+		// Status der Bewerbung
+		headline.addColumn(new Column("Status der Bewerbung"));
 		result.addRow(headline);
 		//TODO getApplicationsByJobPostingId in PitchmenAdmin implementieren
 		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByJobPostingId(jobPostingId);
-
+		/*
+	     * Nun werden sÃ¤mtliche Bewerbungen ausgelesen und deren Erstellungsdatum und
+	     * Text sukzessive in die Tabelle eingetragen.
+	     */
 		for(Application a : applications){
 
 			Row applicationRow = new Row();
 
 			applicationRow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationRow.addColumn(new Column(a.getText()));
+			applicationRow.addColumn(new Column(a.getStatus()));
 
 
-
+			//Hinzufügen der Row zum Result
 			result.addRow(applicationRow);
 		}
-
+		//Rückgabe des fertigen Reports 
 		return result;
 	};
-*/
+
 
 
 	@Override
@@ -330,14 +359,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 	
 	
-	/**
-	 * eventuell unnötig
+	
 	@Override
 	public AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	*/
+
 	
 	@Override
 	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(Person p) throws IllegalArgumentException {
