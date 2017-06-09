@@ -7,7 +7,7 @@ import de.pitchMen.shared.bo.Person;
 
 /**
  * Die Klasse PersonMapper bildet Person-Objekte auf eine relationale Datenbank ab. 
- * Ebenfalls ist es  * möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
