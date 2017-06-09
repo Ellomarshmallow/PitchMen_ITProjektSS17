@@ -23,8 +23,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PitchMenAdminImpl() throws IllegalArgumentException {
 	}
 
-	private Rating rating = null;
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -574,11 +572,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 			this.participationMapper.insert(participation);
 		}
 
-	}
-
-	@Override
-	public void setRating(Rating rating) throws IllegalArgumentException {
-		this.rating = rating;
 	}
 
 	// --------------------------- TEAM
