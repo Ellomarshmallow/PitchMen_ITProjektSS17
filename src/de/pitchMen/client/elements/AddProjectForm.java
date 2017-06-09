@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.Marketplace;
@@ -15,20 +16,25 @@ import de.pitchMen.shared.bo.Project;
 
 public class AddProjectForm extends Formular{
 
-	private int mpID;
+	Project selectedProject = null;
+	PitchMenTreeViewModel pitchMenTreeViewModel = null;
+	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Projektes:");
-	TextBox titleBox = new TextBox();		
+	Label titleBox = new Label();
 	Label descLabel = new Label("Beschreibung des Projektes:");
-	TextBox descBox = new TextBox();
-	Label dateOpenedLabel = new Label("Startdatum des Projektes:");
-	DateBox dateOpenedBox = new DateBox();		
-	Label dateClosedLabel = new Label("Enddatum des Projektes:");
-	DateBox dateClosedBox = new DateBox();
+	Label descBox = new Label();
+	Label fromLabel = new Label("Von:");
+	DatePicker fromBox = new DatePicker();
+	Label toLabel = new Label("Bis:");
+	DatePicker toBox = new DatePicker();
+	boolean addProject = false;
 
-	protected void onLoad(int marketplaceID){
+	AddProjectForm(Project selectedProject,PitchMenTreeViewModel pitchMenTreeViewModel,boolean addProject){
 
-		this.mpID = marketplaceID; 
-
+		this.selectedProject = selectedProject;
+		this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
+		this.addProject = addProject; 
+		
 		Button cancelButton = new Button("Abbrechen" + new ClickHandler(){
 			public void onClick(ClickEvent event){
 				/* Wenn man auf den Cancel Button drückt, wird man auf den angewählten Projektmarktplatz
