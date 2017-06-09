@@ -18,7 +18,7 @@ import de.pitchMen.shared.bo.Marketplace;
 public class AddMarketplaceForm extends Formular {
 	
 	PitchMenTreeViewModel pitchMenTreeViewModel = null; 
-	Marketplace selectedMarketplace = null;
+	private Marketplace selectedMarketplace = null;
 	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Marktplatzes:");
 	TextBox titleBox = new TextBox();
@@ -56,7 +56,7 @@ public class AddMarketplaceForm extends Formular {
 				 * Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
 				 * Projektmarktplatz zurückgeführt.
 				 */
-				MarketplaceForm mpf = new MarketplaceForm(AddMarketplaceForm.this.selectedMarketplace);
+				MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
 				
 			}
 		});
@@ -74,11 +74,11 @@ public class AddMarketplaceForm extends Formular {
 						// bei Click wird die unten implementierte Methode save()
 						// aufgerufen.
 						save();
-						MarketplaceForm mpf = new MarketplaceForm(AddMarketplaceForm.this.selectedMarketplace);
+						MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
 					}
 					else{
 						update();
-						MarketplaceForm mpf = new MarketplaceForm(AddMarketplaceForm.this.selectedMarketplace);
+						MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
 					}
 
 				}
@@ -88,7 +88,11 @@ public class AddMarketplaceForm extends Formular {
 			buttonsPanel.add(saveButton);
 	}
 
-		// ---------- speichern
+		public Marketplace getSelectedMarketplace() {
+		return this.selectedMarketplace ;
+	}
+
+	// ---------- speichern
 	public void save() {
 		//FIXME companyID und TeamID
 		super.getPitchMenAdmin().addMarketplace(titleBox.getText(), descBox.getText(),
@@ -132,12 +136,12 @@ public class AddMarketplaceForm extends Formular {
 	
 
 	 public void onFailure(Throwable caught) {
-	 Window.alert("Das Löschen des Projektmarktplatzes ist fehlgeschlagen!");
+	 Window.alert("Das Bearbeiten des Projektmarktplatzes ist fehlgeschlagen!");
 	
 	 }
 	
 	 public void onSuccess(Void result) {
-		 pitchMenTreeViewModel.updateMarketplace(AddMarketplaceForm.this.selectedMarketplace);
+		 pitchMenTreeViewModel.updateMarketplace(selectedMarketplace);
 	 }
 	 }
 
