@@ -221,16 +221,17 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		 *  mitgeteilt.
 		 */
 		this.selectedMarketplace = selectedMarketplace;
-		this.marketplaceForm.setSelected(selectedMarketplace);
+		this.marketplaceForm.setSelectedMarketplace(selectedMarketplace);
+		this.projectForm.setSelectedMarketplace(selectedMarketplace);
 		
 		/*
 		 * Gleichzeitig werden die evt. noch vorhandenen Projekte
 		 * und Ausschreibungen, die zuvor angezeigt wurden, entfernt.
 		 */
 		this.selectedProject = null;
-		this.projectForm.setSelected(null);
+		this.projectForm.setSelectedProject(null);
 		this.selectedJobPosting = null;
-		this.jobPostingForm.setSelected(null);	
+		this.jobPostingForm.setSelectedJobPosting(null);	
 		
 	}
 
@@ -262,7 +263,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		 * Updates zur Folge:
 		 */
 		this.selectedProject = selectedProject;
-		this.projectForm.setSelected(selectedProject);
+		this.projectForm.setSelectedProject(selectedProject);
 		
 		/*
 		 * Ausschreibungen liegen hierarchisch unter Projekten,
@@ -270,7 +271,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		 * selektiert.
 		 */
 		this.selectedJobPosting = null;
-		this.jobPostingForm.setSelected(null);
+		this.jobPostingForm.setSelectedJobPosting(null);
 		
 		/*
 		 * Projektmarktplätze liegen hierarchisch über Projekten.
@@ -294,7 +295,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 				@Override
 				public void onSuccess(Marketplace result) {
 					selectedMarketplace = result;
-					marketplaceForm.setSelected(result);
+					marketplaceForm.setSelectedMarketplace(result);
 				}
 				
 			});
@@ -328,7 +329,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 		 * selektierte Ausschreibungs-Objekt.
 		 */
 		this.selectedJobPosting = selectedJobPosting;
-		this.jobPostingForm.setSelected(selectedJobPosting);
+		this.jobPostingForm.setSelectedJobPosting(selectedJobPosting);
 		
 		/*
 		 * Gleichzeitig muss das darüberliegende Projekt 
@@ -344,7 +345,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 			@Override
 			public void onSuccess(Project result) {
 				selectedProject = result;
-				projectForm.setSelected(result);
+				projectForm.setSelectedProject(result);
 				
 				/*
 				 * Mitunter muss auch der Marktplatz des Projekts
@@ -360,7 +361,7 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 					@Override
 					public void onSuccess(Marketplace result) {
 						selectedMarketplace = result;
-						marketplaceForm.setSelected(result);
+						marketplaceForm.setSelectedMarketplace(result);
 					}
 					
 				});
