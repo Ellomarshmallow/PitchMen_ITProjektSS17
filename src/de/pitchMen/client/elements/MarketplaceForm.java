@@ -114,7 +114,6 @@ public class MarketplaceForm extends Formular {
 
 			AddProjectForm addProject = new AddProjectForm();
 
-			addProject.onLoad(mpID);
 
 		}
 	}
@@ -140,7 +139,7 @@ public class MarketplaceForm extends Formular {
 	public void onClick(ClickEvent event) {
 
 		// bei Click wird die update() Methode aufgerufen
-		AddMarketplaceForm addMarketplace = new AddMarketplaceForm(MarketplaceForm.this.selectedMarketplace,MarketplaceForm.this.pitchMenTreeViewModel, false);
+		AddMarketplaceForm updateMarketplace = new AddMarketplaceForm(MarketplaceForm.this.selectedMarketplace,MarketplaceForm.this.pitchMenTreeViewModel, false);
 
 	}
 }
