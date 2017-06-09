@@ -65,12 +65,24 @@ public class ReportNavigation extends VerticalPanel {
 	 */
 	private class ReportClickHandler implements ClickHandler {
 		
+		/**
+		 * Die Report-Nummer wird als Instanzvariable deklariert
+		 * und im Konstruktor gesetzt. Somit ist über den 
+		 * später verwendeten Switch-Case eine einfache Handhabung
+		 * der verschiedenen Fälle möglich.
+		 */
 		private int reportNo = 0;
 		
 		public ReportClickHandler(int i) {
 			this.reportNo = i;
 		}
 
+		/**
+		 * Die onClick-Methode ist hier eine verzweigende
+		 * Weitergabe-Methode, die je nach gewähltem 
+		 * Report-Szenario die entsprechende Methode
+		 * ansteuert.
+		 */
 		@Override
 		public void onClick(ClickEvent event) {
 			HTML reportContent = null;
