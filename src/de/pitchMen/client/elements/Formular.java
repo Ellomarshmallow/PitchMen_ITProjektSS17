@@ -1,19 +1,13 @@
 package de.pitchMen.client.elements;
 
-import java.lang.Object;
-import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.Label;
 
 public class Formular extends VerticalPanel {
 
@@ -68,6 +62,7 @@ public class Formular extends VerticalPanel {
 	}
 
 	public Formular(){
+		//FIXME Panels überarbeiten ! 
 		/*
 		 * Verbindung zur PitchMenAdministration
 		 */
