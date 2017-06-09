@@ -1,11 +1,16 @@
 package de.pitchMen.client.elements;
 
 import com.google.gwt.event.dom.client.ClickHandler;
+
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
@@ -13,121 +18,136 @@ import de.pitchMen.shared.bo.Project;
 //TODO noch Buttons (löschen bearbeiten) hinzufügen falls hasPermission() is true, bei false nur + Btn
 public class MarketplaceForm extends Formular {
 
-	private int mpID;
+	Marketplace selectedMarketplace = null;
+	PitchMenTreeViewModel pitchMenTreeViewModel = null;
+	Label idLabel = new Label();
+	Label titleLabel = new Label("Name des Marktplatzes:");
+	Label titleBox = new Label();
+	Label descLabel = new Label("Beschreibung des Marktplatzes:");
+	Label descBox = new Label();
 
-	public MarketplaceForm(int marketplaceID) {
+	public MarketplaceForm(Marketplace marketplace) {
 		super();
 
-		this.mpID = marketplaceID;
+		//TODO labels noch anzeigen lassen
 
-		super.getPitchMenAdmin().getMarketplaceByID(this.mpID, new MarketplaceFormCallback(this));
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		this.add(buttonsPanel);
 
+		// ---------- Neuer Projektmarktplatz Button:
+		Button addMarketplaceBtn = new Button("+ Neuer Projektmarktplatz");
+		addMarketplaceBtn.addClickHandler(new addMarketplaceClickHandler());
+		buttonsPanel.add(addMarketplaceBtn);
+
+
+		// ---------- Neues Projekt Button:
+		Button addProjectBtn = new Button("+ Neues Projekt hinzufügen");
+		addProjectBtn.addClickHandler(new addProjectClickHandler());
+		buttonsPanel.add(addProjectBtn);
+
+		/*
+		 * Wenn der aktuelle User gleich dem Ersteller ist, dann hat
+		 * dieser die Buttons Löschen und Bearbeiten zur verfügung.
+		 */
+		if (hasPermission(this.selectedMarketplace)) {		
+
+
+			// ---------- Projektmarktplatz löschen
+			Button deleteMarketplaceBtn = new Button("- Projektmarktplatz löschen"); 
+			deleteMarketplaceBtn.addClickHandler(new deleteMarketplaceClickHandler());
+			buttonsPanel.add(deleteMarketplaceBtn);
+
+
+			// ---------- Projektmarktplatz bearbeiten
+
+			Button updateMarketplaceBtn = new Button("Bearbeiten");
+			updateMarketplaceBtn.addClickHandler(new updateMarketplaceClickHandler());
+			buttonsPanel.add(updateMarketplaceBtn);
+
+
+		}
 	}
 
-	class MarketplaceFormCallback implements AsyncCallback<Marketplace> {
 
-		private MarketplaceForm marketplaceform = null;
+			// ---------- ClickHandler
 
-		public MarketplaceFormCallback(MarketplaceForm marketplaceForm) {
-			this.marketplaceform = marketplaceForm;
+
+			// ---------- addMarketplaceClickHandler
+	private class addMarketplaceClickHandler implements ClickHandler{
+
+		public void onClick(ClickEvent event) {
+
+			/* bei Click wird ein Objekt vom Typ AddMarketplaceForm erzeugt und
+			 * der aktuell gewählte Marktplatz, den pitchMenTreeViewModel und 
+			 * einen booleanschen Wert übergeben. Dieser Wert sagt aus, ob der 
+			 * addMarketplaceBtn oder der updateMarketplaceBtn gedrückt wurde,
+			 * da beide ClickHandler ein Objekt vom Typ AddMarketplaceForm erzeugen.
+			 * Der booleansche Wert wird benötigt um festzulegen ob bei dem Click auf
+			 * den saveButton in AddMarketplaceForm.java die save() oder die update() Methode
+			 * verwendet wird.			 * 
+			 * addMarketplaceBtn = true
+			 * updateMarketplaceBtn = false
+			*/
+			AddMarketplaceForm addMarketplace = new AddMarketplaceForm(MarketplaceForm.this.selectedMarketplace,MarketplaceForm.this.pitchMenTreeViewModel, true);
+
+
 		}
+	}
 
-		public void onFailure(Throwable caught) {
+			//---------- addProjectClickHandler
+	private class addProjectClickHandler implements ClickHandler{
 
-			this.marketplaceform.add(new HTML("Fehler bei RPC Aufruf:" + caught.getMessage()));
+		public void onClick(ClickEvent event) {
+
+			AddProjectForm addProject = new AddProjectForm();
+
+			addProject.onLoad(mpID);
 
 		}
+	}
 
-		public void onSuccess(Marketplace marketplace) {
-			if (marketplace != null) {
+			//---------- deleteMarketplaceClickHandler
+	private class deleteMarketplaceClickHandler implements ClickHandler{
+	
+		public void onClick(ClickEvent event) {
 
-				this.marketplaceform.add(new HTML(marketplace.getTitle()));
-				this.marketplaceform.add(new HTML(marketplace.getDescription()));
+			// bei Click wird die Methode delete()
+			// aufgerufen
 
-				// ---------- Neuer Projektmarktplatz Button:
-				Button addMarketplaceBtn = new Button("+ Neuer Projektmarktplatz", new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-
-						// bei Click wird die Methode onLoad() aus der Klasse
-						// AddMarketplaceForm aufgerufen
-						AddMarketplaceForm addMarketplace = new AddMarketplaceForm();
-
-						addMarketplace.onLoad();
-
-					}
-				});
-
-				this.marketplaceform.add(addMarketplaceBtn);
-
-				// ---------- Neues Projekt Button:
-
-				Button addProjectBtn = new Button("+ Neues Projekt hinzufügen", new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-
-						AddProjectForm addProject = new AddProjectForm();
-
-						addProject.onLoad(mpID);
-
-					}
-				});
-
-				this.marketplaceform.add(addProjectBtn);
-
-				/*
-				 * Wenn der aktuelle User gleich dem Ersteller ist, dann hat
-				 * dieser die Buttons Löschen und Bearbeiten zur verfügung.
-				 */
-				if (hasPermission()) {
-
-					// ---------- Projektmarktplatz löschen
-
-					Button deleteMarketplaceBtn = new Button("- Ausgewählter Projektmarktplatz löschen",
-							new ClickHandler() {
-
-						public void onClick(ClickEvent event) {
-
-							// bei Click wird die Methode delete()
-							// aufgerufen
-
-							if (Window.confirm("Sind Sie sich sicher, dass Sie das löschen wollen?")) {
-								delete();
-
-							}
-
-						}
-					});
-					this.marketplaceform.add(deleteMarketplaceBtn);
-
-					// ---------- Projektmarktplatz bearbeiten
-
-					Button updateMarketplaceBtn = new Button("Bearbeiten", new ClickHandler() {
-
-						public void onClick(ClickEvent event) {
-
-							// bei Click wird die Methode update() aufgerufen
-							update();
-
-						}
-					});
-					this.marketplaceform.add(updateMarketplaceBtn);
-				}
+			if (Window.confirm("Sind Sie sich sicher, dass Sie das löschen wollen?")) {
+				delete();
 
 			}
+
 		}
 	}
+	
+
+			// ---------- updateMarketplaceClickHandler
+	private class updateMarketplaceClickHandler implements ClickHandler{
+	public void onClick(ClickEvent event) {
+
+		// bei Click wird die Methode update() aufgerufen
+		AddMarketplaceForm addMarketplace = new AddMarketplaceForm(MarketplaceForm.this.selectedMarketplace,MarketplaceForm.this.pitchMenTreeViewModel, false);
+
+	}
+}
+
+	
+	
+	// ---------- delete Methode
 
 	public void delete(){
-		Marketplace m1 = super.getPitchMenAdmin().getMarketplaceByID(mpID, new GetMarketplaceCallback());
+		
 
-		super.getPitchMenAdmin().deleteMarketplace(m1, new DeleteAsyncCallback());
+		super.getPitchMenAdmin().deleteMarketplace(selectedMarketplace, new DeleteMarketplaceCallback(selectedMarketplace));
 	}
 
-	class DeleteAsyncCallback implements AsyncCallback<Void> {
-
-		public DeleteAsyncCallback() {
-
+	class DeleteMarketplaceCallback implements AsyncCallback<Void> {
+		
+		Marketplace m = null; 
+		public DeleteMarketplaceCallback(Marketplace m){
+			this.m = m; 
 		}
 
 		public void onFailure(Throwable caught) {
@@ -136,31 +156,36 @@ public class MarketplaceForm extends Formular {
 		}
 
 		public void onSuccess(Void result) {
+			if(m!= null) {
+				setSelectedMarketplace(null); 
+				pitchMenTreeViewModel.deleteMarketplace(m); 
+			}
 		}
 	}
+	
 
-	public void update() {
-		Marketplace m1 = super.getPitchMenAdmin().getMarketplaceByID(mpID, new GetMarketplaceCallback(this);
-
-		super.getPitchMenAdmin().updateMarketplace(m1, callback);
-	}
-
-	//Folgendes vllt unnötig,
-	//	class GetMarketplaceCallback implements AsyncCallback<Marketplace> {
-	//		
-	//		private MarketplaceForm marketplace;
-	//
-	//		public GetMarketplaceCallback(MarketplaceForm marketplace) {
-	//			this.marketplace = marketplace; 
-	//		}
-	//
-	//		public void onFailure(Throwable caught) {
-	//			Window.alert("Das Löschen des Projektmarktplatzes ist fehlgeschlagen!");
-	//
-	//		}
-	//
-	//		public void onSuccess(Marketplace marketplace) {
-	//		}
-	//	}
+	
+	
+	// ----------pitchMenTreeViewModelsetter
+		public void setPitchMenTreeViewModel(PitchMenTreeViewModel pitchMenTreeViewModel) {
+			this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
+		}
+		
+		
+	// ---------- selectedMarketplace setter
+		public void setSelectedMarketplace(Marketplace m) {
+			if (m != null) {
+				this.selectedMarketplace = m;
+				titleBox.setText(selectedMarketplace.getTitle());
+				descBox.setText(selectedMarketplace.getDescription());				
+				idLabel.setText(Integer.toString(selectedMarketplace.getId()));
+			} 
+			else {
+				idLabel.setText("");
+				titleBox.setText("");
+				descBox.setText("");
+			}
+		}
+		
 
 }
