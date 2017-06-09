@@ -131,13 +131,14 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// FIXME HELP
 	public String changeApplicationStatus(Application application, String status) throws IllegalArgumentException {
 		Application appli = this.getApplicationByID(application.getId());
-		PartnerProfile pp = appli.getPartnerProfileId();
+		// PartnerProfile pp = appli.getPartnerProfileId();
 
-		if (participation != null) {
-			appli.setStatus("angenommen"); // laufend, abgeleht
-			String newstatus = appli.getStatus();
-			return newstatus;
-		}
+		/**
+		 * if (participation != null) { appli.setStatus("angenommen"); //
+		 * laufend, abgeleht String newstatus = appli.getStatus(); return
+		 * newstatus; }
+		 * 
+		 */
 		appli.setStatus(status);
 		return status;
 	}
@@ -569,14 +570,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		Rating rating = new Rating(score, statement);
 		this.setRating(rating);
 
-		if (score == 1) {
-			Participation participation = new Participation();
-			Application application = this.getApplicationByID(applicationId);
-			JobPosting jobPosting = this.getPersonByID(id);
-			participation.setPersonId(application.ge);
-			participation.setProjectId(projectId);
-		}
-
+		/**
+		 * if (score == 1) { Participation participation = new Participation();
+		 * Application application = this.getApplicationByID(applicationId);
+		 * JobPosting jobPosting = this.getPersonByID(id);
+		 * participation.setPersonId(application.ge);
+		 * participation.setProjectId(projectId); }
+		 */
 	}
 
 	@Override
