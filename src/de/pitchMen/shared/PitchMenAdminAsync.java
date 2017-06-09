@@ -19,8 +19,8 @@ public interface PitchMenAdminAsync {
 
 	// ---------- APPLICATION
 
-	void addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId, int partnerProfileId,
-			AsyncCallback<Application> callback);
+	void addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
+			int partnerProfileId, AsyncCallback<Application> callback);
 
 	void updateApplication(Application application, AsyncCallback<Void> callback);
 
@@ -33,8 +33,6 @@ public interface PitchMenAdminAsync {
 	void getApplicationsByPerson(int personId, AsyncCallback<ArrayList<Application>> callback);
 
 	void getApplicationsByJobPostingId(int jobPostingId, AsyncCallback<ArrayList<Application>> callback);
-	
-	void changeApplicationStatus(Application application, String status, AsyncCallback<String> callback);
 
 	// ---------- COMPANY
 
@@ -62,8 +60,6 @@ public interface PitchMenAdminAsync {
 	void getJobPostingByID(int id, AsyncCallback<JobPosting> callback);
 
 	void getJobPostingsByProjectId(int projectId, AsyncCallback<ArrayList<JobPosting>> callback);
-	
-	void changeJobPostingStatus(JobPosting jobPosting, String status, AsyncCallback<String> callback);
 
 	// ---------- MARKETPLACE
 
@@ -162,9 +158,8 @@ public interface PitchMenAdminAsync {
 
 	void getRatingByApplicationId(int applicationId, AsyncCallback<Rating> callback);
 
-	void rateApplication(float score, String statement, int applicationId, int personId, int projectId, AsyncCallback<Void> callback);
-	
-	void setRating(Rating rating, AsyncCallback<Void> callback);
+	void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
+			int jobPostingId, AsyncCallback<Void> callback);
 
 	// ---------- TEAM
 

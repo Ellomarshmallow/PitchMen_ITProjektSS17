@@ -23,8 +23,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PitchMenAdminImpl() throws IllegalArgumentException {
 	}
 
-	private Rating rating = null;
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -127,23 +125,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.applicationMapper.findApplicationsByJobPostingId(jobPostingId);
 	}
 
-	@Override
-	// FIXME HELP
-	public String changeApplicationStatus(Application application, String status) throws IllegalArgumentException {
-		Application appli = this.getApplicationByID(application.getId());
-		// PartnerProfile pp = appli.getPartnerProfileId();
-
-		
-//		  if (participation != null) { appli.setStatus("angenommen"); //
-//		  laufend, abgeleht String newstatus = appli.getStatus(); return
-//		  newstatus; }
-		  
-		 
-		appli.setStatus(status);
-		return status;
-	}
-	// laufend, abgebrochen, besetzt
-
 	// --------------------------- COMPANY
 
 	@Override
@@ -243,13 +224,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException {
 		return this.jobPostingMapper.findJobPostingsByProjectId(projectId);
-	}
-
-	@Override
-	// FIXME HELP
-	public String changeJobPostingStatus(JobPosting jobPosting, String status) throws IllegalArgumentException {
-		// laufend, abgebrochen, besetzt
-		return status;
 	}
 
 	// --------------------------- MARKETPLACE
@@ -565,42 +539,22 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId)
+	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId, int jobPostingId)
 			throws IllegalArgumentException {
 		// FIXME nicht sicher ob die Methode funktioniert
-		Rating rating = new Rating(score, statement);
-		this.setRating(rating);
+		Rating rating = new Rating(score, statement, applicationId);
+		this.ratingMapper.insert(rating);
 
-//		 if (score == 1) {
-//		 Participation participation = new Participation();
-//		 Application application = this.getApplicationByID(applicationId);
-//		 JobPosting jobPosting = this.getPersonByID(id);
-//		 participation.setPersonId(application.ge);
-//		 participation.setProjectId(projectId);
-//		 }
+		if (score == 1) {
+			Participation participation = new Participation(projectId, personId);
+			Application application = this.getApplicationByID(applicationId);
+			JobPosting jobPosting = this.getJobPostingByID(jobPostingId);
+			this.participationMapper.insert(participation);
+			this.applicationMapper.update(application);
+			this.jobPostingMapper.update(jobPosting);
+		}
 
 	}
-
-	@Override
-	public void setRating(Rating rating) throws IllegalArgumentException {
-		this.rating = rating;
-	}
-
-	/**
-	 * 
-	 * public void rate(float score, String statement, int applicationId) {
-	 * Rating rate = new Rating(score, statement); this.setRating(rate); }
-	 */
-
-	/**
-	 * Überprüft ob die Bewerbung eine Bewertung hat. Ist eine Bewertung
-	 * vorhanden, wird true ausgegeben, wenn nicht, false.
-	 * 
-	 * @return
-	 * 
-	 * 		public boolean isRated() { if (this.getRating() != null) { return
-	 *         true; } else { return false; } }
-	 */
 
 	// --------------------------- TEAM
 

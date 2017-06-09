@@ -90,9 +90,6 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public ArrayList<Application> getApplicationsByJobPostingId(int jobPostingId) throws IllegalArgumentException;
 
-	// TODO Kommentar verfassen
-	public String changeApplicationStatus(Application application, String status) throws IllegalArgumentException;
-
 	// -------------------------------------------- COMPANY
 
 	/**
@@ -189,9 +186,6 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException;
-	
-	//TODO Kommentar
-	public String changeJobPostingStatus(JobPosting jobPosting, String status) throws IllegalArgumentException;
 
 	// ---------------------------------------- MARKETPLACE
 
@@ -550,20 +544,19 @@ public interface PitchMenAdmin extends RemoteService {
 	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
 
 	/**
-	 * // TODO Kommentar schreiben
-	 * 
-	 * Bewertet das aufrufende Application-Objekt. Hierfür werden ein
-	 * Bewertungswert und eine Stellungnahme übergeben. Erzeugt ein
-	 * Rating-Objekt.
+	 * Bewertung einer Bewerbung. Wenn die Bewertung einen "score" von 1
+	 * aufweist wird automatisch eine Beteiligung erschaffen. Dadurch �ndert
+	 * sich auch automatisch der Status der Bewerbung und der Ausschreibung.
 	 * 
 	 * @param score
 	 * @param statement
-	 * 
+	 * @param applicationId
+	 * @param personId
+	 * @param projectId
+	 * @param jobPostingId
 	 */
-	public void rateApplication(float score, String statement, int personId, int projectId, int applicationId) throws IllegalArgumentException;
-
-	// TODO Kommentar schreiben
-	public void setRating(Rating rating) throws IllegalArgumentException;
+	void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
+			int jobPostingId);
 
 	// ---------------------------------------- TEAM
 
