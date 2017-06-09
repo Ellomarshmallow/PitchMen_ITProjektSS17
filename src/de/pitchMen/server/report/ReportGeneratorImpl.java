@@ -491,7 +491,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return result;
 	}
 
-
+	/**
+	   * Erstellen von <code>FanInJobPostingsOfUser</code>-Objekten.
+	   * 
+	   * 
+	   * @return der fertige Report
+	   */	
 	@Override
 	public FanInJobPostingsOfUser showFanInJobPostingsOfUser() throws IllegalArgumentException {
 		// TODO Auto-generated method stub
@@ -499,15 +504,30 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		if(this.getPitchMenAdmin() == null){
 			return null;
 		}
-		
+		/*
+	     * ZunÃ¤chst legen wir uns einen leeren Report an.
+	     */
 		FanInJobPostingsOfUser result = new FanInJobPostingsOfUser();
-		
+
+		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
 		result.setTitle("Die FanIn-Analyse");
+		/*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
 		result.setDatecreated(new Date());
 
+		/*
+	     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+	     * auf dem Report stehen) des Reports. Die Kopfdaten sind einzeilig, daher
+	     * die Verwendung von Rows.
+	     */
 		Row headline = new Row();
+		// ID der Bewerbung
 		headline.addColumn(new Column("ID"));
+		// Ersteller der Bewerbung
 		headline.addColumn(new Column("Person"));
+		// Status der Bewerbung
 		headline.addColumn(new Column("Bewerbungsstatus"));
 		
 		result.addRow(headline);
@@ -518,12 +538,20 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			
 		ArrayList<Application> allApplications = pitchMenAdmin.getApplications();
 		
+		/*
+	     * Hier werden die Bewerbungen in 3 neue ArrayLists vom Typ Application aufgeteilt 
+	     * Und zwar in "ongoing", "declined" und "accepted" welche die Stati der Bewerbungen
+	     * wiederspiegeln
+	     */
 			ArrayList<Application> ongoing = new ArrayList<Application>();
 			ArrayList<Application> declined = new ArrayList<Application>();
 			ArrayList<Application> accepted = new ArrayList<Application>();
 		
 			for(Application ap : allApplications){
-				
+
+				/*
+			     * Hier werden die Bewerbungen den jeweiligen Stati entsprechend zugeteilt
+			     */
 								
 				if(ap.getStatus().equals("laufend")){
 					ongoing.add(ap);
@@ -536,11 +564,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				};
 				
 				Row applicationCount = new Row();
-				
+				//hinzufügen der Spalte für die jeweiligen Stati 
 				applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
 				applicationCount.addColumn(new Column(String.valueOf(declined.size())));
 				applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
-				
+				//Hinzufügen der Row zum Result
 				result.addRow(applicationCount);
 				
 			}
@@ -548,7 +576,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			
 		//}
 		
-		
+			//Rückgabe des fertigen Reports
 		return result;
 		
 		
@@ -556,6 +584,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 
+	/**
+	   * Erstellen von <code>FanOutApplicationsOfUser</code>-Objekten.
+	   * 
+	   * 
+	   * @return der fertige Report
+	   */	
 	@Override
 	public FanOutApplicationsOfUser showFanOutApplicationsOfUser() throws IllegalArgumentException {
 	
@@ -563,16 +597,30 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			return null;
 		}
 		
+		/*
+	     * ZunÃ¤chst legen wir uns einen leeren Report an.
+	     */
 		FanOutApplicationsOfUser  result = new FanOutApplicationsOfUser();
 		
+		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
 		result.setTitle("Die FanOut-Analyse");
+		
+		/*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
 		result.setDatecreated(new Date());
 
 		Row headline = new Row();
+		// ID der Ausschreibungen
 		headline.addColumn(new Column("ID"));
+		// Ersteller der Ausschreibungen
 		headline.addColumn(new Column("Person"));
+		// Status der Ausschreibungen
 		headline.addColumn(new Column("laufend"));
+		// Status der Ausschreibungen
 		headline.addColumn(new Column("abgebrochen"));
+		// Status der Ausschreibungen
 		headline.addColumn(new Column("besetzt"));
 		
 		result.addRow(headline);
@@ -583,13 +631,21 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			
 		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.getJobPostings();
 		
+		/*
+	     * Hier werden die Ausschreibungen in 3 neue ArrayLists vom Typ Application aufgeteilt 
+	     * Und zwar in "ongoing", "deleted" und "occupied" welche die Stati der Ausschreibungen
+	     * wiederspiegeln
+	     */
 			ArrayList<JobPosting> ongoing = new ArrayList<JobPosting>();
 			ArrayList<JobPosting> deleted = new ArrayList<JobPosting>();
 			ArrayList<JobPosting> occupied = new ArrayList<JobPosting>();
 		
 			for(JobPosting j : allJobPostings){
 				
-								
+				/*
+			     * Hier werden die Bewerbungen den jeweiligen Stati entsprechend zugeteilt
+			     * den neuen ArrayLists zugeteilt.
+			     */
 				if(j.getStatus().equals("laufend")){
 					ongoing.add(j);
 				}
@@ -601,45 +657,53 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				};
 				
 				Row jobPostingCount = new Row();
-				
+				//hinzufügen der Spalte für die jeweiligen Stati zur Row
 				jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
 				jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
 				jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
-				
+				//Hinzufügen der Row zum Result
 				result.addRow(jobPostingCount);
 				
 			}
-			
-			
-		//}
-		
-		
-		return result;
-		
+		//}	
+		//Rückgabe des fertigen Reports
+		return result;	
 	}
 
+	/**
+	   * Erstellen von <code> FanInAndOutReport</code>-Objekten.
+	   * 
+	   * 
+	   * @return der fertige Report
+	   */	
 	@Override
 	public FanInAndOutReport showFanInAndOutReport() throws IllegalArgumentException {
 		
 		if(this.getPitchMenAdmin() == null){
 			return null;
 		}
-		
+		/*
+	     * ZunÃ¤chst legen wir uns einen leeren Report an.
+	     */
 		FanInAndOutReport result = new FanInAndOutReport();
 		
+		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
 		result.setTitle("Report für die FanIn bzw FanOut Analyse");
+		/*
+	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
 		result.setDatecreated(new Date());
 		
+		/* Dieser Report ist ein Composite Report und setzt sich aus dem Report "showFanInJobPostingsOfUser"
+		 * und "showFanOutApplicationsOfUser" zusammen
+		 */
 		result.addSubReport(this.showFanInJobPostingsOfUser());
 		result.addSubReport(this.showFanOutApplicationsOfUser());
 		
-		
+		//Rückgabe des fertigen Reports
 		return result;
 		
 		
 	}
-	/**
-	 * Default constructor
-	 */
-
 }
