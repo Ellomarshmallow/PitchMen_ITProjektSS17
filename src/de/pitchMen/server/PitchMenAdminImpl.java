@@ -128,18 +128,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	//FIXME HELP
+	// FIXME HELP
 	public String changeApplicationStatus(Application application, String status) throws IllegalArgumentException {
 		Application appli = this.getApplicationByID(application.getId());
-		Participation participation = appli.ge
-		
-		if(participation != null){
-			return appli.setStatus("");
+		PartnerProfile pp = appli.getPartnerProfileId();
+
+		if (participation != null) {
+			appli.setStatus("angenommen"); // laufend, abgeleht
+			String newstatus = appli.getStatus();
+			return newstatus;
 		}
-				appli.setStatus(status);
+		appli.setStatus(status);
 		return status;
 	}
-	
+	// laufend, abgebrochen, besetzt
+
 	// --------------------------- COMPANY
 
 	@Override
@@ -239,6 +242,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException {
 		return this.jobPostingMapper.findJobPostingsByProjectId(projectId);
+	}
+
+	@Override
+	// FIXME HELP
+	public String changeJobPostingStatus(JobPosting jobPosting, String status) throws IllegalArgumentException {
+		// laufend, abgebrochen, besetzt
+		return status;
 	}
 
 	// --------------------------- MARKETPLACE
