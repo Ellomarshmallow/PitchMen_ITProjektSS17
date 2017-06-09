@@ -158,7 +158,9 @@ public interface PitchMenAdminAsync {
 
 	void getRatingByApplicationId(int applicationId, AsyncCallback<Rating> callback);
 
-	void rateApplication(Application application, AsyncCallback<Void> callback);
+	void rateApplication(float score, String statement, int applicationId, AsyncCallback<Void> callback);
+	
+	void setRating(Rating rating, AsyncCallback<Void> callback);
 
 	// ---------- TEAM
 

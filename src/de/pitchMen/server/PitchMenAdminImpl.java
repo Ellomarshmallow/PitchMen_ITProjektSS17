@@ -23,6 +23,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PitchMenAdminImpl() throws IllegalArgumentException {
 	}
 
+	private Rating rating = null;
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -539,15 +541,25 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void rateApplication(Application application) throws IllegalArgumentException {
-	
-	 // FIXME nicht sicher ob die Methode funktioniert application =
-	 this.getApplicationByID(application.getId()); Rating rating = new
-	 Rating(score, statement);
-	 
-	 application.setRating(rating);
-	 
-	 /**
+	public void rateApplication(float score, String statement, int applicationId) throws IllegalArgumentException {
+		// FIXME nicht sicher ob die Methode funktioniert
+		Rating rating = new Rating(score, statement);
+		this.setRating(rating);
+
+		if (score == 1) {
+			Participation participation = new Participation();
+			participation.setPersonId(personId);
+			participation.setProjectId(projectId);
+		}
+
+	}
+
+	@Override
+	public void setRating(Rating rating) throws IllegalArgumentException {
+		this.rating = rating;
+	}
+
+	/**
 	 * }
 	 * 
 	 * 
@@ -558,8 +570,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	 * @param score
 	 * @param statement
 	 * 
-	 *            public void rate(float score, String statement) { Rating rate
-	 *            = new Rating(score, statement); this.setRating(rate); }
+	 *            public void rate(float score, String statement, int
+	 *            applicationId) { Rating rate = new Rating(score, statement);
+	 *            this.setRating(rate); }
 	 */
 
 	/**
