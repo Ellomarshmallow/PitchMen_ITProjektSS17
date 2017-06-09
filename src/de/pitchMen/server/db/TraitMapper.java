@@ -80,7 +80,7 @@ public class TraitMapper {
 					+ ", '" + trait.getName() + "', '" + trait.getValue() + "', " + trait.getPartnerProfileId()
 					+ ")");
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */			
@@ -102,7 +102,7 @@ public class TraitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Aktualisieren des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE trait SET name='" + trait.getName() + "', value= '" + trait.getValue()
 					+ "' WHERE id= " + trait.getId());
@@ -134,7 +134,7 @@ public class TraitMapper {
 			 */
 			stmt.executeUpdate("DELETE FROM trait WHERE id=" + trait.getId());
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -174,7 +174,7 @@ public class TraitMapper {
 				return trait;
 			}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -220,7 +220,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/	
@@ -266,7 +266,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/	
@@ -277,8 +277,7 @@ public class TraitMapper {
 	}
 
 	/**
-	 * Findet ein Trait-Objekt anhand des übergebenen Wertes(value) in der
-	 * Datenbank.
+	 * Findet ein Trait-Objekt anhand des übergebenen Wertes(value) in der Datenbank.
 	 * 
 	 * @param value
 	 * @return ArrayList<Trait>
@@ -314,7 +313,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/	
@@ -336,7 +335,6 @@ public class TraitMapper {
 	 * 
 	 * @param person_id
 	 * @return trait
-	 * 
 	 */
 	public Trait findPartnerProfielByPersonId(int id) {
 		Connection con = DBConnection.connection();
@@ -364,7 +362,7 @@ public class TraitMapper {
 				return trait;
 			}
 		/**
-		* Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/
@@ -375,7 +373,7 @@ public class TraitMapper {
 	}
 		
 	/**
-	 * Findet alle Eigenschaften (Traits) passend  zum ParnterProfile, innerhalb der ParterProfile Tabelle. 
+	 * Findet alle Eigenschaften (Traits) passend zum ParnterProfile, innerhalb der ParterProfile Tabelle. 
 	 * Ausgegeben wird eine ArrayListe, welche die Trait-Objekte beinhaltet
 	 *
 	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
@@ -413,7 +411,7 @@ public class TraitMapper {
 				return trait;
 			}
 		/**
-		* Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/
