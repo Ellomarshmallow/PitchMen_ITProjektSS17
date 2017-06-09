@@ -125,21 +125,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.applicationMapper.findApplicationsByJobPostingId(jobPostingId);
 	}
 
-	@Override
-	// FIXME HELP
-	public String changeApplicationStatus(Application application, String status) throws IllegalArgumentException {
-		Application appli = this.getApplicationByID(application.getId());
-		// PartnerProfile pp = appli.getPartnerProfileId();
-
-		// if (participation != null) { appli.setStatus("angenommen"); //
-		// laufend, abgeleht String newstatus = appli.getStatus(); return
-		// newstatus; }
-
-		appli.setStatus(status);
-		return status;
-	}
-	// laufend, abgebrochen, besetzt
-
 	// --------------------------- COMPANY
 
 	@Override
@@ -239,13 +224,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException {
 		return this.jobPostingMapper.findJobPostingsByProjectId(projectId);
-	}
-
-	@Override
-	// FIXME HELP
-	public String changeJobPostingStatus(JobPosting jobPosting, String status) throws IllegalArgumentException {
-		// laufend, abgebrochen, besetzt
-		return status;
 	}
 
 	// --------------------------- MARKETPLACE
@@ -564,7 +542,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId)
 			throws IllegalArgumentException {
 		// FIXME nicht sicher ob die Methode funktioniert
-		Rating rating = new Rating(score, statement);
+		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
 
 		if (score == 1) {

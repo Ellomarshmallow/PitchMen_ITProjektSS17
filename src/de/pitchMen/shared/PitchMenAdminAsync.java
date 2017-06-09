@@ -34,8 +34,6 @@ public interface PitchMenAdminAsync {
 
 	void getApplicationsByJobPostingId(int jobPostingId, AsyncCallback<ArrayList<Application>> callback);
 	
-	void changeApplicationStatus(Application application, String status, AsyncCallback<String> callback);
-
 	// ---------- COMPANY
 
 	void addCompany(AsyncCallback<Company> callback);
@@ -63,8 +61,6 @@ public interface PitchMenAdminAsync {
 
 	void getJobPostingsByProjectId(int projectId, AsyncCallback<ArrayList<JobPosting>> callback);
 	
-	void changeJobPostingStatus(JobPosting jobPosting, String status, AsyncCallback<String> callback);
-
 	// ---------- MARKETPLACE
 
 	void addMarketplace(String title, String description, int personId, int teamId, int companyId,
