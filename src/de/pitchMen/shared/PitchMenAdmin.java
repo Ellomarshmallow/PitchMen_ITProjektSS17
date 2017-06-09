@@ -543,7 +543,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public Rating getRatingByApplicationId(int applicationId) throws IllegalArgumentException;
 
-	void rateApplication(float score, String statement, int applicationId, int personId, int projectId);
+	void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
+			int jobPostingId);
 
 	// ---------------------------------------- TEAM
 

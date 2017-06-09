@@ -539,7 +539,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId)
+	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId, int jobPostingId)
 			throws IllegalArgumentException {
 		// FIXME nicht sicher ob die Methode funktioniert
 		Rating rating = new Rating(score, statement, applicationId);
@@ -547,7 +547,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		if (score == 1) {
 			Participation participation = new Participation(projectId, personId);
+			Application application = this.getApplicationByID(applicationId);
+			JobPosting jobPosting = this.getJobPostingByID(jobPostingId);
 			this.participationMapper.insert(participation);
+			this.applicationMapper.update(application);
+			this.jobPostingMapper.update(jobPosting);
 		}
 
 	}
