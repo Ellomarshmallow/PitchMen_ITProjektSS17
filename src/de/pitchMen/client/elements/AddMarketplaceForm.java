@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.Project;
 
 public class AddMarketplaceForm extends Formular {
 	
