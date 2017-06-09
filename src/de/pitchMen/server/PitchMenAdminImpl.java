@@ -127,6 +127,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.applicationMapper.findApplicationsByJobPostingId(jobPostingId);
 	}
 
+	@Override
+	//FIXME HELP
+	public String changeApplicationStatus(Application application, String status) throws IllegalArgumentException {
+		Application appli = this.getApplicationByID(application.getId());
+		Participation participation = appli.ge
+		
+		if(participation != null){
+			return appli.setStatus("");
+		}
+				appli.setStatus(status);
+		return status;
+	}
+	
 	// --------------------------- COMPANY
 
 	@Override
@@ -563,9 +576,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	/**
 	 * 
-	 *            public void rate(float score, String statement, int
-	 *            applicationId) { Rating rate = new Rating(score, statement);
-	 *            this.setRating(rate); }
+	 * public void rate(float score, String statement, int applicationId) {
+	 * Rating rate = new Rating(score, statement); this.setRating(rate); }
 	 */
 
 	/**

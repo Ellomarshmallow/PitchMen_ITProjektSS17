@@ -1,6 +1,5 @@
 package de.pitchMen.shared.bo;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**

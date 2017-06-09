@@ -89,6 +89,9 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Application> getApplicationsByJobPostingId(int jobPostingId) throws IllegalArgumentException;
+	
+	//TODO Kommentar verfassen
+	public String changeApplicationStatus(Application application, String status) throws IllegalArgumentException;
 
 	// -------------------------------------------- COMPANY
 

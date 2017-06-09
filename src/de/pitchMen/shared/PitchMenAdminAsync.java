@@ -33,6 +33,8 @@ public interface PitchMenAdminAsync {
 	void getApplicationsByPerson(int personId, AsyncCallback<ArrayList<Application>> callback);
 
 	void getApplicationsByJobPostingId(int jobPostingId, AsyncCallback<ArrayList<Application>> callback);
+	
+	void changeApplicationStatus(Application application, String status, AsyncCallback<String> callback);
 
 	// ---------- COMPANY
 
