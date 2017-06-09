@@ -43,7 +43,12 @@ public class Formular extends VerticalPanel {
 	public PitchMenAdminAsync getPitchMenAdmin() {
 		return pitchMenAdmin;
 	}
-
+	
+	/* Wenn die PersonId gleich der aktuellen UserId ist, dann ist der User auch der Ersteller des
+	 * Projektmarktplatzes bzw. des Projektes und hat die Buttons Löschen und Bearbeiten zur verfügung
+	 * (vgl. MarketplaceForm,ProjectForm) 
+	 * Überlagerung von Methoden: 
+	 */
 	public boolean hasPermission(Marketplace selectedMarketplace){
 		if(selectedMarketplace.getPersonId() == ClientsideSettings.getCurrentUser().getId()){
 			return true;
