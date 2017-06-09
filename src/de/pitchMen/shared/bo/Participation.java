@@ -1,6 +1,5 @@
 package de.pitchMen.shared.bo;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,8 +18,22 @@ public class Participation extends BusinessObject {
 	private static final long serialVersionUID = 1L;
 
 	private int projectId;
-	
+
 	private int personId;
+
+	/**
+	 * Leerer Konstruktor
+	 */
+	public Participation() {
+
+	}
+	
+	/**
+	 * Überladener Konstruktor
+	 */
+	public Participation(int projectId, int personId){
+		
+	}
 	
 	/**
 	 * @return dateOpened
@@ -72,7 +85,8 @@ public class Participation extends BusinessObject {
 	}
 
 	/**
-	 * @param projectId the projectId to set
+	 * @param projectId
+	 *            the projectId to set
 	 */
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
@@ -86,12 +100,11 @@ public class Participation extends BusinessObject {
 	}
 
 	/**
-	 * @param personId the personId to set
+	 * @param personId
+	 *            the personId to set
 	 */
 	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
 
-
-	
 }

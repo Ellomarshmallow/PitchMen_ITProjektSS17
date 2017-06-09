@@ -11,9 +11,9 @@ import java.util.Date;
 public class Application extends BusinessObject {
 
 	private Date dateCreated = null;
-	
+
 	private String status = "";
-	
+
 	private Rating rating = null;
 
 	/**
@@ -100,7 +100,8 @@ public class Application extends BusinessObject {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
@@ -114,7 +115,8 @@ public class Application extends BusinessObject {
 	}
 
 	/**
-	 * @param rating the rating to set
+	 * @param rating
+	 *            the rating to set
 	 */
 	public void setRating(Rating rating) {
 		this.rating = rating;

@@ -19,8 +19,8 @@ public interface PitchMenAdminAsync {
 
 	// ---------- APPLICATION
 
-	void addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId, int partnerProfileId,
-			AsyncCallback<Application> callback);
+	void addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
+			int partnerProfileId, AsyncCallback<Application> callback);
 
 	void updateApplication(Application application, AsyncCallback<Void> callback);
 
@@ -136,7 +136,7 @@ public interface PitchMenAdminAsync {
 
 	void deleteProject(Project project, AsyncCallback<Void> callback);
 
-	void getProject(AsyncCallback<ArrayList<Project>> callback);
+	void getProjects(AsyncCallback<ArrayList<Project>> callback);
 
 	void getProjectByID(int id, AsyncCallback<Project> callback);
 
@@ -158,7 +158,8 @@ public interface PitchMenAdminAsync {
 
 	void getRatingByApplicationId(int applicationId, AsyncCallback<Rating> callback);
 
-	void rateApplication(Application application, AsyncCallback<Void> callback);
+	void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
+			int jobPostingId, AsyncCallback<Void> callback);
 
 	// ---------- TEAM
 
@@ -185,6 +186,8 @@ public interface PitchMenAdminAsync {
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
 
 	void getTraitsByPartnerProfileId(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
+	
+	void getJobPostingsMatchingTraits(PartnerProfile pp, AsyncCallback<ArrayList<JobPosting>> callback);
 
 	// --------------------------- LOGIN
 

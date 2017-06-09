@@ -7,25 +7,24 @@ package de.pitchMen.shared.bo;
  */
 public class Rating extends BusinessObject {
 
-
 	private String statement = "";
-
 
 	private float score = 0.0f;
 
-
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Realisierung der Beziehung zu einer Bewerbung durch einen
-	    Fremdschlüssel.
+	 * Realisierung der Beziehung zu einer Bewerbung durch einen Fremdschlüssel.
 	 */
 	private int applicationId = 0;
-	
-	public Rating (){
-		
+
+	/**
+	 * Leere Konstruktor
+	 */
+	public Rating() {
+
 	}
-	
-	public Rating(float score, String statement) {
+
+	public Rating(float score, String statement, int applicationId) {
 		this.score = score;
 		this.statement = statement;
 	}
@@ -38,7 +37,7 @@ public class Rating extends BusinessObject {
 	}
 
 	/**
-	 * @param statement 
+	 * @param statement
 	 */
 	public void setStatement(String statement) {
 		this.statement = statement;
@@ -52,17 +51,19 @@ public class Rating extends BusinessObject {
 	}
 
 	/**
-	 * @param score 
+	 * @param score
 	 */
 	public void setScore(float score) {
 		this.score = score;
 	}
+
 	/**
 	 * @return applicationId
 	 */
 	public int getApplicationId() {
 		return applicationId;
 	}
+
 	/**
 	 * @param applicationId
 	 */
