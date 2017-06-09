@@ -11,38 +11,36 @@ import de.pitchMen.shared.bo.Company;
  * erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
- * Methoden (Speichern, Suchen, Löschen, Bearbeiten).
+ * Methoden (insert, search, delete, update).
  * 
  * @author Heike
- *
  */
 
 public class CompanyMapper {
 
 	/**
 	 * Die Klasse CompanyMapper wird nur einmal instantiiert
-	 * (Singelton-Eigenschaft). Die Variable ist mit static gekennzeichnet, da
-	 * sie die einzige Instanz dieser Klasse speichert.
+	 * (Singelton-Eigenschaft). amit diese Eigenschaft erfüllt werden kann,
+	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
-
 	private static CompanyMapper companyMapper = null;
 
 	/**
 	 * Ein geschützter Konstrukter verhindert eine neue Instanz dieser Klasse zu
 	 * erzeugen.
 	 */
-
 	protected CompanyMapper() {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit
-	 * sichergestellt, dass nur eine einzige Instanz der CompanyMapper
-	 * existiert.
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * dass nur eine einzige Instanz der companyMapper-Klasse existiert.
+	 * Aufgerufen wird die Klasse somit über CompanyMapper.companyMapper() 
+	 * und nicht über den New-Operator.
 	 * 
 	 * @return companyMapper
 	 */
-
 	public static CompanyMapper companyMapper() {
 		if (companyMapper == null) {
 			companyMapper = new CompanyMapper();
@@ -52,36 +50,44 @@ public class CompanyMapper {
 
 	/**
 	 * Fügt ein Company-Objekt der Datenbank hinzu. Und gibt das korrigierte
-	 * Customerobjekt zurück.
+	 * Company-Objekt zurück.
 	 * 
 	 * @param company
 	 * @return company
 	 */
 	public Company insert(Company company) {
+		/**
+		 *  DB-Verbindung holen.
+		 */
 		Connection con = DBConnection.connection();
 
 		try {
+			/**
+			 * leeres SQL-Statement (JDBC) anlegen.
+			 */
 			Statement stmt = con.createStatement();
 
 			/**
-			 * Abfrage des als letztes hinzugefügten Primärschlüssels des
-			 * Datensatzes. Der aktuelle Primärschlüssel wird um eins erhöht.
+			 * Abfrage des als letztes hinzugefügten Primärschlüssels des Datensatzes. Die aktuelle id wird um eins erhöht.
+			 * Statement ausfüllen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM company");
-			if (rs.next()) {
-				company.setId(rs.getInt("maxid") + 1);
-				stmt = con.createStatement();
 
-				/**
-				 * Ausführen der Einfügeoperation
-				 */
+			company.setId(rs.getInt("maxid") + 1);
+			stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
+			 */
 				stmt.executeUpdate("INSERT INTO company (id, name, description)" + "VALUES ( " + company.getId() + ", '"
 						+ company.getName() + "' ,'" + company.getDescription() + "')");
-			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */	
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
 		return company;
 	}
 
@@ -96,15 +102,21 @@ public class CompanyMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-
+			/**
+			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
+			 */
 			stmt.executeUpdate("UPDATE company SET Name='" + company.getName() + "', " + "description='"
 					+ company.getDescription() + "' " + "WHERE id=" + company.getId());
 		}
-
+		/**
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 * 
+		 */
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
 		return company;
 	}
 
@@ -118,10 +130,16 @@ public class CompanyMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-
+			/**
+			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 */
 			stmt.executeUpdate("DELETE FROM company " + "WHERE id=" + company.getId());
 		}
-
+		/**
+		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 */
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -138,27 +156,31 @@ public class CompanyMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " + "WHERE id=" + id);
-
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
-			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
-			 * ein Objekt umgewandelt.
-			 * 
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " + "WHERE id=" + id);
+			/**
+			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * If-Abfragen geprüft, ob es für den angefragten Primärschlüssel
+			 * ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
 				Company company = new Company();
 				company.setId(rs.getInt("id"));
 				company.setName(rs.getString("name"));
 				company.setDescription(rs.getString("description"));
-
 				return company;
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
 		return null;
 	}
 
@@ -169,32 +191,39 @@ public class CompanyMapper {
 	 */
 	public ArrayList<Company> findAll() {
 		Connection con = DBConnection.connection();
-
+		/**
+		 * Erzeugen einer ArrayList.
+		 */
 		ArrayList<Company> result = new ArrayList<Company>();
 
 		try {
 			Statement stmt = con.createStatement();
-
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " + "ORDER BY id");
-
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
-			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
-			 * ein Objekt umgewandelt.
-			 * 
+			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM company " + "ORDER BY id");
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle company vorhanden ist, muss das Abfragen des ResultSet so
+			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
+			 * Die DB-Tupel werden in Java-Objekte transformiert und
+			 * anschließend der ArrayList hinzugefügt.
 			 */
 			while (rs.next()) {
 				Company company = new Company();
 				company.setId(rs.getInt("id"));
 				company.setName(rs.getString("name"));
 				company.setDescription(rs.getString("description"));
-
 				result.add(company);
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
 		return result;
 	}
 
@@ -211,27 +240,34 @@ public class CompanyMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach dem gesuchten Namen, in der Datenbank, sortiert nach der Id.
+			 */
 			ResultSet rs = stmt.executeQuery(
 					"SELECT id, name, description FROM company " + "WHERE name LIKE '" + name + "' ORDER BY id");
-
 			/**
-			 * Der Primärschlüssel (id) wird als eine TUpel zurück gegeben. Das
-			 * Ergebnis-Tupel wird in ein Objekt umgewandelt.
-			 * 
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle company mit dem übergebenen Namen vorhanden ist, muss das
+			 * Abfragen des ResultSet so oft erfolgen (while-Schleife), bis alle
+			 * Tupel durchlaufen wurden. Die DB-Tupel werden in Java-Objekte
+			 * transformiert und anschließend der ArrayList hinzugefügt.
 			 */
 			while (rs.next()) {
 				Company company = new Company();
 				company.setId(rs.getInt("id"));
 				company.setName(rs.getString("name"));
 				company.setDescription(rs.getString("description"));
-
 				result.add(company);
 			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 * 
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-
 		return result;
 	}
 
