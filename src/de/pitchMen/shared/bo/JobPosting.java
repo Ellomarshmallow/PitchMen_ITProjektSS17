@@ -1,6 +1,5 @@
 package de.pitchMen.shared.bo;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,17 +10,16 @@ import java.util.Date;
 public class JobPosting extends BusinessObject {
 
 	/**
-	 * Realisierung der Beziehung zu einem Projekt durch einen
-	    Fremdschlüssel.
+	 * Realisierung der Beziehung zu einem Projekt durch einen Fremdschlüssel.
 	 */
 	private int projectId = 0;
-	
+
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
 	 * String verwendet, damit man das Werfen einer NullPointException
 	 * vermeidet.
 	 */
-	
+
 	private String title = "";
 	/**
 	 * Der default Wert von Strings ist "null", jedoch wird hier ein leerer
@@ -31,13 +29,11 @@ public class JobPosting extends BusinessObject {
 	private String text = "";
 
 	private Date deadline = null;
-	
+
 	private String status = "";
 
 	private static final long serialVersionUID = 1L;
 
-	
-		
 	/**
 	 * @return title
 	 */
@@ -72,7 +68,7 @@ public class JobPosting extends BusinessObject {
 	public Date getDeadline() {
 		return this.deadline;
 	}
-	
+
 	/**
 	 * @return status
 	 */
@@ -86,14 +82,13 @@ public class JobPosting extends BusinessObject {
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
-	
+
 	/**
 	 * @param status
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 
 	/**
 	 * @return projectid
@@ -101,6 +96,7 @@ public class JobPosting extends BusinessObject {
 	public int getProjectId() {
 		return projectId;
 	}
+
 	/**
 	 * @param projectid
 	 */
@@ -108,5 +104,4 @@ public class JobPosting extends BusinessObject {
 		this.projectId = projectId;
 	}
 
-	
 }

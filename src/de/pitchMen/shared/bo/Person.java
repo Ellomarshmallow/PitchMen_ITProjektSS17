@@ -1,7 +1,5 @@
 package de.pitchMen.shared.bo;
 
-import java.util.ArrayList;
-
 /**
  * Repräsentiert eine Person und erbt von der Superklasse OrganisationUnit.
  * 
@@ -9,19 +7,18 @@ import java.util.ArrayList;
  */
 public class Person extends OrganisationUnit {
 
-
 	private String firstName = "";
 
 	private static final long serialVersionUID = 1L;
 
-	private boolean loggedIn = false ; 
+	private boolean loggedIn = false;
 	private String emailAdress = "";
 	private String nickname = "";
-	private String loginUrl = ""; 
-	private String logoutUrl = ""; 
-	
-	public boolean isLoggedIn(){
-		return loggedIn; 
+	private String loginUrl = "";
+	private String logoutUrl = "";
+
+	public boolean isLoggedIn() {
+		return loggedIn;
 	}
 
 	public String getEmailAdress() {
@@ -59,11 +56,7 @@ public class Person extends OrganisationUnit {
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * @return firstName
 	 */
@@ -72,11 +65,10 @@ public class Person extends OrganisationUnit {
 	}
 
 	/**
-	 * @param firstName 
+	 * @param firstName
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
 
 }

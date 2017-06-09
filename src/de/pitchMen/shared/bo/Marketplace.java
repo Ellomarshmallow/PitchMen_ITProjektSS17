@@ -1,7 +1,5 @@
 package de.pitchMen.shared.bo;
 
-import java.util.ArrayList;
-
 /**
  * ReprÃ¤sentiert eine Marktplatz.
  * 
@@ -22,28 +20,22 @@ public class Marketplace extends BusinessObject {
 	 * vermeidet.
 	 */
 	private String description = "";
-	
+
 	/**
-	 * Realisierung der Beziehung zu einer Person durch einen
-	    Fremdschlüssel.
+	 * Realisierung der Beziehung zu einer Person durch einen Fremdschlüssel.
 	 */
 	private int personId = 0;
 	/**
-	 * Realisierung der Beziehung zu einem Team durch einen
-	    Fremdschlüssel.
+	 * Realisierung der Beziehung zu einem Team durch einen Fremdschlüssel.
 	 */
 	private int teamId = 0;
 	/**
 	 * Realisierung der Beziehung zu eine Unternehmen durch einen
-	    Fremdschlüssel.
+	 * Fremdschlüssel.
 	 */
 	private int companyId = 0;
-	
 
-	
 	private static final long serialVersionUID = 1L;
-
-	
 
 	/**
 	 * @return title
@@ -79,30 +71,35 @@ public class Marketplace extends BusinessObject {
 	public int getPersonId() {
 		return personId;
 	}
+
 	/**
 	 * @param personId
 	 */
 	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
+
 	/**
 	 * @return teamId
-	 */	
+	 */
 	public int getTeamId() {
 		return teamId;
 	}
+
 	/**
 	 * @param teamId
 	 */
 	public void setTeamId(int teamId) {
 		this.teamId = teamId;
 	}
+
 	/**
 	 * @return companyId
-	 */	
+	 */
 	public int getCompanyId() {
 		return companyId;
 	}
+
 	/**
 	 * @param companyId
 	 */
