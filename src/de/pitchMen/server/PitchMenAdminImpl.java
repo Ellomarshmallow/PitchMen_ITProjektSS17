@@ -565,7 +565,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void rateApplication(float score, String statement, int applicationId) throws IllegalArgumentException {
+	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId) throws IllegalArgumentException {
 		// FIXME nicht sicher ob die Methode funktioniert
 		Rating rating = new Rating(score, statement);
 		this.setRating(rating);

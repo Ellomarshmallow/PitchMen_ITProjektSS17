@@ -560,7 +560,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @param statement
 	 * 
 	 */
-	public void rateApplication(float score, String statement, int applicationId) throws IllegalArgumentException;
+	public void rateApplication(float score, String statement, int personId, int projectId, int applicationId) throws IllegalArgumentException;
 
 	// TODO Kommentar schreiben
 	public void setRating(Rating rating) throws IllegalArgumentException;
