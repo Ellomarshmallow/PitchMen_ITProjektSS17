@@ -719,5 +719,35 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		}
 		return logInf;
 	}
+	
+	// -------------------------TRAITMATCHING METHODE
+	
+	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) {
+		
+		ArrayList<Trait> personTraits = traitMapper.findTraitByPartnerProfileId(pp.getId());
+		
+		ArrayList<PartnerProfile> allpps = partnerProfileMapper.findAll();
+		
+		ArrayList<JobPosting> matchingTraits = new ArrayList<JobPosting>();
+		
+		for (PartnerProfile pprofile : allpps) {
+			ArrayList <Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
+			
+			for(Trait trait : jPTraits){
+				String  traitJp = trait.getName();
+				
+				for(Trait pTrait : personTraits){
+					String traitPerson = pTrait.getName();
+					
+					if(traitJp == traitPerson){
+						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
+					}
+				}
+			}
+		}
+		
+		return matchingTraits;
+		
+	}; 
 
 }
