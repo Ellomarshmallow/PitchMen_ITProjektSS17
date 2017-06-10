@@ -9,11 +9,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.pitchMen.client.elements.ProjectForm.DeleteProjectCallback;
-import de.pitchMen.client.elements.ProjectForm.addJobPostingClickHandler;
-import de.pitchMen.client.elements.ProjectForm.addProjectClickHandler;
-import de.pitchMen.client.elements.ProjectForm.deleteProjectClickHandler;
-import de.pitchMen.client.elements.ProjectForm.updateProjectClickHandler;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
@@ -65,6 +60,7 @@ public class JobPostingForm extends Formular{
 				
 				/* ---------- Bewerben-Button, ClickHandler hinzufügen und 
 	 						* dem HorizontalPanel hinzufügen */
+				//TODO applicateClickHandler schreiben! 
 				Button applicateButton = new Button ("Hier Bewerben"); 
 				applicateButton.addClickHandler(new applicateClickHandler());
 				buttonsPanel.add(applicateButton);
@@ -108,7 +104,7 @@ public class JobPostingForm extends Formular{
 
 			public void onClick(ClickEvent event) {
 
-				AddJobPostingForm addJobPosting = new AddJobPostingForm();
+				AddJobPostingForm addJobPosting = new AddJobPostingForm(selectedJobPosting,pitchMenTreeViewModel,true);
 
 			}
 		}
@@ -132,7 +128,7 @@ public class JobPostingForm extends Formular{
 			public void onClick(ClickEvent event) {
 
 				// bei Click wird die update() Methode aufgerufen
-				JobPostingForm updateJobPosting = new JobPostingForm(selectedProject,pitchMenTreeViewModel,false);
+				AddJobPostingForm updateJobPosting = new AddJobPostingForm(selectedJobPosting,pitchMenTreeViewModel,false);
 
 			}
 		} 
