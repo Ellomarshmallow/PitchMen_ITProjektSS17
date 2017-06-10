@@ -6,37 +6,66 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DatePicker;
 
-import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.client.elements.AddProjectForm.AddProjectFormCallback;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Project;
 
 public class AddJobPostingForm extends Formular {
 
-	private int prID;
 
-	Label titleLabel = new Label("Name der Ausschreibung:");
+	private Project selectedProject = null;
+	private JobPosting selectedJobPosting = null; 
+	PitchMenTreeViewModel pitchMenTreeViewModel = null;
+	Label idLabel = new Label();
+	Label titleLabel = new Label("Name des Projektes:");
 	TextBox titleBox = new TextBox();
-	Label descLabel = new Label("Beschreibung der Ausschreibung:");
+	Label descLabel = new Label("Beschreibung des Projektes:");
 	TextBox descBox = new TextBox();
-	Label deadlineLabel = new Label("Bewerbungsdeadline angeben: ");
-	DateBox deadlineBox = new DateBox();
+	Label statusLabel = new Label("aktueller Status: "); 
+	TextBox statusBox = new TextBox(); 
+	Label deadlineLabel = new Label("Deadline: "); 
+	DatePicker deadlineBox = new DatePicker(); 
+	private boolean isSave = false; 
+	
+	AddJobPostingForm(JobPosting selectedJobPosting,PitchMenTreeViewModel pitchMenTreeViewModel,boolean isSave) {
+		
+		this.selectedJobPosting = selectedJobPosting;
+		this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
+		this.isSave = isSave; 
+		this.selectedJobPosting = pitchMenTreeViewModel.getSelectedJobPosting(); 
+		
+		// Vertical Panel erstellen
+		VerticalPanel labelsPanel = new VerticalPanel();
+		this.add(labelsPanel);
 
-	protected void onLoad(int projectID) {
+		// labels und Boxen dem Vertical Panel hinzufügen
+		labelsPanel.add(idLabel);
+		labelsPanel.add(titleLabel);
+		labelsPanel.add(titleBox);
+		labelsPanel.add(descLabel);
+		labelsPanel.add(descBox);
+		labelsPanel.add(statusLabel);
+		labelsPanel.add(statusBox);
+		labelsPanel.add(deadlineLabel);
+		labelsPanel.add(deadlineBox);
 
-		this.prID = projectID;
-
+		// HorizontalPanel für die Buttons erstellen
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		this.add(buttonsPanel);
+		
+		
 		Button cancelButton = new Button("Abbrechen" + new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				/*
-				 * Wenn man auf den Cancel Button drückt, wird man auf das
-				 * angewählten Projekt zurückgeführt
+				 * Wenn man auf den Cancel Button drückt, wird man auf die
+				 * angewählten Ausschreibung zurückgeführt
 				 */
-				ProjectForm prf = new ProjectForm(prID);
+				JobPostingForm jpf = new JobPostingForm(getSelectedJobPosting());
 
 			}
 		});
@@ -47,21 +76,32 @@ public class AddJobPostingForm extends Formular {
 				// TODO: erstellen eines anonymen Partnerprofils für die
 				// Ausschreibung fehlt noch!
 
-				AddJobPostingForm f1 = new AddJobPostingForm();
-				f1.save(prID);
+				if (Window.confirm("Sind alle Angaben korrekt?")) {
 
+					if(getIsSave()){
+
+						/* bei Click wird die unten implementierte Methode save()
+						 * aufgerufen.
+						 */
+						save();
+						JobPostingForm jf = new JobPostingForm(getSelectedJobPosting());
+					}
+					else{
+						update();
+						JobPostingForm jf = new JobPostingForm(getSelectedJobPosting());
+					}
+
+				}
 			}
 		});
 
 	}
 
 	// ---------- speichern
-	public void save(int projektID) {
-
-		super.getPitchMenAdmin().addJobPosting(titleBox.getText(), descBox.getText(), deadlineBox.getValue(), projektID,
-				new AddJobPostingCallback(this));
-
-		super.setCreator(ClientsideSettings.getCurrentUser().getId());
+	public void save() {
+		
+		super.getPitchMenAdmin().addJobPosting(titleBox.getText(), descBox.getText(), statusBox.getText(),
+				deadlineBox.getValue(), this.selectedProject.getId(), new AddJobPostingCallback(this));
 
 	}
 
@@ -74,7 +114,7 @@ public class AddJobPostingForm extends Formular {
 		}
 
 		public void onFailure(Throwable caught) {
-
+			//FIXME andere onFailure Message? 
 			this.addJobPostingForm.add(new HTML("Fehler bei RPC Aufruf:" + caught.getMessage()));
 
 		}
@@ -82,8 +122,45 @@ public class AddJobPostingForm extends Formular {
 		public void onSuccess(JobPosting jobposting) {
 
 			Window.alert("erfolgreich gespeichert");
+			pitchMenTreeViewModel.addJobPosting(selectedJobPosting, selectedProject);
 
 		}
 
+	}
+	
+	// ---------- update Methode
+
+		public void update() {
+			if (selectedJobPosting != null) {
+				selectedJobPosting.setTitle(titleBox.getText());
+				selectedJobPosting.setText(descBox.getText());
+				selectedJobPosting.setDeadline(deadlineBox.getValue());
+				super.getPitchMenAdmin().updateJobPosting(selectedJobPosting, new UpdateJobPostingCallback());
+			}}
+
+
+		// ---------- update Callback
+		class UpdateJobPostingCallback implements AsyncCallback<Void> {
+
+
+			public void onFailure(Throwable caught) {
+				Window.alert("Das Bearbeiten der Ausschreibung ist fehlgeschlagen!");
+
+			}
+
+			public void onSuccess(Void result) {
+				pitchMenTreeViewModel.updateJobPosting(selectedJobPosting);
+			}
+		}
+
+
+	// ---------- getIsSave
+
+	public boolean getIsSave(){
+		return this.isSave; 
+	}
+	
+	public JobPosting getSelectedJobPosting() {
+		return this.selectedJobPosting; 
 	}
 }
