@@ -1,6 +1,7 @@
 package de.pitchMen.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
@@ -28,7 +29,7 @@ public class PitchMen implements EntryPoint {
 	 * zentrale Applikations-Verwaltung zu initialisieren, die die Aktivitäten
 	 * der Applikation steuert.
 	 */
-	//private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
+	private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
 
 	/**
 	 * Initialisierung eines <code>ReportGenerator</code>-Objekts ist nötig, um
@@ -42,30 +43,9 @@ public class PitchMen implements EntryPoint {
 	 * Die Einstiegspunkt-Methode. Zunächst Anmeldung
 	 */
 	public void onModuleLoad() {
-		/*
-		 * TODO Die Login-Funktionalität kann erst dann umgesetzt
-		 * werden, wenn das Problem mit der AppEngine (angeschaltet 
-		 * kein Zugriff auf Datenbank, ausgeschaltet kein Zugriff 
-		 * auf UserService) gelöst wurde. Deshalb ist die folgende 
-		 * Zeile auskommentiert und die darunterliegenden extra
-		 * eingefügt. Damit wird die Anmeldung  zur Erstellung des User-
-		 * Objekts vermieden (gleichzeitig muss aber ein Dummy-User
-		 * in der ClientSide-Settings-Klasse erstellt werden, um
-		 * nutzerbezogene Aktionen zu ermöglichen).
-		 */
 		
-		// pitchMenAdmin.login(GWT.getHostPageBaseURL() + "PitchMen.html", new LoginCallback());
-		
-		Person dummy = new Person();					// später ersetzen
-		dummy.setFirstName("Armin");					// später ersetzen
-		dummy.setName("Austauschbar");					// später ersetzen
-		dummy.setId(1);									// später ersetzen
-		dummy.setLoggedIn(true);						// später ersetzen
-		dummy.setEmailAdress("arm.austausch@web.de");	// später ersetzen
-		dummy.setLogoutUrl("#");						// später ersetzen
-		ClientsideSettings.setCurrentUser(dummy);		// später ersetzen
-		
-		this.loadPitchMen();
+		pitchMenAdmin.login(GWT.getHostPageBaseURL() + "PitchMen.html", new LoginCallback());
+	
 	}
 
 	/**
