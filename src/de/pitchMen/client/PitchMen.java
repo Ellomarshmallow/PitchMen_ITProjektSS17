@@ -64,6 +64,7 @@ public class PitchMen implements EntryPoint {
 		 * @see com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable)
 		 */
 		public void onFailure(Throwable caught) {
+			RootPanel.get("content").add(new HTML("<h1>Herzlich willkommen bei PitchMen. Leider hat das mit dem Login nicht so ganz funktioniert.</h1><p><small>Liegt an der Applikationsschicht. Wahrscheinlich.</small></p>"));
 			ClientsideSettings.getLogger().severe("Login fehlgeschlagen");
 		}
 
@@ -87,10 +88,12 @@ public class PitchMen implements EntryPoint {
 			} else {	
 				// Ansonsten gebe einen Link zur Anmeldung aus
 				VerticalPanel logPanel = new VerticalPanel();
-				Label logLabel = new Label("Bitte melden Sie sich bei Ihrem Google Account an, um die Webseite nutzen zu können");
-				Anchor logLink = new Anchor("Anmelden");
+				HTML logHeading = new HTML("<h1>PitchMen Login</h1>");
+				Label logLabel = new Label("Nur ein Schritt trennt Sie noch von spannenden Projekten, die auf Ihre Teilnahme warten! Melden Sie sich jetzt mit einem Google-Konto an, um PitchMen nutzen zu können.");
+				Anchor logLink = new Anchor("Mit Google anmelden");
 				
 				logLink.setHref(person.getLoginUrl());
+				logPanel.add(logHeading);
 				logPanel.add(logLabel);
 				logPanel.add(logLink);
 				logPanel.addStyleName("login-link-container");
