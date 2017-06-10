@@ -1,9 +1,14 @@
 package de.pitchMen.client.elements;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.pitchMen.client.elements.ProjectForm.addJobPostingClickHandler;
+import de.pitchMen.client.elements.ProjectForm.addProjectClickHandler;
+import de.pitchMen.client.elements.ProjectForm.deleteProjectClickHandler;
+import de.pitchMen.client.elements.ProjectForm.updateProjectClickHandler;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
@@ -52,9 +57,41 @@ public class JobPostingForm extends Formular{
 				// HorizontalPanel für die Buttons erstellen
 				HorizontalPanel buttonsPanel = new HorizontalPanel();
 				this.add(buttonsPanel);
-		
-		
+				
+				/*
+				 * Wenn die aktuelle UserId gleich der PersonId ist, dann hat dieser die
+				 * Buttons Ausschreibung hinzufügen, Löschen und Bearbeiten zur verfügung.
+				 * Vgl. hasPermission() in Formular.java
+				 */
+				if (hasPermission(this.selectedProject)) {
+
+					/* ---------- Neue Ausschreibung-Button, ClickHandler hinzufügen und 
+					 			* dem HorizontalPanel hinzufügen */
+					Button addJobPostingBtn = new Button("+ Neue Ausschreibung hinzufügen");
+					addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
+					buttonsPanel.add(addJobPostingBtn);
+
+					/* ---------- Ausschreibung löschen, ClickHandler hinzufügen und dem
+								* HorizontalPanel hinzufügen */
+					Button deleteJobPostingBtn = new Button("- Ausschreibung löschen");
+					deleteJobPostingBtn.addClickHandler(new deleteJobPostingClickHandler());
+					buttonsPanel.add(deleteJobPostingBtn);
+
+					/* ---------- Ausschreibung bearbeiten, ClickHandler hinzufügen und dem
+					 			* HorizontalPanel hinzufügen */
+
+					Button updateJobPostingBtn = new Button("Bearbeiten");
+					updateJobPostingBtn.addClickHandler(new updateJobPostingClickHandler());
+					buttonsPanel.add(updateJobPostingBtn);
+
+
+				}
+
+
 	}
+
+
+		// ---------- ClickHandler
 	
 	
 	
