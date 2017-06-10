@@ -31,13 +31,13 @@ public class AddProjectForm extends Formular{
 	DatePicker fromBox = new DatePicker();
 	Label toLabel = new Label("Bis:");
 	DatePicker toBox = new DatePicker();
-	boolean addProject = false;
+	private boolean isSave = false;
 
-	AddProjectForm(Project selectedProject,PitchMenTreeViewModel pitchMenTreeViewModel,boolean addProject){
+	AddProjectForm(Project selectedProject,PitchMenTreeViewModel pitchMenTreeViewModel,boolean isSave){
 
 		this.selectedProject = selectedProject;
 		this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
-		this.addProject = addProject; 
+		this.isSave = isSave; 
 		this.selectedMarketplace = pitchMenTreeViewModel.getSelectedMarketplace(); 
 
 		//TODO beim anzeigen der TextBoxes: addProject = true dann alles leer, bei false die vorherigen Daten übernehmen
@@ -73,24 +73,25 @@ public class AddProjectForm extends Formular{
 		}); 
 		buttonsPanel.add(cancelButton);
 
+		// Speichern Button
 		Button saveButton = new Button("Speichern" + new ClickHandler(){
 
 			public void onClick(ClickEvent event) {
 
 				if (Window.confirm("Sind alle Angaben korrekt?")) {
 
-					if(AddProjectForm.this.addProject){
+					if(getIsSave()){
 
 						/* bei Click wird die unten implementierte Methode save()
-						* aufgerufen.
-						*/
+						 * aufgerufen.
+						 */
 						save();
 						ProjectForm pf = new ProjectForm(getSelectedProject());
 					}
 					else{
 						update();
 						ProjectForm pf = new ProjectForm(getSelectedProject());
-						}
+					}
 
 				}
 
@@ -127,7 +128,6 @@ public class AddProjectForm extends Formular{
 		public void onSuccess(Project project){
 
 			Window.alert("erfolgreich gespeichert"); 
-			//FIXME der will nen objekt und kein int
 			pitchMenTreeViewModel.addProject(selectedProject, selectedMarketplace);
 		}
 
@@ -156,6 +156,13 @@ public class AddProjectForm extends Formular{
 		public void onSuccess(Void result) {
 			pitchMenTreeViewModel.updateProject(selectedProject);
 		}
+	}
+
+
+	// ---------- getIsSave
+
+	public boolean getIsSave(){
+		return this.isSave; 
 	}
 }
 
