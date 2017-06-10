@@ -42,6 +42,48 @@ button {
 	font-family: 'Roboto';
 }
 
+/* ### LOGIN ### */
+
+.login-link-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: rgba(200,200,200,.8);
+    display: block;
+    padding: 200px 30% 0px 30%;
+}
+
+.login-link-container tbody {
+    background: #fff;
+    padding: 40px;
+    display: block;
+    box-shadow: 0px 0px 8px #999;
+}
+
+.login-link-container a {
+    margin: 30px 40px 0px 40px;
+    padding: 10px 20px;
+    background: #1c9cd8;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+}
+
+.login-link-container a:focus,
+.login-link-container a:hover {
+	background: #006EB5;
+}
+
+.login-link-container h1 {
+    margin-left: 0px;
+    margin-bottom: 20px;
+    width: 100%;
+	background-position: 50%;
+}
+
 /* ### TOPBAR ### */
 
 #top {
