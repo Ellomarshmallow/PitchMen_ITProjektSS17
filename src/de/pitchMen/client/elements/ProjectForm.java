@@ -33,7 +33,7 @@ public class ProjectForm extends Formular {
 
 	public ProjectForm(Project project) {
 		
-		
+		// FIXME das super() wirklich notwendig ? 
 		super();
 	 
 		
