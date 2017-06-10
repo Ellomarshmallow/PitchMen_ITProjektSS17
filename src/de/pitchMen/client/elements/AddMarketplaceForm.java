@@ -24,14 +24,14 @@ public class AddMarketplaceForm extends Formular {
 	TextBox titleBox = new TextBox();
 	Label descLabel = new Label("Beschreibung des Marktplatzes:");
 	TextArea descBox = new TextArea();
-	boolean addMarketplace = false; 
+	private boolean isSave = false; 
 
 	//FIXME TextArea richtige größe ? 
-	public AddMarketplaceForm(Marketplace selectedMarketplace,PitchMenTreeViewModel pitchMenTreeViewModel,boolean addMarketplace ) {
+	public AddMarketplaceForm(Marketplace selectedMarketplace,PitchMenTreeViewModel pitchMenTreeViewModel,boolean isSave ) {
 		
 			this.selectedMarketplace = selectedMarketplace;
 			this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
-			this.addMarketplace = addMarketplace; 
+			this.isSave = isSave; 
 		//TODO beim anzeigen der TextBoxes: addMarketplace = true dann alles leer, bei false die vorherigen Daten übernehmen
 		
 			//Vertical Panel erstellen
@@ -69,7 +69,7 @@ public class AddMarketplaceForm extends Formular {
 
 				if (Window.confirm("Sind alle Angaben korrekt?")) {
 					
-					if(AddMarketplaceForm.this.addMarketplace){
+					if(getIsSave()){
 						
 						// bei Click wird die unten implementierte Methode save()
 						// aufgerufen.
@@ -144,5 +144,12 @@ public class AddMarketplaceForm extends Formular {
 		 pitchMenTreeViewModel.updateMarketplace(selectedMarketplace);
 	 }
 	 }
+	 
+	 // ---------- getIsSave
+	 
+	 public boolean getIsSave(){
+		 return this.isSave; 
+	 }
+	 
 
 }
