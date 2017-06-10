@@ -30,7 +30,7 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-    void showAllJobPostings(JobPosting jobPosting, AsyncCallback<AllJobPostings> callback);
+    void showAllJobPostings(AsyncCallback<AllJobPostings> callback);
 	/**
 	 * 
 	 */

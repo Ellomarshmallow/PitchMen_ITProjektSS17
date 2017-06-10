@@ -36,7 +36,7 @@ import de.pitchMen.shared.report.SimpleParagraph;
 import de.pitchMen.shared.report.SimpleReport;
 
 /**
- * Implemetierungsklasse des Interface ReportGenerator.  Sie enthält die Applikationslogik, stellt die Zusammenhänge konstistent dar und ist zuständig für einen geordneten Ablauf.
+ * Implemetierungsklasse des Interface ReportGenerator.  Sie enthï¿½lt die Applikationslogik, stellt die Zusammenhï¿½nge konstistent dar und ist zustï¿½ndig fï¿½r einen geordneten Ablauf.
  * 
  * @author JuliusDigel
  */
@@ -46,7 +46,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	//private PitchMenAdminImpl administration = null;
 	/**
 	   * Ein ReportGenerator benÃ¶tigt Zugriff auf die PitchMenAdministration, da diese die
-	   * essentiellen Methoden für die Koexistenz von Datenobjekten (vgl.
+	   * essentiellen Methoden fï¿½r die Koexistenz von Datenobjekten (vgl.
 	   * bo-Package) bietet.
 	   */
 	private PitchMenAdmin pitchMenAdmin = null;
@@ -61,7 +61,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public void init() throws IllegalArgumentException{
 		/**	
-		 Ein ReportGeneratorImpl-Objekt instantiiert für seinen Eigenbedarf eine
+		 Ein ReportGeneratorImpl-Objekt instantiiert fï¿½r seinen Eigenbedarf eine
 		 * PitchMenAdministration-Instanz.
 		 */
 		PitchMenAdminImpl a = new PitchMenAdminImpl();
@@ -89,7 +89,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	/**
 	protected void addImprint(Report r) {
 		    
-	 /** Das Impressum soll wesentliche Informationen über den Report enthalten. */
+	 /** Das Impressum soll wesentliche Informationen ï¿½ber den Report enthalten. */
 	 
 	/** Bank bank = this.pitchMenAdmin.getMarketplaceByID(id);*/
 	 /**
@@ -114,7 +114,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	   * @return der fertige Report
 	   */
 	@Override
-	public AllJobPostings showAllJobPostings(JobPosting jopPosting) throws IllegalArgumentException {
+	public AllJobPostings showAllJobPostings() throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
 			return null;
 		}
@@ -144,12 +144,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Text der Ausschreibung
 		headline.addColumn(new Column("JobPosting Text"));
 		
-		// das dazugehörige Projekt der Ausschreibung
-		headline.addColumn(new Column("dazugehöriges Projekt"));
+		// das dazugehï¿½rige Projekt der Ausschreibung
+		headline.addColumn(new Column("dazugehï¿½riges Projekt"));
 		
 		// Deadline der Ausschreibung
 		headline.addColumn(new Column("Deadline"));
 		
+		// Deadline der Ausschreibung
+		headline.addColumn(new Column("Status der Ausschreibung"));
+				
 		// HinzufÃ¼gen der zusammengestellten Kopfdaten zu dem Report
 		result.addRow(headline);
 
@@ -166,10 +169,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getDeadline().toString()));
+			jobPostingZeile.addColumn(new Column(jobPosting.getStatus()));
 			result.addRow(jobPostingZeile);
 
 		}
-		//Rückgabe des fertigen Reports für alle Ausschreibungen
+		//Rï¿½ckgabe des fertigen Reports fï¿½r alle Ausschreibungen
 		return result;
 	}
 
@@ -206,7 +210,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		headline.addColumn(new Column("JobPosting Beschreibung"));
 		
-		headline.addColumn(new Column("Dazugehöriges Projekt"));
+		headline.addColumn(new Column("Dazugehï¿½riges Projekt"));
 		
 		result.addRow(headline);
 		
@@ -229,7 +233,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return result;
 			
 		}
-		//Rückgabe des fertigen Reports 
+		//Rï¿½ckgabe des fertigen Reports 
 		return null;
 		// TODO Methode noch zu erledigen!
 	}
@@ -289,11 +293,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationsrow.addColumn(new Column(a.getText()));
 			
-			//Hinzufügen der Row zum Result
+			//Hinzufï¿½gen der Row zum Result
 			result.addRow(applicationsrow);
 		}
 
-		//Rückgabe des fertigen Reports
+		//Rï¿½ckgabe des fertigen Reports
 		return result;
 	}
 	
@@ -352,10 +356,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			applicationRow.addColumn(new Column(a.getStatus()));
 
 
-			//Hinzufügen der Row zum Result
+			//Hinzufï¿½gen der Row zum Result
 			result.addRow(applicationRow);
 		}
-		//Rückgabe des fertigen Reports 
+		//Rï¿½ckgabe des fertigen Reports 
 		return result;
 	};
 
@@ -377,7 +381,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
-		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugehörigen Ausschreibungen");
+		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugehï¿½rigen Ausschreibungen");
 		
 		/*
 	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
@@ -400,7 +404,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Ersteller der Ausschreibung"));
 		// Beschreibung der Ausschreibung
 		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
-		//Hinzufügen der Row zum Resultobjekt
+		//Hinzufï¿½gen der Row zum Resultobjekt
 		result.addRow(headline);
 
 		/*
@@ -422,11 +426,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			applicationsrow.addColumn(new Column(jobPoster.getFirstName() + " " + jobPoster.getName()));
 			applicationsrow.addColumn(new Column(jobPoster.getDescription()));
 			
-			//Hinzufügen der Row zum Result
+			//Hinzufï¿½gen der Row zum Result
 			result.addRow(applicationsrow);
 
 		}
-		//Rückgabe des fertigen Reports 
+		//Rï¿½ckgabe des fertigen Reports 
 		return null;
 	}
 	
@@ -456,7 +460,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllParticipationsOfOneUser result = new AllParticipationsOfOneUser();
 		
 		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
-		result.setTitle("Report für Alle Beteiligungen eines Nutzers");
+		result.setTitle("Report fï¿½r Alle Beteiligungen eines Nutzers");
 		
 		/*
 	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
@@ -471,7 +475,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	     * auf dem Report stehen) des Reports. Die Kopfdaten sind einzeilig, daher
 	     * die Verwendung von Rows.
 	     */
-		// Dazugehöriges Projekt
+		// Dazugehï¿½riges Projekt
 		headline.addColumn(new Column("Projekt"));
 		// Startdatum des Projekts
 		headline.addColumn(new Column("Startdatum"));
@@ -495,10 +499,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			projectRow.addColumn(new Column(project.getDateClosed()));
 			projectRow.addColumn(new Column(project.getDescription()));
 			
-			//Hinzufügen der Row zum Result
+			//Hinzufï¿½gen der Row zum Result
 			result.addRow(projectRow);
 		}
-		//Rückgabe des fertigen Reports 
+		//Rï¿½ckgabe des fertigen Reports 
 		return result;
 	}
 
@@ -531,7 +535,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		//Dieser Report ist ein Composite Report und setzt sich aus dem Report "showAllApplicationsOfUser" und "showAllParticipationsOfOneUser" zusammen
 		result.addSubReport(this.showAllApplicationsOfUser(p));
 		result.addSubReport(this.showAllParticipationsOfOneUser(p));
-		//Rückgabe des fertigen Reports 
+		//Rï¿½ckgabe des fertigen Reports 
 		return result;
 	}
 
@@ -608,11 +612,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				};
 				
 				Row applicationCount = new Row();
-				//hinzufügen der Spalte für die jeweiligen Stati 
+				//hinzufï¿½gen der Spalte fï¿½r die jeweiligen Stati 
 				applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
 				applicationCount.addColumn(new Column(String.valueOf(declined.size())));
 				applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
-				//Hinzufügen der Row zum Result
+				//Hinzufï¿½gen der Row zum Result
 				result.addRow(applicationCount);
 				
 			}
@@ -620,7 +624,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			
 		//}
 		
-			//Rückgabe des fertigen Reports
+			//Rï¿½ckgabe des fertigen Reports
 		return result;
 		
 		
@@ -701,16 +705,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				};
 				
 				Row jobPostingCount = new Row();
-				//hinzufügen der Spalte für die jeweiligen Stati zur Row
+				//hinzufï¿½gen der Spalte fï¿½r die jeweiligen Stati zur Row
 				jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
 				jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
 				jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
-				//Hinzufügen der Row zum Result
+				//Hinzufï¿½gen der Row zum Result
 				result.addRow(jobPostingCount);
 				
 			}
 		//}	
-		//Rückgabe des fertigen Reports
+		//Rï¿½ckgabe des fertigen Reports
 		return result;	
 	}
 
@@ -732,7 +736,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanInAndOutReport result = new FanInAndOutReport();
 		
 		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
-		result.setTitle("Report für die FanIn bzw FanOut Analyse");
+		result.setTitle("Report fï¿½r die FanIn bzw FanOut Analyse");
 		/*
 	     * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
 	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
@@ -745,7 +749,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		result.addSubReport(this.showFanInJobPostingsOfUser());
 		result.addSubReport(this.showFanOutApplicationsOfUser());
 		
-		//Rückgabe des fertigen Reports
+		//Rï¿½ckgabe des fertigen Reports
 		return result;
 		
 		

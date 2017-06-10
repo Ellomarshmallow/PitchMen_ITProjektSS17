@@ -3,10 +3,23 @@ package de.pitchMen.client.report;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTree;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
+
+import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.ShowAllJobPostings;
+
+import de.pitchMen.server.report.ReportGeneratorImpl;
+import de.pitchMen.shared.ReportGenerator;
+import de.pitchMen.shared.ReportGeneratorAsync;
+import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.report.AllJobPostings;
+import de.pitchMen.shared.report.HTMLReportWriter;
 
 /**
  * Die Klasse <code>ReportNavigation</code> erweitert die
@@ -19,6 +32,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 
 public class ReportNavigation extends VerticalPanel {
+	
+	
 
 	public void onLoad() {
 		/*
@@ -135,11 +150,42 @@ public class ReportNavigation extends VerticalPanel {
 		}
 
 		private HTML getAllApplications() {
-			return null;
-			// TODO Auto-generated method stub
 			
+//			class ShowAllJobPostings extends VerticalPanel {
+//				
+//				public void onLoad() {
+//					super.onLoad();
+//					this.add(new HTML("<h2>Alle Ausschreibungen</h2>"));
+//					
+//					ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
+//					
+//					reportGenerator.showAllJobPostings(new AllJobPostingsCallback(this));
+//				}
+//				
+//				
+//			}
+			return null;
 		}
-		
+		class AllJobPostingsCallback implements AsyncCallback<AllJobPostings> {
+			
+			private ClickHandler parent = null;
+			
+			public AllJobPostingsCallback(ClickHandler parent) {
+				this.parent = parent;
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				((AbsolutePanel) parent).add(new HTML("<p class='error'>Konnte Ausschreibungen nicht laden.</p>"));
+				
+			}
+
+			@Override
+			public void onSuccess(AllJobPostings report) {
+				HTMLReportWriter writer = new HTMLReportWriter();
+				writer.process(report);
+		        ((AbsolutePanel) parent).add(new HTML(writer.getReportText()));
+			}
+		}
 	}
-	
 }
