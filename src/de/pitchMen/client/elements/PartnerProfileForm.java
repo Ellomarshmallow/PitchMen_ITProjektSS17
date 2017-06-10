@@ -45,13 +45,11 @@ public class PartnerProfileForm extends Formular {
 
 		@Override
 		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
+			ClientsideSettings.getLogger().severe("Konnte Partnerprofil nicht laden");	
 		}
 
 		@Override
 		public void onSuccess(PartnerProfile result) {
-			// TODO Auto-generated method stub
 			
 		}
 		
