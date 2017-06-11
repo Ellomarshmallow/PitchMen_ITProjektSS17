@@ -191,6 +191,6 @@ public interface PitchMenAdminAsync {
 
 	// --------------------------- LOGIN
 
-	void login(String requestUri, AsyncCallback<Person> async);
+	void login(String requestUri, AsyncCallback<Person> callback);
 
 }
