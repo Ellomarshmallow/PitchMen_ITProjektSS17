@@ -22,13 +22,21 @@ public class PartnerProfileForm extends Formular {
 	 * um ihm das richtige PartnerProfile zur Bearbeitung
 	 * ausgeben zu können.
 	 */
-	int currentUserId = 0;
+	private int currentUserId = 0;
 	
 	/**
 	 * Auch in dieser Klasse werden die Funktionalitäten der
 	 * {@link de.pitchMen.server.PitchMenAdminImpl} benötigt.
 	 */
 	PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
+	
+	/**
+	 * Der angemeldete Nutzer hat i. d. R. bereits ein Partnerprofil, das
+	 * in der Variable <code>userPartnerProfile</code> hinterlegt wird. Hat
+	 * der Nutzer noch kein Partnerprofil angelegt, bleibt dieses Element 
+	 * <code>null</code> und dem Nutzer wird ein leeres Formular angezeigt.
+	 */
+	private PartnerProfile userPartnerProfile = null;
 	
 	public PartnerProfileForm() {
 		// Abfrage der id des aktuell angemeldeten Nutzers
@@ -50,8 +58,26 @@ public class PartnerProfileForm extends Formular {
 
 		@Override
 		public void onSuccess(PartnerProfile result) {
-			
+			if(result == null) {
+				ClientsideSettings.getLogger().info("RPC gibt null zurück - der Nutzer mit der id " + currentUserId + " hat noch kein Partnerprofil.");
+			} else {
+				ClientsideSettings.getLogger().info("PartnerProfil von RPC empfangen");
+				/*
+				 *  Das Attribut userPartnerProfile enthält nach dieser Zuweisung
+				 *  das PartnerProfil des aktuell angemeldeten Benutzers.
+				 */
+				userPartnerProfile = result;
+			}
 		}
 		
+	}
+	
+	/**
+	 * Die Methode <code>onLoad()</code> wird von GWT für alle Widgets
+	 * vorgeschrieben und wird ausgeführt, wenn das Widget zur Anzeige 
+	 * gebracht wird.
+	 */
+	public void onLoad() {
+		super.onLoad();
 	}
 }
