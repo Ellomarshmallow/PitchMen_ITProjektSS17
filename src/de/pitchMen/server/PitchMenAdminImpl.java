@@ -645,14 +645,14 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
+		
 		Person logInf = new Person();
 
 		if (user != null) {
-
-			Person existingPerson = null;
-			existingPerson = PersonMapper.personMapper().findByEmail(user.getEmail());
-
-			if (existingPerson != null) {
+			Person existingPerson = personMapper.findByEmail(user.getEmail());
+			//existingPerson.setEmailAdress("JuliusDigel@gmail.com");
+			
+			if(existingPerson != null){
 				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
 						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmailAdress());
 
@@ -663,13 +663,15 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 			}
 
-			logInf.setEmailAdress(user.getEmail());
+			
 			logInf.setLoggedIn(true);
 			logInf.setNickname(user.getNickname());
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
+			logInf.setEmailAdress(user.getEmail());
 		} else {
 			logInf.setLoggedIn(false);
 			logInf.setLoginUrl(userService.createLoginURL(requestUri));
+			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 		}
 		return logInf;
 	}
