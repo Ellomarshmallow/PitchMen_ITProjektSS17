@@ -4,7 +4,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.ReportGeneratorAsync;
 
 /**

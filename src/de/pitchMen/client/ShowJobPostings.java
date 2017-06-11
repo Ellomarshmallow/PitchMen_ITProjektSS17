@@ -2,7 +2,6 @@ package de.pitchMen.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.JobPosting;

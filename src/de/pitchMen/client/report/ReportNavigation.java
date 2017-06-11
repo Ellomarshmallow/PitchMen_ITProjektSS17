@@ -2,22 +2,13 @@ package de.pitchMen.client.report;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
-import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.client.ShowAllJobPostings;
-
-import de.pitchMen.server.report.ReportGeneratorImpl;
-import de.pitchMen.shared.ReportGenerator;
-import de.pitchMen.shared.ReportGeneratorAsync;
-import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.HTMLReportWriter;
 

@@ -2,13 +2,10 @@ package de.pitchMen.server.report;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
 
-import com.google.gwt.thirdparty.javascript.jscomp.Result;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.pitchMen.client.PitchMen;
-import de.pitchMen.server.*;
+import de.pitchMen.server.PitchMenAdminImpl;
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
 import de.pitchMen.shared.bo.Application;
@@ -25,15 +22,11 @@ import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.AllParticipationsOfOneUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.Column;
-import de.pitchMen.shared.report.CompositeParagraph;
 import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.FanInJobPostingsOfUser;
 import de.pitchMen.shared.report.FanOutApplicationsOfUser;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
-import de.pitchMen.shared.report.Report;
 import de.pitchMen.shared.report.Row;
-import de.pitchMen.shared.report.SimpleParagraph;
-import de.pitchMen.shared.report.SimpleReport;
 
 /**
  * Implemetierungsklasse des Interface ReportGenerator.  Sie enth�lt die Applikationslogik, stellt die Zusammenh�nge konstistent dar und ist zust�ndig f�r einen geordneten Ablauf.
