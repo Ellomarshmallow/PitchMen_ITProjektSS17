@@ -523,6 +523,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException {
 		return this.projectMapper.findProjectsByPersonId(personId);
 	}
+
 	// --------------------------- RATING
 
 	@Override
@@ -561,8 +562,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId, int jobPostingId)
-			throws IllegalArgumentException {
+	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
+			int jobPostingId) throws IllegalArgumentException {
 		// FIXME nicht sicher ob die Methode funktioniert
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
@@ -667,14 +668,14 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		
+
 		Person logInf = new Person();
 
 		if (user != null) {
 			Person existingPerson = personMapper.findByEmail(user.getEmail());
-			//existingPerson.setEmailAdress("JuliusDigel@gmail.com");
-			
-			if(existingPerson != null){
+			// existingPerson.setEmailAdress("JuliusDigel@gmail.com");
+
+			if (existingPerson != null) {
 				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
 						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmailAdress());
 
@@ -685,7 +686,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 			}
 
-			
 			logInf.setLoggedIn(true);
 			logInf.setNickname(user.getNickname());
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
@@ -697,35 +697,35 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		}
 		return logInf;
 	}
-	
+
 	// -------------------------TRAITMATCHING METHODE
-	
+
 	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) {
-		
+
 		ArrayList<Trait> personTraits = traitMapper.findTraitByPartnerProfileId(pp.getId());
-		
+
 		ArrayList<PartnerProfile> allpps = partnerProfileMapper.findAll();
-		
+
 		ArrayList<JobPosting> matchingTraits = new ArrayList<JobPosting>();
-		
+
 		for (PartnerProfile pprofile : allpps) {
-			ArrayList <Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
-			
-			for(Trait trait : jPTraits){
-				String  traitJp = trait.getName();
-				
-				for(Trait pTrait : personTraits){
+			ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
+
+			for (Trait trait : jPTraits) {
+				String traitJp = trait.getName();
+
+				for (Trait pTrait : personTraits) {
 					String traitPerson = pTrait.getName();
-					
-					if(traitJp == traitPerson){
+
+					if (traitJp == traitPerson) {
 						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
 					}
 				}
 			}
 		}
-		
+
 		return matchingTraits;
-		
-	}; 
+
+	};
 
 }
