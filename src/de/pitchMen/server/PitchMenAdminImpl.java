@@ -675,22 +675,26 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 			//existingPerson.setEmailAdress("JuliusDigel@gmail.com");
 			
 			if(existingPerson != null){
-				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
+				ClientsideSettings.getLogger().info("Userobjekt E-Mail = " + user.getEmail()
 						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmailAdress());
 
 				existingPerson.setLoggedIn(true);
 				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
+				existingPerson.setIsExisting(true);
 
 				return existingPerson;
 
 			}
 
-			
+			//FIXME NickName falsche, Name wird über Formular gesettet
 			logInf.setLoggedIn(true);
-			logInf.setNickname(user.getNickname());
+			logInf.setNickName(user.getNickname());
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 			logInf.setEmailAdress(user.getEmail());
-		} else {
+			logInf.setIsExisting(false); 
+			//TODO Formular zum eingeben eines Firstname Lastname, 
+		} 
+		else {
 			logInf.setLoggedIn(false);
 			logInf.setLoginUrl(userService.createLoginURL(requestUri));
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));

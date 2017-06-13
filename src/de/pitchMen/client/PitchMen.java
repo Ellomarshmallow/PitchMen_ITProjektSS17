@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.pitchMen.client.elements.FirstLoginForm;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Person;
 
@@ -83,8 +84,16 @@ public class PitchMen implements EntryPoint {
 			
 			// Ist der Nutzer bereits eingeloggt?
 			if (person.isLoggedIn()) {
-				// Dann lade die Applikation
-				loadPitchMen();
+					// Ist der Nutzer bereits in der Datenbank? 
+				if(person.getIsExisting()){					
+					// Dann lade die Applikation
+					loadPitchMen();
+				}
+				else{
+					//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
+					FirstLoginForm firstLoginForm = new FirstLoginForm(); 
+				}
+				
 			} else {	
 				// Ansonsten gebe einen Link zur Anmeldung aus
 				VerticalPanel logPanel = new VerticalPanel();
