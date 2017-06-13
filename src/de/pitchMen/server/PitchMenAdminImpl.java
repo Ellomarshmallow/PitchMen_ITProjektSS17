@@ -9,29 +9,9 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.server.db.ApplicationMapper;
-import de.pitchMen.server.db.CompanyMapper;
-import de.pitchMen.server.db.JobPostingMapper;
-import de.pitchMen.server.db.MarketplaceMapper;
-import de.pitchMen.server.db.ParticipationMapper;
-import de.pitchMen.server.db.PartnerProfileMapper;
-import de.pitchMen.server.db.PersonMapper;
-import de.pitchMen.server.db.ProjectMapper;
-import de.pitchMen.server.db.RatingMapper;
-import de.pitchMen.server.db.TeamMapper;
-import de.pitchMen.server.db.TraitMapper;
+import de.pitchMen.server.db.*;
 import de.pitchMen.shared.PitchMenAdmin;
-import de.pitchMen.shared.bo.Application;
-import de.pitchMen.shared.bo.Company;
-import de.pitchMen.shared.bo.JobPosting;
-import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.Participation;
-import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Person;
-import de.pitchMen.shared.bo.Project;
-import de.pitchMen.shared.bo.Rating;
-import de.pitchMen.shared.bo.Team;
-import de.pitchMen.shared.bo.Trait;
+import de.pitchMen.shared.bo.*;
 
 /**
  * Implemetierungsklasse des Interface PitchMenAdmin. Sie enth�lt die
@@ -416,6 +396,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PartnerProfile getPartnerProfileByCompanyId(int companyId) throws IllegalArgumentException {
 		return this.partnerProfileMapper.findPartnerProfileByCompanyId(companyId);
 	}
+	
+	// --------------------------- PERSON
 
 	@Override
 	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
