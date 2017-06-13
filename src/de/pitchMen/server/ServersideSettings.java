@@ -1,6 +1,7 @@
 package de.pitchMen.server;
 
 import java.util.logging.Logger;
+
 import de.pitchMen.shared.CommonSettings;
 
 /**

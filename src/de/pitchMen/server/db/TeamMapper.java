@@ -5,8 +5,10 @@ package de.pitchMen.server.db;
  * 
  * @author Lars
  */
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.pitchMen.shared.bo.Team;

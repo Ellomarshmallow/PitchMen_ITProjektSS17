@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import de.pitchMen.shared.bo.*;
+
+import de.pitchMen.shared.bo.Application;
+import de.pitchMen.shared.bo.Company;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.Participation;
+import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Rating;
+import de.pitchMen.shared.bo.Team;
+import de.pitchMen.shared.bo.Trait;
 
 /**
  * Das asynchrone Gegenstück des Interface PitchMenAdmin. Es wird
@@ -191,6 +202,6 @@ public interface PitchMenAdminAsync {
 
 	// --------------------------- LOGIN
 
-	void login(String requestUri, AsyncCallback<Person> async);
+	void login(String requestUri, AsyncCallback<Person> callback);
 
 }

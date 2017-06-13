@@ -1,9 +1,15 @@
 package de.pitchMen.client;
 
 import java.util.logging.Logger;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import de.pitchMen.shared.*;
+
+import de.pitchMen.shared.CommonSettings;
+import de.pitchMen.shared.PitchMenAdmin;
+import de.pitchMen.shared.PitchMenAdminAsync;
+import de.pitchMen.shared.ReportGenerator;
+import de.pitchMen.shared.ReportGeneratorAsync;
 import de.pitchMen.shared.bo.Person;
 
 /**

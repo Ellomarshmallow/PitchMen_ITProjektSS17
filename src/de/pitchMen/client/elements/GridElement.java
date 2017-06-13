@@ -2,6 +2,7 @@ package de.pitchMen.client.elements;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import de.pitchMen.shared.bo.BusinessObject;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Marketplace;

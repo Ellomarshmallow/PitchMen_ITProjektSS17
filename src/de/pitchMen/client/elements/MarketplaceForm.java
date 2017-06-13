@@ -1,20 +1,15 @@
 package de.pitchMen.client.elements;
 
-import com.google.gwt.event.dom.client.ClickHandler;
-
-
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.Project;
 
 public class MarketplaceForm extends Formular {
 	

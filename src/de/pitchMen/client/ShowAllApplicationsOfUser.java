@@ -1,7 +1,9 @@
 package de.pitchMen.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.pitchMen.shared.ReportGeneratorAsync;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
