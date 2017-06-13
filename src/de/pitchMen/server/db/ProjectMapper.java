@@ -475,10 +475,10 @@ public class ProjectMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten marketplaceId, in der Datenbank.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT * FROM project"
-					+ "INNER JOIN marketplace"
+			ResultSet rs = stmt.executeQuery("SELECT * FROM project "
+					+ "INNER JOIN marketplace "
 					+ "ON marketplace.id = project.marketplace_id "
-					+ "WHERE marketplace.id ="+ marketplaceId);
+					+ "WHERE marketplace.id = "+ marketplaceId);
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
