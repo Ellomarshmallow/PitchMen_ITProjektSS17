@@ -123,6 +123,7 @@ public class JobPostingForm extends Formular{
 			}
 		}
 
+		
 		// ---------- updateJobPostingClickHandler
 		private class updateJobPostingClickHandler implements ClickHandler {
 			public void onClick(ClickEvent event) {
@@ -132,6 +133,16 @@ public class JobPostingForm extends Formular{
 
 			}
 		} 
+		private class applicateClickHandler implements ClickHandler {
+			public void onClick(ClickEvent event) {
+
+				// bei Click wird die update() Methode aufgerufen
+				ApplicationForm applicationForm = new ApplicationForm(selectedJobPosting);
+
+			}
+		} 
+		
+		
 
 		public void delete() {
 			
