@@ -7,15 +7,24 @@ package de.pitchMen.shared.bo;
  */
 public class Person extends OrganisationUnit {
 
-	private String firstName = "";
 
 	private static final long serialVersionUID = 1L;
 
+	private String firstName = "";
 	private boolean loggedIn = false;
 	private String emailAdress = "";
-	private String nickname = "";
+	private String name = "";
 	private String loginUrl = "";
 	private String logoutUrl = "";
+	private boolean isExisting = false; 
+
+	public boolean getIsExisting() {
+		return isExisting;
+	}
+
+	public void setIsExisting(boolean isExisting) {
+		this.isExisting = isExisting;
+	}
 
 	public boolean isLoggedIn() {
 		return loggedIn;
@@ -29,12 +38,12 @@ public class Person extends OrganisationUnit {
 		this.emailAdress = emailAdress;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getName() {
+		return name;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setName(String nickname) {
+		this.name = nickname;
 	}
 
 	public String getLoginUrl() {
