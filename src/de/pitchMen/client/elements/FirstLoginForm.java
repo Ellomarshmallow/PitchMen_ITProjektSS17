@@ -71,7 +71,7 @@ public class FirstLoginForm extends Formular  {
 	
 	//FIXME rest ausfüllen
 	public void save(){
-		super.getPitchMenAdmin().addPerson(firstNameBox.getText(), true, newUser.getEmailAdress(), lastNameBox.getText(),newUser.getLoginUrl(), newUser.getLogoutUrl(), new AsyncCallback<Person>() {
+		super.getPitchMenAdmin().addPerson(firstNameBox.getText(), lastNameBox.getText(),newUser.getEmailAdress(), newUser.getLoginUrl(), newUser.getLogoutUrl(), true, true, new AsyncCallback<Person>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
