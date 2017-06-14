@@ -84,8 +84,16 @@ public class FirstLoginForm extends Formular  {
 										  + " "
 										  + lastNameBox.getText()
 										  + "</h2>"));
+		pitchMen.loadPitchMen();
 		
-		this.pitchMen.pitchMenAdmin.addPerson(firstNameBox.getText(), lastNameBox.getText(),newUser.getEmailAdress(), newUser.getLoginUrl(), newUser.getLogoutUrl(), true, true, new AsyncCallback<Person>() {
+		this.pitchMen.pitchMenAdmin.addPerson(firstNameBox.getText(), 
+											  lastNameBox.getText(),
+											  newUser.getEmailAdress(), 
+											  newUser.getLoginUrl(), 
+											  newUser.getLogoutUrl(), 
+											  true, 
+											  true, 
+											  new AsyncCallback<Person>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -101,7 +109,9 @@ public class FirstLoginForm extends Formular  {
 													+ result.getName()
 													+ " ("
 													+ result.getEmailAdress()
-													+ ")");		
+													+ ")");	
+				ClientsideSettings.getCurrentUser().setFirstName(result.getFirstName());
+				ClientsideSettings.getCurrentUser().setName(result.getName());
 				RootPanel.get("content").clear();
 				pitchMen.loadPitchMen();
 			}
