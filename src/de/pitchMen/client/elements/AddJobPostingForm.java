@@ -32,6 +32,10 @@ public class AddJobPostingForm extends Formular {
 	DatePicker deadlineBox = new DatePicker(); 
 	private boolean isSave = false; 
 	
+	AddJobPostingForm(PitchMenTreeViewModel pitchMenTreeViewModel, boolean isSave) {
+		this(null, pitchMenTreeViewModel, isSave);
+	}
+	
 	AddJobPostingForm(JobPosting selectedJobPosting,PitchMenTreeViewModel pitchMenTreeViewModel,boolean isSave) {
 		
 		this.selectedJobPosting = selectedJobPosting;

@@ -418,16 +418,17 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException {
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl,
+			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException {
 		Person person = new Person();
 
 		person.setFirstName(firstName);
-		person.setLoggedIn(loggedIn);
+		person.setName(name);
 		person.setEmailAdress(emailAdress);
-		person.setNickname(nickname);
 		person.setLoginUrl(loginUrl);
 		person.setLogoutUrl(logoutUrl);
+		person.setLoggedIn(loggedIn);
+		person.setIsExisting(isExisting);
 
 		return this.personMapper.insert(person);
 
@@ -665,33 +666,84 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	public Person login(String requestUri) {
 
+		ClientsideSettings.getLogger().severe("login()-Methode wurde aufgerufen.");
+		
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		
 		Person logInf = new Person();
 
+		/*
+		 * Ist der User angemeldet, hat der Methodenaufruf von
+		 * userService.getCurrentUser() ein vollwertiges User-Objekt
+		 * zurückgegeben. Ist der Nutzer nicht angemeldet, gibt die Methode
+		 * null zurück. Wir springen dann in den else-Block.
+		 */
 		if (user != null) {
-			Person existingPerson = personMapper.findByEmail(user.getEmail());
-			//existingPerson.setEmailAdress("JuliusDigel@gmail.com");
+			// Der Nutzer hat die erste Hürde genommen und sich angemeldet
 			
+			ClientsideSettings.getLogger().severe("User-Objekt ist nicht null.");
+			
+			/*
+			 * Wir fragen zunächst bei der Datenbank an, ob der Nutzer,
+			 * der sich gerade angemeldet hat, bereits vorhanden ist.
+			 */
+			Person existingPerson = personMapper.findByEmail(user.getEmail());
+			
+			/*
+			 * Hat der Mapper ein passendes Person-Objekt gefunden, gibt er
+			 * dieses zurück. Ansonsten returnt er null. Darauf basierend 
+			 * können wir folgende Fallunterscheidung vornehemen:
+			 */
 			if(existingPerson != null){
-				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
-						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmailAdress());
+				// Der Nutzer ist dem System bereits bekannt.
+				ClientsideSettings.getLogger().severe("User mit der E-Mai-Adresse [" + user.getEmail()
+						+ "]  existiert.");
 
-				existingPerson.setLoggedIn(true);
+				/*
+				 *  Hier werden nun noch alle Attribute gesetzt, die in der 
+				 *  Datenbank nicht gespeichert sind.
+				 */
+				
+				// der Nutzer ist eingeloggt
+				existingPerson.setLoggedIn(true); 
+				// über diese URL kann er sich ausloggen
 				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
+				// außerdem existiert er bereits. Dieser Wert sagt der GUI: lade die eigentliche Applikation
+				existingPerson.setIsExisting(true); 
 
 				return existingPerson;
 
 			}
-
 			
+			// Hier landet das Programm, wenn der Nutzer angemeldet, aber noch unbekannt ist
 			logInf.setLoggedIn(true);
-			logInf.setNickname(user.getNickname());
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 			logInf.setEmailAdress(user.getEmail());
-		} else {
+			// Der GUI wird mit diesem Wert mitgeteilt, dass der Nutzer erst seine Daten eingeben muss
+			logInf.setIsExisting(false);  
+		} 
+		else {
+			// Hier landen wir wenn der Nutzer nicht angemeldet ist
+			
+			ClientsideSettings.getLogger().severe("User-Objekt ist null.");
+			
+			/*
+			 * Mit dem setzen dieses Wertes auf false teilen wir der GUI
+			 * mit, dass der Nutzer sich erst anmelden muss. Diese erzeugt
+			 * daraufhin ein Overlay mit einem Link, der den Nutzer zum
+			 * Anmeldeformular weiterleitet.
+			 */
 			logInf.setLoggedIn(false);
+			
+			/*
+			 * Dem per Callback an die GUI weitergereichten Person-Obbjekt
+			 * logInf wird eine LoginURL mitgegeben. Diese wird zum Ziel
+			 * des Links im Overlay. Darüber meldet sich der Nutzer an und 
+			 * kehrt dann auf die Seite zurück. Wieder wird diese login()-
+			 * Methode aufgerufen, nun ist der User aber nicht mehr null.
+			 * Jetzt geht es im if-Block "weiter".
+			 */
 			logInf.setLoginUrl(userService.createLoginURL(requestUri));
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 		}

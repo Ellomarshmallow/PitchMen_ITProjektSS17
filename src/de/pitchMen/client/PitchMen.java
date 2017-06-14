@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.pitchMen.client.elements.FirstLoginForm;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Person;
 
@@ -64,7 +65,7 @@ public class PitchMen implements EntryPoint {
 		 * @see com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable)
 		 */
 		public void onFailure(Throwable caught) {
-			RootPanel.get("content").add(new HTML("<h1>Herzlich willkommen bei PitchMen. Leider hat das mit dem Login nicht so ganz funktioniert.</h1><p><small>Liegt an der Applikationsschicht. Wahrscheinlich.</small></p>"));
+			RootPanel.get("content").add(new HTML("<h2>Herzlich willkommen bei PitchMen. Leider hat das mit dem Login nicht so ganz funktioniert.</h2>"));
 			ClientsideSettings.getLogger().severe("Login fehlgeschlagen");
 		}
 
@@ -83,8 +84,16 @@ public class PitchMen implements EntryPoint {
 			
 			// Ist der Nutzer bereits eingeloggt?
 			if (person.isLoggedIn()) {
-				// Dann lade die Applikation
-				loadPitchMen();
+					// Ist der Nutzer bereits in der Datenbank? 
+				if(person.getIsExisting()){					
+					// Dann lade die Applikation
+					loadPitchMen();
+				}
+				else{
+					//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
+					FirstLoginForm firstLoginForm = new FirstLoginForm(); 
+				}
+				
 			} else {	
 				// Ansonsten gebe einen Link zur Anmeldung aus
 				VerticalPanel logPanel = new VerticalPanel();

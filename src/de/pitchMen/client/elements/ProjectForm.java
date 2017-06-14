@@ -41,7 +41,7 @@ public class ProjectForm extends Formular {
 		VerticalPanel labelsPanel = new VerticalPanel();
 		this.add(labelsPanel);
 
-		// labels und Boxen dem Vertical Panel hinzufügen
+		// labels dem Vertical Panel hinzufügen
 		labelsPanel.add(idLabel);
 		labelsPanel.add(titleLabel);
 		labelsPanel.add(titleBox);
@@ -116,7 +116,7 @@ public class ProjectForm extends Formular {
 
 		public void onClick(ClickEvent event) {
 
-			AddJobPostingForm addJobposting = new AddJobPostingForm();
+			AddJobPostingForm addJobPosting = new AddJobPostingForm(pitchMenTreeViewModel,true);
 
 		}
 	}
