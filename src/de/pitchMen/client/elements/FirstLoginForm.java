@@ -38,9 +38,10 @@ public class FirstLoginForm extends Formular  {
 				// ---------- Speichern Button, ClickHandler hinzufügen und dem
 				// HorizontalPanel hinzufügen
 				Button saveButton = new Button("Speichern");
-				saveButton.addClickHandler(new saveClickHandler(){
+				saveButton.addClickHandler(new ClickHandler(){
 					 public void onClick(ClickEvent event) {
 						 save(); 
+					 }
 				}); 
 				
 				
