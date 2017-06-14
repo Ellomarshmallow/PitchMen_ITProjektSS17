@@ -79,7 +79,7 @@ public class JobPostingMapper {
 				/**
 				 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
 				 */
-				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline project_id)" + "VALUES ( "
+				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline project_id)" + " VALUES ( "
 						+ jobPosting.getId() + ", '" + jobPosting.getTitle() + "' ,'" + jobPosting.getText()
 						+ "' ,'" + jobPosting.getDeadline() + "' ," + jobPosting.getProjectId() + ")");
 			}
@@ -109,9 +109,9 @@ public class JobPostingMapper {
 			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate(
-					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + "Text='" + jobPosting.getText()
-							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + "status='" 
-							+ jobPosting.getStatus() + "WHERE id=" + jobPosting.getId());
+					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + " Text='" + jobPosting.getText()
+							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + " status='" 
+							+ jobPosting.getStatus() + " WHERE id=" + jobPosting.getId());
 		}
 		/**
 		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
@@ -137,7 +137,7 @@ public class JobPostingMapper {
 			/**
 			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
 			 */
-			stmt.executeUpdate("DELETE FROM jobPosting " + "WHERE id=" + jobPosting.getId());
+			stmt.executeUpdate("DELETE FROM jobPosting" + " WHERE id=" + jobPosting.getId());
 		}
 		/**
 		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
@@ -165,7 +165,7 @@ public class JobPostingMapper {
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, text, deadline, projcet_id, "
-							+ "status FROM jobPosting " + "WHERE id =" + id);
+							+ "status FROM jobPosting" + " WHERE id =" + id);
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
 			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
@@ -258,8 +258,8 @@ public class JobPostingMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach dem gesuchten Test, in der Datenbank, sortiert nach der Id.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting "
-					+ "WHERE text LIKE '" + text + "' ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting"
+					+ " WHERE text LIKE '" + text + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
@@ -462,7 +462,7 @@ public class JobPostingMapper {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM jobPosting "
 					+ "INNER JOIN project"
-					+ "ON project.id = jobPosting.project_id WHERE jobPosting.project_id="+ projectId);
+					+ " ON project.id = jobPosting.project_id WHERE jobPosting.project_id = "+ projectId);
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so

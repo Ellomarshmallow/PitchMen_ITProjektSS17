@@ -26,8 +26,10 @@
 
   <!-- Configure java.util.logging -->
   <system-properties>
-    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+  <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
+  
+  
 
   <!--
     HTTP Sessions are disabled by default. To enable HTTP sessions specify:

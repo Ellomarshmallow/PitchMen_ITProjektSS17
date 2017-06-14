@@ -21,11 +21,9 @@ public class DBConnection {
 	/**
 	 * Mit dieser Url wird die Datenbank angesprochen.
 	 */
-	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   static final String googleUrl = "jdbc:google:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema";
-	   static final String USER = "root";
-	   static final String PASS = "winter2017";
-	private static String TestUrl = "jdbc:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema";
+
+	private static String googleUrl = "jdbc:google:mysql://pitchmen-itprojekt-ss17:pitchmen/pitchmen_itprojekt_schema?user=root&password=winter2017";
+	private static String TestUrl = "jdbc:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema?user=root&password=winter2017";
 
 	/**
 	 * Stellt die Verbindung zur Datenbank her.
@@ -55,7 +53,7 @@ public class DBConnection {
 				 * Die Verbindung zur Datenbank wird in der Variablen 
 				 * con mit den dazugeh�rigen Informationen gespeichert
 				 */
-				con = DriverManager.getConnection(url, USER, PASS);
+				con = DriverManager.getConnection(url);
 
 			} catch (Exception e) {
 				con = null;
