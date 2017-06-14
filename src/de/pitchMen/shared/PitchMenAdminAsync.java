@@ -127,7 +127,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PERSON
 
-	void addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
+	void addPerson(String firstName, boolean loggedIn, String emailAdress, String loginUrl,
 			String logoutUrl, AsyncCallback<Person> callback);
 
 	void updatePerson(Person person, AsyncCallback<Void> callback);

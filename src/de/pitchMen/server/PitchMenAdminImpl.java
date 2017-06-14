@@ -418,14 +418,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
+	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String loginUrl,
 			String logoutUrl) throws IllegalArgumentException {
 		Person person = new Person();
 
 		person.setFirstName(firstName);
 		person.setLoggedIn(loggedIn);
 		person.setEmailAdress(emailAdress);
-		person.setNickname(nickname);
 		person.setLoginUrl(loginUrl);
 		person.setLogoutUrl(logoutUrl);
 
@@ -688,7 +687,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 			//FIXME NickName falsche, Name wird über Formular gesettet
 			logInf.setLoggedIn(true);
-			logInf.setNickName(user.getNickname());
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 			logInf.setEmailAdress(user.getEmail());
 			logInf.setIsExisting(false); 
