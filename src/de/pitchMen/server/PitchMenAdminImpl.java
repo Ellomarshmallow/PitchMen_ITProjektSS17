@@ -669,31 +669,73 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		
 		Person logInf = new Person();
 
+		/*
+		 * Ist der User angemeldet, hat der Methodenaufruf von
+		 * userService.getCurrentUser() ein vollwertiges User-Objekt
+		 * zurückgegeben. Ist der Nutzer nicht angemeldet, gibt die Methode
+		 * null zurück. Wir springen dann in den else-Block.
+		 */
 		if (user != null) {
-			Person existingPerson = personMapper.findByEmail(user.getEmail());
-			//existingPerson.setEmailAdress("JuliusDigel@gmail.com");
+			// Der Nutzer hat die erste Hürde genommen und sich angemeldet
 			
+			/*
+			 * Wir fragen zunächst bei der Datenbank an, ob der Nutzer,
+			 * der sich gerade angemeldet hat, bereits vorhanden ist.
+			 */
+			Person existingPerson = personMapper.findByEmail(user.getEmail());
+			
+			/*
+			 * Hat der Mapper ein passendes Person-Objekt gefunden, gibt er
+			 * dieses zurück. Ansonsten returnt er null. Darauf basierend 
+			 * können wir folgende Fallunterscheidung vornehemen:
+			 */
 			if(existingPerson != null){
-				ClientsideSettings.getLogger().info("Userobjekt E-Mail = " + user.getEmail()
-						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmailAdress());
+				// Der Nutzer ist dem System bereits bekannt.
+				ClientsideSettings.getLogger().info("User mit der E-Mai-Adresse [" + user.getEmail()
+						+ "]  existiert.");
 
-				existingPerson.setLoggedIn(true);
+				/*
+				 *  Hier werden nun noch alle Attribute gesetzt, die in der 
+				 *  Datenbank nicht gespeichert sind.
+				 */
+				
+				// der Nutzer ist eingeloggt
+				existingPerson.setLoggedIn(true); 
+				// über diese URL kann er sich ausloggen
 				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
-				existingPerson.setIsExisting(true);
+				// außerdem existiert er bereits. Dieser Wert sagt der GUI: lade die eigentliche Applikation
+				existingPerson.setIsExisting(true); 
 
 				return existingPerson;
 
 			}
-
-			//FIXME NickName falsche, Name wird über Formular gesettet
+			
+			// Hier landet das Programm, wenn der Nutzer angemeldet, aber noch unbekannt ist
 			logInf.setLoggedIn(true);
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 			logInf.setEmailAdress(user.getEmail());
-			logInf.setIsExisting(false); 
-			//TODO Formular zum eingeben eines Firstname Lastname, 
+			// Der GUI wird mit diesem Wert mitgeteilt, dass der Nutzer erst seine Daten eingeben muss
+			logInf.setIsExisting(false);  
 		} 
 		else {
+			// Hier landen wir wenn der Nutzer nicht angemeldet ist
+			
+			/*
+			 * Mit dem setzen dieses Wertes auf false teilen wir der GUI
+			 * mit, dass der Nutzer sich erst anmelden muss. Diese erzeugt
+			 * daraufhin ein Overlay mit einem Link, der den Nutzer zum
+			 * Anmeldeformular weiterleitet.
+			 */
 			logInf.setLoggedIn(false);
+			
+			/*
+			 * Dem per Callback an die GUI weitergereichten Person-Obbjekt
+			 * logInf wird eine LoginURL mitgegeben. Diese wird zum Ziel
+			 * des Links im Overlay. Darüber meldet sich der Nutzer an und 
+			 * kehrt dann auf die Seite zurück. Wieder wird diese login()-
+			 * Methode aufgerufen, nun ist der User aber nicht mehr null.
+			 * Jetzt geht es im if-Block "weiter".
+			 */
 			logInf.setLoginUrl(userService.createLoginURL(requestUri));
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 		}
