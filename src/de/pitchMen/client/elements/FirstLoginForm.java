@@ -86,7 +86,8 @@ public class FirstLoginForm extends Formular  {
 													+ result.getName()
 													+ " ("
 													+ result.getEmailAdress()
-													+ ")");				
+													+ ")");		
+				// TODO Was passiert nach erfolgreicher Speicherung?
 			}
 			
 		});			
