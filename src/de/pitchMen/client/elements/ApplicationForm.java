@@ -5,7 +5,7 @@ import de.pitchMen.shared.bo.JobPosting;
 /**
  * Klasse, deren Objekte ein Formular
  * zur Bewerbung auf eine Ausschreibung 
- * dienen.
+ * bereitstellen.
  * 
  * @author Simon
  */
