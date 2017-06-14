@@ -45,7 +45,7 @@ public class PitchMen implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-		pitchMenAdmin.login(GWT.getHostPageBaseURL() + "PitchMen.html", new LoginCallback());
+		pitchMenAdmin.login(GWT.getHostPageBaseURL() + "PitchMen.html", new LoginCallback(this));
 	
 	}
 
@@ -57,6 +57,12 @@ public class PitchMen implements EntryPoint {
 	 *
 	 */
 	class LoginCallback implements AsyncCallback<Person> {
+		
+		private PitchMen pitchMen = null;
+		
+		public LoginCallback(PitchMen pitchMen) {
+			this.pitchMen = pitchMen;
+		}
 
 		/*
 		 * Fehlerbehandlung, sollte ein Problem bei der 
@@ -90,8 +96,20 @@ public class PitchMen implements EntryPoint {
 					loadPitchMen();
 				}
 				else{
+					/*
+					 * Informationen zum angemeldeten User in der Topbar ausgeben.
+					 * Hierzu gehört auch der Logout-Link, über den der Nutzer
+					 * sich von der PitchMen-Applikation abmelden kann.
+					 */
+					RootPanel.get("top").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
+							  ClientsideSettings.getCurrentUser().getEmailAdress() +
+							  "<a href='" +
+							  ClientsideSettings.getCurrentUser().getLogoutUrl() +
+							  "' title='Ausloggen'><span class='fa fa-sign-out'></span></a></p>"));
+					
 					//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
-					FirstLoginForm firstLoginForm = new FirstLoginForm(); 
+					FirstLoginForm firstLoginForm = new FirstLoginForm(this.pitchMen);
+					RootPanel.get("content").add(firstLoginForm);
 				}
 				
 			} else {	
@@ -118,7 +136,7 @@ public class PitchMen implements EntryPoint {
 	 * eingeloggt ist.
 	 * 
 	 */
-	private void loadPitchMen() {
+	public void loadPitchMen() {
 		
 		/*
 		 * Informationen zum angemeldeten User in der Topbar ausgeben.
