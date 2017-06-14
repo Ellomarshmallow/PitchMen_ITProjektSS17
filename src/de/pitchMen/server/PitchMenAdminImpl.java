@@ -666,7 +666,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	public Person login(String requestUri) {
 
-		ClientsideSettings.getLogger().severe("login()-Methode wurde aufgerufen.");
+		ClientsideSettings.getLogger().info("login()-Methode wurde aufgerufen.");
 		
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
@@ -682,7 +682,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		if (user != null) {
 			// Der Nutzer hat die erste Hürde genommen und sich angemeldet
 			
-			ClientsideSettings.getLogger().severe("User-Objekt ist nicht null.");
+			ClientsideSettings.getLogger().info("User-Objekt ist nicht null.");
 			
 			/*
 			 * Wir fragen zunächst bei der Datenbank an, ob der Nutzer,
@@ -697,7 +697,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 			 */
 			if(existingPerson != null){
 				// Der Nutzer ist dem System bereits bekannt.
-				ClientsideSettings.getLogger().severe("User mit der E-Mai-Adresse [" + user.getEmail()
+				ClientsideSettings.getLogger().info("User mit der E-Mai-Adresse [" + user.getEmail()
 						+ "]  existiert.");
 
 				/*
@@ -726,7 +726,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		else {
 			// Hier landen wir wenn der Nutzer nicht angemeldet ist
 			
-			ClientsideSettings.getLogger().severe("User-Objekt ist null.");
+			ClientsideSettings.getLogger().info("User-Objekt ist null.");
 			
 			/*
 			 * Mit dem setzen dieses Wertes auf false teilen wir der GUI
