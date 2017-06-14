@@ -227,9 +227,9 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException;
 
 	/**
-	 * Gibt alle vorhandenen Marktplätze aus.
+	 * Gibt alle vorhandenen Marktplï¿½tze aus.
 	 * 
-	 * @return ArrayList aller Marktplätze
+	 * @return ArrayList aller Marktplï¿½tze
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
@@ -404,8 +404,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Person-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException;
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl,
+			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Person-Objekt.
@@ -556,7 +556,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	/**
 	 * Bewertung einer Bewerbung. Wenn die Bewertung einen "score" von 1
-	 * aufweist wird automatisch eine Beteiligung erschaffen. Dadurch ändert
+	 * aufweist wird automatisch eine Beteiligung erschaffen. Dadurch ï¿½ndert
 	 * sich auch automatisch der Status der Bewerbung und der Ausschreibung.
 	 * 
 	 * @param score

@@ -9,9 +9,29 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.server.db.*;
+import de.pitchMen.server.db.ApplicationMapper;
+import de.pitchMen.server.db.CompanyMapper;
+import de.pitchMen.server.db.JobPostingMapper;
+import de.pitchMen.server.db.MarketplaceMapper;
+import de.pitchMen.server.db.ParticipationMapper;
+import de.pitchMen.server.db.PartnerProfileMapper;
+import de.pitchMen.server.db.PersonMapper;
+import de.pitchMen.server.db.ProjectMapper;
+import de.pitchMen.server.db.RatingMapper;
+import de.pitchMen.server.db.TeamMapper;
+import de.pitchMen.server.db.TraitMapper;
 import de.pitchMen.shared.PitchMenAdmin;
-import de.pitchMen.shared.bo.*;
+import de.pitchMen.shared.bo.Application;
+import de.pitchMen.shared.bo.Company;
+import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.Participation;
+import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Rating;
+import de.pitchMen.shared.bo.Team;
+import de.pitchMen.shared.bo.Trait;
 
 /**
  * Implemetierungsklasse des Interface PitchMenAdmin. Sie enth�lt die
@@ -396,20 +416,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public PartnerProfile getPartnerProfileByCompanyId(int companyId) throws IllegalArgumentException {
 		return this.partnerProfileMapper.findPartnerProfileByCompanyId(companyId);
 	}
-	
-	// --------------------------- PERSON
 
 	@Override
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException {
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl,
+			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException {
 		Person person = new Person();
 
 		person.setFirstName(firstName);
-		person.setLoggedIn(loggedIn);
+		person.setName(name);
 		person.setEmailAdress(emailAdress);
-		person.setNickname(nickname);
 		person.setLoginUrl(loginUrl);
 		person.setLogoutUrl(logoutUrl);
+		person.setLoggedIn(loggedIn);
+		person.setIsExisting(isExisting);
 
 		return this.personMapper.insert(person);
 
@@ -505,7 +524,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException {
 		return this.projectMapper.findProjectsByPersonId(personId);
 	}
-
 	// --------------------------- RATING
 
 	@Override
@@ -544,8 +562,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
-			int jobPostingId) throws IllegalArgumentException {
+	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId, int jobPostingId)
+			throws IllegalArgumentException {
 		// FIXME nicht sicher ob die Methode funktioniert
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
@@ -648,66 +666,118 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	public Person login(String requestUri) {
 
+		ClientsideSettings.getLogger().severe("login()-Methode wurde aufgerufen.");
+		
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-
+		
 		Person logInf = new Person();
 
+		/*
+		 * Ist der User angemeldet, hat der Methodenaufruf von
+		 * userService.getCurrentUser() ein vollwertiges User-Objekt
+		 * zurückgegeben. Ist der Nutzer nicht angemeldet, gibt die Methode
+		 * null zurück. Wir springen dann in den else-Block.
+		 */
 		if (user != null) {
+			// Der Nutzer hat die erste Hürde genommen und sich angemeldet
+			
+			ClientsideSettings.getLogger().severe("User-Objekt ist nicht null.");
+			
+			/*
+			 * Wir fragen zunächst bei der Datenbank an, ob der Nutzer,
+			 * der sich gerade angemeldet hat, bereits vorhanden ist.
+			 */
 			Person existingPerson = personMapper.findByEmail(user.getEmail());
-			// existingPerson.setEmailAdress("JuliusDigel@gmail.com");
+			
+			/*
+			 * Hat der Mapper ein passendes Person-Objekt gefunden, gibt er
+			 * dieses zurück. Ansonsten returnt er null. Darauf basierend 
+			 * können wir folgende Fallunterscheidung vornehemen:
+			 */
+			if(existingPerson != null){
+				// Der Nutzer ist dem System bereits bekannt.
+				ClientsideSettings.getLogger().severe("User mit der E-Mai-Adresse [" + user.getEmail()
+						+ "]  existiert.");
 
-			if (existingPerson != null) {
-				ClientsideSettings.getLogger().severe("Userobjekt E-Mail = " + user.getEmail()
-						+ "  Bestehender User: E-Mail  =" + existingPerson.getEmailAdress());
-
-				existingPerson.setLoggedIn(true);
+				/*
+				 *  Hier werden nun noch alle Attribute gesetzt, die in der 
+				 *  Datenbank nicht gespeichert sind.
+				 */
+				
+				// der Nutzer ist eingeloggt
+				existingPerson.setLoggedIn(true); 
+				// über diese URL kann er sich ausloggen
 				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
+				// außerdem existiert er bereits. Dieser Wert sagt der GUI: lade die eigentliche Applikation
+				existingPerson.setIsExisting(true); 
 
 				return existingPerson;
 
 			}
-
+			
+			// Hier landet das Programm, wenn der Nutzer angemeldet, aber noch unbekannt ist
 			logInf.setLoggedIn(true);
-			logInf.setNickname(user.getNickname());
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 			logInf.setEmailAdress(user.getEmail());
-		} else {
+			// Der GUI wird mit diesem Wert mitgeteilt, dass der Nutzer erst seine Daten eingeben muss
+			logInf.setIsExisting(false);  
+		} 
+		else {
+			// Hier landen wir wenn der Nutzer nicht angemeldet ist
+			
+			ClientsideSettings.getLogger().severe("User-Objekt ist null.");
+			
+			/*
+			 * Mit dem setzen dieses Wertes auf false teilen wir der GUI
+			 * mit, dass der Nutzer sich erst anmelden muss. Diese erzeugt
+			 * daraufhin ein Overlay mit einem Link, der den Nutzer zum
+			 * Anmeldeformular weiterleitet.
+			 */
 			logInf.setLoggedIn(false);
+			
+			/*
+			 * Dem per Callback an die GUI weitergereichten Person-Obbjekt
+			 * logInf wird eine LoginURL mitgegeben. Diese wird zum Ziel
+			 * des Links im Overlay. Darüber meldet sich der Nutzer an und 
+			 * kehrt dann auf die Seite zurück. Wieder wird diese login()-
+			 * Methode aufgerufen, nun ist der User aber nicht mehr null.
+			 * Jetzt geht es im if-Block "weiter".
+			 */
 			logInf.setLoginUrl(userService.createLoginURL(requestUri));
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 		}
 		return logInf;
 	}
-
+	
 	// -------------------------TRAITMATCHING METHODE
-
+	
 	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) {
-
+		
 		ArrayList<Trait> personTraits = traitMapper.findTraitByPartnerProfileId(pp.getId());
-
+		
 		ArrayList<PartnerProfile> allpps = partnerProfileMapper.findAll();
-
+		
 		ArrayList<JobPosting> matchingTraits = new ArrayList<JobPosting>();
-
+		
 		for (PartnerProfile pprofile : allpps) {
-			ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
-
-			for (Trait trait : jPTraits) {
-				String traitJp = trait.getName();
-
-				for (Trait pTrait : personTraits) {
+			ArrayList <Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
+			
+			for(Trait trait : jPTraits){
+				String  traitJp = trait.getName();
+				
+				for(Trait pTrait : personTraits){
 					String traitPerson = pTrait.getName();
-
-					if (traitJp == traitPerson) {
+					
+					if(traitJp == traitPerson){
 						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
 					}
 				}
 			}
 		}
-
+		
 		return matchingTraits;
-
-	};
+		
+	}; 
 
 }
