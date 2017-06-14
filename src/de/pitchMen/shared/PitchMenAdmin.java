@@ -404,8 +404,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Person-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException;
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl,
+			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Person-Objekt.

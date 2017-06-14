@@ -418,15 +418,17 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException {
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl,
+			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException {
 		Person person = new Person();
 
 		person.setFirstName(firstName);
-		person.setLoggedIn(loggedIn);
+		person.setName(name);
 		person.setEmailAdress(emailAdress);
 		person.setLoginUrl(loginUrl);
 		person.setLogoutUrl(logoutUrl);
+		person.setLoggedIn(loggedIn);
+		person.setIsExisting(isExisting);
 
 		return this.personMapper.insert(person);
 

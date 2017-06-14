@@ -42,8 +42,8 @@ public class Person extends OrganisationUnit {
 		return name;
 	}
 
-	public void setName(String nickname) {
-		this.name = nickname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getLoginUrl() {
