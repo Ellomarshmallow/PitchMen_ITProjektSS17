@@ -73,6 +73,8 @@ public class AddJobPostingForm extends Formular {
 
 			}
 		});
+		buttonsPanel.add(cancelButton);
+		
 		// ---------- Speichern-Button
 		Button saveButton = new Button("Speichern" + new ClickHandler() {
 
@@ -98,6 +100,7 @@ public class AddJobPostingForm extends Formular {
 				}
 			}
 		});
+		buttonsPanel.add(saveButton);
 
 	}
 
