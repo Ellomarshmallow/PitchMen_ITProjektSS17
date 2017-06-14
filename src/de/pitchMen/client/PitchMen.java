@@ -65,7 +65,7 @@ public class PitchMen implements EntryPoint {
 		 * @see com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable)
 		 */
 		public void onFailure(Throwable caught) {
-			RootPanel.get("content").add(new HTML("<h1>Herzlich willkommen bei PitchMen. Leider hat das mit dem Login nicht so ganz funktioniert.</h1><p><small>Liegt an der Applikationsschicht. Wahrscheinlich.</small></p>"));
+			RootPanel.get("content").add(new HTML("<h2>Herzlich willkommen bei PitchMen. Leider hat das mit dem Login nicht so ganz funktioniert.</h2>"));
 			ClientsideSettings.getLogger().severe("Login fehlgeschlagen");
 		}
 

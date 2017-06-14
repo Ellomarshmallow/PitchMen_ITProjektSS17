@@ -116,7 +116,7 @@ public class ProjectForm extends Formular {
 
 		public void onClick(ClickEvent event) {
 
-			AddJobPostingForm addJobposting = new AddJobPostingForm();
+			AddJobPostingForm addJobPosting = new AddJobPostingForm(pitchMenTreeViewModel,true);
 
 		}
 	}

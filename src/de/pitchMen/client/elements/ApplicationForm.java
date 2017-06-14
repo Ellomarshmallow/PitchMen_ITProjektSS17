@@ -2,22 +2,32 @@ package de.pitchMen.client.elements;
 
 import de.pitchMen.shared.bo.JobPosting;
 
-public class ApplicationForm extends Formular{
+/**
+ * Klasse, deren Objekte ein Formular
+ * zur Bewerbung auf eine Ausschreibung 
+ * bereitstellen.
+ * 
+ * @author Simon
+ */
 
-
-	private JobPosting selectedJobPosting;
+public class ApplicationForm extends Formular {
 	
-ApplicationForm(JobPosting jobPosting){
+	/**
+	 * Um die Zugehörigkeit der mit dem Formular
+	 * zu erstellenden Bewerbung zu einem Projekt
+	 * feststellen zu können, benötigen Objekte der
+	 * Klasse {@link ApplicationForm} ein Attribut
+	 * <code>referredJobPosting</code> vom Typ
+	 * {@link JobPosting}. 
+	 */
+	private JobPosting referredJobPosting = null;
 	
-	this.selectedJobPosting = jobPosting; 
-	
-	
-	
-	
-	
-	
-	
-	
-	super.getPitchMenAdmin().addApplication(dateCreated, text, rating, status, selectedJobPosting.getId(), partnerProfileId, callback);
-}
+	/**
+	 * Beim Anlegen eines neuen <code>ApplicationForm</code>
+	 * Objekts wird das JobPosting-Objekt übergeben, auf das
+	 * sich die anzulegende Bewerbung beziehen soll.
+	 */
+	public ApplicationForm(JobPosting jobPosting) {
+		this.referredJobPosting = jobPosting;
+	}
 }
