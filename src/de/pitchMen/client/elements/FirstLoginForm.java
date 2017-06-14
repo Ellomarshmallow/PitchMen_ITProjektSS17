@@ -16,44 +16,40 @@ public class FirstLoginForm extends Formular  {
 	Label lastNameLabel = new Label("Nachname: ");
 	TextBox lastNameBox = new TextBox(); 
 	
-	public FirstLoginForm(){
-		
+	public FirstLoginForm(){		
 		
 		// Vertical Panel erstellen
-				VerticalPanel labelsPanel = new VerticalPanel();
-				this.add(labelsPanel);
+		VerticalPanel labelsPanel = new VerticalPanel();
+		this.add(labelsPanel);
 				
-				// labels und Boxen dem Vertical Panel hinzufügen
+		// labels und Boxen dem Vertical Panel hinzufügen
 				
-				labelsPanel.add(firstNameLabel);
-				labelsPanel.add(firstNameBox);
-				labelsPanel.add(lastNameLabel);
-				labelsPanel.add(lastNameBox);
+		labelsPanel.add(firstNameLabel);
+		labelsPanel.add(firstNameBox);
+		labelsPanel.add(lastNameLabel);
+		labelsPanel.add(lastNameBox);
 				
-				// HorizontalPanel für den Button erstellen
-				HorizontalPanel buttonsPanel = new HorizontalPanel();
-				this.add(buttonsPanel);
+		// HorizontalPanel für den Button erstellen
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+		this.add(buttonsPanel);
+						
+		// ---------- Speichern Button, ClickHandler hinzufügen und dem
+		// HorizontalPanel hinzufügen
+		Button saveButton = new Button("Speichern");
+		saveButton.addClickHandler(new ClickHandler(){
+			 public void onClick(ClickEvent event) {
+				 save(); 
+			 }
+		}); 				
 				
-				
-				// ---------- Speichern Button, ClickHandler hinzufügen und dem
-				// HorizontalPanel hinzufügen
-				Button saveButton = new Button("Speichern");
-				saveButton.addClickHandler(new ClickHandler(){
-					 public void onClick(ClickEvent event) {
-						 save(); 
-					 }
-				}); 
-				
-				
-				buttonsPanel.add(saveButton);
+		buttonsPanel.add(saveButton);
 				
 	}
 	
-				//FIXME rest ausfüllen
-				public void save(){
-					super.getPitchMenAdmin().addPerson(firstNameBox.getText(), true, emailAdress, lastNameBox.getText(), loginUrl, logoutUrl, callback);
-					
-				}
+	//FIXME rest ausfüllen
+	public void save(){
+		super.getPitchMenAdmin().addPerson(firstNameBox.getText(), true, emailAdress, lastNameBox.getText(), loginUrl, logoutUrl, callback);			
+	}
 
 	
 }
