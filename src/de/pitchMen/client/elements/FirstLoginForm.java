@@ -84,7 +84,6 @@ public class FirstLoginForm extends Formular  {
 										  + " "
 										  + lastNameBox.getText()
 										  + "</h2>"));
-		pitchMen.loadPitchMen();
 		
 		this.pitchMen.pitchMenAdmin.addPerson(firstNameBox.getText(), 
 											  lastNameBox.getText(),
