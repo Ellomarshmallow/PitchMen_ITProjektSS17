@@ -2,19 +2,42 @@ package de.pitchMen.client.elements;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.shared.bo.Person;
+
+/**
+ * Das FirstLoginForm wird instanziiert, wenn bei einer
+ * Nutzeranmeldung festgestellt wird, dass ein Nutzer noch
+ * nicht in der Datenbank der PitchMen-Applikation vorhanden
+ * ist.
+ * 
+ * @author Leon & Simon
+ */
 
 public class FirstLoginForm extends Formular  {
 
 	Label firstNameLabel = new Label("Vorname: "); 
 	TextBox firstNameBox = new TextBox(); 
 	Label lastNameLabel = new Label("Nachname: ");
-	TextBox lastNameBox = new TextBox(); 
+	TextBox lastNameBox = new TextBox();
+	
+	/**
+	 * Das Attribut <code>newUser</code> wird Instanzen
+	 * der Klasse {@link FirstLoginForm} beim 
+	 * Konstruktor-Aufruf übergeben und enthält das
+	 * {@link Person}-Objekt, das von der Applikationsschicht
+	 * bei der Anmeldung an die GUI zurückübergeben wird.
+	 * Über dieses Attribut sind die bereits bekannten
+	 * User-Daten abfragbar.
+	 */
+	private Person newUser = null;
 	
 	public FirstLoginForm(){		
 		
@@ -48,7 +71,25 @@ public class FirstLoginForm extends Formular  {
 	
 	//FIXME rest ausfüllen
 	public void save(){
-		super.getPitchMenAdmin().addPerson(firstNameBox.getText(), true, emailAdress, lastNameBox.getText(), loginUrl, logoutUrl, callback);			
+		super.getPitchMenAdmin().addPerson(firstNameBox.getText(), true, newUser.getEmailAdress(), lastNameBox.getText(),newUser.getLoginUrl(), newUser.getLogoutUrl(), new AsyncCallback<Person>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe("Neue Person konnte nicht gespeichert werden.");				
+			}
+
+			@Override
+			public void onSuccess(Person result) {
+				ClientsideSettings.getLogger().info("Neue Person erfolgreich gespeichert: " 
+													+ result.getFirstName() 
+													+ " "
+													+ result.getName()
+													+ " ("
+													+ result.getEmailAdress()
+													+ ")");				
+			}
+			
+		});			
 	}
 
 	
