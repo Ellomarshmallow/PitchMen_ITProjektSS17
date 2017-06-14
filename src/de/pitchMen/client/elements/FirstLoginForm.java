@@ -4,12 +4,15 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.PitchMen;
 import de.pitchMen.shared.bo.Person;
 
 /**
@@ -39,7 +42,11 @@ public class FirstLoginForm extends Formular  {
 	 */
 	private Person newUser = null;
 	
-	public FirstLoginForm(){		
+	private PitchMen pitchMen = null;
+	
+	public FirstLoginForm(PitchMen pitchMen){		
+		
+		this.pitchMen = pitchMen; 
 		
 		// Vertical Panel erstellen
 		VerticalPanel labelsPanel = new VerticalPanel();
@@ -54,7 +61,6 @@ public class FirstLoginForm extends Formular  {
 				
 		// HorizontalPanel für den Button erstellen
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
-		this.add(buttonsPanel);
 						
 		// ---------- Speichern Button, ClickHandler hinzufügen und dem
 		// HorizontalPanel hinzufügen
@@ -66,16 +72,25 @@ public class FirstLoginForm extends Formular  {
 		}); 				
 				
 		buttonsPanel.add(saveButton);
+		
+		this.add(buttonsPanel);
 				
 	}
 	
-	//FIXME rest ausfüllen
+	//FIXME RPC funktioniert nicht
 	public void save(){
-		super.getPitchMenAdmin().addPerson(firstNameBox.getText(), lastNameBox.getText(),newUser.getEmailAdress(), newUser.getLoginUrl(), newUser.getLogoutUrl(), true, true, new AsyncCallback<Person>() {
+		RootPanel.get("nav").add(new HTML("<h2>Hallo "
+										  + firstNameBox.getText() 
+										  + " "
+										  + lastNameBox.getText()
+										  + "</h2>"));
+		
+		this.pitchMen.pitchMenAdmin.addPerson(firstNameBox.getText(), lastNameBox.getText(),newUser.getEmailAdress(), newUser.getLoginUrl(), newUser.getLogoutUrl(), true, true, new AsyncCallback<Person>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				ClientsideSettings.getLogger().severe("Neue Person konnte nicht gespeichert werden.");				
+				ClientsideSettings.getLogger().severe("Neue Person konnte nicht gespeichert werden.");
+				RootPanel.get("content").clear();
 			}
 
 			@Override
@@ -87,7 +102,8 @@ public class FirstLoginForm extends Formular  {
 													+ " ("
 													+ result.getEmailAdress()
 													+ ")");		
-				// TODO Was passiert nach erfolgreicher Speicherung?
+				RootPanel.get("content").clear();
+				pitchMen.loadPitchMen();
 			}
 			
 		});			

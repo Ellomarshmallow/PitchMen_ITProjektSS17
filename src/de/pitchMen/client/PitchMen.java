@@ -30,7 +30,7 @@ public class PitchMen implements EntryPoint {
 	 * zentrale Applikations-Verwaltung zu initialisieren, die die Aktivitäten
 	 * der Applikation steuert.
 	 */
-	private final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
+	public final PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
 
 	/**
 	 * Initialisierung eines <code>ReportGenerator</code>-Objekts ist nötig, um
@@ -109,6 +109,10 @@ public class PitchMen implements EntryPoint {
 					
 					//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
 					FirstLoginForm firstLoginForm = new FirstLoginForm(this.pitchMen);
+					RootPanel.get("content").add(new HTML("<h2>Hallo, Neuankömmling! Wir freuen uns, "
+														  + "dass du den Weg zu PitchMen gefunden hast.</h2>"
+														  + "<p>Da dies deine erste Anmeldung bei PitchMen ist,"
+														  + "würden wir gerne deinen Namen wissen. Wie heißt du?</p>"));
 					RootPanel.get("content").add(firstLoginForm);
 				}
 				
