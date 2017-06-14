@@ -145,6 +145,7 @@ h1 {
 	display: flex;
 	flex-flow: column;
 	background: #ddd;
+	overflow-y: auto;
 }
 
 #nav table {
