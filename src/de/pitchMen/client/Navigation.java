@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.TreeViewModel;
 
+import de.pitchMen.client.elements.MarketplaceForm;
 import de.pitchMen.client.elements.PitchMenTreeViewModel;
 
 /**
@@ -92,7 +93,9 @@ public class Navigation extends VerticalPanel {
 	 */
 	private void onLoadWithTree() {
 		// Modell für den Baum erstellen. 
-		TreeViewModel navTreeModel = new PitchMenTreeViewModel();
+		PitchMenTreeViewModel navTreeModel = new PitchMenTreeViewModel();
+		// FIXME Sobald man die untere Zeile laufen lässt, wird der Baum nicht mehr angezeigt
+//		MarketplaceForm mpf = new MarketplaceForm(null);
 		
 		/*
 		 * Anlegen des Baumes mit dem zuvor definierten TreeViewModel.
