@@ -45,6 +45,7 @@ public class PitchMen implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
+		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 		pitchMenAdmin.login(GWT.getHostPageBaseURL() + "PitchMen.html", new LoginCallback(this));
 	
 	}
@@ -109,6 +110,7 @@ public class PitchMen implements EntryPoint {
 					
 					//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
 					FirstLoginForm firstLoginForm = new FirstLoginForm(this.pitchMen);
+					RootPanel.get("content").clear();
 					RootPanel.get("content").add(new HTML("<h2>Hallo, Neuankömmling! Wir freuen uns, "
 														  + "dass du den Weg zu PitchMen gefunden hast.</h2>"
 														  + "<p>Da dies deine erste Anmeldung bei PitchMen ist,"
@@ -182,6 +184,8 @@ public class PitchMen implements EntryPoint {
 		// }
 		//
 		// });
+		
+		RootPanel.get("content").clear();
 
 	}
 }
