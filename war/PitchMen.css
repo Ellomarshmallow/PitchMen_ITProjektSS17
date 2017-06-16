@@ -229,6 +229,12 @@ h1 {
 	color: #777;
 }
 
+.load-msg {
+	text-align: center;
+	color: #999;
+	font-size: 90%;
+}
+
 /* ### CONTENT > GRID ### */
 
 .grid-element {
@@ -274,8 +280,8 @@ h1 {
 }
 .lds-dual-ring div {
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   border: 6px solid #000;
   border-color: #1c9cd8 transparent #1c9cd8 transparent;
@@ -283,9 +289,9 @@ h1 {
   animation: lds-dual-ring 2s linear infinite;
 }
 .lds-dual-ring {
-  width: 100px !important;
-  height: 100px !important;
+  width: 80px !important;
+  height: 80px !important;
   -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
   transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
-  margin: 10% auto;
+  margin: 10% auto 10px auto;
 }
