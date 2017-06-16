@@ -95,8 +95,8 @@ public class AddMarketplaceForm extends Formular {
 	// ---------- speichern
 	public void save() {
 		//FIXME companyID und TeamID
-		super.getPitchMenAdmin().addMarketplace(titleBox.getText(), descBox.getText(),
-				ClientsideSettings.getCurrentUser().getId(), 0, 0, new AddMarketplaceFormCallback(this));
+		super.getPitchMenAdmin().addMarketplaceByPerson(titleBox.getText(), descBox.getText(),
+				ClientsideSettings.getCurrentUser().getId(), new AddMarketplaceFormCallback(this));
 	}
 
 	class AddMarketplaceFormCallback implements AsyncCallback<Marketplace> {
