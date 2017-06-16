@@ -60,7 +60,6 @@ public class JobPostingForm extends Formular{
 				
 				/* ---------- Bewerben-Button, ClickHandler hinzufügen und 
 	 						* dem HorizontalPanel hinzufügen */
-				//TODO applicateClickHandler schreiben! 
 				Button applicateButton = new Button ("Hier Bewerben"); 
 				applicateButton.addClickHandler(new applicateClickHandler());
 				buttonsPanel.add(applicateButton);
@@ -136,7 +135,6 @@ public class JobPostingForm extends Formular{
 		private class applicateClickHandler implements ClickHandler {
 			public void onClick(ClickEvent event) {
 
-				// bei Click wird die update() Methode aufgerufen
 				ApplicationForm applicationForm = new ApplicationForm(selectedJobPosting);
 
 			}
