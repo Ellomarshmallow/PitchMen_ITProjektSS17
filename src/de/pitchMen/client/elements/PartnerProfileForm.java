@@ -73,9 +73,16 @@ public class PartnerProfileForm extends Formular {
 		
 		// nach dem Aufruf des RPCs ist entweder das userPartnerProfile gesetzt, oder der Nutzer hatte noch keins
 		if(this.userPartnerProfile == null) {
-			this.add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));
-			this.add(this.addTraitBtn);		
+			this.add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));		
+		} else {
+			// Der Nutzer hatte schon ein PartnerProfile
+			
+			// RPC-Abfrage des Partnerprofils
+			this.pitchMenAdmin.getTraitsByPartnerProfileId(this.userPartnerProfile.getId(), new TraitsCallback());
+			
+			this.add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
 		}
+		this.add(this.addTraitBtn);
 	}
 	
 	/**
@@ -101,6 +108,34 @@ public class PartnerProfileForm extends Formular {
 				 *  das PartnerProfil des aktuell angemeldeten Benutzers.
 				 */
 				userPartnerProfile = result;
+			}
+		}
+		
+	}
+	
+	/**
+	 * Die genestete Klasse <code>PartnerProfileCallback</code>
+	 * behandelt die zurückkehrende Server-Abfrage eines
+	 * Partnerprofils.
+	 */
+	private class TraitsCallback implements AsyncCallback<ArrayList<Trait>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			ClientsideSettings.getLogger().severe("Konnte Partnerprofil nicht laden");	
+		}
+
+		@Override
+		public void onSuccess(ArrayList<Trait> result) {
+			if(result == null) {
+				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
+			} else {
+				ClientsideSettings.getLogger().info("Traits von RPC empfangen");
+				/*
+				 *  Das Attribut userPartnerProfile enthält nach dieser Zuweisung
+				 *  das PartnerProfil des aktuell angemeldeten Benutzers.
+				 */
+				traits = result;
 			}
 		}
 		
