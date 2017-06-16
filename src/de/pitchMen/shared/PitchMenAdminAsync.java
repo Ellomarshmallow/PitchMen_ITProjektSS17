@@ -106,8 +106,17 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PARTNERPROFILE
 
-	void addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
-			int jobPostingId, AsyncCallback<PartnerProfile> callback);
+	void addPartnerProfileForPerson(Date dateCreated, Date dateChanged, int personId,
+			AsyncCallback<PartnerProfile> callback);
+
+	void addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId,
+			AsyncCallback<PartnerProfile> callback);
+
+	void addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId,
+			AsyncCallback<PartnerProfile> callback);
+
+	void addPartnerProfileForJobPosting(Date dateCreated, Date dateChanged, int jobPostingId,
+			AsyncCallback<PartnerProfile> callback);
 
 	void updatePartnerProfile(PartnerProfile PartnerProfile, AsyncCallback<Void> callback);
 
@@ -127,8 +136,8 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PERSON
 
-	void addPerson(String firstName, String name, String emailAdress, String loginUrl,
-			String logoutUrl, boolean loggedIn, boolean isExisting, AsyncCallback<Person> callback);
+	void addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
+			boolean loggedIn, boolean isExisting, AsyncCallback<Person> callback);
 
 	void updatePerson(Person person, AsyncCallback<Void> callback);
 
@@ -197,7 +206,7 @@ public interface PitchMenAdminAsync {
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
 
 	void getTraitsByPartnerProfileId(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
-	
+
 	void getJobPostingsMatchingTraits(PartnerProfile pp, AsyncCallback<ArrayList<JobPosting>> callback);
 
 	// --------------------------- LOGIN
