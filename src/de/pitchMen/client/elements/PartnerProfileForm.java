@@ -1,5 +1,7 @@
 package de.pitchMen.client.elements;
 
+import java.util.ArrayList;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -11,6 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Trait;
 
 /**
  * Die Klasse <code>PartnerProfileForm</code> stellt
@@ -45,6 +48,14 @@ public class PartnerProfileForm extends Formular {
 	private PartnerProfile userPartnerProfile = null;
 	
 	/**
+	 * Die {@link Trait}-Objekte eines Partnerprofils werden in Objekten der 
+	 * <code>PartnerProfileForm</code>-Klasse gesondert als Attribut geführt,
+	 * um Veränderungen an den Traits vornehmen zu können.
+	 */
+	private ArrayList<Trait> traits = new ArrayList<Trait>();
+	
+	
+	/**
 	 * Der Button <code>addTraitButton</code> dient dem Anlegen einer neuen
 	 * Eigenschaft für das Partnerprofil.
 	 */
@@ -63,8 +74,7 @@ public class PartnerProfileForm extends Formular {
 		// nach dem Aufruf des RPCs ist entweder das userPartnerProfile gesetzt, oder der Nutzer hatte noch keins
 		if(this.userPartnerProfile == null) {
 			this.add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));
-			this.add(this.addTraitBtn);
-			
+			this.add(this.addTraitBtn);		
 		}
 	}
 	
