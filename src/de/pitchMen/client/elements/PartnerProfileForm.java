@@ -68,32 +68,7 @@ public class PartnerProfileForm extends Formular {
 		this.currentUserId = ClientsideSettings.getCurrentUser().getId();
 		
 		// RPC-Abfrage des Partnerprofils
-		this.pitchMenAdmin.getPartnerProfileByID(currentUserId, new PartnerProfileCallback());
-		
-		// Der addTraitBtn erhält einen Clickhandler
-		this.addTraitBtn.addClickHandler(new AddTraitClickHandler(this));
-		
-		// nach dem Aufruf des RPCs ist entweder das userPartnerProfile gesetzt, oder der Nutzer hatte noch keins
-		if(this.userPartnerProfile == null) {
-			this.add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));
-			Button createButton = new Button("Partnerprofil anlegen");
-			createButton.addClickHandler(new CreatePartnerProfileClickHandler());
-			this.add(createButton);
-			return;
-		} else {
-			// Der Nutzer hatte schon ein PartnerProfile
-			
-			// RPC-Abfrage des Partnerprofils
-			this.pitchMenAdmin.getTraitsByPartnerProfileId(this.userPartnerProfile.getId(), new TraitsCallback());
-			
-			this.add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
-			
-			// Überprüfen, ob Traits hinterlegt wurden
-			if(traits == null) {
-				this.add(new HTML("<p>Sie haben bisher keine Eigenschaften angelegt </p>"));
-			}
-		}
-		this.add(this.addTraitBtn);
+		this.pitchMenAdmin.getPartnerProfileByPersonId(currentUserId, new PartnerProfileCallback());
 	}
 	
 	/**
@@ -119,6 +94,20 @@ public class PartnerProfileForm extends Formular {
 				 *  das PartnerProfil des aktuell angemeldeten Benutzers.
 				 */
 				userPartnerProfile = result;
+				
+				// nach dem Aufruf des RPCs ist entweder das userPartnerProfile gesetzt, oder der Nutzer hatte noch keins
+				if(userPartnerProfile == null) {
+					add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));
+					Button createButton = new Button("Partnerprofil anlegen");
+					createButton.addClickHandler(new CreatePartnerProfileClickHandler());
+					add(createButton);
+					return;
+				} else {
+					// Der Nutzer hatte schon ein PartnerProfile
+					
+					// RPC-Abfrage des Partnerprofils
+					pitchMenAdmin.getTraitsByPartnerProfileId(userPartnerProfile.getId(), new TraitsCallback());
+				}
 			}
 		}
 		
@@ -130,7 +119,7 @@ public class PartnerProfileForm extends Formular {
 	 * Partnerprofils.
 	 */
 	private class TraitsCallback implements AsyncCallback<ArrayList<Trait>> {
-
+		
 		@Override
 		public void onFailure(Throwable caught) {
 			ClientsideSettings.getLogger().severe("Konnte Partnerprofil nicht laden");	
@@ -147,6 +136,17 @@ public class PartnerProfileForm extends Formular {
 				 *  die Traits des PartnerProfils des aktuell angemeldeten Benutzers.
 				 */
 				traits = result;
+				add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
+				
+				// Überprüfen, ob Traits hinterlegt wurden
+				if(traits == null) {
+					add(new HTML("<p>Sie haben bisher keine Eigenschaften angelegt </p>"));
+				}
+				
+				// Der addTraitBtn erhält einen Clickhandler
+				addTraitBtn.addClickHandler(new AddTraitClickHandler());
+				
+				add(addTraitBtn);
 			}
 		}
 		
@@ -157,17 +157,6 @@ public class PartnerProfileForm extends Formular {
 	 * behandelt das Drücken des Buttons <code>addTraitButton</code>.
 	 */
 	private class AddTraitClickHandler implements ClickHandler {
-
-		/**
-		 * Um dem aufrufenden {@link PartnerProfileForm}-Objekt Widgets
-		 * anhängen zu können, muss dieses Objekt der lokalen Klasse
-		 * übergeben und in ihr gespeichert werden.
-		 */
-		private PartnerProfileForm callingPartnerProfileForm = null;
-		
-		public AddTraitClickHandler(PartnerProfileForm ppf) {
-			this.callingPartnerProfileForm = ppf;
-		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
@@ -180,7 +169,7 @@ public class PartnerProfileForm extends Formular {
 			TextBox valueBox = new TextBox();
 			traitFormRow.add(nameBox);
 			traitFormRow.add(valueBox);
-			this.callingPartnerProfileForm.add(traitFormRow);
+			add(traitFormRow);
 		}
 		
 	}
