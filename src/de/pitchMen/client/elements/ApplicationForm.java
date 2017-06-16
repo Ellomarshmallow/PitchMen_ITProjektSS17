@@ -1,5 +1,6 @@
 package de.pitchMen.client.elements;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,10 +41,8 @@ public class ApplicationForm extends Formular {
 	private JobPosting referredJobPosting = null;
 	private int partnerProfileId;
 	
-	// Aktuelles Datum
-	GregorianCalendar now = new GregorianCalendar();
-	DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-	
+
+
 	Label infoLabel = new Label("Hiermit bewerben Sie sich auf die ausgewählte Ausschreibung,"
 							+ "bedenken Sie, dass Ihr AKTUELLES Partnerprofil automatisch beigefügt wird. ");
 	
@@ -90,8 +89,11 @@ public class ApplicationForm extends Formular {
 	// Send Methode die beim Click auf den Absenden Button ausgeführt wird
 	public void send(){
 		//FIXME
-		super.getPitchMenAdmin().addApplication(df.format(now.getTime()), textArea.getText(), null, null, 
+		// Aktuelles Datum
+		Date date = new Date();		
+		super.getPitchMenAdmin().addApplication(date, textArea.getText(), null, null, 
 				referredJobPosting.getId(), partnerProfileId, new AddApplicationCallback(this));
+		
 	}
 		
 	// GetPartnerProfilCallback
