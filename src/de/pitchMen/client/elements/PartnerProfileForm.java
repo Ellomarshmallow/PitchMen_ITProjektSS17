@@ -9,6 +9,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
@@ -64,6 +66,8 @@ public class PartnerProfileForm extends Formular {
 	private Button addTraitBtn = new Button("Eigenschaft hinzufügen");
 	
 	public PartnerProfileForm() {
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 		// Abfrage der id des aktuell angemeldeten Nutzers
 		this.currentUserId = ClientsideSettings.getCurrentUser().getId();
 		
@@ -86,7 +90,11 @@ public class PartnerProfileForm extends Formular {
 		@Override
 		public void onSuccess(PartnerProfile result) {
 			if(result == null) {
-				ClientsideSettings.getLogger().info("RPC gibt null zurück - der Nutzer mit der id " + currentUserId + " hat noch kein Partnerprofil.");
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<h2>Sie haben noch kein Partnerprofil.</h2>"));
+				Button createButton = new Button("Partnerprofil anlegen");
+				createButton.addClickHandler(new CreatePartnerProfileClickHandler());
+				add(createButton);			
 			} else {
 				ClientsideSettings.getLogger().info("PartnerProfil von RPC empfangen");
 				/*
@@ -95,19 +103,11 @@ public class PartnerProfileForm extends Formular {
 				 */
 				userPartnerProfile = result;
 				
-				// nach dem Aufruf des RPCs ist entweder das userPartnerProfile gesetzt, oder der Nutzer hatte noch keins
-				if(userPartnerProfile == null) {
-					add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));
-					Button createButton = new Button("Partnerprofil anlegen");
-					createButton.addClickHandler(new CreatePartnerProfileClickHandler());
-					add(createButton);
-					return;
-				} else {
-					// Der Nutzer hatte schon ein PartnerProfile
-					
-					// RPC-Abfrage des Partnerprofils
-					pitchMenAdmin.getTraitsByPartnerProfileId(userPartnerProfile.getId(), new TraitsCallback());
-				}
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
+				RootPanel.get("content").add(new HTML("<p class='load-msg'>Eigenschaften des Partnerprofils werden abgefragt</p>"));
+				
+				pitchMenAdmin.getTraitsByPartnerProfileId(userPartnerProfile.getId(), new TraitsCallback());
 			}
 		}
 		
@@ -122,25 +122,43 @@ public class PartnerProfileForm extends Formular {
 		
 		@Override
 		public void onFailure(Throwable caught) {
-			ClientsideSettings.getLogger().severe("Konnte Partnerprofil nicht laden");	
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(new HTML("Konnte Traits nicht laden"));	
 		}
 
 		@Override
 		public void onSuccess(ArrayList<Trait> result) {
-			if(result == null) {
+			if(result.isEmpty()) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<h2>Für Ihr Partnerprofil gibt es noch keine Eigenschaften.</h2>"));
 				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
 			} else {
+				RootPanel.get("content").clear();
 				ClientsideSettings.getLogger().info("Traits von RPC empfangen");
 				/*
 				 *  Das Attribut traits enthält nach dieser Zuweisung
 				 *  die Traits des PartnerProfils des aktuell angemeldeten Benutzers.
 				 */
 				traits = result;
-				add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
+				RootPanel.get("content").add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
 				
-				// Überprüfen, ob Traits hinterlegt wurden
-				if(traits == null) {
-					add(new HTML("<p>Sie haben bisher keine Eigenschaften angelegt </p>"));
+				for(final Trait trait : traits) {
+					HorizontalPanel traitFormRow = new HorizontalPanel();
+					Label nameLabel = new Label(trait.getName());
+					Label valueLabel = new Label(trait.getValue());
+					Button deleteTraitBtn = new Button("x");
+					deleteTraitBtn.addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							traits.remove(trait);
+						}
+						
+					});
+					traitFormRow.add(nameLabel);
+					traitFormRow.add(valueLabel);
+					traitFormRow.add(deleteTraitBtn);
+					RootPanel.get("content").add(traitFormRow);
 				}
 				
 				// Der addTraitBtn erhält einen Clickhandler
