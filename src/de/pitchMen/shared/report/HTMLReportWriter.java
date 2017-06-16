@@ -71,7 +71,7 @@ import java.util.ArrayList;
 	    }
 	    
 	
-	    
+	    // ---------- process(AllApplicationsOfUser)
 	    
 	    public void process(AllApplicationsOfUser a) {
 			// zurücksetzen des Ausgabe-Strings
@@ -102,7 +102,7 @@ import java.util.ArrayList;
 			this.reportText = buff.toString(); 
 		}
 	    
-	    
+	    // ---------- process(AllJobPostings)
 
 	    public void process(AllJobPostings a){
 	    	// zurücksetzen des Ausgabe-Strings
@@ -133,7 +133,8 @@ import java.util.ArrayList;
 	    	this.reportText = buff.toString(); 
 	    }
 
-				
+	     // ---------- process(ApplicationsRelatedToJobPostingsOfUser)
+	    
 		public void process(AllJobPostingsMatchingPartnerProfileOfUser a){
 			// zurücksetzen des Ausgabe-Strings
 			this.resetReportText();
@@ -164,21 +165,87 @@ import java.util.ArrayList;
 
 		}
 		
+		// ---------- process(ApplicationsRelatedToJobPostingsOfUser)
 		
 		public void process(ApplicationsRelatedToJobPostingsOfUser a){
 			// TODO Composite Report? 
 		}
 		
+		//---------- process(ProjectInterweavingsWithParticipationsAndApplications)
+
 		public void process(ProjectInterweavingsWithParticipationsAndApplications a	){
-			// TODO implement here
+			//FIXME
+			// zurücksetzen des Ausgabe-Strings
+			this.resetReportText();
+
+			//StringBuffer erzeugen
+			StringBuffer buff = new StringBuffer(); 
+			buff.append("<h2>" + a.getTitle() + "</h2>");
+			buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
+			//table und tr und td öffnen			
+			buff.append("<table><tr>");
+			buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
+			buff.append("</tr>");
+			
 		}
+
+		//---------- process(FanInJobPostingsOfUser)
 		
 		public void process(FanInJobPostingsOfUser a){
-			// TODO implement here
+			// zurücksetzen des Ausgabe-Strings
+			this.resetReportText();
+
+			//StringBuffer erzeugen
+			StringBuffer buff = new StringBuffer(); 
+			buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
+			//table und tr und td öffnen			
+			buff.append("<table><tr>");
+			buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
+			buff.append("</tr>");
+			
+			ArrayList<Row> rows = a.getRows();
+			
+			for(int i=0; i<rows.size();i++){
+				Row row = rows.get(i);
+				buff.append("<tr>"); 
+				for(int x=0; x<row.getNumberOfColumns();x++){
+					buff.append("<td>" + row.getColumnAt(x) + "</td");
+				}
+				buff.append("</tr"); 
+			}
+
+			buff.append("</table"); 
+			this.reportText = buff.toString(); 
 		}
+
+		
+		// ---------- process(FanOutApplicationsOfUser)
 		
 		public void process(FanOutApplicationsOfUser a){
-			// TODO implement here
+			// zurücksetzen des Ausgabe-Strings
+			this.resetReportText();
+
+			//StringBuffer erzeugen
+			StringBuffer buff = new StringBuffer(); 
+			buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
+			//table und tr und td öffnen			
+			buff.append("<table><tr>");
+			buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
+			buff.append("</tr>");
+			
+			ArrayList<Row> rows = a.getRows();
+			
+			for(int i=0; i<rows.size();i++){
+				Row row = rows.get(i);
+				buff.append("<tr>"); 
+				for(int x=0; x<row.getNumberOfColumns();x++){
+					buff.append("<td>" + row.getColumnAt(x) + "</td");
+				}
+				buff.append("</tr"); 
+			}
+
+			buff.append("</table"); 
+			this.reportText = buff.toString(); 
 		}
 	
 			//TODO Beschreibung
