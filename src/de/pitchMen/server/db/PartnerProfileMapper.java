@@ -10,7 +10,7 @@ import de.pitchMen.shared.bo.PartnerProfile;
 
 /**
  * Bildet PartnerProfile-Objekte auf eine relationale Datenbank ab. Ebenfalls
- * ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * ist es mï¿½glich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
@@ -21,24 +21,24 @@ public class PartnerProfileMapper {
 
 	/**
 	 * Die Klasse PartnerProfileMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfï¿½llt werden kann,
+	 * wird zunï¿½chst eine Variable mit dem Schlï¿½sselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 	private static PartnerProfileMapper partnerProfileMapper = null;
 
 	/**
-	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschï¿½tzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 	protected PartnerProfileMapper() {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafï¿½r,
 	 * dass nur eine einzige Instanz der PartnerProfileMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über
-	 * PartnerProfileMapper.partnerProfileMapper() und nicht über den
+	 * Aufgerufen wird die Klasse somit ï¿½ber
+	 * PartnerProfileMapper.partnerProfileMapper() und nicht ï¿½ber den
 	 * New-Operator.
 	 * 
 	 * @return partnerProfileMapper
@@ -51,7 +51,7 @@ public class PartnerProfileMapper {
 	}
 
 	/**
-	 * Fügt ein PartnerProfile-Objekt der Datenbank hinzu.
+	 * Fï¿½gt ein PartnerProfile-Objekt der Datenbank hinzu.
 	 * 
 	 * @param partnerProfile
 	 * @return partnerProfile
@@ -68,15 +68,15 @@ public class PartnerProfileMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die
+			 * aktuelle id wird um eins erhï¿½ht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
 
 			partnerProfile.setId(rs.getInt("maxid") + 1);
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die Datenbank
+			 * SQL-Anweisung zum Einfï¿½gen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id, team_id, "
 					+ "person_id, jobPosting_id) VALUES (" + partnerProfile.getId() + ", '"
@@ -84,7 +84,7 @@ public class PartnerProfileMapper {
 					+ partnerProfile.getCompanyId() + ", " + partnerProfile.getTeamId() + ", "
 					+ partnerProfile.getPersonId() + ", " + partnerProfile.getJobPostingId() + ")");
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -106,13 +106,13 @@ public class PartnerProfileMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des ï¿½bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE partnerProfile SET dateCreated='" + partnerProfile.getDateCreated()
 					+ "', dateChanged= '" + partnerProfile.getDateChanged() + "' WHERE id= " + partnerProfile.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -123,7 +123,7 @@ public class PartnerProfileMapper {
 	}
 
 	/**
-	 * Löscht ein PartnerProfile-Objekt aus der Datenbank.
+	 * Lï¿½scht ein PartnerProfile-Objekt aus der Datenbank.
 	 * 
 	 * @param partnerProfile
 	 */
@@ -133,12 +133,12 @@ public class PartnerProfileMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Lï¿½schen des ï¿½bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM partnerProfile WHERE id=" + partnerProfile.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -148,7 +148,7 @@ public class PartnerProfileMapper {
 	}
 
 	/**
-	 * Findet ein PartnerProfile-Objekt anhand der übergebenen Id in der Datenbank.
+	 * Findet ein PartnerProfile-Objekt anhand der ï¿½bergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return partnerProfil
@@ -159,14 +159,14 @@ public class PartnerProfileMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der ï¿½bergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged, company_id, team_id, "
 					+ "person_id, jobPosting_id FROM partnerProfile WHERE id=" + id);
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
+			 * Zu einem Primï¿½rschlï¿½ssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -181,7 +181,7 @@ public class PartnerProfileMapper {
 				return partnerProfile;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -215,7 +215,7 @@ public class PartnerProfileMapper {
 			 * Tabelle partnerProfile vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				PartnerProfile partnerProfile = new PartnerProfile();
@@ -229,7 +229,7 @@ public class PartnerProfileMapper {
 				result.add(partnerProfile);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -240,15 +240,15 @@ public class PartnerProfileMapper {
 	}
 	
 	/**
-	 * Findet ein PartnerProfile-Tupel anhand der übergebenen jobPostingId in der
-	 * Datenbank. Anschließend wird es als Java-Objekt in der Variablen partnerProfile 
+	 * Findet ein PartnerProfile-Tupel anhand der ï¿½bergebenen jobPostingId in der
+	 * Datenbank. Anschlieï¿½end wird es als Java-Objekt in der Variablen partnerProfile 
 	 * vom Typ PartnerProfile gespeichert. Methode zum Suchen von Partnerprofilen 
-	 * bestehende Beziehungen/Datensätze zu löschen.
+	 * bestehende Beziehungen/Datensï¿½tze zu lï¿½schen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensï¿½tze zusammengefï¿½gt
+	 * werden, zu den es jeweils auch ein Gegenstï¿½ck in der verknï¿½pften 
+	 * Tabelle gibt. Da es mï¿½glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * mï¿½ssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * @param jobPostingId
 	 * @return partnerProfil
@@ -267,8 +267,8 @@ public class PartnerProfileMapper {
 					+ "WHERE jobPosting_id = " + jobPostingId);
 			/**
 			 * Zu einem JobPosting exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -283,7 +283,7 @@ public class PartnerProfileMapper {
 				return partnerProfile;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -294,15 +294,15 @@ public class PartnerProfileMapper {
 	}
 	
 	/**
-	 * Findet ein PartnerProfile-Tupel anhand der übergebenen companyId in der
-	 * Datenbank. Anschließend wird es als Java-Objekt in der Variablen partnerProfile 
+	 * Findet ein PartnerProfile-Tupel anhand der ï¿½bergebenen companyId in der
+	 * Datenbank. Anschlieï¿½end wird es als Java-Objekt in der Variablen partnerProfile 
 	 * vom Typ PartnerProfile gespeichert. Methode zum Suchen von Partnerprofilen 
-	 * bestehende Beziehungen/Datensätze zu löschen.
+	 * bestehende Beziehungen/Datensï¿½tze zu lï¿½schen.
 	 *
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * müssen 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensï¿½tze zusammengefï¿½gt
+	 * werden, zu den es jeweils auch ein Gegenstï¿½ck in der verknï¿½pften 
+	 * Tabelle gibt. Da es mï¿½glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * mï¿½ssen 
 	 * 
 	 * @param companyId
 	 * @return partnerProfil
@@ -320,8 +320,8 @@ public class PartnerProfileMapper {
 					"SELECT * FROM partnerProfile + WHERE company_id = " + companyId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -336,7 +336,7 @@ public class PartnerProfileMapper {
 				return partnerProfile;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -348,12 +348,12 @@ public class PartnerProfileMapper {
 	
 	/**
 	 * Methode zum Suchen von Partnerprofilen in Bezug zu teamIds um
-	 * bestehende Beziehungen/Datensätze zu löschen.
+	 * bestehende Beziehungen/Datensï¿½tze zu lï¿½schen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * müssen 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensï¿½tze zusammengefï¿½gt
+	 * werden, zu den es jeweils auch ein Gegenstï¿½ck in der verknï¿½pften 
+	 * Tabelle gibt. Da es mï¿½glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * mï¿½ssen 
 	 * 
 	 * @param teamId
 	 * @return partnerProfil
@@ -371,8 +371,8 @@ public class PartnerProfileMapper {
 					"SELECT * FROM partnerProfile + WHERE company_id = " + teamId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -387,7 +387,7 @@ public class PartnerProfileMapper {
 				return partnerProfile;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -399,12 +399,12 @@ public class PartnerProfileMapper {
 	
 	/**
 	 * Methode zum Suchen von Partnerprofilen in Bezug zu personIds um
-	 * bestehende Beziehungen/Datensätze zu löschen.
+	 * bestehende Beziehungen/Datensï¿½tze zu lï¿½schen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * müssen 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensï¿½tze zusammengefï¿½gt
+	 * werden, zu den es jeweils auch ein Gegenstï¿½ck in der verknï¿½pften 
+	 * Tabelle gibt. Da es mï¿½glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * mï¿½ssen 
 	 * 
 	 * @param PersonId
 	 * @return partnerProfil
@@ -419,11 +419,11 @@ public class PartnerProfileMapper {
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten personId, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM partnerProfile + WHERE person_id = " +  personId);
+					"SELECT * FROM partnerProfile WHERE person_id = " +  personId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -438,7 +438,7 @@ public class PartnerProfileMapper {
 				return partnerProfile;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
