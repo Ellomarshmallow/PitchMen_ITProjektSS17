@@ -74,8 +74,11 @@ public interface PitchMenAdminAsync {
 
 	// ---------- MARKETPLACE
 
-	void addMarketplace(String title, String description, int personId, int teamId, int companyId,
-			AsyncCallback<Marketplace> callback);
+	void addMarketplaceByPerson(String title, String description, int personId, AsyncCallback<Marketplace> callback);
+
+	void addMarketplaceByTeam(String title, String description, int teamId, AsyncCallback<Marketplace> callback);
+
+	void addMarketplaceByCompany(String title, String description, int companyId, AsyncCallback<Marketplace> callback);
 
 	void updateMarketplace(Marketplace m, AsyncCallback<Void> callback);
 

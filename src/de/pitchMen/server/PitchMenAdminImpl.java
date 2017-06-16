@@ -250,14 +250,32 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	// --------------------------- MARKETPLACE
 
+	// TODO
 	@Override
-	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
-			throws IllegalArgumentException {
+	public Marketplace addMarketplaceByPerson(String title, String description, int personId) throws IllegalArgumentException {
 		Marketplace marketplace = new Marketplace();
 		marketplace.setTitle(title);
 		marketplace.setDescription(description);
 		marketplace.setPersonId(personId);
+
+		return this.marketplaceMapper.insert(marketplace);
+	}
+
+	@Override
+	public Marketplace addMarketplaceByTeam(String title, String description, int teamId) throws IllegalArgumentException {
+		Marketplace marketplace = new Marketplace();
+		marketplace.setTitle(title);
+		marketplace.setDescription(description);
 		marketplace.setTeamId(teamId);
+
+		return this.marketplaceMapper.insert(marketplace);
+	}
+
+	@Override
+	public Marketplace addMarketplaceByCompany(String title, String description, int companyId) throws IllegalArgumentException {
+		Marketplace marketplace = new Marketplace();
+		marketplace.setTitle(title);
+		marketplace.setDescription(description);
 		marketplace.setCompanyId(companyId);
 
 		return this.marketplaceMapper.insert(marketplace);

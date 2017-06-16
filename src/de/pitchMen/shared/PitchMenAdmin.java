@@ -201,13 +201,28 @@ public interface PitchMenAdmin extends RemoteService {
 	// ---------------------------------------- MARKETPLACE
 
 	/**
-	 * Erstellt ein neues Marketplace-Objekt.
+	 * Eine Firma erstellt ein neues Marketplace-Objekt.
 	 * 
 	 * @return Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
+	public Marketplace addMarketplaceByCompany(String title, String description, int companyId)
 			throws IllegalArgumentException;
+	/**
+	 * Ein Team erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace addMarketplaceByTeam(String title, String description, int teamId) throws IllegalArgumentException;
+	
+	/**
+	 * Eine Person erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace addMarketplaceByPerson(String title, String description, int personId) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Marketplace-Objekt.
