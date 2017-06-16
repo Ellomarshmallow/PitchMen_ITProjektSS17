@@ -1,6 +1,7 @@
 package de.pitchMen.client.elements;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -73,7 +74,11 @@ public class PartnerProfileForm extends Formular {
 		
 		// nach dem Aufruf des RPCs ist entweder das userPartnerProfile gesetzt, oder der Nutzer hatte noch keins
 		if(this.userPartnerProfile == null) {
-			this.add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));		
+			this.add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));
+			Button createButton = new Button("Partnerprofil anlegen");
+			createButton.addClickHandler(new CreatePartnerProfileClickHandler());
+			this.add(createButton);
+			return;
 		} else {
 			// Der Nutzer hatte schon ein PartnerProfile
 			
@@ -81,6 +86,11 @@ public class PartnerProfileForm extends Formular {
 			this.pitchMenAdmin.getTraitsByPartnerProfileId(this.userPartnerProfile.getId(), new TraitsCallback());
 			
 			this.add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
+			
+			// Überprüfen, ob Traits hinterlegt wurden
+			if(traits == null) {
+				this.add(new HTML("<p>Sie haben bisher keine Eigenschaften angelegt </p>"));
+			}
 		}
 		this.add(this.addTraitBtn);
 	}
@@ -132,8 +142,8 @@ public class PartnerProfileForm extends Formular {
 			} else {
 				ClientsideSettings.getLogger().info("Traits von RPC empfangen");
 				/*
-				 *  Das Attribut userPartnerProfile enthält nach dieser Zuweisung
-				 *  das PartnerProfil des aktuell angemeldeten Benutzers.
+				 *  Das Attribut traits enthält nach dieser Zuweisung
+				 *  die Traits des PartnerProfils des aktuell angemeldeten Benutzers.
 				 */
 				traits = result;
 			}
@@ -170,6 +180,35 @@ public class PartnerProfileForm extends Formular {
 			traitFormRow.add(nameBox);
 			traitFormRow.add(valueBox);
 			this.callingPartnerProfileForm.add(traitFormRow);
+		}
+		
+	}
+	
+	/**
+	 * Die genestete Klasse <code>CreatePartnerProfileClickHandler</code>
+	 * behandelt das Drücken des Buttons <code>createButton</code>.
+	 */
+	private class CreatePartnerProfileClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			/*
+			 *  wird der Button geklickt, muss ein neues Paar von
+			 *  Name- & Wert-Eingabefeldern erzeugt werden.
+			 */
+			pitchMenAdmin.addPartnerProfile(new Date(), new Date(), currentUserId, 0, 0, 0, new AsyncCallback<PartnerProfile>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings.getLogger().severe("PartnerProfile konnte nicht gespeichert werden");				
+				}
+
+				@Override
+				public void onSuccess(PartnerProfile result) {
+					userPartnerProfile = result;
+				}
+				
+			});
 		}
 		
 	}
