@@ -250,14 +250,32 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	// --------------------------- MARKETPLACE
 
+	// TODO
 	@Override
-	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
-			throws IllegalArgumentException {
+	public Marketplace addMarketplaceByPerson(String title, String description, int personId) throws IllegalArgumentException {
 		Marketplace marketplace = new Marketplace();
 		marketplace.setTitle(title);
 		marketplace.setDescription(description);
 		marketplace.setPersonId(personId);
+
+		return this.marketplaceMapper.insert(marketplace);
+	}
+
+	@Override
+	public Marketplace addMarketplaceByTeam(String title, String description, int teamId) throws IllegalArgumentException {
+		Marketplace marketplace = new Marketplace();
+		marketplace.setTitle(title);
+		marketplace.setDescription(description);
 		marketplace.setTeamId(teamId);
+
+		return this.marketplaceMapper.insert(marketplace);
+	}
+
+	@Override
+	public Marketplace addMarketplaceByCompany(String title, String description, int companyId) throws IllegalArgumentException {
+		Marketplace marketplace = new Marketplace();
+		marketplace.setTitle(title);
+		marketplace.setDescription(description);
 		marketplace.setCompanyId(companyId);
 
 		return this.marketplaceMapper.insert(marketplace);
@@ -349,15 +367,45 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- PARTNERPROFILE
 
 	@Override
-	public PartnerProfile addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
-			int jobPostingId) throws IllegalArgumentException {
+	public PartnerProfile addPartnerProfileForJobPosting(Date dateCreated, Date dateChanged, int jobPostingId)
+			throws IllegalArgumentException {
+		PartnerProfile partnerProfile = new PartnerProfile();
+		partnerProfile.setDateCreated(dateCreated);
+		partnerProfile.setDateChanged(dateChanged);
+		partnerProfile.setJobPostingId(jobPostingId);
+
+		return this.partnerProfileMapper.insert(partnerProfile);
+	}
+
+	@Override
+	public PartnerProfile addPartnerProfileForPerson(Date dateCreated, Date dateChanged, int personId)
+			throws IllegalArgumentException {
+		PartnerProfile partnerProfile = new PartnerProfile();
+		partnerProfile.setDateCreated(dateCreated);
+		partnerProfile.setDateChanged(dateChanged);
+		partnerProfile.setPersonId(personId);
+
+		return this.partnerProfileMapper.insert(partnerProfile);
+	}
+
+	@Override
+	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId)
+			throws IllegalArgumentException {
+		PartnerProfile partnerProfile = new PartnerProfile();
+		partnerProfile.setDateCreated(dateCreated);
+		partnerProfile.setDateChanged(dateChanged);
+		partnerProfile.setTeamId(teamId);
+
+		return this.partnerProfileMapper.insert(partnerProfile);
+	}
+
+	@Override
+	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId)
+			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
 		partnerProfile.setDateCreated(dateCreated);
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setCompanyId(companyId);
-		partnerProfile.setPersonId(personId);
-		partnerProfile.setTeamId(teamId);
-		partnerProfile.setJobPostingId(jobPostingId);
 
 		return this.partnerProfileMapper.insert(partnerProfile);
 	}
@@ -417,9 +465,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.partnerProfileMapper.findPartnerProfileByCompanyId(companyId);
 	}
 
+	// -------------------------------- PERSON
+
 	@Override
-	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl,
-			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException {
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
+			boolean loggedIn, boolean isExisting) throws IllegalArgumentException {
 		Person person = new Person();
 
 		person.setFirstName(firstName);
@@ -562,8 +612,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId, int jobPostingId)
-			throws IllegalArgumentException {
+	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
+			int jobPostingId) throws IllegalArgumentException {
 		// FIXME nicht sicher ob die Methode funktioniert
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
@@ -667,10 +717,10 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Person login(String requestUri) {
 
 		ClientsideSettings.getLogger().info("login()-Methode wurde aufgerufen.");
-		
+
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		
+
 		Person logInf = new Person();
 
 		/*
@@ -681,103 +731,104 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		 */
 		if (user != null) {
 			// Der Nutzer hat die erste Hürde genommen und sich angemeldet
-			
+
 			ClientsideSettings.getLogger().info("User-Objekt ist nicht null.");
-			
+
 			/*
-			 * Wir fragen zunächst bei der Datenbank an, ob der Nutzer,
-			 * der sich gerade angemeldet hat, bereits vorhanden ist.
+			 * Wir fragen zunächst bei der Datenbank an, ob der Nutzer, der
+			 * sich gerade angemeldet hat, bereits vorhanden ist.
 			 */
 			Person existingPerson = personMapper.findByEmail(user.getEmail());
-			
+
 			/*
 			 * Hat der Mapper ein passendes Person-Objekt gefunden, gibt er
-			 * dieses zurück. Ansonsten returnt er null. Darauf basierend 
+			 * dieses zurück. Ansonsten returnt er null. Darauf basierend
 			 * können wir folgende Fallunterscheidung vornehemen:
 			 */
-			if(existingPerson != null){
+			if (existingPerson != null) {
 				// Der Nutzer ist dem System bereits bekannt.
-				ClientsideSettings.getLogger().info("User mit der E-Mai-Adresse [" + user.getEmail()
-						+ "]  existiert.");
+				ClientsideSettings.getLogger().info("User mit der E-Mai-Adresse [" + user.getEmail() + "]  existiert.");
 
 				/*
-				 *  Hier werden nun noch alle Attribute gesetzt, die in der 
-				 *  Datenbank nicht gespeichert sind.
+				 * Hier werden nun noch alle Attribute gesetzt, die in der
+				 * Datenbank nicht gespeichert sind.
 				 */
-				
+
 				// der Nutzer ist eingeloggt
-				existingPerson.setLoggedIn(true); 
+				existingPerson.setLoggedIn(true);
 				// über diese URL kann er sich ausloggen
 				existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
-				// außerdem existiert er bereits. Dieser Wert sagt der GUI: lade die eigentliche Applikation
-				existingPerson.setIsExisting(true); 
+				// außerdem existiert er bereits. Dieser Wert sagt der GUI:
+				// lade die eigentliche Applikation
+				existingPerson.setIsExisting(true);
 
 				return existingPerson;
 
 			}
-			
-			// Hier landet das Programm, wenn der Nutzer angemeldet, aber noch unbekannt ist
+
+			// Hier landet das Programm, wenn der Nutzer angemeldet, aber noch
+			// unbekannt ist
 			logInf.setLoggedIn(true);
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 			logInf.setEmailAdress(user.getEmail());
-			// Der GUI wird mit diesem Wert mitgeteilt, dass der Nutzer erst seine Daten eingeben muss
-			logInf.setIsExisting(false);  
-		} 
-		else {
+			// Der GUI wird mit diesem Wert mitgeteilt, dass der Nutzer erst
+			// seine Daten eingeben muss
+			logInf.setIsExisting(false);
+		} else {
 			// Hier landen wir wenn der Nutzer nicht angemeldet ist
-			
+
 			ClientsideSettings.getLogger().info("User-Objekt ist null.");
-			
+
 			/*
-			 * Mit dem setzen dieses Wertes auf false teilen wir der GUI
-			 * mit, dass der Nutzer sich erst anmelden muss. Diese erzeugt
-			 * daraufhin ein Overlay mit einem Link, der den Nutzer zum
-			 * Anmeldeformular weiterleitet.
+			 * Mit dem setzen dieses Wertes auf false teilen wir der GUI mit,
+			 * dass der Nutzer sich erst anmelden muss. Diese erzeugt daraufhin
+			 * ein Overlay mit einem Link, der den Nutzer zum Anmeldeformular
+			 * weiterleitet.
 			 */
 			logInf.setLoggedIn(false);
-			
+
 			/*
 			 * Dem per Callback an die GUI weitergereichten Person-Obbjekt
-			 * logInf wird eine LoginURL mitgegeben. Diese wird zum Ziel
-			 * des Links im Overlay. Darüber meldet sich der Nutzer an und 
-			 * kehrt dann auf die Seite zurück. Wieder wird diese login()-
-			 * Methode aufgerufen, nun ist der User aber nicht mehr null.
-			 * Jetzt geht es im if-Block "weiter".
+			 * logInf wird eine LoginURL mitgegeben. Diese wird zum Ziel des
+			 * Links im Overlay. Darüber meldet sich der Nutzer an und kehrt
+			 * dann auf die Seite zurück. Wieder wird diese login()- Methode
+			 * aufgerufen, nun ist der User aber nicht mehr null. Jetzt geht es
+			 * im if-Block "weiter".
 			 */
 			logInf.setLoginUrl(userService.createLoginURL(requestUri));
 			logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
 		}
 		return logInf;
 	}
-	
+
 	// -------------------------TRAITMATCHING METHODE
-	
+
 	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) {
-		
+
 		ArrayList<Trait> personTraits = traitMapper.findTraitByPartnerProfileId(pp.getId());
-		
+
 		ArrayList<PartnerProfile> allpps = partnerProfileMapper.findAll();
-		
+
 		ArrayList<JobPosting> matchingTraits = new ArrayList<JobPosting>();
-		
+
 		for (PartnerProfile pprofile : allpps) {
-			ArrayList <Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
-			
-			for(Trait trait : jPTraits){
-				String  traitJp = trait.getName();
-				
-				for(Trait pTrait : personTraits){
+			ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
+
+			for (Trait trait : jPTraits) {
+				String traitJp = trait.getName();
+
+				for (Trait pTrait : personTraits) {
 					String traitPerson = pTrait.getName();
-					
-					if(traitJp == traitPerson){
+
+					if (traitJp == traitPerson) {
 						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
 					}
 				}
 			}
 		}
-		
+
 		return matchingTraits;
-		
-	}; 
+
+	};
 
 }

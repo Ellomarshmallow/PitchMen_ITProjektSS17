@@ -201,13 +201,28 @@ public interface PitchMenAdmin extends RemoteService {
 	// ---------------------------------------- MARKETPLACE
 
 	/**
-	 * Erstellt ein neues Marketplace-Objekt.
+	 * Eine Firma erstellt ein neues Marketplace-Objekt.
 	 * 
 	 * @return Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
+	public Marketplace addMarketplaceByCompany(String title, String description, int companyId)
 			throws IllegalArgumentException;
+	/**
+	 * Ein Team erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace addMarketplaceByTeam(String title, String description, int teamId) throws IllegalArgumentException;
+	
+	/**
+	 * Eine Person erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace addMarketplaceByPerson(String title, String description, int personId) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Marketplace-Objekt.
@@ -318,13 +333,40 @@ public interface PitchMenAdmin extends RemoteService {
 	// -------------------------------------- PARTNERPROFILE
 
 	/**
-	 * Erstellt ein neues PartnerProfile-Objekt
+	 * Erstellt ein neues PartnerProfile-Objekt für eine Firma
 	 * 
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
-			int jobPostingId) throws IllegalArgumentException;
+	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId)
+			throws IllegalArgumentException;
+
+	/**
+	 * Erstellt ein neues PartnerProfile-Objekt für ein Team
+	 * 
+	 * @return neu erstelltes PartnerProfile-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId)
+			throws IllegalArgumentException;
+
+	/**
+	 * Erstellt ein neues PartnerProfile-Objekt für eine Person
+	 * 
+	 * @return neu erstelltes PartnerProfile-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile addPartnerProfileForPerson(Date dateCreated, Date dateChanged, int personId)
+			throws IllegalArgumentException;
+
+	/**
+	 * Erstellt ein neues PartnerProfile-Objekt für eine Ausschreibung
+	 * 
+	 * @return neu erstelltes PartnerProfile-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile addPartnerProfileForJobPosting(Date dateCreated, Date dateChanged, int jobPostingId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein PartnerProfile-Objekt.
@@ -404,8 +446,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Person-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl,
-			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
+			boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Person-Objekt.
@@ -663,7 +705,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException;
-	
+
 	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) throws IllegalArgumentException;
 
 	// --------------------------- LOGIN
