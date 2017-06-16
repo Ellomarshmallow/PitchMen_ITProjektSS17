@@ -184,6 +184,7 @@ h1 {
 
 #content table {
 	width: 100%;
+	box-sizing: border-box;
 }
 
 /* ### CONTENT > TOPBAR ### */
