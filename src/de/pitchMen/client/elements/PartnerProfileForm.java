@@ -1,5 +1,8 @@
 package de.pitchMen.client.elements;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -11,6 +14,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Trait;
 
 /**
  * Die Klasse <code>PartnerProfileForm</code> stellt
@@ -45,6 +49,14 @@ public class PartnerProfileForm extends Formular {
 	private PartnerProfile userPartnerProfile = null;
 	
 	/**
+	 * Die {@link Trait}-Objekte eines Partnerprofils werden in Objekten der 
+	 * <code>PartnerProfileForm</code>-Klasse gesondert als Attribut geführt,
+	 * um Veränderungen an den Traits vornehmen zu können.
+	 */
+	private ArrayList<Trait> traits = new ArrayList<Trait>();
+	
+	
+	/**
 	 * Der Button <code>addTraitButton</code> dient dem Anlegen einer neuen
 	 * Eigenschaft für das Partnerprofil.
 	 */
@@ -63,9 +75,24 @@ public class PartnerProfileForm extends Formular {
 		// nach dem Aufruf des RPCs ist entweder das userPartnerProfile gesetzt, oder der Nutzer hatte noch keins
 		if(this.userPartnerProfile == null) {
 			this.add(new HTML("<h2>Sie haben noch kein Partner-Profil angelegt. Beginnen Sie jetzt!</h2>"));
-			this.add(this.addTraitBtn);
+			Button createButton = new Button("Partnerprofil anlegen");
+			createButton.addClickHandler(new CreatePartnerProfileClickHandler());
+			this.add(createButton);
+			return;
+		} else {
+			// Der Nutzer hatte schon ein PartnerProfile
 			
+			// RPC-Abfrage des Partnerprofils
+			this.pitchMenAdmin.getTraitsByPartnerProfileId(this.userPartnerProfile.getId(), new TraitsCallback());
+			
+			this.add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
+			
+			// Überprüfen, ob Traits hinterlegt wurden
+			if(traits == null) {
+				this.add(new HTML("<p>Sie haben bisher keine Eigenschaften angelegt </p>"));
+			}
 		}
+		this.add(this.addTraitBtn);
 	}
 	
 	/**
@@ -91,6 +118,34 @@ public class PartnerProfileForm extends Formular {
 				 *  das PartnerProfil des aktuell angemeldeten Benutzers.
 				 */
 				userPartnerProfile = result;
+			}
+		}
+		
+	}
+	
+	/**
+	 * Die genestete Klasse <code>PartnerProfileCallback</code>
+	 * behandelt die zurückkehrende Server-Abfrage eines
+	 * Partnerprofils.
+	 */
+	private class TraitsCallback implements AsyncCallback<ArrayList<Trait>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			ClientsideSettings.getLogger().severe("Konnte Partnerprofil nicht laden");	
+		}
+
+		@Override
+		public void onSuccess(ArrayList<Trait> result) {
+			if(result == null) {
+				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
+			} else {
+				ClientsideSettings.getLogger().info("Traits von RPC empfangen");
+				/*
+				 *  Das Attribut traits enthält nach dieser Zuweisung
+				 *  die Traits des PartnerProfils des aktuell angemeldeten Benutzers.
+				 */
+				traits = result;
 			}
 		}
 		
@@ -125,6 +180,35 @@ public class PartnerProfileForm extends Formular {
 			traitFormRow.add(nameBox);
 			traitFormRow.add(valueBox);
 			this.callingPartnerProfileForm.add(traitFormRow);
+		}
+		
+	}
+	
+	/**
+	 * Die genestete Klasse <code>CreatePartnerProfileClickHandler</code>
+	 * behandelt das Drücken des Buttons <code>createButton</code>.
+	 */
+	private class CreatePartnerProfileClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			/*
+			 *  wird der Button geklickt, muss ein neues Paar von
+			 *  Name- & Wert-Eingabefeldern erzeugt werden.
+			 */
+			pitchMenAdmin.addPartnerProfile(new Date(), new Date(), currentUserId, 0, 0, 0, new AsyncCallback<PartnerProfile>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings.getLogger().severe("PartnerProfile konnte nicht gespeichert werden");				
+				}
+
+				@Override
+				public void onSuccess(PartnerProfile result) {
+					userPartnerProfile = result;
+				}
+				
+			});
 		}
 		
 	}

@@ -2,14 +2,19 @@ package de.pitchMen.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.elements.FirstLoginForm;
+import de.pitchMen.client.elements.PartnerProfileForm;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Person;
 
@@ -72,6 +77,7 @@ public class PitchMen implements EntryPoint {
 		 * @see com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable)
 		 */
 		public void onFailure(Throwable caught) {
+			RootPanel.get("content").clear();
 			RootPanel.get("content").add(new HTML("<h2>Herzlich willkommen bei PitchMen. Leider hat das mit dem Login nicht so ganz funktioniert.</h2>"));
 			ClientsideSettings.getLogger().severe("Login fehlgeschlagen");
 		}
@@ -142,20 +148,33 @@ public class PitchMen implements EntryPoint {
 	 * eingeloggt ist.
 	 * 
 	 */
-	public void loadPitchMen() {
-		
+	public void loadPitchMen() {		
 		/*
 		 * Informationen zum angemeldeten User in der Topbar ausgeben.
 		 * Hierzu gehört auch der Logout-Link, über den der Nutzer
 		 * sich von der PitchMen-Applikation abmelden kann.
 		 */
-		RootPanel.get("top").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
-				  ClientsideSettings.getCurrentUser().getFirstName() +
-				  " " +
-				  ClientsideSettings.getCurrentUser().getName() +
-				  "<a href='" +
-				  ClientsideSettings.getCurrentUser().getLogoutUrl() +
-				  "' title='Ausloggen'><span class='fa fa-sign-out'></span></a></p>"));
+		HTML partnerProfileLink = new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " 
+									+ ClientsideSettings.getCurrentUser().getFirstName()
+									+ " " 
+									+ ClientsideSettings.getCurrentUser().getName()
+									+ "</p>");
+		
+		HTML logoutLink = new HTML("<p><a href='" 
+									+ ClientsideSettings.getCurrentUser().getLogoutUrl() 
+									+ "'><span class='fa fa-sign-out'></span></a></p>");
+		partnerProfileLink.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				PartnerProfileForm partnerProfileForm = new PartnerProfileForm();
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(partnerProfileForm);
+			}
+			
+		});
+		RootPanel.get("usermenu").add(partnerProfileLink);
+		RootPanel.get("usermenu").add(logoutLink);
 
 		/*
 		 * Navigation-Objekt zur Darstellung der Navigationselemente
@@ -164,26 +183,6 @@ public class PitchMen implements EntryPoint {
 
 		// Das navPanel der Seite im Bereich der id "nav" hinzufügen
 		RootPanel.get("nav").add(navigation);
-
-		/*
-		 * Einen report laden, wenn der reportBtn geklickt wird. Aktuell ist das
-		 * der Report ShowAllJobPostings. Dieser wiederum implementiert
-		 * Reportgenerator und PitchMenAdmin, beide aktuell noch nicht
-		 * funktionsfähig. Durch auskommentieren dieses Aufrufs bleibt die GUI
-		 * aktuell compilierfähig. Auskommentierung kann zum Testen und final
-		 * nach Fertigstellung der beiden Interfaces entfernt werden. Stand:
-		 * 03.05.2017 19:00 Uhr - Simon
-		 */
-		// reportBtn.addClickHandler(new ClickHandler() {
-		//
-		// @Override
-		// public void onClick(ClickEvent event) {
-		// RootPanel.get("content").clear();
-		// VerticalPanel report = (VerticalPanel) new ShowAllJobPostings();
-		// RootPanel.get("content").add(report);
-		// }
-		//
-		// });
 		
 		RootPanel.get("content").clear();
 
