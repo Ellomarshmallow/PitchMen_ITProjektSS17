@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Trait;
@@ -196,7 +197,7 @@ public class PartnerProfileForm extends Formular {
 			 *  wird der Button geklickt, muss ein neues Paar von
 			 *  Name- & Wert-Eingabefeldern erzeugt werden.
 			 */
-			pitchMenAdmin.addPartnerProfile(new Date(), new Date(), currentUserId, 0, 0, 0, new AsyncCallback<PartnerProfile>() {
+			pitchMenAdmin.addPartnerProfileForPerson(new Date(), new Date(), currentUserId, new AsyncCallback<PartnerProfile>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
