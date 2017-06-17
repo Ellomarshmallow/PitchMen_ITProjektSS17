@@ -104,8 +104,10 @@ public class AddJobPostingForm extends Formular {
 	// ---------- speichern
 	public void save() {
 		
+		java.sql.Date convertedDate = new java.sql.Date(deadlineBox.getValue().getTime());
+		
 		super.getPitchMenAdmin().addJobPosting(titleBox.getText(), descBox.getText(), statusBox.getText(),
-				deadlineBox.getValue(), this.selectedProject.getId(), new AddJobPostingCallback(this));
+				convertedDate, this.selectedProject.getId(), new AddJobPostingCallback(this));
 
 	}
 
