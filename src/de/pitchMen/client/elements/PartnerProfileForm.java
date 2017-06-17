@@ -267,7 +267,7 @@ public class PartnerProfileForm extends Formular {
 		public void onClick(ClickEvent event) {
 			/*
 			 *  wird der Button geklickt, muss ein 
-			 *  neues partnerProfile erstellt.
+			 *  neues partnerProfile erstellt werden.
 			 */ 
 			Date initialDate = new Date();
 			pitchMenAdmin.addPartnerProfileForPerson(initialDate, initialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
