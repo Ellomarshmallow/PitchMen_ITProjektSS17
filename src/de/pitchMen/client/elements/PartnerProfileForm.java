@@ -1,10 +1,12 @@
 package de.pitchMen.client.elements;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -147,6 +149,12 @@ public class PartnerProfileForm extends Formular {
 				traits = result;
 				RootPanel.get("content").add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
 				
+				RootPanel.get("content").add(new HTML("<p><strong>Erstellt:</strong> "
+														+ userPartnerProfile.getDateCreated()
+														+ " | <strong>Zuletzt geändert:</strong> "
+														+ userPartnerProfile.getDateChanged()
+														+ "</p>"));
+				
 				FlexTable traitTable = new FlexTable();
 				traitTable.setStyleName("traits");
 				
@@ -223,6 +231,22 @@ public class PartnerProfileForm extends Formular {
 
 				@Override
 				public void onSuccess(Trait result) {
+					// TODO getDateChanged() von userPartnerProfile updaten 
+					pitchMenAdmin.updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+					});
 					PartnerProfileForm updatedForm = new PartnerProfileForm();
 					RootPanel.get("content").clear();
 					RootPanel.get("content").add(updatedForm);
@@ -244,8 +268,9 @@ public class PartnerProfileForm extends Formular {
 			/*
 			 *  wird der Button geklickt, muss ein 
 			 *  neues partnerProfile erstellt.
-			 */
-			pitchMenAdmin.addPartnerProfileForPerson(new Date(), new Date(), currentUserId, new AsyncCallback<PartnerProfile>() {
+			 */ 
+			Date initialDate = new Date();
+			pitchMenAdmin.addPartnerProfileForPerson(initialDate, initialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
