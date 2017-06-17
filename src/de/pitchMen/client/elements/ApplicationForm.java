@@ -90,8 +90,9 @@ public class ApplicationForm extends Formular {
 	public void send(){
 		//FIXME
 		// Aktuelles Datum
-		Date date = new Date();		
-		super.getPitchMenAdmin().addApplication(date, textArea.getText(), null, null, 
+		java.util.Date date = new Date();
+		java.sql.Date convertedDate = new java.sql.Date(date.getTime());
+		super.getPitchMenAdmin().addApplication(convertedDate, textArea.getText(), null, null, 
 				referredJobPosting.getId(), partnerProfileId, new AddApplicationCallback(this));
 		
 	}
