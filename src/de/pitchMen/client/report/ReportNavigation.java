@@ -12,10 +12,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
+import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.HTMLReportWriter;
+import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
 
 /**
  * Die Klasse <code>ReportNavigation</code> erweitert die
@@ -123,15 +125,65 @@ public class ReportNavigation extends VerticalPanel {
 		}
 
 		private HTML getProjectInterveawings() {
-			return null;
-			// TODO Auto-generated method stub
-			
+			final HTMLReportWriter writer = new HTMLReportWriter();
+			ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<Person>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(Person result) {
+					ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(result,new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
+							writer.process(result);
+							reportContent = new HTML(writer.getReportText());
+						}
+					});
+				}				
+			});
+			return reportContent;
 		}
 
 		private HTML getAllApplicationsOfUserWithJobPostings() {
-			return null;
-			// TODO Auto-generated method stub
-			
+			final HTMLReportWriter writer = new HTMLReportWriter();
+			ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<Person>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(Person result) {
+					ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(result,new AsyncCallback<AllApplicationsOfUser>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(AllApplicationsOfUser result) {
+							writer.process(result);
+							reportContent = new HTML(writer.getReportText());
+						}
+					});
+				}				
+			});
+			return reportContent;
 		}
 
 		private HTML getApplicationsRelatedToJobPostingsOfUser() {
