@@ -1,6 +1,6 @@
 package de.pitchMen.shared.bo;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Repräsentiert eine Bewerbung.

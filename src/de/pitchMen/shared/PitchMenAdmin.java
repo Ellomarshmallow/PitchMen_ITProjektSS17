@@ -7,17 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import de.pitchMen.server.PitchMenAdminImpl;
-import de.pitchMen.shared.bo.Application;
-import de.pitchMen.shared.bo.Company;
-import de.pitchMen.shared.bo.JobPosting;
-import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.Participation;
-import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Person;
-import de.pitchMen.shared.bo.Project;
-import de.pitchMen.shared.bo.Rating;
-import de.pitchMen.shared.bo.Team;
-import de.pitchMen.shared.bo.Trait;
+import de.pitchMen.shared.bo.*;
 
 /**
  * Schnittstelle für die RPC-Fähige Klasse PitchMenAdminImpl.
