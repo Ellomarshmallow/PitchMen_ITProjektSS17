@@ -73,7 +73,9 @@ public class PartnerProfileMapper {
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
 
-			partnerProfile.setId(rs.getInt("maxid") + 1);
+			if(rs.next()) {
+				partnerProfile.setId(rs.getInt("maxid") + 1);	
+			}
 			stmt = con.createStatement();
 			/**
 			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
