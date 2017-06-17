@@ -333,7 +333,7 @@ public interface PitchMenAdmin extends RemoteService {
 	// -------------------------------------- PARTNERPROFILE
 
 	/**
-	 * Erstellt ein neues PartnerProfile-Objekt für eine Firma
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r eine Firma
 	 * 
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
@@ -342,7 +342,7 @@ public interface PitchMenAdmin extends RemoteService {
 			throws IllegalArgumentException;
 
 	/**
-	 * Erstellt ein neues PartnerProfile-Objekt für ein Team
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r ein Team
 	 * 
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
@@ -351,7 +351,7 @@ public interface PitchMenAdmin extends RemoteService {
 			throws IllegalArgumentException;
 
 	/**
-	 * Erstellt ein neues PartnerProfile-Objekt für eine Person
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r eine Person
 	 * 
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
@@ -360,7 +360,7 @@ public interface PitchMenAdmin extends RemoteService {
 			throws IllegalArgumentException;
 
 	/**
-	 * Erstellt ein neues PartnerProfile-Objekt für eine Ausschreibung
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r eine Ausschreibung
 	 * 
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
@@ -662,7 +662,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Trait-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Trait addTrait(String name, String value) throws IllegalArgumentException;
+	public Trait addTrait(String name, String value, int partnerProfileId) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Trait-Objekt.

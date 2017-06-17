@@ -674,10 +674,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// ------------------------------ TRAIT
 
 	@Override
-	public Trait addTrait(String name, String value) throws IllegalArgumentException {
+	public Trait addTrait(String name, String value, int partnerProfileId) throws IllegalArgumentException {
 		Trait trait = new Trait();
 		trait.setName(name);
 		trait.setValue(value);
+		trait.setPartnerProfileId(partnerProfileId);
 
 		return this.traitMapper.insert(trait);
 	}

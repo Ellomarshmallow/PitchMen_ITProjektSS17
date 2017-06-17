@@ -198,7 +198,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- TRAIT
 
-	void addTrait(String name, String value, AsyncCallback<Trait> callback);
+	void addTrait(String name, String value, int partnerProfileId, AsyncCallback<Trait> callback);
 
 	void updateTrait(Trait Trait, AsyncCallback<Void> callback);
 
