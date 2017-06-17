@@ -1,21 +1,11 @@
 package de.pitchMen.shared;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import de.pitchMen.shared.bo.Application;
-import de.pitchMen.shared.bo.Company;
-import de.pitchMen.shared.bo.JobPosting;
-import de.pitchMen.shared.bo.Marketplace;
-import de.pitchMen.shared.bo.Participation;
-import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Person;
-import de.pitchMen.shared.bo.Project;
-import de.pitchMen.shared.bo.Rating;
-import de.pitchMen.shared.bo.Team;
-import de.pitchMen.shared.bo.Trait;
+import de.pitchMen.shared.bo.*;
 
 /**
  * Das asynchrone Gegenstück des Interface PitchMenAdmin. Es wird
