@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -142,10 +143,10 @@ public class PartnerProfileForm extends Formular {
 				traits = result;
 				RootPanel.get("content").add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
 				
+				FlexTable traitTable = new FlexTable();
+				
 				for(final Trait trait : traits) {
-					HorizontalPanel traitFormRow = new HorizontalPanel();
-					Label nameLabel = new Label(trait.getName());
-					Label valueLabel = new Label(trait.getValue());
+					HTML traitRow = new HTML("<p><strong>" + trait.getName() + "</strong>: " + trait.getValue() + "</p>");
 					Button deleteTraitBtn = new Button("x");
 					deleteTraitBtn.addClickHandler(new ClickHandler() {
 
@@ -155,10 +156,10 @@ public class PartnerProfileForm extends Formular {
 						}
 						
 					});
-					traitFormRow.add(nameLabel);
-					traitFormRow.add(valueLabel);
-					traitFormRow.add(deleteTraitBtn);
-					RootPanel.get("content").add(traitFormRow);
+					int rowCount = traitTable.getRowCount();
+					traitTable.setWidget(rowCount, 0, traitRow);
+					traitTable.setWidget(rowCount, 1, deleteTraitBtn);
+					RootPanel.get("content").add(traitTable);
 				}
 				
 				// Der addTraitBtn erhält einen Clickhandler
