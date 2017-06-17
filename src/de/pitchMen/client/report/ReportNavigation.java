@@ -16,6 +16,7 @@ import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
 import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
+import de.pitchMen.shared.report.FanInAndOutReport;
 import de.pitchMen.shared.report.HTMLReportWriter;
 import de.pitchMen.shared.report.ProjectInterweavingsWithParticipationsAndApplications;
 
@@ -119,9 +120,22 @@ public class ReportNavigation extends VerticalPanel {
 		}
 
 		private HTML getFanInFanOutAnalysis() {
-			return null;
-			// TODO Auto-generated method stub
-			
+			final HTMLReportWriter writer = new HTMLReportWriter();
+			ClientsideSettings.getReportGenerator().showFanInAndOutReport(new AsyncCallback<FanInAndOutReport>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(FanInAndOutReport result) {
+							writer.process(result);
+							reportContent = new HTML(writer.getReportText());
+						}
+			});
+			return reportContent;
 		}
 
 		private HTML getProjectInterveawings() {
