@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
@@ -37,6 +38,9 @@ public class AddProjectForm extends Formular{
 		this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
 		this.isSave = isSave; 
 		this.selectedMarketplace = pitchMenTreeViewModel.getSelectedMarketplace(); 
+		
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 
 		//TODO beim anzeigen der TextBoxes: addProject = true dann alles leer, bei false die vorherigen Daten übernehmen
 
@@ -55,61 +59,45 @@ public class AddProjectForm extends Formular{
 		labelsPanel.add(toLabel);
 		labelsPanel.add(toBox);
 
-
+				
 		//HorizontalPanel für die Buttons erstellen
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);	
-
-		Button cancelButton = new Button("Abbrechen" + new ClickHandler(){
-			public void onClick(ClickEvent event){
-				/* Wenn man auf den Cancel Button drückt, wird man auf den angewählten Projektmarktplatz
-				 * zurückgeführt
-				 * */
-				MarketplaceForm mpf = new MarketplaceForm(selectedMarketplace); 
-
-			}
-		}); 
-		buttonsPanel.add(cancelButton);
-
-		// Speichern Button
-		Button saveButton = new Button("Speichern" + new ClickHandler(){
-
-			public void onClick(ClickEvent event) {
-
-				if (Window.confirm("Sind alle Angaben korrekt?")) {
-
-					if(getIsSave()){
-
-						/* bei Click wird die unten implementierte Methode save()
-						 * aufgerufen.
-						 */
-						save();
-						ProjectForm pf = new ProjectForm(getSelectedProject());
-					}
-					else{
-						update();
-						ProjectForm pf = new ProjectForm(getSelectedProject());
-					}
-
-				}
-
-			}
-		});
-		buttonsPanel.add(saveButton);
+		
+		//Die zwei VerticalPanels hinzufügen
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(labelsPanel);
+		RootPanel.get("content").add(buttonsPanel);
+		
+		Button cancelBtn = new Button("Abbrechen");
+		cancelBtn.addClickHandler(new cancelClickHandler());
+		buttonsPanel.add(cancelBtn);
+		
+		Button saveBtn = new Button("Speichern"); 
+		saveBtn.addClickHandler(new saveClickHandler()); 
+		buttonsPanel.add(saveBtn);
+	
 	}
-
+	
+	// get SelectedProject
 	public Project getSelectedProject() {
 		return selectedProject;
 	}
-
+	//get SelectedMarketplace
+	public Marketplace getSelectedMarketplace(){
+		return selectedMarketplace; 
+	}
+	
+	// save Methode
 	public void save(){
 
-
-		super.getPitchMenAdmin().addProject(fromBox.getValue(), toBox.getValue(), titleBox.getText(), descBox.getText(),
+		java.sql.Date convertedFromDate = new java.sql.Date(fromBox.getValue().getTime()); 
+		java.sql.Date convertedToDate = new java.sql.Date(toBox.getValue().getTime()); 
+		super.getPitchMenAdmin().addProject(convertedFromDate, convertedToDate, titleBox.getText(), descBox.getText(),
 				ClientsideSettings.getCurrentUser().getId(),selectedProject.getMarketplaceId(), new AddProjectFormCallback(this));
 	}
-
-
+	
+	//AddProjectFormCallback
 	public class AddProjectFormCallback implements AsyncCallback<Project>{
 
 		private AddProjectForm addProjectForm = null; 
@@ -134,10 +122,14 @@ public class AddProjectForm extends Formular{
 
 	public void update() {
 		if (selectedProject != null) {
+			
+			java.sql.Date convertedFromDate = new java.sql.Date(fromBox.getValue().getTime()); 
+			java.sql.Date convertedToDate = new java.sql.Date(toBox.getValue().getTime()); 
+			
 			selectedProject.setTitle(titleBox.getText());
 			selectedProject.setDescription(descBox.getText());
-			selectedProject.setDateOpened(fromBox.getValue());
-			selectedProject.setDateClosed(toBox.getValue());
+			selectedProject.setDateOpened(convertedFromDate);
+			selectedProject.setDateClosed(convertedToDate);
 			super.getPitchMenAdmin().updateProject(selectedProject, new UpdateProjectCallback());
 		}}
 
@@ -162,5 +154,50 @@ public class AddProjectForm extends Formular{
 	public boolean getIsSave(){
 		return this.isSave; 
 	}
+	
+
+	// ---------- ClickHandler
+
+	// ---------- cancelClickHandler
+	private class cancelClickHandler implements ClickHandler{
+		public void onClick(ClickEvent event) {
+
+			/* Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
+			 * Projektmarktplatz zurückgeführt.*/
+			RootPanel.get("content").clear();
+			MarketplaceForm cancel = new MarketplaceForm(getSelectedMarketplace());
+
+		}
+	}
+
+
+	// ---------- saveClickHandler
+	private class saveClickHandler implements ClickHandler{
+		public void onClick(ClickEvent event) {
+
+
+			RootPanel.get("content").clear();
+
+			if (Window.confirm("Sind alle Angaben korrekt?")) {
+
+				if(getIsSave()){
+
+					/* bei Click wird die unten implementierte Methode save()
+					 * aufgerufen.
+					 */
+					save();
+					ProjectForm pf = new ProjectForm(getSelectedProject());
+				}
+				else{
+					update();
+					ProjectForm pf = new ProjectForm(getSelectedProject());
+				}
+
+			}
+		}
+	}
+
+	 
+	 
 }
 
