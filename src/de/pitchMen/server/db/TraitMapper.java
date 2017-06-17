@@ -72,8 +72,9 @@ public class TraitMapper {
 			 * Statement ausf�llen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM trait");
-
-			trait.setId(rs.getInt("maxid") + 1);
+			if(rs.next()) {
+				trait.setId(rs.getInt("maxid") + 1);
+			}
 			stmt = con.createStatement();
 			/**
 			 * SQL-Anweisung zum Einf�gen des neuen Datensatzes in die Datenbank.
