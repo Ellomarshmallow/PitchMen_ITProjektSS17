@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.pitchMen.shared.CommonSettings;
@@ -50,11 +51,6 @@ public class ClientsideSettings extends CommonSettings {
 	   * Instanz des Client-seitigen Loggers.
 	   */
 	  private static final Logger log = Logger.getLogger(LOGGER_NAME);
-	  
-	  /**
-	   * 
-	   */
-	  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
 
 	  /**
 	   * <p>
@@ -129,10 +125,6 @@ public class ClientsideSettings extends CommonSettings {
 
 	public static void setCurrentUser(Person currentUser) {
 		ClientsideSettings.currentUser = currentUser;
-	}
-	
-	public static SimpleDateFormat getDateFormat() {
-		return dateFormat;
 	}
 
 }
