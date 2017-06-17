@@ -144,15 +144,31 @@ public class PartnerProfileForm extends Formular {
 				RootPanel.get("content").add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
 				
 				FlexTable traitTable = new FlexTable();
+				traitTable.setStyleName("traits");
 				
 				for(final Trait trait : traits) {
 					HTML traitRow = new HTML("<p><strong>" + trait.getName() + "</strong>: " + trait.getValue() + "</p>");
-					Button deleteTraitBtn = new Button("x");
+					Button deleteTraitBtn = new Button("Eigenschaft entfernen");
 					deleteTraitBtn.addClickHandler(new ClickHandler() {
 
 						@Override
 						public void onClick(ClickEvent event) {
-							traits.remove(trait);
+							pitchMenAdmin.deleteTrait(trait, new AsyncCallback<Void>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									RootPanel.get("content").clear();
+									RootPanel.get("content").add(new HTML("<p>Fehler beim Entfernen der Eigenschaft.</p>"));
+								}
+
+								@Override
+								public void onSuccess(Void result) {
+									PartnerProfileForm updatedForm = new PartnerProfileForm();
+									RootPanel.get("content").clear();
+									RootPanel.get("content").add(updatedForm);
+								}
+								
+							});
 						}
 						
 					});
