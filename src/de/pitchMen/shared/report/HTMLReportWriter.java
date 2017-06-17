@@ -252,4 +252,33 @@ import java.util.ArrayList;
 		public String getReportText(){
 			return this.getHead() + this.reportText + this.getTrailer(); 
 		}
+
+		public void process(FanInAndOutReport a) {
+			// zurücksetzen des Ausgabe-Strings
+	    	this.resetReportText();
+
+	    	//StringBuffer erzeugen
+	    	StringBuffer buff = new StringBuffer(); 
+
+	    	buff.append("<h2>" + a.getTitle() + "</h2>"); 
+	    	buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
+	    	//table und tr und td öffnen			
+	    	buff.append("<table><tr>");
+	    	buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
+	    	buff.append("</tr>");
+
+	    	ArrayList<Row> rows = a.getRows();
+
+	    	for(int i=0; i<rows.size();i++){
+	    		Row row = rows.get(i);
+	    		buff.append("<tr>"); 
+	    		for(int x=0; x<row.getNumberOfColumns();x++){
+	    			buff.append("<td>" + row.getColumnAt(x) + "</td");
+	    		}
+	    		buff.append("</tr"); 
+	    	}
+
+	    	buff.append("</table"); 
+	    	this.reportText = buff.toString(); 
+					}
 }

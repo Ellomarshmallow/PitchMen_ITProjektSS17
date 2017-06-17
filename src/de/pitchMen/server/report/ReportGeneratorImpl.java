@@ -424,7 +424,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		}
 		//R�ckgabe des fertigen Reports 
-		return null;
+		return result;
 	}
 	
 	
