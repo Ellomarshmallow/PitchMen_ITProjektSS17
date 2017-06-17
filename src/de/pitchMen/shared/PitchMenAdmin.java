@@ -201,13 +201,28 @@ public interface PitchMenAdmin extends RemoteService {
 	// ---------------------------------------- MARKETPLACE
 
 	/**
-	 * Erstellt ein neues Marketplace-Objekt.
+	 * Eine Firma erstellt ein neues Marketplace-Objekt.
 	 * 
 	 * @return Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplace(String title, String description, int personId, int teamId, int companyId)
+	public Marketplace addMarketplaceByCompany(String title, String description, int companyId)
 			throws IllegalArgumentException;
+	/**
+	 * Ein Team erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace addMarketplaceByTeam(String title, String description, int teamId) throws IllegalArgumentException;
+	
+	/**
+	 * Eine Person erstellt ein neues Marketplace-Objekt.
+	 * 
+	 * @return Marketplace-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public Marketplace addMarketplaceByPerson(String title, String description, int personId) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Marketplace-Objekt.
@@ -227,9 +242,9 @@ public interface PitchMenAdmin extends RemoteService {
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException;
 
 	/**
-	 * Gibt alle vorhandenen Marktplätze aus.
+	 * Gibt alle vorhandenen Marktplï¿½tze aus.
 	 * 
-	 * @return ArrayList aller Marktplätze
+	 * @return ArrayList aller Marktplï¿½tze
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Marketplace> getMarketplaces() throws IllegalArgumentException;
@@ -318,13 +333,40 @@ public interface PitchMenAdmin extends RemoteService {
 	// -------------------------------------- PARTNERPROFILE
 
 	/**
-	 * Erstellt ein neues PartnerProfile-Objekt
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r eine Firma
 	 * 
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
-			int jobPostingId) throws IllegalArgumentException;
+	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId)
+			throws IllegalArgumentException;
+
+	/**
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r ein Team
+	 * 
+	 * @return neu erstelltes PartnerProfile-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId)
+			throws IllegalArgumentException;
+
+	/**
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r eine Person
+	 * 
+	 * @return neu erstelltes PartnerProfile-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile addPartnerProfileForPerson(Date dateCreated, Date dateChanged, int personId)
+			throws IllegalArgumentException;
+
+	/**
+	 * Erstellt ein neues PartnerProfile-Objekt fï¿½r eine Ausschreibung
+	 * 
+	 * @return neu erstelltes PartnerProfile-Objekt
+	 * @throws IllegalArgumentException
+	 */
+	public PartnerProfile addPartnerProfileForJobPosting(Date dateCreated, Date dateChanged, int jobPostingId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein PartnerProfile-Objekt.
@@ -404,8 +446,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Person-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Person addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
-			String logoutUrl) throws IllegalArgumentException;
+	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
+			boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Person-Objekt.
@@ -556,7 +598,7 @@ public interface PitchMenAdmin extends RemoteService {
 
 	/**
 	 * Bewertung einer Bewerbung. Wenn die Bewertung einen "score" von 1
-	 * aufweist wird automatisch eine Beteiligung erschaffen. Dadurch ändert
+	 * aufweist wird automatisch eine Beteiligung erschaffen. Dadurch ï¿½ndert
 	 * sich auch automatisch der Status der Bewerbung und der Ausschreibung.
 	 * 
 	 * @param score
@@ -620,7 +662,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Trait-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Trait addTrait(String name, String value) throws IllegalArgumentException;
+	public Trait addTrait(String name, String value, int partnerProfileId) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Trait-Objekt.
@@ -663,7 +705,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException;
-	
+
 	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) throws IllegalArgumentException;
 
 	// --------------------------- LOGIN

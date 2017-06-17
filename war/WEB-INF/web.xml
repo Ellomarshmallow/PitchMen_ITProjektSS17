@@ -24,7 +24,7 @@
 <!-- ReportGenerator-Servlet -->  
   <servlet>
     <servlet-name>reportGeneratorServlet</servlet-name>
-    <servlet-class>de.pitchMen.server.ReportGeneratorImpl</servlet-class>
+    <servlet-class>de.pitchMen.server.report.ReportGeneratorImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>

@@ -74,8 +74,11 @@ public interface PitchMenAdminAsync {
 
 	// ---------- MARKETPLACE
 
-	void addMarketplace(String title, String description, int personId, int teamId, int companyId,
-			AsyncCallback<Marketplace> callback);
+	void addMarketplaceByPerson(String title, String description, int personId, AsyncCallback<Marketplace> callback);
+
+	void addMarketplaceByTeam(String title, String description, int teamId, AsyncCallback<Marketplace> callback);
+
+	void addMarketplaceByCompany(String title, String description, int companyId, AsyncCallback<Marketplace> callback);
 
 	void updateMarketplace(Marketplace m, AsyncCallback<Void> callback);
 
@@ -106,8 +109,17 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PARTNERPROFILE
 
-	void addPartnerProfile(Date dateCreated, Date dateChanged, int personId, int teamId, int companyId,
-			int jobPostingId, AsyncCallback<PartnerProfile> callback);
+	void addPartnerProfileForPerson(Date dateCreated, Date dateChanged, int personId,
+			AsyncCallback<PartnerProfile> callback);
+
+	void addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId,
+			AsyncCallback<PartnerProfile> callback);
+
+	void addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId,
+			AsyncCallback<PartnerProfile> callback);
+
+	void addPartnerProfileForJobPosting(Date dateCreated, Date dateChanged, int jobPostingId,
+			AsyncCallback<PartnerProfile> callback);
 
 	void updatePartnerProfile(PartnerProfile PartnerProfile, AsyncCallback<Void> callback);
 
@@ -127,8 +139,8 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PERSON
 
-	void addPerson(String firstName, boolean loggedIn, String emailAdress, String nickname, String loginUrl,
-			String logoutUrl, AsyncCallback<Person> callback);
+	void addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
+			boolean loggedIn, boolean isExisting, AsyncCallback<Person> callback);
 
 	void updatePerson(Person person, AsyncCallback<Void> callback);
 
@@ -186,7 +198,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- TRAIT
 
-	void addTrait(String name, String value, AsyncCallback<Trait> callback);
+	void addTrait(String name, String value, int partnerProfileId, AsyncCallback<Trait> callback);
 
 	void updateTrait(Trait Trait, AsyncCallback<Void> callback);
 
@@ -197,7 +209,7 @@ public interface PitchMenAdminAsync {
 	void getTraitByID(int id, AsyncCallback<Trait> callback);
 
 	void getTraitsByPartnerProfileId(int partnerProfileId, AsyncCallback<ArrayList<Trait>> callback);
-	
+
 	void getJobPostingsMatchingTraits(PartnerProfile pp, AsyncCallback<ArrayList<JobPosting>> callback);
 
 	// --------------------------- LOGIN

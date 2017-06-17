@@ -21,11 +21,9 @@ public class DBConnection {
 	/**
 	 * Mit dieser Url wird die Datenbank angesprochen.
 	 */
-	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   static final String googleUrl = "jdbc:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema";
-	   static final String USER = "root";
-	   static final String PASS = "winter2017";
-	private static String TestUrl = "jdbc:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema";
+
+	private static String googleUrl = "jdbc:google:mysql://pitchmen-itprojekt-ss17:pitchmen/pitchmen_itprojekt_schema?user=root&password=winter2017";
+	private static String TestUrl = "jdbc:mysql://173.194.105.139:3306/pitchmen_itprojekt_schema?user=root&password=winter2017";
 
 	/**
 	 * Stellt die Verbindung zur Datenbank her.
@@ -41,21 +39,21 @@ public class DBConnection {
 			String url = null;
 			try {
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
-					Class.forName("com.mysql.jdbc.Driver");
+					Class.forName("com.mysql.jdbc.GoogleDriver");
 					url = googleUrl;
 				} else {
 					/**
 					 * Wenn die googleUrl nicht erreichbar ist, wird die LocaleUrl aufgerufen.
-					 * Alternativlösung während des Entwickelns.
+					 * Alternativlï¿½sung wï¿½hrend des Entwickelns.
 					 */
 					Class.forName("com.mysql.jdbc.Driver");
 					url = TestUrl;
 				}
 				/**
 				 * Die Verbindung zur Datenbank wird in der Variablen 
-				 * con mit den dazugehörigen Informationen gespeichert
+				 * con mit den dazugehï¿½rigen Informationen gespeichert
 				 */
-				con = DriverManager.getConnection(url, USER, PASS);
+				con = DriverManager.getConnection(url);
 
 			} catch (Exception e) {
 				con = null;
@@ -63,7 +61,7 @@ public class DBConnection {
 			}
 		}
 		/**
-		 * Verbindung wird in der Variable con zurückgegeben
+		 * Verbindung wird in der Variable con zurï¿½ckgegeben
 		 */
 		return con;
 	}

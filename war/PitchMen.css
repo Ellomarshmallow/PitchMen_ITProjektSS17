@@ -94,6 +94,9 @@ button {
 	/* TODO Hintergrund finden, der entsprechend lizensiert ist */
 	background: #999 url('http://mindchamps-medical.com/wp-content/uploads/2015/04/Abstract-Background-White.jpg') no-repeat left 50%;
 	background-size: cover;
+	justify-content: space-between;
+	padding-right: 30px;
+	box-sizing: border-box;
 }
 
 h1 {
@@ -109,14 +112,14 @@ h1 {
 }
 
 #top .gwt-HTML {
-	width: 70%;
-	padding: 20px 30px 20px 0px;
+	padding: 20px 0px;
 }
 
 #top p {
 	width: 100%;
 	font-size: 16px;
 	text-align: right;
+	cursor: pointer;
 }
 
 #top p a {
@@ -125,6 +128,10 @@ h1 {
 	text-decoration: none;
 	color: #666;
 	border-left: 1px solid #666;
+}
+
+#usermenu {
+	display: flex;
 }
 
 /* ### MAIN (Enthält nav und content) ### */
@@ -137,6 +144,10 @@ h1 {
 	overflow-y: hidden;
 }
 
+strong {
+	font-weight: bold;
+}
+
 /* ### NAVIGATION ### */
 
 #nav {
@@ -145,6 +156,7 @@ h1 {
 	display: flex;
 	flex-flow: column;
 	background: #ddd;
+	overflow-y: auto;
 }
 
 #nav table {
@@ -183,7 +195,30 @@ h1 {
 
 #content table {
 	width: 100%;
+	box-sizing: border-box;
 }
+
+#content button {
+    border: none;
+    background: #1c9cd8;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;	
+}
+
+#content button:hover,
+#content button:active {
+	background: #006EB5;
+}
+
+.gwt-TextBox {
+    margin: 10px;
+    padding: 5px;
+    font-family: 'Roboto';
+    background: #fff;
+    border: 1px solid #e1e1e1;
+}
+
 
 /* ### CONTENT > TOPBAR ### */
 
@@ -220,6 +255,27 @@ h1 {
 	color: #777;
 }
 
+.load-msg {
+	text-align: center;
+	color: #999;
+	font-size: 90%;
+}
+
+/* ### CONTENT > FLEXTABLE ### */
+
+.traits {
+	width: 50% !important;
+	border-top: 1px solid #ccc;	
+}
+
+.traits td {
+	border-bottom: 1px solid #ccc;
+}
+
+.traits .gwt-HTML {
+    padding: 10px;
+}
+
 /* ### CONTENT > GRID ### */
 
 .grid-element {
@@ -234,4 +290,49 @@ h1 {
     font-weight: lighter;
     color: #999;
     margin: 0px 0px 10px 0px;
+}
+
+/* ### CONTENT > LOADING ANIMATION ### */
+@-webkit-keyframes {name}
+    {block}
+*/
+@keyframes lds-dual-ring {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes lds-dual-ring {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.lds-dual-ring {
+  position: relative;
+}
+.lds-dual-ring div {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 6px solid #000;
+  border-color: #1c9cd8 transparent #1c9cd8 transparent;
+  -webkit-animation: lds-dual-ring 2s linear infinite;
+  animation: lds-dual-ring 2s linear infinite;
+}
+.lds-dual-ring {
+  width: 80px !important;
+  height: 80px !important;
+  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+  margin: 10% auto 10px auto;
 }
