@@ -147,7 +147,6 @@ public class PartnerProfileForm extends Formular {
 				traitTable.setStyleName("traits");
 				
 				for(final Trait trait : traits) {
-					HTML traitRow = new HTML("<p><strong>" + trait.getName() + "</strong>: " + trait.getValue() + "</p>");
 					Button deleteTraitBtn = new Button("Eigenschaft entfernen");
 					deleteTraitBtn.addClickHandler(new ClickHandler() {
 
@@ -173,15 +172,30 @@ public class PartnerProfileForm extends Formular {
 						
 					});
 					int rowCount = traitTable.getRowCount();
-					traitTable.setWidget(rowCount, 0, traitRow);
-					traitTable.setWidget(rowCount, 1, deleteTraitBtn);
-					RootPanel.get("content").add(traitTable);
+					traitTable.setWidget(rowCount, 0, new HTML("<p><strong>" + trait.getName() + "</strong></p>"));
+					traitTable.setWidget(rowCount, 1, new HTML("<p>" + trait.getValue() + "</p>"));
+					traitTable.setWidget(rowCount, 2, deleteTraitBtn);
 				}
 				
 				// Der addTraitBtn erhält einen Clickhandler
 				addTraitBtn.addClickHandler(new AddTraitClickHandler());
 				
-				add(addTraitBtn);
+				int rowCount = traitTable.getRowCount();
+				
+				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 3);
+				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
+				
+				rowCount = traitTable.getRowCount();
+				
+				TextBox traitNameBox = new TextBox();
+				traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+				TextBox traitValueBox = new TextBox();
+				traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+				traitTable.setWidget(rowCount, 0, traitNameBox);
+				traitTable.setWidget(rowCount, 1, traitValueBox);
+				traitTable.setWidget(rowCount, 2, addTraitBtn);
+				
+				RootPanel.get("content").add(traitTable);
 			}
 		}
 		
@@ -195,16 +209,7 @@ public class PartnerProfileForm extends Formular {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			/*
-			 *  wird der Button geklickt, muss ein neues Paar von
-			 *  Name- & Wert-Eingabefeldern erzeugt werden.
-			 */
-			HorizontalPanel traitFormRow = new HorizontalPanel();
-			TextBox nameBox = new TextBox();
-			TextBox valueBox = new TextBox();
-			traitFormRow.add(nameBox);
-			traitFormRow.add(valueBox);
-			add(traitFormRow);
+			// TODO
 		}
 		
 	}
