@@ -211,6 +211,15 @@ strong {
 	background: #006EB5;
 }
 
+.gwt-TextBox {
+    margin: 10px;
+    padding: 5px;
+    font-family: 'Roboto';
+    background: #fff;
+    border: 1px solid #e1e1e1;
+}
+
+
 /* ### CONTENT > TOPBAR ### */
 
 #content h2 {
