@@ -193,6 +193,10 @@ strong {
 	overflow-y: auto;
 }
 
+#content p {
+	margin: 0px 0px 15px 0px;
+}
+
 #content table {
 	width: 100%;
 	box-sizing: border-box;
