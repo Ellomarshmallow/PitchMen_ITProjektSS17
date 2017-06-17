@@ -66,6 +66,10 @@ public class PartnerProfileForm extends Formular {
 	 */
 	private Button addTraitBtn = new Button("Eigenschaft hinzufügen");
 	
+	TextBox traitNameBox = null;
+	
+	TextBox traitValueBox = null;
+	
 	public PartnerProfileForm() {
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
@@ -187,9 +191,9 @@ public class PartnerProfileForm extends Formular {
 				
 				rowCount = traitTable.getRowCount();
 				
-				TextBox traitNameBox = new TextBox();
+				traitNameBox = new TextBox();
 				traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
-				TextBox traitValueBox = new TextBox();
+				traitValueBox = new TextBox();
 				traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
 				traitTable.setWidget(rowCount, 0, traitNameBox);
 				traitTable.setWidget(rowCount, 1, traitValueBox);
@@ -209,7 +213,22 @@ public class PartnerProfileForm extends Formular {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO
+			pitchMenAdmin.addTrait(traitNameBox.getText(), traitValueBox.getText(), userPartnerProfile.getId(), new AsyncCallback<Trait>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					RootPanel.get("content").clear();
+					RootPanel.get("content").add(new HTML("<p>Fehler beim Speichern der Eigenschaft</p>"));
+				}
+
+				@Override
+				public void onSuccess(Trait result) {
+					PartnerProfileForm updatedForm = new PartnerProfileForm();
+					RootPanel.get("content").clear();
+					RootPanel.get("content").add(updatedForm);
+				}
+				
+			});
 		}
 		
 	}
