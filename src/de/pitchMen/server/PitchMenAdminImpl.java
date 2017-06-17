@@ -1,7 +1,7 @@
 package de.pitchMen.server;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;

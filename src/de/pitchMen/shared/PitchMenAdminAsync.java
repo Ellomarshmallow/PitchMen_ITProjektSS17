@@ -1,7 +1,7 @@
 package de.pitchMen.shared;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
