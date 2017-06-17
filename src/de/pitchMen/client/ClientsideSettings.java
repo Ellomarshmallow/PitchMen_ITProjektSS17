@@ -51,6 +51,11 @@ public class ClientsideSettings extends CommonSettings {
 	   * Instanz des Client-seitigen Loggers.
 	   */
 	  private static final Logger log = Logger.getLogger(LOGGER_NAME);
+	  
+	  /**
+	   * 
+	   */
+	  private static DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd.MM.yyyy"); 
 
 	  /**
 	   * <p>
@@ -125,6 +130,10 @@ public class ClientsideSettings extends CommonSettings {
 
 	public static void setCurrentUser(Person currentUser) {
 		ClientsideSettings.currentUser = currentUser;
+	}
+	
+	public static DateTimeFormat getDateFormat() {
+		return dateFormat;
 	}
 
 }
