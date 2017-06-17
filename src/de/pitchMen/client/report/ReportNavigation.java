@@ -14,6 +14,7 @@ import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllJobPostings;
 import de.pitchMen.shared.report.AllJobPostingsMatchingPartnerProfileOfUser;
+import de.pitchMen.shared.report.ApplicationsRelatedToJobPostingsOfUser;
 import de.pitchMen.shared.report.HTMLReportWriter;
 
 /**
@@ -102,7 +103,7 @@ public class ReportNavigation extends VerticalPanel {
 						break;
 				case 2: reportContent = this.getAllJobPostingsMatchingPartnerProfileOfUser();
 						break;
-				case 3: reportContent = this.getAllApplicationOnJobPostingsOfUser();
+				case 3: reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
 						break;
 				case 4: reportContent = this.getAllApplicationsOfUserWithJobPostings();
 						break;
@@ -133,11 +134,37 @@ public class ReportNavigation extends VerticalPanel {
 			
 		}
 
-		private HTML getAllApplicationOnJobPostingsOfUser() {
-			return null;
-			// TODO Auto-generated method stub
-			
+		private HTML getApplicationsRelatedToJobPostingsOfUser() {
+			final HTMLReportWriter writer = new HTMLReportWriter();
+			ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<Person>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(Person result) {
+					ClientsideSettings.getReportGenerator().showApplicationsRelatedToJobPostingsOfUser(result, new AsyncCallback<ApplicationsRelatedToJobPostingsOfUser>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(ApplicationsRelatedToJobPostingsOfUser result) {
+							writer.process(result);
+							reportContent = new HTML(writer.getReportText());
+						}
+					});
+				}				
+			});
+			return reportContent;
 		}
+		
 		
 		private HTML getAllJobPostingsMatchingPartnerProfileOfUser() {
 			final HTMLReportWriter writer = new HTMLReportWriter();
@@ -170,7 +197,7 @@ public class ReportNavigation extends VerticalPanel {
 				
 			});
 			return reportContent;
-	}
+		}
 
 		private HTML getAllJobPostings() {
 			final HTMLReportWriter writer = new HTMLReportWriter();
