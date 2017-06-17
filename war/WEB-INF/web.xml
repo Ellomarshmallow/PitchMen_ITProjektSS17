@@ -23,12 +23,12 @@
 
 <!-- ReportGenerator-Servlet -->  
   <servlet>
-    <servlet-name>reportGeneratorServlet</servlet-name>
+    <servlet-name>reportGeneratorImpl</servlet-name>
     <servlet-class>de.pitchMen.server.report.ReportGeneratorImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>reportGeneratorServlet</servlet-name>
+    <servlet-name>reportGeneratorImpl</servlet-name>
     <url-pattern>/pitchmen/reportgenerator</url-pattern>
   </servlet-mapping>
   
