@@ -185,4 +185,9 @@ import java.util.ArrayList;
 		public String getReportText(){
 			return this.getHead() + this.reportText + this.getTrailer(); 
 		}
+
+		public void process(FanInAndOutReport result) {
+			// TODO Auto-generated method stub
+			
+		}
 }
