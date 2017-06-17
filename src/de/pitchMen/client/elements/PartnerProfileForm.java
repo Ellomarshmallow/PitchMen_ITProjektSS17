@@ -99,7 +99,7 @@ public class PartnerProfileForm extends Formular {
 				RootPanel.get("content").add(new HTML("<h2>Sie haben noch kein Partnerprofil.</h2>"));
 				Button createButton = new Button("Partnerprofil anlegen");
 				createButton.addClickHandler(new CreatePartnerProfileClickHandler());
-				add(createButton);			
+				RootPanel.get("content").add(createButton);			
 			} else {
 				ClientsideSettings.getLogger().info("PartnerProfil von RPC empfangen");
 				/*
@@ -242,8 +242,8 @@ public class PartnerProfileForm extends Formular {
 		@Override
 		public void onClick(ClickEvent event) {
 			/*
-			 *  wird der Button geklickt, muss ein neues Paar von
-			 *  Name- & Wert-Eingabefeldern erzeugt werden.
+			 *  wird der Button geklickt, muss ein 
+			 *  neues partnerProfile erstellt.
 			 */
 			pitchMenAdmin.addPartnerProfileForPerson(new Date(), new Date(), currentUserId, new AsyncCallback<PartnerProfile>() {
 
@@ -254,7 +254,8 @@ public class PartnerProfileForm extends Formular {
 
 				@Override
 				public void onSuccess(PartnerProfile result) {
-					userPartnerProfile = result;
+					PartnerProfileForm updatedForm = new PartnerProfileForm();
+					RootPanel.get("content").add(updatedForm);
 				}
 				
 			});
