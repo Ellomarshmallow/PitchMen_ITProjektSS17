@@ -1,23 +1,17 @@
 package de.pitchMen.client.elements;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Trait;
@@ -269,8 +263,9 @@ public class PartnerProfileForm extends Formular {
 			 *  wird der Button geklickt, muss ein 
 			 *  neues partnerProfile erstellt werden.
 			 */ 
-			Date initialDate = new Date();
-			pitchMenAdmin.addPartnerProfileForPerson(initialDate, initialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
+			java.util.Date initialDate = new java.util.Date();
+			java.sql.Date convertedInitialDate = new java.sql.Date(initialDate.getTime());
+			pitchMenAdmin.addPartnerProfileForPerson(convertedInitialDate, convertedInitialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
