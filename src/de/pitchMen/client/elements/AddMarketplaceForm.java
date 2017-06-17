@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -32,6 +33,11 @@ public class AddMarketplaceForm extends Formular {
 			this.selectedMarketplace = selectedMarketplace;
 			this.pitchMenTreeViewModel = pitchMenTreeViewModel; 
 			this.isSave = isSave; 
+			
+			
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
+			
 		//TODO beim anzeigen der TextBoxes: addMarketplace = true dann alles leer, bei false die vorherigen Daten übernehmen
 		
 			//Vertical Panel erstellen
@@ -49,43 +55,20 @@ public class AddMarketplaceForm extends Formular {
 			HorizontalPanel buttonsPanel = new HorizontalPanel();
 			this.add(buttonsPanel);	
 				
+			//Die zwei VerticalPanels hinzufügen
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(labelsPanel);
+			RootPanel.get("content").add(buttonsPanel);
 			
-			Button cancelButton = new Button("Abbrechen" + new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				/*
-				 * Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
-				 * Projektmarktplatz zurückgeführt.
-				 */
-				MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
-				
-			}
-		});
-			buttonsPanel.add(cancelButton);
+			Button cancelBtn = new Button("Abbrechen");
+			cancelBtn.addClickHandler(new cancelClickHandler());
+			buttonsPanel.add(cancelBtn);
 			
-		// ---------- Speichern-Button
-		Button saveButton = new Button("Speichern" + new ClickHandler() {
+			Button saveBtn = new Button("Speichern"); 
+			saveBtn.addClickHandler(new saveClickHandler()); 
+			buttonsPanel.add(saveBtn);
+			
 
-			public void onClick(ClickEvent event) {
-
-				if (Window.confirm("Sind alle Angaben korrekt?")) {
-					
-					if(getIsSave()){
-						
-						// bei Click wird die unten implementierte Methode save()
-						// aufgerufen.
-						save();
-						MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
-					}
-					else{
-						update();
-						MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
-					}
-
-				}
-
-			}
-		});
-			buttonsPanel.add(saveButton);
 	}
 
 		public Marketplace getSelectedMarketplace() {
@@ -151,5 +134,43 @@ public class AddMarketplaceForm extends Formular {
 		 return this.isSave; 
 	 }
 	 
+	 // ---------- ClickHandler
+	 
+	 // ---------- cancelClickHandler
+	 private class cancelClickHandler implements ClickHandler{
+			public void onClick(ClickEvent event) {
+
+				/* Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
+				 * Projektmarktplatz zurückgeführt.*/
+				RootPanel.get("content").clear();
+				MarketplaceForm cancel = new MarketplaceForm(getSelectedMarketplace());
+
+			}
+		}
+	 
+	 // ---------- saveClickHandler
+	 private class saveClickHandler implements ClickHandler{
+		 public void onClick(ClickEvent event) {
+
+
+			 RootPanel.get("content").clear();
+			 
+			 if (Window.confirm("Sind alle Angaben korrekt?")) {
+
+				 if(getIsSave()){
+
+					 // bei Click wird die unten implementierte Methode save()
+					 // aufgerufen.
+					 save();
+					 MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
+				 }
+				 else{
+					 update();
+					 MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
+				 }
+
+			 }
+		 }
+	 }
 
 }
