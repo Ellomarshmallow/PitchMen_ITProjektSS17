@@ -14,7 +14,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.elements.FirstLoginForm;
+import de.pitchMen.client.elements.JobPostingForm;
+import de.pitchMen.client.elements.MarketplaceForm;
 import de.pitchMen.client.elements.PartnerProfileForm;
+import de.pitchMen.client.elements.PitchMenTreeViewModel;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Person;
 
@@ -185,6 +188,17 @@ public class PitchMen implements EntryPoint {
 		RootPanel.get("nav").add(navigation);
 		
 		RootPanel.get("content").clear();
+		
+		PitchMenTreeViewModel pmtvm = new PitchMenTreeViewModel() ; 
+		MarketplaceForm m = new MarketplaceForm(pmtvm.getSelectedMarketplace()); 
+		JobPostingForm jp = new JobPostingForm(pmtvm.getSelectedJobPosting()); 
+		pmtvm.setMarketplaceForm(m);
+		pmtvm.setJobPostingForm(jp);
+		
+		
+		
+		
+		
 
 	}
 }
