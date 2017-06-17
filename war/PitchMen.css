@@ -144,6 +144,10 @@ h1 {
 	overflow-y: hidden;
 }
 
+strong {
+	font-weight: bold;
+}
+
 /* ### NAVIGATION ### */
 
 #nav {
@@ -194,6 +198,19 @@ h1 {
 	box-sizing: border-box;
 }
 
+#content button {
+    border: none;
+    background: #1c9cd8;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;	
+}
+
+#content button:hover,
+#content button:active {
+	background: #006EB5;
+}
+
 /* ### CONTENT > TOPBAR ### */
 
 #content h2 {
@@ -233,6 +250,21 @@ h1 {
 	text-align: center;
 	color: #999;
 	font-size: 90%;
+}
+
+/* ### CONTENT > FLEXTABLE ### */
+
+.traits {
+	width: 50% !important;
+	border-top: 1px solid #ccc;	
+}
+
+.traits td {
+	border-bottom: 1px solid #ccc;
+}
+
+.traits .gwt-HTML {
+    padding: 10px;
 }
 
 /* ### CONTENT > GRID ### */
