@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -158,22 +159,24 @@ public class PartnerProfileForm extends Formular {
 
 						@Override
 						public void onClick(ClickEvent event) {
-							pitchMenAdmin.deleteTrait(trait, new AsyncCallback<Void>() {
+							if(Window.confirm("Möchten Sie diese Eigenschaft wirklich löschen?")) {
+								pitchMenAdmin.deleteTrait(trait, new AsyncCallback<Void>() {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									RootPanel.get("content").clear();
-									RootPanel.get("content").add(new HTML("<p>Fehler beim Entfernen der Eigenschaft.</p>"));
-								}
+									@Override
+									public void onFailure(Throwable caught) {
+										RootPanel.get("content").clear();
+										RootPanel.get("content").add(new HTML("<p>Fehler beim Entfernen der Eigenschaft.</p>"));
+									}
 
-								@Override
-								public void onSuccess(Void result) {
-									PartnerProfileForm updatedForm = new PartnerProfileForm();
-									RootPanel.get("content").clear();
-									RootPanel.get("content").add(updatedForm);
-								}
-								
-							});
+									@Override
+									public void onSuccess(Void result) {
+										PartnerProfileForm updatedForm = new PartnerProfileForm();
+										RootPanel.get("content").clear();
+										RootPanel.get("content").add(updatedForm);
+									}
+									
+								});
+							}
 						}
 						
 					});
