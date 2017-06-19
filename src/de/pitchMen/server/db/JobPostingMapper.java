@@ -211,7 +211,7 @@ public class JobPostingMapper {
 			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, text, deadline, projcet_id, "
+					.executeQuery("SELECT id, title, text, deadline, project_id, "
 							+ "status FROM jobPosting ORDER BY status");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
