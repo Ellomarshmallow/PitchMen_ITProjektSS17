@@ -103,17 +103,23 @@ public class ReportNavigation extends VerticalPanel {
 			HTML reportContent = null;
 			RootPanel.get("content").clear();
 			switch (reportNo) {
-				case 1: reportContent = this.getAllJobPostings();
+				case 1: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostings() ausgewählt</h3>"));
+						reportContent = this.getAllJobPostings();
 						break;
-				case 2: reportContent = this.getAllJobPostingsMatchingPartnerProfileOfUser();
+				case 2: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostingsMathcingPartnerProfile() ausgewählt</h3>"));
+						reportContent = this.getAllJobPostingsMatchingPartnerProfileOfUser();
 						break;
-				case 3: reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
+				case 3: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getApplicationsRealtedToJobPostingOfUser() ausgewählt</h3>"));
+						reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
 						break;
-				case 4: reportContent = this.getAllApplicationsOfUserWithJobPostings();
+				case 4: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllApplicationsOfUserWithJobPostings() ausgewählt</h3>"));
+						reportContent = this.getAllApplicationsOfUserWithJobPostings();
 						break;
-				case 5: reportContent = this.getProjectInterveawings();
+				case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getProjectInterveawings() ausgewählt</h3>"));
+						reportContent = this.getProjectInterveawings();
 						break;
-				case 6: reportContent = this.getFanInFanOutAnalysis();
+				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewählt</h3>"));
+						reportContent = this.getFanInFanOutAnalysis();
 						break;
 			}
 			RootPanel.get("content").add(new HTML("<h3>Button geklickt: " + reportNo + "</h3>"));
@@ -141,7 +147,10 @@ public class ReportNavigation extends VerticalPanel {
 
 		private HTML getProjectInterveawings() {
 			final HTMLReportWriter writer = new HTMLReportWriter();
-			ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<Person>() {
+			
+			ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
+													ClientsideSettings.getCurrentUser(),
+													new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -150,22 +159,10 @@ public class ReportNavigation extends VerticalPanel {
 				}
 
 				@Override
-				public void onSuccess(Person result) {
-					ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(result,new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
-							writer.process(result);
-							reportContent = new HTML(writer.getReportText());
-						}
-					});
-				}				
+				public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
+					writer.process(result);
+					reportContent = new HTML(writer.getReportText());
+				}
 			});
 			return reportContent;
 		}
