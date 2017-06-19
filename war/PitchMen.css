@@ -103,7 +103,7 @@ h1 {
 	font-weight: 400;
 	font-size: 16px;
 	padding: 20px 0px 20px 30px;
-	width: 30%;
+	width: 20%;
 	box-sizing: border-box;
 	color: rgba(255,255,255,0.0);
 	background: url('PitchMenLogoFinal-01.png') no-repeat left 80%;
@@ -111,18 +111,18 @@ h1 {
 	margin-left: 20px;
 }
 
-#top .gwt-HTML {
+#usermenu .gwt-HTML {
 	padding: 20px 0px;
 }
 
-#top p {
+#usermenu p {
 	width: 100%;
 	font-size: 16px;
 	text-align: right;
 	cursor: pointer;
 }
 
-#top p a {
+#usermenu p a {
 	margin-left: 10px;
 	padding-left: 10px;
 	text-decoration: none;
@@ -132,6 +132,13 @@ h1 {
 
 #usermenu {
 	display: flex;
+}
+
+#repgen-heading {
+	text-align: left;
+	font-size: 25px;
+	padding: 16px 0px;	
+	width: 100%;
 }
 
 /* ### MAIN (Enthält nav und content) ### */
