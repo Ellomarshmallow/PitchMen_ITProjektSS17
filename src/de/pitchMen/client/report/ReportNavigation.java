@@ -101,6 +101,7 @@ public class ReportNavigation extends VerticalPanel {
 		@Override
 		public void onClick(ClickEvent event) {
 			HTML reportContent = null;
+			RootPanel.get("content").clear();
 			switch (reportNo) {
 				case 1: reportContent = this.getAllJobPostings();
 						break;
@@ -115,7 +116,7 @@ public class ReportNavigation extends VerticalPanel {
 				case 6: reportContent = this.getFanInFanOutAnalysis();
 						break;
 			}
-			RootPanel.get("content").clear();
+			RootPanel.get("content").add(new HTML("<h3>Button geklickt: " + reportNo + "</h3>"));
 			RootPanel.get("content").add(reportContent);
 		}
 
@@ -171,32 +172,20 @@ public class ReportNavigation extends VerticalPanel {
 
 		private HTML getAllApplicationsOfUserWithJobPostings() {
 			final HTMLReportWriter writer = new HTMLReportWriter();
-			ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<Person>() {
+			
+			ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(ClientsideSettings.getCurrentUser(),new AsyncCallback<AllApplicationsOfUser>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
+					// TODO Auto-generated method stub	
 				}
 
 				@Override
-				public void onSuccess(Person result) {
-					ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(result,new AsyncCallback<AllApplicationsOfUser>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void onSuccess(AllApplicationsOfUser result) {
-							writer.process(result);
-							reportContent = new HTML(writer.getReportText());
-						}
-					});
-				}				
-			});
+				public void onSuccess(AllApplicationsOfUser result) {
+					writer.process(result);
+					reportContent = new HTML(writer.getReportText());
+				}
+			});							
 			return reportContent;
 		}
 
