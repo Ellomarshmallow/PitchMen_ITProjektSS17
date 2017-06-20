@@ -804,7 +804,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 				for (Trait pTrait : personTraits) {
 					String traitPerson = pTrait.getName();
 
-					if (traitJp == traitPerson) {
+					if (traitJp.equals(traitPerson)) {
 						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
 					}
 				}

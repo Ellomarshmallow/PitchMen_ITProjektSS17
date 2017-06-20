@@ -544,8 +544,7 @@ public class PartnerProfileMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten personId, in der Datenbank.
 			 */
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM partnerProfile WHERE person_id = " +  personId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile WHERE person_id = " +  personId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
 			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer

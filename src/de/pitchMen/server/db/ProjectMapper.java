@@ -418,8 +418,8 @@ public class ProjectMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten PersonenId, in der Datenbank.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT * FROM project " + "INNER JOIN person_has_participation"
-					+ "ON (person_has_participation.person_id = project.person_id)" + " WHERE project.person_id ="
+			ResultSet rs = stmt.executeQuery("SELECT * FROM project INNER JOIN person_has_participation "
+					+ "ON (person_has_participation.person_id = project.person_id) WHERE project.person_id = "
 					+ personId + " GROUP BY project.id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der

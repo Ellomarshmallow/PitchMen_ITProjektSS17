@@ -3,9 +3,14 @@ package de.pitchMen.server.report;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.server.PitchMenAdminImpl;
+import de.pitchMen.server.db.PersonMapper;
 import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
 import de.pitchMen.shared.bo.Application;
@@ -35,6 +40,8 @@ import de.pitchMen.shared.report.Row;
  */
 public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportGenerator {
 
+	private PersonMapper personMapper = null;
+	
 	private static final long serialVersionUID = 1L;
 	//private PitchMenAdminImpl administration = null;
 	/**
@@ -171,7 +178,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	 /**
-	   * Erstellen von <code>AllJobPostingsMatchinPartnerProfileofUser Report</code>-Objekten.
+	   * Erstellen von <code>AllJobPostingsMatchingPartnerProfileofUser Report</code>-Objekten.
 	   * 
 	   * @param c das Partnerprofilobjekt bzgl. dessen der Report erstellt werden soll.
 	   * @return der fertige Report
@@ -744,7 +751,94 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		//R�ckgabe des fertigen Reports
 		return result;
-		
-		
 	}
+	// --------------------------- LOGIN
+
+		public Person login(String requestUri) {
+
+			ClientsideSettings.getLogger().info("login()-Methode wurde aufgerufen.");
+
+			UserService userService = UserServiceFactory.getUserService();
+			User user = userService.getCurrentUser();
+
+			Person logInf = new Person();
+
+			/*
+			 * Ist der User angemeldet, hat der Methodenaufruf von
+			 * userService.getCurrentUser() ein vollwertiges User-Objekt
+			 * zurückgegeben. Ist der Nutzer nicht angemeldet, gibt die Methode
+			 * null zurück. Wir springen dann in den else-Block.
+			 */
+			if (user != null) {
+				// Der Nutzer hat die erste Hürde genommen und sich angemeldet
+
+				ClientsideSettings.getLogger().info("User-Objekt ist nicht null.");
+
+				/*
+				 * Wir fragen zunächst bei der Datenbank an, ob der Nutzer, der
+				 * sich gerade angemeldet hat, bereits vorhanden ist.
+				 */
+				Person existingPerson = personMapper.findByEmail(user.getEmail());
+
+				/*
+				 * Hat der Mapper ein passendes Person-Objekt gefunden, gibt er
+				 * dieses zurück. Ansonsten returnt er null. Darauf basierend
+				 * können wir folgende Fallunterscheidung vornehemen:
+				 */
+				if (existingPerson != null) {
+					// Der Nutzer ist dem System bereits bekannt.
+					ClientsideSettings.getLogger().info("User mit der E-Mai-Adresse [" + user.getEmail() + "]  existiert.");
+
+					/*
+					 * Hier werden nun noch alle Attribute gesetzt, die in der
+					 * Datenbank nicht gespeichert sind.
+					 */
+
+					// der Nutzer ist eingeloggt
+					existingPerson.setLoggedIn(true);
+					// über diese URL kann er sich ausloggen
+					existingPerson.setLogoutUrl(userService.createLogoutURL(requestUri));
+					// außerdem existiert er bereits. Dieser Wert sagt der GUI:
+					// lade die eigentliche Applikation
+					existingPerson.setIsExisting(true);
+
+					return existingPerson;
+
+				}
+
+				// Hier landet das Programm, wenn der Nutzer angemeldet, aber noch
+				// unbekannt ist
+				logInf.setLoggedIn(true);
+				logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
+				logInf.setEmailAdress(user.getEmail());
+				// Der GUI wird mit diesem Wert mitgeteilt, dass der Nutzer erst
+				// seine Daten eingeben muss
+				logInf.setIsExisting(false);
+			} else {
+				// Hier landen wir wenn der Nutzer nicht angemeldet ist
+
+				ClientsideSettings.getLogger().info("User-Objekt ist null.");
+
+				/*
+				 * Mit dem setzen dieses Wertes auf false teilen wir der GUI mit,
+				 * dass der Nutzer sich erst anmelden muss. Diese erzeugt daraufhin
+				 * ein Overlay mit einem Link, der den Nutzer zum Anmeldeformular
+				 * weiterleitet.
+				 */
+				logInf.setLoggedIn(false);
+
+				/*
+				 * Dem per Callback an die GUI weitergereichten Person-Obbjekt
+				 * logInf wird eine LoginURL mitgegeben. Diese wird zum Ziel des
+				 * Links im Overlay. Darüber meldet sich der Nutzer an und kehrt
+				 * dann auf die Seite zurück. Wieder wird diese login()- Methode
+				 * aufgerufen, nun ist der User aber nicht mehr null. Jetzt geht es
+				 * im if-Block "weiter".
+				 */
+				logInf.setLoginUrl(userService.createLoginURL(requestUri));
+				logInf.setLogoutUrl(userService.createLogoutURL(requestUri));
+			}
+			return logInf;
+		}
+
 }

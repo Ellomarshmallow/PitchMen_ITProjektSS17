@@ -396,8 +396,7 @@ public class TraitMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten PartnerProfilId, in der Datenbank.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT * FROM trait "
-					+ "WHERE partnerProfile_id = " + partnerProfileId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM trait WHERE partnerProfile_id = " + partnerProfileId);
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle trait mit dem �bergebenen Wert vorhanden ist,
