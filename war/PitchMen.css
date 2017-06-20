@@ -255,6 +255,12 @@ strong {
 	margin-right: 5px;
 }
 
+#content h3 {
+    font-weight: lighter;
+    font-size: 150%;
+    margin: 1em 0px .5em 0px;
+}
+
 
 
 /* ### CONTENT > TOPBAR ### */
