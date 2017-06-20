@@ -179,6 +179,7 @@ public class PartnerProfileForm extends Formular {
 				
 				for(final Trait trait : traits) {
 					Button deleteTraitBtn = new Button("Eigenschaft entfernen");
+					deleteTraitBtn.setStyleName("delete");
 					deleteTraitBtn.addClickHandler(new ClickHandler() {
 
 						@Override
@@ -204,10 +205,72 @@ public class PartnerProfileForm extends Formular {
 						}
 						
 					});
+					
+					Button updateTraitBtn = new Button("Eigenschaft bearbeiten");
+					
+					updateTraitBtn.addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							RootPanel.get("content").clear();
+							RootPanel.get("content").add(new HTML("<h2>Eigenschaft bearbeiten</h2>"));
+							
+							Button saveUpdateTraitBtn = new Button("Änderungen speichern");
+							
+							saveUpdateTraitBtn.addClickHandler(new ClickHandler() {
+
+								@Override
+								public void onClick(ClickEvent event) {
+									Trait updatedTrait = trait;
+									updatedTrait.setName(traitNameBox.getText());
+									updatedTrait.setValue(traitValueBox.getText());
+									ClientsideSettings.getPitchMenAdmin().updateTrait(updatedTrait, new AsyncCallback<Void>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											ClientsideSettings.getLogger().severe("Updaten der Eigenschaft fehlgeschlagen");
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											PartnerProfileForm updatedPartnerProfileForm = new PartnerProfileForm();
+											RootPanel.get("content").clear();
+											RootPanel.get("content").add(updatedPartnerProfileForm);
+										}
+										
+									});
+									
+								}
+								
+							});
+							
+							FlexTable traitTable = new FlexTable();
+							traitTable.setStyleName("traits");
+							
+							int rowCount = traitTable.getRowCount();
+							
+							traitNameBox = new TextBox();
+							traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+							traitNameBox.setText(trait.getName());
+							traitValueBox = new TextBox();
+							traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+							traitValueBox.setText(trait.getValue());
+							traitTable.setWidget(rowCount, 0, traitNameBox);
+							traitTable.setWidget(rowCount, 1, traitValueBox);
+							traitTable.setWidget(rowCount, 2, saveUpdateTraitBtn);
+							traitTable.setWidget(rowCount, 3, new HTML(""));
+							
+							RootPanel.get("content").add(traitTable);
+							
+						}
+						
+					});
+					
 					int rowCount = traitTable.getRowCount();
 					traitTable.setWidget(rowCount, 0, new HTML("<p><strong>" + trait.getName() + "</strong></p>"));
 					traitTable.setWidget(rowCount, 1, new HTML("<p>" + trait.getValue() + "</p>"));
-					traitTable.setWidget(rowCount, 2, deleteTraitBtn);
+					traitTable.setWidget(rowCount, 2, updateTraitBtn);
+					traitTable.setWidget(rowCount, 3, deleteTraitBtn);
 				}
 				
 				// Der addTraitBtn erhält einen Clickhandler
@@ -215,7 +278,7 @@ public class PartnerProfileForm extends Formular {
 				
 				int rowCount = traitTable.getRowCount();
 				
-				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 3);
+				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
 				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
 				
 				rowCount = traitTable.getRowCount();
@@ -227,6 +290,7 @@ public class PartnerProfileForm extends Formular {
 				traitTable.setWidget(rowCount, 0, traitNameBox);
 				traitTable.setWidget(rowCount, 1, traitValueBox);
 				traitTable.setWidget(rowCount, 2, addTraitBtn);
+				traitTable.setWidget(rowCount, 3, new HTML(""));
 				
 				RootPanel.get("content").add(traitTable);
 			}
