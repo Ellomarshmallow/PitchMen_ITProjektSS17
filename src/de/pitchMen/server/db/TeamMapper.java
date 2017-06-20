@@ -65,8 +65,10 @@ public class TeamMapper {
 			 * aktuelle id wird um eins erhöht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM team");
-
+			if(rs.next()) {
 			team.setId(rs.getInt("maxid") + 1);
+			}
+			
 			stmt = con.createStatement();
 
 			/**

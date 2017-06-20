@@ -74,7 +74,9 @@ public class ProjectMapper {
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM project");
 
-			project.setId(rs.getInt("maxid") + 1);
+			if(rs.next()) {
+				project.setId(rs.getInt("maxid") + 1);
+			}
 			stmt = con.createStatement();
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Project-Tupels in die Datenbank.

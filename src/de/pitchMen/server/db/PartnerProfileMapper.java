@@ -80,8 +80,7 @@ public class PartnerProfileMapper {
 			/**
 			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, "
-					+ "person_id) VALUES (" + partnerProfile.getId() + ", '"
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, person_id) VALUES (" + partnerProfile.getId() + ", '"
 					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
 					+ partnerProfile.getPersonId() + ")");
 		/**
@@ -184,7 +183,7 @@ public class PartnerProfileMapper {
 		return partnerProfile;
 	}
 
-	public PartnerProfile insertPartnerProfileForJobPostingId(PartnerProfile partnerProfile) {
+	public PartnerProfile insertPartnerProfileForJobPosting(PartnerProfile partnerProfile) {
 		/**
 		 *  DB-Verbindung holen.
 		 */

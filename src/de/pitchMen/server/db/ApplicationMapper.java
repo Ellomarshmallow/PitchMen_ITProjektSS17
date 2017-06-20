@@ -74,8 +74,9 @@ public class ApplicationMapper {
 			 * Statement ausfüllen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM application");
-
-			application.setId(rs.getInt("maxid") + 1);
+			if(rs.next()) {
+				application.setId(rs.getInt("maxid") + 1);
+			}
 			stmt = con.createStatement();
 				/**
 				 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
