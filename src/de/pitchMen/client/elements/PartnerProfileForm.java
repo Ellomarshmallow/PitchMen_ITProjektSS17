@@ -134,6 +134,30 @@ public class PartnerProfileForm extends Formular {
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(new HTML("<h2>Für Ihr Partnerprofil gibt es noch keine Eigenschaften.</h2>"));
 				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
+				
+				FlexTable traitTable = new FlexTable();
+				traitTable.setStyleName("traits");
+				
+				// Der addTraitBtn erhält einen Clickhandler
+				addTraitBtn.addClickHandler(new AddTraitClickHandler());
+				
+				int rowCount = traitTable.getRowCount();
+				
+				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 3);
+				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
+				
+				rowCount = traitTable.getRowCount();
+				
+				traitNameBox = new TextBox();
+				traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+				traitValueBox = new TextBox();
+				traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+				traitTable.setWidget(rowCount, 0, traitNameBox);
+				traitTable.setWidget(rowCount, 1, traitValueBox);
+				traitTable.setWidget(rowCount, 2, addTraitBtn);
+				
+				RootPanel.get("content").add(traitTable);
+			
 			} else {
 				RootPanel.get("content").clear();
 				ClientsideSettings.getLogger().info("Traits von RPC empfangen");
