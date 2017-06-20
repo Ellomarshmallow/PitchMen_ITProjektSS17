@@ -1,5 +1,6 @@
 package de.pitchMen.client.elements;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -195,6 +196,20 @@ public class PartnerProfileForm extends Formular {
 
 									@Override
 									public void onSuccess(Void result) {
+										java.util.Date currentDate = new java.util.Date();
+										userPartnerProfile.setDateChanged(new Date(currentDate.getTime()));
+										ClientsideSettings.getPitchMenAdmin().updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
+
+											@Override
+											public void onFailure(Throwable caught) {
+												ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht aktualisieren");
+											}
+
+											@Override
+											public void onSuccess(Void result) {
+												ClientsideSettings.getLogger().info("PartnerProfile aktualisiert");
+											}
+										});	
 										PartnerProfileForm updatedForm = new PartnerProfileForm();
 										RootPanel.get("content").clear();
 										RootPanel.get("content").add(updatedForm);
@@ -233,6 +248,20 @@ public class PartnerProfileForm extends Formular {
 
 										@Override
 										public void onSuccess(Void result) {
+											java.util.Date currentDate = new java.util.Date();
+											userPartnerProfile.setDateChanged(new Date(currentDate.getTime()));
+											ClientsideSettings.getPitchMenAdmin().updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
+
+												@Override
+												public void onFailure(Throwable caught) {
+													ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht aktualisieren");
+												}
+
+												@Override
+												public void onSuccess(Void result) {
+													ClientsideSettings.getLogger().info("PartnerProfile aktualisiert");
+												}
+											});	
 											PartnerProfileForm updatedPartnerProfileForm = new PartnerProfileForm();
 											RootPanel.get("content").clear();
 											RootPanel.get("content").add(updatedPartnerProfileForm);
@@ -328,19 +357,18 @@ public class PartnerProfileForm extends Formular {
 
 				@Override
 				public void onSuccess(Trait result) {
-					// TODO getDateChanged() von userPartnerProfile updaten 
-					pitchMenAdmin.updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
+					java.util.Date currentDate = new java.util.Date();
+					userPartnerProfile.setDateChanged(new Date(currentDate.getTime()));
+					ClientsideSettings.getPitchMenAdmin().updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
+							ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht aktualisieren");
 						}
 
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
-							
+							ClientsideSettings.getLogger().info("PartnerProfile aktualisiert");
 						}
 						
 					});
