@@ -50,6 +50,7 @@ public class ReportDisplay implements EntryPoint {
 	public void onModuleLoad() {
 		
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
+		RootPanel.get("content").add(new HTML("<p class='load-msg'>Warte auf Nutzereingabe.</p>"));
 		ClientsideSettings.getPitchMenAdmin().login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginCallback(this));
 	}
 
@@ -104,7 +105,7 @@ public class ReportDisplay implements EntryPoint {
 							 * Hierzu gehört auch der Logout-Link, über den der Nutzer
 							 * sich von der PitchMen-Applikation abmelden kann.
 							 */
-							RootPanel.get("top").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
+							RootPanel.get("usermenu").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
 									  ClientsideSettings.getCurrentUser().getEmailAdress() +
 									  "<a href='" +
 									  ClientsideSettings.getCurrentUser().getLogoutUrl() +
@@ -113,10 +114,10 @@ public class ReportDisplay implements EntryPoint {
 							//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
 							FirstLoginForm firstLoginForm = new FirstLoginForm(this.reportDisplay);
 							RootPanel.get("content").clear();
-							RootPanel.get("content").add(new HTML("<h2>Hallo, Neuankömmling! Wir freuen uns, "
-																  + "dass du den Weg zum ReportGenerator von PitchMen gefunden hast.</h2>"
-																  + "<p>Da dies deine erste Anmeldung bei PitchMen ist,"
-																  + "würden wir gerne deinen Namen wissen. Wie heißt du?</p>"));
+							RootPanel.get("content").add(new HTML("<h2>Wir freuen uns, "
+																  + "dass Sie den Weg zum ReportGenerator von PitchMen gefunden haben.</h2>"
+																  + "<p>Da dies Ihre erste Anmeldung bei PitchMen ist,"
+																  + "würden wir gerne Ihren Namen wissen.</p>"));
 							RootPanel.get("content").add(firstLoginForm);
 						}		
 
@@ -160,16 +161,6 @@ public class ReportDisplay implements EntryPoint {
 		HTML logoutLink = new HTML("<p><a href='" 
 									+ ClientsideSettings.getCurrentUser().getLogoutUrl() 
 									+ "'><span class='fa fa-sign-out'></span></a></p>");
-		partnerProfileLink.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				PartnerProfileForm partnerProfileForm = new PartnerProfileForm();
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(partnerProfileForm);
-			}
-			
-		});
 		RootPanel.get("usermenu").add(partnerProfileLink);
 		RootPanel.get("usermenu").add(logoutLink);
 
