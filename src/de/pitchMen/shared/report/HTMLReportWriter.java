@@ -264,6 +264,7 @@ import java.util.ArrayList;
 	    	buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
 	    	//table und tr und td öffnen			
 	    	buff.append("<table><tr>");
+	    	
 	    	buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
 	    	buff.append("</tr>");
 
