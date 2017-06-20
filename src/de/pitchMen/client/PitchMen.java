@@ -111,7 +111,7 @@ public class PitchMen implements EntryPoint {
 					 * Hierzu gehört auch der Logout-Link, über den der Nutzer
 					 * sich von der PitchMen-Applikation abmelden kann.
 					 */
-					RootPanel.get("top").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
+					RootPanel.get("usermenu").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
 							  ClientsideSettings.getCurrentUser().getEmailAdress() +
 							  "<a href='" +
 							  ClientsideSettings.getCurrentUser().getLogoutUrl() +
@@ -120,10 +120,9 @@ public class PitchMen implements EntryPoint {
 					//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
 					FirstLoginForm firstLoginForm = new FirstLoginForm(this.pitchMen);
 					RootPanel.get("content").clear();
-					RootPanel.get("content").add(new HTML("<h2>Hallo, Neuankömmling! Wir freuen uns, "
-														  + "dass du den Weg zu PitchMen gefunden hast.</h2>"
-														  + "<p>Da dies deine erste Anmeldung bei PitchMen ist,"
-														  + "würden wir gerne deinen Namen wissen. Wie heißt du?</p>"));
+					RootPanel.get("content").add(new HTML("<h2>Herzlich willkommen bei PitchMen.</h2>"
+														  + "<p>Da dies Ihre erste Anmeldung bei PitchMen ist, "
+														  + "bitten wir Sie, das untenstehende Formular auszufüllen.</p>"));
 					RootPanel.get("content").add(firstLoginForm);
 				}
 				
