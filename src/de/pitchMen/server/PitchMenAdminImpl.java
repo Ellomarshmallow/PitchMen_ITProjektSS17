@@ -357,7 +357,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setJobPostingId(jobPostingId);
 
-		return this.partnerProfileMapper.insert(partnerProfile);
+		return this.partnerProfileMapper.insertPartnerProfilForJobPosting(partnerProfile);
 	}
 
 	@Override
@@ -368,7 +368,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setPersonId(personId);
 
-		return this.partnerProfileMapper.insert(partnerProfile);
+		return this.partnerProfileMapper.insertPartnerProfilForPerson(partnerProfile);
 	}
 
 	@Override
@@ -379,7 +379,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setTeamId(teamId);
 
-		return this.partnerProfileMapper.insert(partnerProfile);
+		return this.partnerProfileMapper.insertPartnerProfilForTeam(partnerProfile);
 	}
 
 	@Override
@@ -390,7 +390,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setCompanyId(companyId);
 
-		return this.partnerProfileMapper.insert(partnerProfile);
+		return this.partnerProfileMapper.insertPartnerProfilForCompany(partnerProfile);
 	}
 
 	@Override
