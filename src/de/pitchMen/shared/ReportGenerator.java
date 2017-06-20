@@ -1,5 +1,6 @@
 package de.pitchMen.shared;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -76,5 +77,8 @@ public interface ReportGenerator extends RemoteService {
 	 * 
 	 */
 	public abstract ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p) throws IllegalArgumentException;
+
+	
+	public Person login(String requestUri);
 
 }
