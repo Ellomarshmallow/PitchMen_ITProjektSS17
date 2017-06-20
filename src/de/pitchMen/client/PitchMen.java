@@ -199,17 +199,5 @@ public class PitchMen implements EntryPoint {
 				+ "Ihre Skills präsentieren können. <strong>Sie erreichen Ihr Partnerprofil über einen Klick auf Ihren "
 				+ "Namen oben rechts.</strong> Direkt daneben können Sie sich aus der PitchMen-Applikation ausloggen.</p>"
 		));
-		
-		PitchMenTreeViewModel pmtvm = new PitchMenTreeViewModel() ; 
-//		MarketplaceForm m = new MarketplaceForm(pmtvm.getSelectedMarketplace()); 
-//		JobPostingForm jp = new JobPostingForm(pmtvm.getSelectedJobPosting()); 
-//		pmtvm.setMarketplaceForm(m);
-//		pmtvm.setJobPostingForm(jp);
-		
-		
-		
-		
-		
-
 	}
 }
