@@ -171,7 +171,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	}
 
 	 /**
-	   * Erstellen von <code>AllJobPostingsMatchinPartnerProfileofUser Report</code>-Objekten.
+	   * Erstellen von <code>AllJobPostingsMatchingPartnerProfileofUser Report</code>-Objekten.
 	   * 
 	   * @param c das Partnerprofilobjekt bzgl. dessen der Report erstellt werden soll.
 	   * @return der fertige Report
