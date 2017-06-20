@@ -365,7 +365,7 @@ public class ApplicationMapper {
 			 * SQL-Anweisung zum Finden der Datensätze, nach der gesuchten PersonenId, in der Datenbank.
 			 */			
 			ResultSet rs = stmt.executeQuery("SELECT * FROM application INNER JOIN partnerProfile"
-					+ "ON application.partnerProfil_id = partnerProfile.id WHERE partnerProfile.person_id = "
+					+ " ON application.partnerProfil_id = partnerProfile.id WHERE partnerProfile.person_id = "
 					+ personId);
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -391,8 +391,14 @@ public class ApplicationMapper {
 			 */	
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-		}
+			e2.getCause();
+			e2.getErrorCode();
+			e2.getLocalizedMessage();
+
+			}
+
 		return result;
+
 	}
 	
 	/**
