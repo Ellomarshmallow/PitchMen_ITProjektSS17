@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.client.PitchMen;
+import de.pitchMen.client.report.ReportDisplay;
 import de.pitchMen.shared.bo.Person;
 
 /**
@@ -45,6 +46,7 @@ public class FirstLoginForm extends Formular  {
 	private Person newUser = null;
 	
 	private PitchMen pitchMen = null;
+	private ReportDisplay reportDisplay = null;
 	
 	public FirstLoginForm(PitchMen pitchMen){		
 		
@@ -82,7 +84,6 @@ public class FirstLoginForm extends Formular  {
 				
 	}
 	
-	//FIXME RPC funktioniert nicht
 	public void save(){		
 		ClientsideSettings.getPitchMenAdmin().addPerson(firstNameBox.getText(), 
 											  lastNameBox.getText(),
@@ -121,5 +122,79 @@ public class FirstLoginForm extends Formular  {
 		
 	}
 
+	
+	public FirstLoginForm(ReportDisplay reportDisplay){		
+		
+		this.reportDisplay  = reportDisplay; 
+		this.newUser = ClientsideSettings.getCurrentUser();
+		
+		// Vertical Panel erstellen
+		VerticalPanel labelsPanel = new VerticalPanel();
+		this.add(labelsPanel);
+				
+		// labels und Boxen dem Vertical Panel hinzufügen
+				
+		labelsPanel.add(firstNameLabel);
+		labelsPanel.add(firstNameBox);
+		labelsPanel.add(lastNameLabel);
+		labelsPanel.add(lastNameBox);
+		labelsPanel.add(descriptionLabel);
+		labelsPanel.add(descriptionBox);
+				
+		// HorizontalPanel für den Button erstellen
+		HorizontalPanel buttonsPanel = new HorizontalPanel();
+						
+		// ---------- Speichern Button, ClickHandler hinzufügen und dem
+		// HorizontalPanel hinzufügen
+		Button saveButton = new Button("Speichern");
+		saveButton.addClickHandler(new ClickHandler(){
+			 public void onClick(ClickEvent event) {
+				 saveForRepGen(); 
+			 }
+		}); 				
+				
+		buttonsPanel.add(saveButton);
+		
+		this.add(buttonsPanel);
+				
+	}
+	
+	public void saveForRepGen() {		
+		ClientsideSettings.getPitchMenAdmin().addPerson(firstNameBox.getText(), 
+											  lastNameBox.getText(),
+											  newUser.getEmailAdress(), 
+											  newUser.getLoginUrl(), 
+											  newUser.getLogoutUrl(), 
+											  true, 
+											  true, 
+											  new NewPersonOnRepGenCallback());	
+	}
+	
+	private class NewPersonOnRepGenCallback implements AsyncCallback<Person> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			ClientsideSettings.getLogger().severe("Neue Person konnte nicht gespeichert werden.");
+			RootPanel.get("content").clear();
+		}
+
+		@Override
+		public void onSuccess(Person result) {
+			ClientsideSettings.getLogger().info("Neue Person erfolgreich gespeichert: " 
+												+ result.getFirstName() 
+												+ " "
+												+ result.getName()
+												+ " ("
+												+ result.getEmailAdress()
+												+ ")");	
+			ClientsideSettings.getCurrentUser().setFirstName(result.getFirstName());
+			ClientsideSettings.getCurrentUser().setName(result.getName());
+			ClientsideSettings.getCurrentUser().setIsExisting(true);
+			RootPanel.get("usermenu").clear();
+			RootPanel.get("content").clear();
+			reportDisplay.onModuleLoad();
+		}
+		
+	}
 	
 }

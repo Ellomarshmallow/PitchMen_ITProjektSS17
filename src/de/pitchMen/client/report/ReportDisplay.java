@@ -45,22 +45,17 @@ public class ReportDisplay implements EntryPoint {
 	private final ReportGeneratorAsync reportGenerator = ClientsideSettings.getReportGenerator();
 
 	/**
-	 * Die Einstiegspunkt-Methode. Zunächst die Anmeldung durchführen. 
+	 * Die Einstiegspunkt-Methode. Zunï¿½chst die Anmeldung durchfï¿½hren. 
 	 */
-	//public void onModuleLoad() {
-		//ReportNavigation repNav = new ReportNavigation();
-		//RootPanel.get("nav").add(repNav);
-		//}
-
-public void onModuleLoad() {
+	public void onModuleLoad() {
 		
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
-		reportGenerator.login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginCallback(this));
+		ClientsideSettings.getPitchMenAdmin().login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginCallback(this));
 	}
 
 	/**
 	 * Die lokale Klasse LoginCallback wird instantiiert, wenn wir von der 
-	 * Applikationsschicht einen Callback bezüglich des Logins erwarten. 
+	 * Applikationsschicht einen Callback bezï¿½glich des Logins erwarten. 
 	 * Ihre Instantiierung erfolgt in der onModuleLoad()-Methode.
 	 * @author Heike
 	 *
@@ -181,18 +176,8 @@ public void onModuleLoad() {
 		/*
 		 * Navigation-Objekt zur Darstellung der Navigationselemente
 		 */
-		Navigation navigation = new Navigation();
-
-		// Das navPanel der Seite im Bereich der id "nav" hinzufÃ¼gen
-		RootPanel.get("nav").add(navigation);
-		
-		RootPanel.get("content").clear();
-		
-		PitchMenTreeViewModel pmtvm = new PitchMenTreeViewModel() ; 
-		MarketplaceForm m = new MarketplaceForm(pmtvm.getSelectedMarketplace()); 
-		JobPostingForm jp = new JobPostingForm(pmtvm.getSelectedJobPosting()); 
-		pmtvm.setMarketplaceForm(m);
-		pmtvm.setJobPostingForm(jp);
+		ReportNavigation repNav = new ReportNavigation();
+		RootPanel.get("nav").add(repNav);
 	}
 		
 				
