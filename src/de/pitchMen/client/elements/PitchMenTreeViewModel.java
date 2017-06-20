@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -154,14 +157,14 @@ public class PitchMenTreeViewModel implements TreeViewModel {
 			BusinessObject selection = selectionModel.getSelectedObject();
 			
 			if (selection instanceof Marketplace) {
-				// Handelt es sich dabei um ein Marktplatz-Objekt, wird dieses gesetzt
-				setSelectedMarketplace((Marketplace) selection);
+				// Handelt es sich dabei um ein Marktplatz-Objekt, wird ein entsprechendes Formular erstellt
+				RootPanel.get("content").add(new MarketplaceForm((Marketplace) selection));
 			} else if (selection instanceof Project) {
-				// Handelt es sich stattdessen um ein Projekt-Objekt, wird dieses gesetzt
-				setSelectedProject((Project) selection);
+				// Handelt es sich stattdessen um ein Projekt-Objekt, wird ein entsprechendes Formular erstellt
+				RootPanel.get("content").add(new ProjectForm((Project) selection));
 			} else {
-				// Handelt es sich um ein Ausschreibungs-Objekt, wird dieses gesetzt
-				setSelectedJobPosting((JobPosting) selection);
+				// Handelt es sich um ein Ausschreibungs-Objekt, wird ein entsprechendes Formular erstellt
+				RootPanel.get("content").add(new JobPostingForm((JobPosting) selection));
 			}
 			
 		}
