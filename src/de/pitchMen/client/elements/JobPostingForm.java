@@ -105,7 +105,7 @@ public class JobPostingForm extends Formular{
 									RootPanel.get("content").clear();
 									
 									if (hasPermission(parentProject)) {
-										RootPanel.get("content").add(new HTML("<div class='info'><p>Sie sind Besitzer dieser Ausschreibung. "
+										RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span> Sie sind Besitzer dieser Ausschreibung. "
 												+ "Sie können sich daher nicht bewerben. Nur Sie sehen die unten aufgeführten Bewerbungen.</p></div>"));
 									}
 									
