@@ -188,11 +188,23 @@ public class PitchMen implements EntryPoint {
 		
 		RootPanel.get("content").clear();
 		
+		// Der Begrüßungstext der startseite 
+		RootPanel.get("content").add(new HTML(
+				"<h2>Herzlich willkommen bei PitchMen.</h2>"
+				+ "<p>Wählen Sie aus der Navigation links einen Projektmarktplatz, darunterliegende Projekte "
+				+ "oder in der dritten Ebene liegende Ausschreibungen aus, um mehr über die jeweiligen Objekte "
+				+ "zu erfahren. Wenn Sie sich bewerben möchten, wählen Sie eine Ausschreibung aus und klicken Sie "
+				+ "auf den Button <em>Bewerben</em>.</p>"
+				+ "<p>Bevor Sie sich bewerben können, müssen Sie zunächst ein Partnerprofil erstellen, in dem Sie "
+				+ "Ihre Skills präsentieren können. <strong>Sie erreichen Ihr Partnerprofil über einen Klick auf Ihren "
+				+ "Namen oben rechts.</strong> Direkt daneben können Sie sich aus der PitchMen-Applikation ausloggen.</p>"
+		));
+		
 		PitchMenTreeViewModel pmtvm = new PitchMenTreeViewModel() ; 
-		MarketplaceForm m = new MarketplaceForm(pmtvm.getSelectedMarketplace()); 
-		JobPostingForm jp = new JobPostingForm(pmtvm.getSelectedJobPosting()); 
-		pmtvm.setMarketplaceForm(m);
-		pmtvm.setJobPostingForm(jp);
+//		MarketplaceForm m = new MarketplaceForm(pmtvm.getSelectedMarketplace()); 
+//		JobPostingForm jp = new JobPostingForm(pmtvm.getSelectedJobPosting()); 
+//		pmtvm.setMarketplaceForm(m);
+//		pmtvm.setJobPostingForm(jp);
 		
 		
 		
