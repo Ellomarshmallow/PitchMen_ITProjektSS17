@@ -249,6 +249,18 @@ public class PartnerProfileForm extends Formular {
 							
 							int rowCount = traitTable.getRowCount();
 							
+							Button cancelButton = new Button("Abbrechen");
+							cancelButton.setStyleName("delete");
+							cancelButton.addClickHandler(new ClickHandler() {
+
+								@Override
+								public void onClick(ClickEvent event) {
+									PartnerProfileForm updatedForm = new PartnerProfileForm();
+									RootPanel.get("content").add(updatedForm);
+								}
+								
+							});
+							
 							traitNameBox = new TextBox();
 							traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
 							traitNameBox.setText(trait.getName());
@@ -258,7 +270,7 @@ public class PartnerProfileForm extends Formular {
 							traitTable.setWidget(rowCount, 0, traitNameBox);
 							traitTable.setWidget(rowCount, 1, traitValueBox);
 							traitTable.setWidget(rowCount, 2, saveUpdateTraitBtn);
-							traitTable.setWidget(rowCount, 3, new HTML(""));
+							traitTable.setWidget(rowCount, 3, cancelButton);
 							
 							RootPanel.get("content").add(traitTable);
 							
