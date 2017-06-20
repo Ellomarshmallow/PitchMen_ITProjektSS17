@@ -76,7 +76,9 @@ public class RatingMapper {
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM rating");
 
-			rating.setId(rs.getInt("maxid") + 1);
+			if(rs.next()) {
+				rating.setId(rs.getInt("maxid") + 1);
+			}
 			stmt = con.createStatement();
 
 			/**

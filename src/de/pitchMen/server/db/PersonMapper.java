@@ -73,7 +73,9 @@ public class PersonMapper {
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM person");
 
-			person.setId(rs.getInt("maxid") + 1);
+			if(rs.next()) {
+				person.setId(rs.getInt("maxid") + 1);
+			}
 			stmt = con.createStatement();
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Person-Tupels in die Datenbank.
