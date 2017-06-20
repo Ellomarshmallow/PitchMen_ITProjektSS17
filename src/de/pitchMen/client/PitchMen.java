@@ -111,7 +111,7 @@ public class PitchMen implements EntryPoint {
 					 * Hierzu gehört auch der Logout-Link, über den der Nutzer
 					 * sich von der PitchMen-Applikation abmelden kann.
 					 */
-					RootPanel.get("top").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
+					RootPanel.get("usermenu").add(new HTML("<p><span class='fa fa-user-circle-o'></span> &nbsp; " +
 							  ClientsideSettings.getCurrentUser().getEmailAdress() +
 							  "<a href='" +
 							  ClientsideSettings.getCurrentUser().getLogoutUrl() +
@@ -120,10 +120,9 @@ public class PitchMen implements EntryPoint {
 					//Wenn der Nutzer sich das erste Mal eingeloggt hat, dann wird ein Formular aufgerufen.
 					FirstLoginForm firstLoginForm = new FirstLoginForm(this.pitchMen);
 					RootPanel.get("content").clear();
-					RootPanel.get("content").add(new HTML("<h2>Hallo, Neuankömmling! Wir freuen uns, "
-														  + "dass du den Weg zu PitchMen gefunden hast.</h2>"
-														  + "<p>Da dies deine erste Anmeldung bei PitchMen ist,"
-														  + "würden wir gerne deinen Namen wissen. Wie heißt du?</p>"));
+					RootPanel.get("content").add(new HTML("<h2>Herzlich willkommen bei PitchMen.</h2>"
+														  + "<p>Da dies Ihre erste Anmeldung bei PitchMen ist, "
+														  + "bitten wir Sie, das untenstehende Formular auszufüllen.</p>"));
 					RootPanel.get("content").add(firstLoginForm);
 				}
 				
@@ -189,16 +188,16 @@ public class PitchMen implements EntryPoint {
 		
 		RootPanel.get("content").clear();
 		
-		PitchMenTreeViewModel pmtvm = new PitchMenTreeViewModel() ; 
-		MarketplaceForm m = new MarketplaceForm(pmtvm.getSelectedMarketplace()); 
-		JobPostingForm jp = new JobPostingForm(pmtvm.getSelectedJobPosting()); 
-		pmtvm.setMarketplaceForm(m);
-		pmtvm.setJobPostingForm(jp);
-		
-		
-		
-		
-		
-
+		// Der Begrüßungstext der startseite 
+		RootPanel.get("content").add(new HTML(
+				"<h2>Herzlich willkommen bei PitchMen.</h2>"
+				+ "<p>Wählen Sie aus der Navigation links einen Projektmarktplatz, darunterliegende Projekte "
+				+ "oder in der dritten Ebene liegende Ausschreibungen aus, um mehr über die jeweiligen Objekte "
+				+ "zu erfahren. Wenn Sie sich bewerben möchten, wählen Sie eine Ausschreibung aus und klicken Sie "
+				+ "auf den Button <em>Bewerben</em>.</p>"
+				+ "<p>Bevor Sie sich bewerben können, müssen Sie zunächst ein Partnerprofil erstellen, in dem Sie "
+				+ "Ihre Skills präsentieren können. <strong>Sie erreichen Ihr Partnerprofil über einen Klick auf Ihren "
+				+ "Namen oben rechts.</strong> Direkt daneben können Sie sich aus der PitchMen-Applikation ausloggen.</p>"
+		));
 	}
 }

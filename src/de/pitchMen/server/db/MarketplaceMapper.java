@@ -71,12 +71,14 @@ public class MarketplaceMapper {
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM marketplace");
 
-			marketplace.setId(rs.getInt("maxid") + 1);
+			if(rs.next()) {
+				marketplace.setId(rs.getInt("maxid") + 1);
+				}
 			stmt = con.createStatement();
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
 			 */
-				stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id, team_id, company_id)"
+			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id, team_id, company_id)"
 						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
 						+ marketplace.getTitle() + "' ," + marketplace.getPersonId() + " ," + marketplace.getTeamId()
 						+ " ," + marketplace.getCompanyId() + ")");

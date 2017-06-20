@@ -1,21 +1,19 @@
 package de.pitchMen.client.elements;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Trait;
@@ -137,49 +135,9 @@ public class PartnerProfileForm extends Formular {
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(new HTML("<h2>Für Ihr Partnerprofil gibt es noch keine Eigenschaften.</h2>"));
 				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
-			} else {
-				RootPanel.get("content").clear();
-				ClientsideSettings.getLogger().info("Traits von RPC empfangen");
-				/*
-				 *  Das Attribut traits enthält nach dieser Zuweisung
-				 *  die Traits des PartnerProfils des aktuell angemeldeten Benutzers.
-				 */
-				traits = result;
-				RootPanel.get("content").add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
 				
 				FlexTable traitTable = new FlexTable();
 				traitTable.setStyleName("traits");
-				
-				for(final Trait trait : traits) {
-					Button deleteTraitBtn = new Button("Eigenschaft entfernen");
-					deleteTraitBtn.addClickHandler(new ClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-							pitchMenAdmin.deleteTrait(trait, new AsyncCallback<Void>() {
-
-								@Override
-								public void onFailure(Throwable caught) {
-									RootPanel.get("content").clear();
-									RootPanel.get("content").add(new HTML("<p>Fehler beim Entfernen der Eigenschaft.</p>"));
-								}
-
-								@Override
-								public void onSuccess(Void result) {
-									PartnerProfileForm updatedForm = new PartnerProfileForm();
-									RootPanel.get("content").clear();
-									RootPanel.get("content").add(updatedForm);
-								}
-								
-							});
-						}
-						
-					});
-					int rowCount = traitTable.getRowCount();
-					traitTable.setWidget(rowCount, 0, new HTML("<p><strong>" + trait.getName() + "</strong></p>"));
-					traitTable.setWidget(rowCount, 1, new HTML("<p>" + trait.getValue() + "</p>"));
-					traitTable.setWidget(rowCount, 2, deleteTraitBtn);
-				}
 				
 				// Der addTraitBtn erhält einen Clickhandler
 				addTraitBtn.addClickHandler(new AddTraitClickHandler());
@@ -198,6 +156,182 @@ public class PartnerProfileForm extends Formular {
 				traitTable.setWidget(rowCount, 0, traitNameBox);
 				traitTable.setWidget(rowCount, 1, traitValueBox);
 				traitTable.setWidget(rowCount, 2, addTraitBtn);
+				
+				RootPanel.get("content").add(traitTable);
+			
+			} else {
+				RootPanel.get("content").clear();
+				ClientsideSettings.getLogger().info("Traits von RPC empfangen");
+				/*
+				 *  Das Attribut traits enthält nach dieser Zuweisung
+				 *  die Traits des PartnerProfils des aktuell angemeldeten Benutzers.
+				 */
+				traits = result;
+				RootPanel.get("content").add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
+				
+				RootPanel.get("content").add(new HTML("<p><strong>Erstellt:</strong> "
+														+ userPartnerProfile.getDateCreated()
+														+ " | <strong>Zuletzt geändert:</strong> "
+														+ userPartnerProfile.getDateChanged()
+														+ "</p>"));
+				
+				FlexTable traitTable = new FlexTable();
+				traitTable.setStyleName("traits");
+				
+				for(final Trait trait : traits) {
+					Button deleteTraitBtn = new Button("Eigenschaft entfernen");
+					deleteTraitBtn.setStyleName("delete");
+					deleteTraitBtn.addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							if(Window.confirm("Möchten Sie diese Eigenschaft wirklich löschen?")) {
+								pitchMenAdmin.deleteTrait(trait, new AsyncCallback<Void>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										RootPanel.get("content").clear();
+										RootPanel.get("content").add(new HTML("<p>Fehler beim Entfernen der Eigenschaft.</p>"));
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										java.util.Date currentDate = new java.util.Date();
+										userPartnerProfile.setDateChanged(new Date(currentDate.getTime()));
+										ClientsideSettings.getPitchMenAdmin().updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
+
+											@Override
+											public void onFailure(Throwable caught) {
+												ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht aktualisieren");
+											}
+
+											@Override
+											public void onSuccess(Void result) {
+												ClientsideSettings.getLogger().info("PartnerProfile aktualisiert");
+											}
+										});	
+										PartnerProfileForm updatedForm = new PartnerProfileForm();
+										RootPanel.get("content").clear();
+										RootPanel.get("content").add(updatedForm);
+									}
+									
+								});
+							}
+						}
+						
+					});
+					
+					Button updateTraitBtn = new Button("Eigenschaft bearbeiten");
+					
+					updateTraitBtn.addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							RootPanel.get("content").clear();
+							RootPanel.get("content").add(new HTML("<h2>Eigenschaft bearbeiten</h2>"));
+							
+							Button saveUpdateTraitBtn = new Button("Änderungen speichern");
+							
+							saveUpdateTraitBtn.addClickHandler(new ClickHandler() {
+
+								@Override
+								public void onClick(ClickEvent event) {
+									Trait updatedTrait = trait;
+									updatedTrait.setName(traitNameBox.getText());
+									updatedTrait.setValue(traitValueBox.getText());
+									ClientsideSettings.getPitchMenAdmin().updateTrait(updatedTrait, new AsyncCallback<Void>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											ClientsideSettings.getLogger().severe("Updaten der Eigenschaft fehlgeschlagen");
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											java.util.Date currentDate = new java.util.Date();
+											userPartnerProfile.setDateChanged(new Date(currentDate.getTime()));
+											ClientsideSettings.getPitchMenAdmin().updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
+
+												@Override
+												public void onFailure(Throwable caught) {
+													ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht aktualisieren");
+												}
+
+												@Override
+												public void onSuccess(Void result) {
+													ClientsideSettings.getLogger().info("PartnerProfile aktualisiert");
+												}
+											});	
+											PartnerProfileForm updatedPartnerProfileForm = new PartnerProfileForm();
+											RootPanel.get("content").clear();
+											RootPanel.get("content").add(updatedPartnerProfileForm);
+										}
+										
+									});
+									
+								}
+								
+							});
+							
+							FlexTable traitTable = new FlexTable();
+							traitTable.setStyleName("traits");
+							
+							int rowCount = traitTable.getRowCount();
+							
+							Button cancelButton = new Button("Abbrechen");
+							cancelButton.setStyleName("delete");
+							cancelButton.addClickHandler(new ClickHandler() {
+
+								@Override
+								public void onClick(ClickEvent event) {
+									PartnerProfileForm updatedForm = new PartnerProfileForm();
+									RootPanel.get("content").add(updatedForm);
+								}
+								
+							});
+							
+							traitNameBox = new TextBox();
+							traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+							traitNameBox.setText(trait.getName());
+							traitValueBox = new TextBox();
+							traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+							traitValueBox.setText(trait.getValue());
+							traitTable.setWidget(rowCount, 0, traitNameBox);
+							traitTable.setWidget(rowCount, 1, traitValueBox);
+							traitTable.setWidget(rowCount, 2, saveUpdateTraitBtn);
+							traitTable.setWidget(rowCount, 3, cancelButton);
+							
+							RootPanel.get("content").add(traitTable);
+							
+						}
+						
+					});
+					
+					int rowCount = traitTable.getRowCount();
+					traitTable.setWidget(rowCount, 0, new HTML("<p><strong>" + trait.getName() + "</strong></p>"));
+					traitTable.setWidget(rowCount, 1, new HTML("<p>" + trait.getValue() + "</p>"));
+					traitTable.setWidget(rowCount, 2, updateTraitBtn);
+					traitTable.setWidget(rowCount, 3, deleteTraitBtn);
+				}
+				
+				// Der addTraitBtn erhält einen Clickhandler
+				addTraitBtn.addClickHandler(new AddTraitClickHandler());
+				
+				int rowCount = traitTable.getRowCount();
+				
+				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
+				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
+				
+				rowCount = traitTable.getRowCount();
+				
+				traitNameBox = new TextBox();
+				traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+				traitValueBox = new TextBox();
+				traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+				traitTable.setWidget(rowCount, 0, traitNameBox);
+				traitTable.setWidget(rowCount, 1, traitValueBox);
+				traitTable.setWidget(rowCount, 2, addTraitBtn);
+				traitTable.setWidget(rowCount, 3, new HTML(""));
 				
 				RootPanel.get("content").add(traitTable);
 			}
@@ -223,6 +357,21 @@ public class PartnerProfileForm extends Formular {
 
 				@Override
 				public void onSuccess(Trait result) {
+					java.util.Date currentDate = new java.util.Date();
+					userPartnerProfile.setDateChanged(new Date(currentDate.getTime()));
+					ClientsideSettings.getPitchMenAdmin().updatePartnerProfile(userPartnerProfile, new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht aktualisieren");
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							ClientsideSettings.getLogger().info("PartnerProfile aktualisiert");
+						}
+						
+					});
 					PartnerProfileForm updatedForm = new PartnerProfileForm();
 					RootPanel.get("content").clear();
 					RootPanel.get("content").add(updatedForm);
@@ -243,9 +392,11 @@ public class PartnerProfileForm extends Formular {
 		public void onClick(ClickEvent event) {
 			/*
 			 *  wird der Button geklickt, muss ein 
-			 *  neues partnerProfile erstellt.
-			 */
-			pitchMenAdmin.addPartnerProfileForPerson(new Date(), new Date(), currentUserId, new AsyncCallback<PartnerProfile>() {
+			 *  neues partnerProfile erstellt werden.
+			 */ 
+			java.util.Date initialDate = new java.util.Date();
+			java.sql.Date convertedInitialDate = new java.sql.Date(initialDate.getTime());
+			pitchMenAdmin.addPartnerProfileForPerson(convertedInitialDate, convertedInitialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
 
 				@Override
 				public void onFailure(Throwable caught) {

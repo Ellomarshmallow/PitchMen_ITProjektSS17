@@ -69,7 +69,9 @@ public class ParticipationMapper {
 			 * aktuelle id wird um eins erhöht.
 			 */			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM participation");
+			if(rs.next()) {
 			participation.setId(rs.getInt("maxid") + 1);
+			}
 			
 			String insert1 = "INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
 					+ participation.getId() + ", '" + participation.getDateOpened() + "', '"

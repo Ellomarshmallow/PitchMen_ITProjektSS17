@@ -164,7 +164,7 @@ public class JobPostingMapper {
 			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, text, deadline, projcet_id, "
+					.executeQuery("SELECT id, title, text, deadline, project_id, "
 							+ "status FROM jobPosting" + " WHERE id =" + id);
 			/**
 			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
@@ -211,8 +211,7 @@ public class JobPostingMapper {
 			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, title, text, deadline, projcet_id, "
-							+ "status FROM jobPosting ORDER BY status");
+					.executeQuery("SELECT (id, title, text, deadline, project_id, status) FROM jobPosting ORDER BY status");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
@@ -258,7 +257,7 @@ public class JobPostingMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach dem gesuchten Test, in der Datenbank, sortiert nach der Id.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting"
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, project_id, status FROM jobPosting"
 					+ " WHERE text LIKE '" + text + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -305,7 +304,7 @@ public class JobPostingMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach dem gesuchten Titel, in der Datenbank, sortiert nach der Id.
 			 */			
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, "
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, project_id, "
 					+ "status FROM jobPosting WHERE title LIKE '" + titel + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
@@ -352,7 +351,7 @@ public class JobPostingMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten Deadline, in der Datenbank, sortiert nach der Id.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, projcet_id, status FROM jobPosting "
+			ResultSet rs = stmt.executeQuery("SELECT id, title, text, deadline, project_id, status FROM jobPosting "
 					+ "WHERE deadline LIKE '" + deadline + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der

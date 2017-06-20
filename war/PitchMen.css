@@ -103,7 +103,7 @@ h1 {
 	font-weight: 400;
 	font-size: 16px;
 	padding: 20px 0px 20px 30px;
-	width: 30%;
+	width: 20%;
 	box-sizing: border-box;
 	color: rgba(255,255,255,0.0);
 	background: url('PitchMenLogoFinal-01.png') no-repeat left 80%;
@@ -111,18 +111,18 @@ h1 {
 	margin-left: 20px;
 }
 
-#top .gwt-HTML {
+#usermenu .gwt-HTML {
 	padding: 20px 0px;
 }
 
-#top p {
+#usermenu p {
 	width: 100%;
 	font-size: 16px;
 	text-align: right;
 	cursor: pointer;
 }
 
-#top p a {
+#usermenu p a {
 	margin-left: 10px;
 	padding-left: 10px;
 	text-decoration: none;
@@ -132,6 +132,15 @@ h1 {
 
 #usermenu {
 	display: flex;
+	width: 30%;
+	justify-content: flex-end;
+}
+
+#repgen-heading {
+	text-align: left;
+	font-size: 25px;
+	padding: 16px 0px;	
+	width: 70%;
 }
 
 /* ### MAIN (Enthält nav und content) ### */
@@ -193,6 +202,10 @@ strong {
 	overflow-y: auto;
 }
 
+#content p {
+	margin: 0px 0px 15px 0px;
+}
+
 #content table {
 	width: 100%;
 	box-sizing: border-box;
@@ -209,6 +222,15 @@ strong {
 #content button:hover,
 #content button:active {
 	background: #006EB5;
+}
+
+#content button.delete {
+    background: #d8581c;	
+}
+
+#content button.delete:hover,
+#content button.delete:active {
+    background: #ab4616;	
 }
 
 .gwt-TextBox {
@@ -264,7 +286,7 @@ strong {
 /* ### CONTENT > FLEXTABLE ### */
 
 .traits {
-	width: 50% !important;
+	width: 75% !important;
 	border-top: 1px solid #ccc;	
 }
 

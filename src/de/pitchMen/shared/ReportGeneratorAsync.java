@@ -70,4 +70,7 @@ public interface ReportGeneratorAsync {
 	 * 
 	 */
 	void showApplicationsRelatedToJobPostingsOfUser(Person p, AsyncCallback<ApplicationsRelatedToJobPostingsOfUser> callback);
+	
+	void login(String requestUri, AsyncCallback<Person> callback);
+
 }

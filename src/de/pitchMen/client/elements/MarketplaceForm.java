@@ -5,11 +5,14 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.shared.bo.Marketplace;
+import de.pitchMen.shared.bo.Project;
 
 public class MarketplaceForm extends Formular {
 	
@@ -17,6 +20,7 @@ public class MarketplaceForm extends Formular {
 	 * eine Textbox und descBox eine TextArea
 	*/
 	private Marketplace selectedMarketplace = null;
+	private Project selectedProject = null; 
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Marktplatzes:");
@@ -25,9 +29,11 @@ public class MarketplaceForm extends Formular {
 	Label descBox = new Label();
 
 	public MarketplaceForm(Marketplace marketplace) {
-		super();
 		
 		this.selectedMarketplace = marketplace; 
+		
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 		
 		//Vertical Panel erstellen
 		VerticalPanel labelsPanel = new VerticalPanel(); 
@@ -43,6 +49,11 @@ public class MarketplaceForm extends Formular {
 		//HorizontalPanel für die Buttons erstellen
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
+		
+		//Die zwei VerticalPanels hinzufügen
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(labelsPanel);
+		RootPanel.get("content").add(buttonsPanel);
 
 		// ---------- Neuer Projektmarktplatz Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen
 		Button addMarketplaceBtn = new Button("+ Neuer Projektmarktplatz");
@@ -79,14 +90,16 @@ public class MarketplaceForm extends Formular {
 	}
 
 
-			// ---------- ClickHandler
-
-
 			public Marketplace getSelectedMarketplace() {
 		return selectedMarketplace;
 	}
+			
+			public Project getSelectedProject(){
+				return selectedProject; 
+			}
 
 
+			// ---------- ClickHandler
 	// ---------- addMarketplaceClickHandler
 	private class addMarketplaceClickHandler implements ClickHandler{
 
@@ -103,7 +116,7 @@ public class MarketplaceForm extends Formular {
 			 * addMarketplaceBtn = true
 			 * updateMarketplaceBtn = false
 			*/
-			AddMarketplaceForm addMarketplace = new AddMarketplaceForm(getSelectedMarketplace(),MarketplaceForm.this.pitchMenTreeViewModel, true);
+			AddMarketplaceForm addMarketplace = new AddMarketplaceForm(getSelectedMarketplace(),pitchMenTreeViewModel, true);
 
 
 		}
@@ -114,8 +127,10 @@ public class MarketplaceForm extends Formular {
 
 		public void onClick(ClickEvent event) {
 			//FIXME selectedProject steht im Konstruktor von AddProjectForm, geht hier aber nicht
-			AddProjectForm addProject = new AddProjectForm( null,pitchMenTreeViewModel,true);
-
+			RootPanel.get("content").clear();
+			RootPanel.get("content").add(new HTML("<h2> Ich wurde geclickt <h2>"));
+			
+			AddProjectForm addProject = new AddProjectForm(getSelectedProject(),pitchMenTreeViewModel,true);
 
 		}
 	}

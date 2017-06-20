@@ -20,6 +20,11 @@
     <servlet-name>pitchMenAdminImpl</servlet-name>
     <url-pattern>/pitchmen/pitchmenadmin</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>pitchMenAdminImpl</servlet-name>
+    <url-pattern>/reportgenerator/pitchmenadmin</url-pattern>
+  </servlet-mapping>
 
 <!-- ReportGenerator-Servlet -->  
   <servlet>
@@ -29,7 +34,12 @@
   
   <servlet-mapping>
     <servlet-name>reportGeneratorImpl</servlet-name>
-    <url-pattern>/pitchmen/reportgenerator</url-pattern>
+    <url-pattern>/pitchmenadmin/reportgenerator</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>reportGeneratorImpl</servlet-name>
+    <url-pattern>/reportgenerator/reportgenerator</url-pattern>
   </servlet-mapping>
   
 </web-app>

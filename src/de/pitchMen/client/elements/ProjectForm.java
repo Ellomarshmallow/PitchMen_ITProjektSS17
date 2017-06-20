@@ -5,8 +5,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.shared.bo.Marketplace;
@@ -33,8 +35,10 @@ public class ProjectForm extends Formular {
 
 	public ProjectForm(Project project) {
 		
-		// FIXME das super() wirklich notwendig ? 
-		super();
+		this.selectedProject = project;
+		
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 	 
 		
 		// Vertical Panel erstellen
@@ -56,6 +60,11 @@ public class ProjectForm extends Formular {
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 		this.add(buttonsPanel);
 
+		//Die zwei VerticalPanels hinzufügen
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(labelsPanel);
+		RootPanel.get("content").add(buttonsPanel);
+		
 		// ---------- Neues Projekt Button, ClickHandler hinzufügen und dem
 		// HorizontalPanel hinzufügen
 		Button addProjectBtn = new Button("+ Neues Projekt hinzufügen");

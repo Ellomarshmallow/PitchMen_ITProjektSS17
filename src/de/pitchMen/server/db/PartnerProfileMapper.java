@@ -51,12 +51,12 @@ public class PartnerProfileMapper {
 	}
 
 	/**
-	 * F�gt ein PartnerProfile-Objekt der Datenbank hinzu.
+	 * F�gt ein PartnerProfile-Objekt (auf Basis einer Person) der Datenbank hinzu.
 	 * 
 	 * @param partnerProfile
 	 * @return partnerProfile
 	 */
-	public PartnerProfile insert(PartnerProfile partnerProfile) {
+	public PartnerProfile insertPartnerProfileForPerson(PartnerProfile partnerProfile) {
 		/**
 		 *  DB-Verbindung holen.
 		 */
@@ -80,11 +80,9 @@ public class PartnerProfileMapper {
 			/**
 			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id, team_id, "
-					+ "person_id, jobPosting_id) VALUES (" + partnerProfile.getId() + ", '"
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, person_id) VALUES (" + partnerProfile.getId() + ", '"
 					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
-					+ partnerProfile.getCompanyId() + ", " + partnerProfile.getTeamId() + ", "
-					+ partnerProfile.getPersonId() + ", " + partnerProfile.getJobPostingId() + ")");
+					+ partnerProfile.getPersonId() + ")");
 		/**
 		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
@@ -96,6 +94,132 @@ public class PartnerProfileMapper {
 		return partnerProfile;
 	}
 
+	/**
+	 * F�gt ein PartnerProfile-Objekt, auf Basis einer Company, der Datenbank hinzu.
+	 * 
+	 * @param partnerProfile
+	 * @return partnerProfile
+	 */
+	public PartnerProfile insertPartnerProfileForCompany(PartnerProfile partnerProfile) {
+		/**
+		 *  DB-Verbindung holen.
+		 */
+		Connection con = DBConnection.connection();
+
+		try {
+			/**
+			 * leeres SQL-Statement (JDBC) anlegen.
+			 */
+			Statement stmt = con.createStatement();
+			/**
+			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
+			 * aktuelle id wird um eins erh�ht.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
+
+			if(rs.next()) {
+				partnerProfile.setId(rs.getInt("maxid") + 1);	
+			}
+			stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
+			 */
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id) VALUES (" + partnerProfile.getId() + ", '"
+					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
+					+ partnerProfile.getCompanyId() + ")");
+		/**
+		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 */	
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return partnerProfile;
+	}
+
+	/**
+	 * F�gt ein PartnerProfile-Objekt, auf Basis des Teams, der Datenbank hinzu.
+	 * 
+	 * @param partnerProfile
+	 * @return partnerProfile
+	 */
+	public PartnerProfile insertPartnerProfileForTeam(PartnerProfile partnerProfile) {
+		/**
+		 *  DB-Verbindung holen.
+		 */
+		Connection con = DBConnection.connection();
+
+		try {
+			/**
+			 * leeres SQL-Statement (JDBC) anlegen.
+			 */
+			Statement stmt = con.createStatement();
+			/**
+			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
+			 * aktuelle id wird um eins erh�ht.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
+
+			if(rs.next()) {
+				partnerProfile.setId(rs.getInt("maxid") + 1);	
+			}
+			stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
+			 */
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, team_id, "
+					+ ") VALUES (" + partnerProfile.getId() + ", '"
+					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
+					+ partnerProfile.getTeamId() + ")");
+		/**
+		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 */	
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return partnerProfile;
+	}
+
+	public PartnerProfile insertPartnerProfileForJobPosting(PartnerProfile partnerProfile) {
+		/**
+		 *  DB-Verbindung holen.
+		 */
+		Connection con = DBConnection.connection();
+
+		try {
+			/**
+			 * leeres SQL-Statement (JDBC) anlegen.
+			 */
+			Statement stmt = con.createStatement();
+			/**
+			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
+			 * aktuelle id wird um eins erh�ht.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
+
+			if(rs.next()) {
+				partnerProfile.setId(rs.getInt("maxid") + 1);	
+			}
+			stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
+			 */
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, jobPosting_id) VALUES (" + partnerProfile.getId() + ", '"
+					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
+					+ partnerProfile.getJobPostingId() + ")");
+		/**
+		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 */	
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return partnerProfile;
+	}	
 	/**
 	 * Aktualisiert ein PartnerProfile-Objekt in der Datenbank.
 	 * 
