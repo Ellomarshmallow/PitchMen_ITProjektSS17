@@ -132,13 +132,15 @@ h1 {
 
 #usermenu {
 	display: flex;
+	width: 30%;
+	justify-content: flex-end;
 }
 
 #repgen-heading {
 	text-align: left;
 	font-size: 25px;
 	padding: 16px 0px;	
-	width: 100%;
+	width: 70%;
 }
 
 /* ### MAIN (Enthält nav und content) ### */
