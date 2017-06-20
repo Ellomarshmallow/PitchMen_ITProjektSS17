@@ -222,6 +222,15 @@ strong {
 	background: #006EB5;
 }
 
+#content button.delete {
+    background: #d8581c;	
+}
+
+#content button.delete:hover,
+#content button.delete:active {
+    background: #ab4616;	
+}
+
 .gwt-TextBox {
     margin: 10px;
     padding: 5px;
@@ -275,7 +284,7 @@ strong {
 /* ### CONTENT > FLEXTABLE ### */
 
 .traits {
-	width: 50% !important;
+	width: 75% !important;
 	border-top: 1px solid #ccc;	
 }
 
