@@ -379,3 +379,22 @@ strong {
   transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
   margin: 10% auto 10px auto;
 }
+
+/* ### FOOTER ### */
+
+#footer {
+    padding: 10px 0px;
+    text-align: center;
+    color: #777;
+    font-size: 80%;
+    width: 100%;
+   	display: flex;
+   	justify-content: center;
+    background: #999 url('http://mindchamps-medical.com/wp-content/uploads/2015/04/Abstract-Background-White.jpg') no-repeat left 50%;
+}
+
+#footer a {
+    color: #1c9cd8;
+    text-decoration: none;
+    margin-left: 4px;
+}

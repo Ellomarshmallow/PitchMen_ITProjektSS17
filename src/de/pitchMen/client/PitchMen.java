@@ -199,5 +199,12 @@ public class PitchMen implements EntryPoint {
 				+ "Ihre Skills präsentieren können. <strong>Sie erreichen Ihr Partnerprofil über einen Klick auf Ihren "
 				+ "Namen oben rechts.</strong> Direkt daneben können Sie sich aus der PitchMen-Applikation ausloggen.</p>"
 		));
+		
+		HorizontalPanel footer = new HorizontalPanel();
+		HTML copyrightText = new HTML("© 2017 PitchMen | ");
+		Anchor impressumLink = new Anchor("Impressum");
+		footer.add(copyrightText);
+		footer.add(impressumLink);
+		RootPanel.get("footer").add(footer);
 	}
 }

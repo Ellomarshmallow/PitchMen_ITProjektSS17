@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -169,6 +170,13 @@ public class ReportDisplay implements EntryPoint {
 		 */
 		ReportNavigation repNav = new ReportNavigation();
 		RootPanel.get("nav").add(repNav);
+		
+		HorizontalPanel footer = new HorizontalPanel();
+		HTML copyrightText = new HTML("© 2017 PitchMen | ");
+		Anchor impressumLink = new Anchor("Impressum");
+		footer.add(copyrightText);
+		footer.add(impressumLink);
+		RootPanel.get("footer").add(footer);
 	}
 		
 				
