@@ -148,6 +148,18 @@ public class JobPostingForm extends Formular{
 											
 											RootPanel.get("content").add(new HTML("<h3>Ausgeschrieben durch</h3><p>" + owningPerson.getFirstName() + " " + owningPerson.getName() + "</p>"));
 											
+											RootPanel.get("content").add(new HTML("<h3>Deadline</h3><p>" + selectedJobPosting.getDeadline() + "</p>"));
+											
+											java.sql.Date convertedDate = new java.sql.Date(new java.util.Date().getTime());
+											int dateDifference = Math.round((selectedJobPosting.getDeadline().getTime() - convertedDate.getTime()) / 86400000);
+											if(dateDifference > 0) {
+												RootPanel.get("content").add(new HTML("<p><strong>Diese Ausschreibung läuft noch " + dateDifference + " Tage.</strong></p>"));
+											} else if(dateDifference < 0) {
+												RootPanel.get("content").add(new HTML("<p><strong>Diese Ausschreibung läuft seit " + (-dateDifference) + " Tagen nicht mehr.</strong></p>"));
+											} else {
+												RootPanel.get("content").add(new HTML("<p><strong>Diese Ausschreibung läuft nur noch heute!</strong></p>"));
+											}
+											
 											RootPanel.get("content").add(new HTML("<h3>Ausschreibungstext</h3><p> " + selectedJobPosting.getText() + "</p>"));
 											
 											RootPanel.get("content").add(new HTML("<h3>In dieser Bewerbung verlangte Eigenschaften</h3>"));
