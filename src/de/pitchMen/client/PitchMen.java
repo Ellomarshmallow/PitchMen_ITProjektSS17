@@ -190,21 +190,28 @@ public class PitchMen implements EntryPoint {
 		
 		// Der Begrüßungstext der startseite 
 		RootPanel.get("content").add(new HTML(
-				"<h2>Herzlich willkommen bei PitchMen.</h2>"
-				+ "<p>Wählen Sie aus der Navigation links einen Projektmarktplatz, darunterliegende Projekte "
-				+ "oder in der dritten Ebene liegende Ausschreibungen aus, um mehr über die jeweiligen Objekte "
-				+ "zu erfahren. Wenn Sie sich bewerben möchten, wählen Sie eine Ausschreibung aus und klicken Sie "
-				+ "auf den Button <em>Bewerben</em>.</p>"
-				+ "<p>Bevor Sie sich bewerben können, müssen Sie zunächst ein Partnerprofil erstellen, in dem Sie "
-				+ "Ihre Skills präsentieren können. <strong>Sie erreichen Ihr Partnerprofil über einen Klick auf Ihren "
-				+ "Namen oben rechts.</strong> Direkt daneben können Sie sich aus der PitchMen-Applikation ausloggen.</p>"
+				"<h2>Herzlich Willkommen bei PitchMen,</h2>"
+				+ "<p>dem unabhängigen Projektmarktplatz für Ihre Projekte und Ausschreibungen. "
+				+ "<br/>"
+				+ "<br/>"
+				+ "PitchMen bietet Ihnen die Möglichkeit sowohl an Projektausschreibungen teilzunehmen als auch eigene Projekte "
+				+ "anzubieten. Diese Plattform lebt von Ihnen und mit Ihnen. "
+				+ "<br/>"
+				+ "<br/>"
+				+ "Bevor Sie sich jedoch in dem vielfältigen Angebot vertiefen, bitten wir Sie zunächst Ihr eigenes Partnerprofil"
+				+ " zu erstellen in dem Sie Ihre Skills präsentieren können. Sie erreichen Ihr Partnerprofil über einen Klick "
+				+ "auf Ihren Namen in der rechten Hauptnavigation. Für weitere Fragen steht Ihnen das PitchMen Team "
+				+ "gerne zur Verfügung.</p>"
 		));
 		
 		HorizontalPanel footer = new HorizontalPanel();
-		HTML copyrightText = new HTML("© 2017 PitchMen | ");
+		Anchor reportGeneratorLink = new Anchor ("ReportGenerator | ", "ReportGenerator.html");
+		HTML copyrightText = new HTML(" © 2017 PitchMen | ");
 		Anchor impressumLink = new Anchor("Impressum");
+		footer.add(reportGeneratorLink);
 		footer.add(copyrightText);
 		footer.add(impressumLink);
+		
 		impressumLink.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -227,11 +234,12 @@ public class PitchMen implements EntryPoint {
 													+ "<li>Renz, Eleonora</li></ul>"
 													+ "<h3>Kontakt</h3>"
 													+ "<p><strong>Telefon:</strong> 0711 8923 10 (Zentrale)</p>"
-													+ "<p><strong>Website:</strong> <a href='http://www.hdm-stuttgart.de'>"
+													+ "<p><strong>Website:</strong> <a href='http://www.hdm-stuttgart.de' target='_blank'>"
 													+ "www.hdm-stuttgart.de</a></p>"));
 			}
 			
 		});
 		RootPanel.get("footer").add(footer);
+		
 	}
 }
