@@ -27,4 +27,12 @@ public abstract class ReportWriter {
 	
 	public abstract void process(FanOutApplicationsOfUser a); 
 	
+	public abstract void process(FanInAndOutReport a);
+	
+	public abstract void process(AllApplicationsToOneJobPostingOfUser a);
+	
+	public abstract void process(AllApplicationsOfOneUser a);
+	
+	
+	
 }

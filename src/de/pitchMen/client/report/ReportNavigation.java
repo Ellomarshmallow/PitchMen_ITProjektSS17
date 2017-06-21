@@ -109,7 +109,7 @@ public class ReportNavigation extends VerticalPanel {
 				case 2: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostingsMathcingPartnerProfile() ausgewählt</h3>"));
 						reportContent = this.getAllJobPostingsMatchingPartnerProfileOfUser();
 						break;
-				case 3: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getApplicationsRealtedToJobPostingOfUser() ausgewählt</h3>"));
+				case 3: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getApplicationsRelatedToJobPostingOfUser() ausgewählt</h3>"));
 						reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
 						break;
 				case 4: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllApplicationsOfUserWithJobPostings() ausgewählt</h3>"));
@@ -174,7 +174,7 @@ public class ReportNavigation extends VerticalPanel {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub	
+					ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt :()");
 				}
 
 				@Override
