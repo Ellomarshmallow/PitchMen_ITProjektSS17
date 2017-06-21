@@ -205,6 +205,33 @@ public class PitchMen implements EntryPoint {
 		Anchor impressumLink = new Anchor("Impressum");
 		footer.add(copyrightText);
 		footer.add(impressumLink);
+		impressumLink.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<h2>Impressum nach §5 TMG</h2>"
+													+ "<h3>Verantwortlich</h3>"
+													+ "<p>Hochschule der Medien<br />"
+													+ "Nobelstraße 8<br />"
+													+ "70569 Stuttgart<br /></p>"
+													+ "<p><strong>Projektarbeit innerhalb des Studiengangs "
+													+ "Wirtschaftsinformatik und digitale Medien, "
+													+ "Modul: 335105 IT-Projekt SS 17.</strong></p>"
+													+ "<h3>Projektteam</h3>"
+													+ "<ul><li>Digel, Julius</li>"
+													+ "<li>Drews, Heike</li>"
+													+ "<li>Kienzler, Simon</li>"
+													+ "<li>Leenen, Lars</li>"
+													+ "<li>Schelle, Leon</li>"
+													+ "<li>Renz, Eleonora</li></ul>"
+													+ "<h3>Kontakt</h3>"
+													+ "<p><strong>Telefon:</strong> 0711 8923 10 (Zentrale)</p>"
+													+ "<p><strong>Website:</strong> <a href='http://www.hdm-stuttgart.de'>"
+													+ "www.hdm-stuttgart.de</a></p>"));
+			}
+			
+		});
 		RootPanel.get("footer").add(footer);
 	}
 }
