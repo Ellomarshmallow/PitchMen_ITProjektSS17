@@ -35,6 +35,7 @@ public class JobPostingForm extends Formular{
 	private Project parentProject = null;
 	private JobPosting selectedJobPosting = null; 
 	private PartnerProfile partnerProfileOfJobPosting = null;
+	private Person owningPerson = null;
 	private PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	private ArrayList<Trait> jobPostingTraits = null;
 	private FlexTable applicationTable  = null;
@@ -105,112 +106,124 @@ public class JobPostingForm extends Formular{
 									
 									parentProject = result;
 									
-									RootPanel.get("content").clear();
-									
-									HorizontalPanel topPanel = new HorizontalPanel();
-									
-									topPanel.add(new HTML("<h2>Ausschreibung: <em>" + selectedJobPosting.getTitle() + "</em></h2>"));
-									
-									if (hasPermission(parentProject)) {
-										RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span> Sie sind Besitzer dieser Ausschreibung. "
-												+ "Sie können sich daher nicht bewerben. Nur Sie sehen die unten aufgeführten Bewerbungen.</p></div>"));
-									
-										/* ---------- Neue Ausschreibung-Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
-										Button addJobPostingBtn = new Button("Neue Ausschreibung in diesem Projekt hinzufügen");
-										addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
-										topPanel.add(addJobPostingBtn);
-										
-										/* ---------- Ausschreibung löschen, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
-										Button deleteJobPostingBtn = new Button("Ausschreibung löschen");
-										deleteJobPostingBtn.setStyleName("delete");
-										deleteJobPostingBtn.addClickHandler(new deleteJobPostingClickHandler());
-										topPanel.add(deleteJobPostingBtn);
+									ClientsideSettings.getPitchMenAdmin().getPersonByID(parentProject.getPersonId(), new AsyncCallback<Person>() {
 
-										/* ---------- Ausschreibung bearbeiten, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
-										Button updateJobPostingBtn = new Button("Ausschreibung bearbeiten");
-										updateJobPostingBtn.addClickHandler(new updateJobPostingClickHandler());
-										topPanel.add(updateJobPostingBtn);
-									
-									} else {
-										/* ---------- Bewerben-Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
-										Button applicateButton = new Button ("Hier Bewerben"); 
-										applicateButton.addClickHandler(new applicateClickHandler());
-										topPanel.add(applicateButton);
-									}
-									
-									RootPanel.get("content").add(topPanel);
-									
-									RootPanel.get("content").add(new HTML("<h3>Übergeordnetes Projekt</h3><p>" + parentProject.getTitle() + "</p>"));
-									
-									RootPanel.get("content").add(new HTML("<h3>Ausschreibungstext</h3><p> " + selectedJobPosting.getText() + "</p>"));
-									
-									RootPanel.get("content").add(new HTML("<h3>Angehängtes Partnerprofil</h3>"));
-									
-									FlexTable traitTable = new FlexTable();
-									traitTable.setStyleName("traits");
-									
-									for(final Trait trait : jobPostingTraits) {
-										int rowCount = traitTable.getRowCount();
-										traitTable.setWidget(rowCount, 0, new HTML("<p><strong>" + trait.getName() + "</strong></p>"));
-										traitTable.setWidget(rowCount, 1, new HTML("<p>" + trait.getValue() + "</p>"));
-									}
-									
-									RootPanel.get("content").add(traitTable);
-									
-									if(hasPermission(parentProject)) {
-										RootPanel.get("content").add(new HTML("<h3>Bewerbungen </h3>"));
-										ClientsideSettings.getPitchMenAdmin().getApplicationsByJobPostingId(selectedJobPosting.getId(), new AsyncCallback<ArrayList<Application>>() {
+										@Override
+										public void onFailure(Throwable caught) {
+											ClientsideSettings.getLogger().severe("Abfrage der Person fehlgeschlagen");
+										}
 
-											@Override
-											public void onFailure(Throwable caught) {
-												ClientsideSettings.getLogger().severe("Konnte Ausschreibungen nicht empfangen");
+										@Override
+										public void onSuccess(Person result) {
+											owningPerson = result;
+											
+											RootPanel.get("content").clear();
+											
+											HorizontalPanel topPanel = new HorizontalPanel();
+											topPanel.addStyleName("headline");
+											
+											topPanel.add(new HTML("<h2>Ausschreibung: <em>" + selectedJobPosting.getTitle() + "</em></h2>"));
+											
+											if (hasPermission(parentProject)) {
+												RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span> Sie sind Besitzer dieser Ausschreibung. "
+														+ "Sie können sich daher nicht bewerben. Nur Sie sehen die unten aufgeführten Bewerbungen.</p></div>"));
+												
+												/* ---------- Ausschreibung bearbeiten, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
+												Button updateJobPostingBtn = new Button("Ausschreibung bearbeiten");
+												updateJobPostingBtn.addClickHandler(new updateJobPostingClickHandler());
+												topPanel.add(updateJobPostingBtn);
+												
+												/* ---------- Ausschreibung löschen, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
+												Button deleteJobPostingBtn = new Button("Ausschreibung löschen");
+												deleteJobPostingBtn.setStyleName("delete");
+												deleteJobPostingBtn.addClickHandler(new deleteJobPostingClickHandler());
+												topPanel.add(deleteJobPostingBtn);
+											
+											} else {
+												/* ---------- Bewerben-Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
+												Button applicateButton = new Button ("Auf diese Ausschreibung bewerben"); 
+												applicateButton.addClickHandler(new applicateClickHandler());
+												topPanel.add(applicateButton);
 											}
+											
+											RootPanel.get("content").add(topPanel);
+											
+											RootPanel.get("content").add(new HTML("<h3>Übergeordnetes Projekt</h3><p>" + parentProject.getTitle() + "</p>"));
+											
+											RootPanel.get("content").add(new HTML("<h3>Ausgeschrieben durch</h3><p>" + owningPerson.getFirstName() + " " + owningPerson.getName() + "</p>"));
+											
+											RootPanel.get("content").add(new HTML("<h3>Ausschreibungstext</h3><p> " + selectedJobPosting.getText() + "</p>"));
+											
+											RootPanel.get("content").add(new HTML("<h3>In dieser Bewerbung verlangte Eigenschaften</h3>"));
+											
+											FlexTable traitTable = new FlexTable();
+											traitTable.setStyleName("traits");
+											
+											for(final Trait trait : jobPostingTraits) {
+												int rowCount = traitTable.getRowCount();
+												traitTable.setWidget(rowCount, 0, new HTML("<p><strong>" + trait.getName() + "</strong></p>"));
+												traitTable.setWidget(rowCount, 1, new HTML("<p>" + trait.getValue() + "</p>"));
+											}
+											
+											RootPanel.get("content").add(traitTable);
+											
+											if(hasPermission(parentProject)) {
+												RootPanel.get("content").add(new HTML("<h3>Bewerbungen </h3>"));
+												ClientsideSettings.getPitchMenAdmin().getApplicationsByJobPostingId(selectedJobPosting.getId(), new AsyncCallback<ArrayList<Application>>() {
 
-											@Override
-											public void onSuccess(ArrayList<Application> applications) {
-												
-												applicationTable = new FlexTable();
-												
-												for(final Application app : applications) {
-													ClientsideSettings.getPitchMenAdmin().getPartnerProfileByID(app.getPartnerProfileId(), new AsyncCallback<PartnerProfile>() {
+													@Override
+													public void onFailure(Throwable caught) {
+														ClientsideSettings.getLogger().severe("Konnte Ausschreibungen nicht empfangen");
+													}
 
-														@Override
-														public void onFailure(Throwable caught) {
-															ClientsideSettings.getLogger().severe("Konnte PartnerProfil nicht empfangen");
-														}
-
-														@Override
-														public void onSuccess(PartnerProfile partnerProfile) {
-															ClientsideSettings.getPitchMenAdmin().getPersonByID(partnerProfile.getPersonId(), new AsyncCallback<Person>() {
+													@Override
+													public void onSuccess(ArrayList<Application> applications) {
+														
+														applicationTable = new FlexTable();
+														
+														for(final Application app : applications) {
+															ClientsideSettings.getPitchMenAdmin().getPartnerProfileByID(app.getPartnerProfileId(), new AsyncCallback<PartnerProfile>() {
 
 																@Override
 																public void onFailure(Throwable caught) {
-																	ClientsideSettings.getLogger().severe("Konnte Person nicht empfangen");
+																	ClientsideSettings.getLogger().severe("Konnte PartnerProfil nicht empfangen");
 																}
 
 																@Override
-																public void onSuccess(Person person) {
-																	applicationTable.setStyleName("traits");
-																	
-																	int rowCount = applicationTable.getRowCount();
-																	applicationTable.setWidget(rowCount, 0, new HTML("<p><strong>" + person.getFirstName() + " " + person.getName() + "</strong></p>"));
-																	applicationTable.setWidget(rowCount, 1, new HTML("<p>" + app.getText().substring(0, 200) + " [...]</p>"));
-																	applicationTable.setWidget(rowCount, 2, new HTML("<p>" + app.getStatus() + "</p>"));
-																	applicationTable.setWidget(rowCount, 3, new Button("Details"));
-																
-																	RootPanel.get("content").add(applicationTable);
-																
+																public void onSuccess(PartnerProfile partnerProfile) {
+																	ClientsideSettings.getPitchMenAdmin().getPersonByID(partnerProfile.getPersonId(), new AsyncCallback<Person>() {
+
+																		@Override
+																		public void onFailure(Throwable caught) {
+																			ClientsideSettings.getLogger().severe("Konnte Person nicht empfangen");
+																		}
+
+																		@Override
+																		public void onSuccess(Person person) {
+																			applicationTable.setStyleName("traits");
+																			
+																			int rowCount = applicationTable.getRowCount();
+																			applicationTable.setWidget(rowCount, 0, new HTML("<p><strong>" + person.getFirstName() + " " + person.getName() + "</strong></p>"));
+																			applicationTable.setWidget(rowCount, 1, new HTML("<p>" + app.getText().substring(0, 200) + " [...]</p>"));
+																			applicationTable.setWidget(rowCount, 2, new HTML("<p>" + app.getStatus() + "</p>"));
+																			applicationTable.setWidget(rowCount, 3, new Button("Details"));
+																		
+																			RootPanel.get("content").add(applicationTable);
+																		
+																		}
+																		
+																	});
 																}
 																
 															});
 														}
-														
-													});
-												}
+													}
+													
+												});
 											}
-											
-										});
-									}
+										}
+										
+									});					
 								}
 								
 							});
@@ -225,16 +238,6 @@ public class JobPostingForm extends Formular{
 
 
 		// ---------- ClickHandler
-	
-	// ---------- addJobPostingClickHandler
-		private class addJobPostingClickHandler implements ClickHandler {
-
-			public void onClick(ClickEvent event) {
-
-				AddJobPostingForm addJobPosting = new AddJobPostingForm(selectedJobPosting,pitchMenTreeViewModel,true);
-
-			}
-		}
 	
 		// ---------- deleteJobPostingClickHandler
 		private class deleteJobPostingClickHandler implements ClickHandler {
