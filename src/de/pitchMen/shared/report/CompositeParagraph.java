@@ -23,25 +23,42 @@ import java.util.ArrayList;
 	    /**
 	     * @return
 	     */
-	    public String toString() {
-	        // TODO implement here
-	        return null;
-	    }
-
-	    /**
-	     * @return
-	     */
 	    public ArrayList<SimpleParagraph> getSubParagraphs() {
-	        // TODO implement here
-	        return null;
+	        return subParagraphs;
 	    }
+	    
+	    public void addSubParagraph(SimpleParagraph p) {
+	    	subParagraphs.add(p);
+	    }
+	    
+	    public void removeSubParagraph(SimpleParagraph p) {
+	        subParagraphs.remove(p);
+	      }
 
+	    
 	    /**
 	     * @param value
 	     */
 	    public void setSubParagraphs(ArrayList<SimpleParagraph> value) {
-	        // TODO implement here
+	       
 	    }
+	    public SimpleParagraph getParagraphAt(int i) {
+	        return subParagraphs.get(i);
+	      }
+	    
+	    @Override
+	    public String toString() {
 
+	      StringBuffer result = new StringBuffer();
+
+
+	      for (int i = 0; i < subParagraphs.size(); i++) {
+	        SimpleParagraph p = subParagraphs.get(i);
+
+	        result.append(p.toString() + "<br>");
+	      }
+
+	      return result.toString();
+	    }
 	}
 
