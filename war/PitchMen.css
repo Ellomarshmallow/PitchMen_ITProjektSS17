@@ -245,6 +245,16 @@ strong {
     border: 1px solid #e1e1e1;
 }
 
+.gwt-TextArea {
+    width: 70%;
+    height: 250px;
+    padding: 10px;
+    font-family: 'Roboto';
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    color: #666;
+}
+
 #content .info {
     padding: 20px 20px 5px 20px;
     background: #fff;
