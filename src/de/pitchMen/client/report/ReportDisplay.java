@@ -176,8 +176,11 @@ public class ReportDisplay implements EntryPoint {
 		 * zum Impressum. 
 		 */
 		HorizontalPanel footer = new HorizontalPanel();
-		HTML copyrightText = new HTML("© 2017 PitchMen | ");
+		Anchor pitchMenLink = new Anchor ("PitchMen | ", "PitchMen.html");
+		HTML copyrightText = new HTML(" © 2017 PitchMen | ");
 		Anchor impressumLink = new Anchor("Impressum");
+		
+		
 		impressumLink.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -200,11 +203,12 @@ public class ReportDisplay implements EntryPoint {
 													+ "<li>Renz, Eleonora</li></ul>"
 													+ "<h3>Kontakt</h3>"
 													+ "<p><strong>Telefon:</strong> 0711 8923 10 (Zentrale)</p>"
-													+ "<p><strong>Website:</strong> <a href='http://www.hdm-stuttgart.de'>"
+													+ "<p><strong>Website:</strong> <a href='http://www.hdm-stuttgart.de' target='_blank'>"
 													+ "www.hdm-stuttgart.de</a></p>"));
 			}
 			
 		});
+		footer.add(pitchMenLink);
 		footer.add(copyrightText);
 		footer.add(impressumLink);
 		RootPanel.get("footer").add(footer);
