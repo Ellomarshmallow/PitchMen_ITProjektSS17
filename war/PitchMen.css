@@ -261,6 +261,19 @@ strong {
     margin: 1em 0px .5em 0px;
 }
 
+/* ### CONTENT > HEADLINE ### */
+
+.headline tr {
+	display: flex;
+}
+
+.headline td:first-of-type {
+	flex-grow: 1;
+}
+
+.headline button {
+	margin-left: 5px;
+}
 
 
 /* ### CONTENT > TOPBAR ### */
