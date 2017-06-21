@@ -237,7 +237,7 @@ strong {
     background: #ab4616;	
 }
 
-.gwt-TextBox {
+input {
     margin: 10px;
     padding: 5px;
     font-family: 'Roboto';
