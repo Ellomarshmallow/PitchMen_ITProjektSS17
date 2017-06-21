@@ -176,8 +176,8 @@ public class ReportDisplay implements EntryPoint {
 		 * zum Impressum. 
 		 */
 		HorizontalPanel footer = new HorizontalPanel();
-		Anchor pitchMenLink = new Anchor ("PitchMen | ", "PitchMen.html");
-		HTML copyrightText = new HTML(" © 2017 PitchMen | ");
+		Anchor pitchMenLink = new Anchor ("PitchMen", "PitchMen.html");
+		HTML copyrightText = new HTML(" | © 2017 PitchMen | ");
 		Anchor impressumLink = new Anchor("Impressum");
 		
 		
