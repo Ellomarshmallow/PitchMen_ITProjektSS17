@@ -336,6 +336,7 @@ strong {
 .traits {
 	width: 75% !important;
 	border-top: 1px solid #ccc;	
+	margin-bottom: 40px;
 }
 
 .traits td {
@@ -361,6 +362,29 @@ strong {
     color: #999;
     margin: 0px 0px 10px 0px;
 }
+
+.applications {
+	border-top: 1px solid #ccc;
+	margin-bottom: 40px;
+}
+
+.applications td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.scoreContainer {
+    width: 150px;
+    height: 20px;
+    background: #ccc;
+    margin: 0px 10px;
+}
+
+.scoreBar {
+    height: 100%;
+    background: #1c9cd8;
+}
+
 
 /* ### CONTENT > LOADING ANIMATION ### */
 @-webkit-keyframes {name}
