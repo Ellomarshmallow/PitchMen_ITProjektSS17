@@ -444,10 +444,13 @@ input {
     background: #999 url('http://mindchamps-medical.com/wp-content/uploads/2015/04/Abstract-Background-White.jpg') no-repeat left 50%;
 }
 
+#footer .gwt-HTML {
+	margin: 0px 5px;
+}
+
 #footer a {
     color: #1c9cd8;
     text-decoration: none;
-    margin-left: 4px;
 }
 
 /* ### DATE-BOX ### */
