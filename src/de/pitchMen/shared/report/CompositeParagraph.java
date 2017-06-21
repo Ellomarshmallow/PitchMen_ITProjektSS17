@@ -34,6 +34,11 @@ import java.util.ArrayList;
 	    public void removeSubParagraph(SimpleParagraph p) {
 	        subParagraphs.remove(p);
 	      }
+	    
+	    public int getNumParagraphs() {
+	    	return subParagraphs.size();
+	    };
+	    
 
 	    
 	    /**
