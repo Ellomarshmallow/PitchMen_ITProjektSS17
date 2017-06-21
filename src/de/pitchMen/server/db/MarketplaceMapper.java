@@ -209,7 +209,7 @@ public class MarketplaceMapper {
 			 */
 			ResultSet rs = stmt.executeQuery(
 					"SELECT id, description, title, person_id, team_id, company_id FROM marketplace " 
-							+ "ORDER BY id");
+							+ "ORDER BY title");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle marketplace vorhanden ist, muss das Abfragen des ResultSet so
