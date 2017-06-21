@@ -10,19 +10,18 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
-import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Rating;
 import de.pitchMen.shared.bo.Trait;
 
 /**
@@ -41,15 +40,10 @@ public class JobPostingForm extends Formular{
 	private PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	private ArrayList<Trait> jobPostingTraits = null;
 	private FlexTable applicationTable  = null;
-	Label idLabel = new Label();
-	Label titleLabel = new Label("Name des Projektes:");
-	Label titleBox = new Label();
-	Label descLabel = new Label("Beschreibung des Projektes:");
-	Label descBox = new Label();
-	Label statusLabel = new Label("aktueller Status: "); 
-	Label statusBox = new Label(); 
-	Label deadlineLabel = new Label("Deadline: "); 
-	Label deadlineBox = new Label(); 
+	TextBox titleBox = new TextBox();
+	TextArea jobPostingText = new TextArea();
+	DateBox deadlineBox = new DateBox();
+	
 	HorizontalPanel buttonsPanel = null;
 	
 	public JobPostingForm(JobPosting jobPosting) {
@@ -132,7 +126,7 @@ public class JobPostingForm extends Formular{
 												
 												/* ---------- Ausschreibung bearbeiten, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
 												Button updateJobPostingBtn = new Button("Ausschreibung bearbeiten");
-												updateJobPostingBtn.addClickHandler(new updateJobPostingClickHandler());
+												updateJobPostingBtn.addClickHandler(new UpdateJobPostingClickHandler());
 												topPanel.add(updateJobPostingBtn);
 												
 												/* ---------- Ausschreibung löschen, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
@@ -183,6 +177,13 @@ public class JobPostingForm extends Formular{
 														
 														applicationTable = new FlexTable();
 														
+														applicationTable.setWidget(0, 0, new HTML("<p><strong>BewerberIn</strong></p>"));
+														applicationTable.setWidget(0, 1, new HTML("<p><strong>Anschreiben</strong></p>"));
+														applicationTable.setWidget(0, 2, new HTML("<p><strong>System-Bewertung</strong></p>"));
+														applicationTable.setWidget(0, 3, new HTML("<p><strong>Text-Bewertung</strong></p>"));
+														applicationTable.setWidget(0, 4, new HTML("<p><strong>Ablehnen</strong></p>"));
+														applicationTable.setWidget(0, 5, new HTML("<p><strong>Annehmen</strong></p>"));
+														
 														for(final Application app : applications) {
 															ClientsideSettings.getPitchMenAdmin().getPartnerProfileByID(app.getPartnerProfileId(), new AsyncCallback<PartnerProfile>() {
 
@@ -201,16 +202,39 @@ public class JobPostingForm extends Formular{
 																		}
 
 																		@Override
-																		public void onSuccess(Person person) {
-																			applicationTable.setStyleName("traits");
+																		public void onSuccess(final Person person) {
 																			
-																			int rowCount = applicationTable.getRowCount();
-																			applicationTable.setWidget(rowCount, 0, new HTML("<p><strong>" + person.getFirstName() + " " + person.getName() + "</strong></p>"));
-																			applicationTable.setWidget(rowCount, 1, new HTML("<p>" + app.getText().substring(0, 200) + " [...]</p>"));
-																			applicationTable.setWidget(rowCount, 2, new HTML("<p>" + app.getStatus() + "</p>"));
-																			applicationTable.setWidget(rowCount, 3, new Button("Details"));
-																		
-																			RootPanel.get("content").add(applicationTable);
+																			ClientsideSettings.getPitchMenAdmin().getRatingByApplicationId(app.getId(), new AsyncCallback<Rating>() {
+
+																				@Override
+																				public void onFailure(Throwable caught) {
+																					ClientsideSettings.getLogger().severe("Konnte Rating nicht empfangen");
+																				}
+
+																				@Override
+																				public void onSuccess(Rating result) {
+																					if(result != null) {
+																						applicationTable.setStyleName("applications");
+																						
+																						Button rejectButton = new Button("Ablehnen");
+																						rejectButton.addStyleName("delete");
+																						Button acceptButton = new Button("Annehmen");
+																						
+																						int scorePercentage = Math.round(result.getScore()*100);
+																						
+																						int rowCount = applicationTable.getRowCount();
+																						applicationTable.setWidget(rowCount, 0, new HTML("<p><strong>" + person.getFirstName() + " " + person.getName() + "</strong></p>"));
+																						applicationTable.setWidget(rowCount, 1, new HTML(app.getText()));
+																						applicationTable.setWidget(rowCount, 2, new HTML("<div class='scoreContainer'><div class='scoreBar' style='width: " + scorePercentage + "%;'></div></div>"));
+																						applicationTable.setWidget(rowCount, 3, new HTML("<p>" + result.getStatement() + "</p>"));
+																						applicationTable.setWidget(rowCount, 4, rejectButton);
+																						applicationTable.setWidget(rowCount, 5, acceptButton);
+																					
+																						RootPanel.get("content").add(applicationTable);
+																					}
+																				}
+																				
+																			});
 																		
 																		}
 																		
@@ -257,7 +281,8 @@ public class JobPostingForm extends Formular{
 
 		
 		// ---------- updateJobPostingClickHandler
-		private class updateJobPostingClickHandler implements ClickHandler {
+		private class UpdateJobPostingClickHandler implements ClickHandler {
+			
 			public void onClick(ClickEvent event) {
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span> Sie bearbeiten diese Ausschreibung.</p></div>"));
@@ -278,7 +303,26 @@ public class JobPostingForm extends Formular{
 				saveButton.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						// TODO
+						
+						selectedJobPosting.setTitle(titleBox.getText());
+						selectedJobPosting.setText(jobPostingText.getText());
+						java.sql.Date convertedDate = new java.sql.Date(deadlineBox.getValue().getTime());
+						selectedJobPosting.setDeadline(convertedDate);
+						
+						ClientsideSettings.getPitchMenAdmin().updateJobPosting(selectedJobPosting, new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								ClientsideSettings.getLogger().severe("PartnerProfile konnte nicht gespeichert werden.");
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+								RootPanel.get("content").add(updatedForm);
+							}
+							
+						});
 					}
 				});
 				
@@ -289,45 +333,28 @@ public class JobPostingForm extends Formular{
 				
 				RootPanel.get("content").add(new HTML("<h3>Titel der Ausschreibung</h3>"));
 				
-				TextBox titleBox = new TextBox();
+				titleBox = new TextBox();
 				titleBox.setText(selectedJobPosting.getTitle());
 				RootPanel.get("content").add(titleBox);
 				
+				RootPanel.get("content").add(new HTML("<h3>Deadline</h3>"));
+				
+				deadlineBox = new DateBox();
+				deadlineBox.setValue(selectedJobPosting.getDeadline());
+				RootPanel.get("content").add(deadlineBox);
+				
 				RootPanel.get("content").add(new HTML("<h3>Ausschreibungstext</h3>"));
 				
-				TextArea jobPostingText = new TextArea();
+				jobPostingText = new TextArea();
 				jobPostingText.setText(selectedJobPosting.getText());
 				RootPanel.get("content").add(jobPostingText);
 				
-				FlexTable traitTable = new FlexTable();
+				RootPanel.get("content").add(new HTML("<h3>Benötigte Bewerber-Eigenschaften</h3>"));
 				
-				for(final Trait trait : jobPostingTraits) {
-					int rowCount = traitTable.getRowCount();
-					
-					traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
-					traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
-					
-					rowCount = traitTable.getRowCount();
-					
-					Button removeButton = new Button("Eigenschaft entfernen");
-					removeButton.addClickHandler(new ClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-							jobPostingTraits.remove(trait);
-						}
-						
-					});
-					
-					TextBox traitNameBox = new TextBox();
-					traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
-					TextBox traitValueBox = new TextBox();
-					traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
-					traitTable.setWidget(rowCount, 0, traitNameBox);
-					traitTable.setWidget(rowCount, 1, traitValueBox);
-					traitTable.setWidget(rowCount, 2, removeButton);
-					traitTable.setWidget(rowCount, 3, new HTML(""));
-				}
+				final FlexTable traitTable = new FlexTable();
+				traitTable.setStyleName("traits");
+				
+				printJobPostingTraitTable(traitTable);
 			
 				RootPanel.get("content").add(traitTable);
 			}
@@ -363,39 +390,113 @@ public class JobPostingForm extends Formular{
 			}
 
 			public void onSuccess(Void result) {
-				if (j != null) {
-					setSelectedJobPosting(null);
 				
-					pitchMenTreeViewModel.deleteJobPosting(selectedJobPosting, parentProject);
-				}
 			}
 		}
+				
+	public void printJobPostingTraitTable(final FlexTable traitTable) {
 		
-		// ----------pitchMenTreeViewModelsetter
-		public void setPitchMenTreeViewModel(PitchMenTreeViewModel pitchMenTreeViewModel) {
-			this.pitchMenTreeViewModel = pitchMenTreeViewModel;
-		}
+		ClientsideSettings.getPitchMenAdmin().getTraitsByPartnerProfileId(partnerProfileOfJobPosting.getId(), new AsyncCallback<ArrayList<Trait>>() {
 
+			@Override
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe("Empfangen der Traits fehlgeschlagen");
+			}
+
+			@Override
+			public void onSuccess(ArrayList<Trait> result) {
+				
+				jobPostingTraits = result;
+			}
+		});
 		
 		
-		// ---------- selectedProject setter
-				public void setSelectedJobPosting(JobPosting j) {
-					if (j != null) {
-						this.selectedJobPosting = j;
-						titleBox.setText(selectedJobPosting.getTitle());
-						descBox.setText(selectedJobPosting.getText()); 						
-						statusBox.setText(selectedJobPosting.getStatus());
-						deadlineBox.setText(selectedJobPosting.getStatus());
-						idLabel.setText(Integer.toString(parentProject.getId()));
-					} 
-					else {
-						idLabel.setText("");
-						titleBox.setText("");
-						descBox.setText("");
-						statusBox.setText("");
-						deadlineBox.setText("");
-						
+		for(final Trait trait : jobPostingTraits) {
+			int rowCount = traitTable.getRowCount();
+			
+			rowCount = traitTable.getRowCount();
+			
+			Button removeButton = null;
+			
+			removeButton = new Button("Eigenschaft entfernen");
+			removeButton.setStyleName("delete");
+			removeButton.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					if(Window.confirm("Möchten Sie die Eigenschaft wirklich löschen?")) {
+						jobPostingTraits.remove(trait);
+						ClientsideSettings.getPitchMenAdmin().deleteTrait(trait, new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								ClientsideSettings.getLogger().severe("Löschen der Eigenschaft fehlgeschlagen");
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								traitTable.removeAllRows();
+								printJobPostingTraitTable(traitTable);
+							}
+							
+						});
 					}
 				}
+				
+			});
+			
+			TextBox traitNameBox = new TextBox();
+			traitNameBox.setText(trait.getName());
+			traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+			TextBox traitValueBox = new TextBox();
+			traitValueBox.setText(trait.getValue());
+			traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+			traitTable.setWidget(rowCount, 0, traitNameBox);
+			traitTable.setWidget(rowCount, 1, traitValueBox);
+			traitTable.setWidget(rowCount, 2, removeButton);
+		}
+		
+		int rowCount = traitTable.getRowCount();
+		
+		final TextBox newTraitNameBox = new TextBox();
+		newTraitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+		final TextBox newTraitValueBox = new TextBox();
+		newTraitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+		
+		Button addTraitButton = new Button("Eigenschaft hinzufügen");
+		addTraitButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				ClientsideSettings.getPitchMenAdmin().addTrait(newTraitNameBox.getText(), 
+															newTraitValueBox.getText(), 
+															partnerProfileOfJobPosting.getId(), 
+															new AsyncCallback<Trait>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Konnte Trait nicht speichern");
+					}
+
+					@Override
+					public void onSuccess(Trait result) {
+						jobPostingTraits.add(result);
+						traitTable.removeAllRows();
+						printJobPostingTraitTable(traitTable);
+					}
+					
+				});
+			}
+			
+		});
+		
+		traitTable.setWidget(rowCount, 0, newTraitNameBox);
+		traitTable.setWidget(rowCount, 1, newTraitValueBox);
+		traitTable.setWidget(rowCount, 2, addTraitButton);
+	}
+	
+	public void setSelectedJobPosting(JobPosting jp) {
+		
+	}
 	
 }
