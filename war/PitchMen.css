@@ -206,6 +206,10 @@ strong {
 	margin: 0px 0px 15px 0px;
 }
 
+#content ul {
+    list-style-position: inside;
+}
+
 #content table {
 	width: 100%;
 	box-sizing: border-box;
