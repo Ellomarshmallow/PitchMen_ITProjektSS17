@@ -206,6 +206,10 @@ strong {
 	margin: 0px 0px 15px 0px;
 }
 
+#content ul {
+    list-style-position: inside;
+}
+
 #content table {
 	width: 100%;
 	box-sizing: border-box;
@@ -239,6 +243,50 @@ strong {
     font-family: 'Roboto';
     background: #fff;
     border: 1px solid #e1e1e1;
+}
+
+.gwt-TextArea {
+    width: 70%;
+    height: 250px;
+    padding: 10px;
+    font-family: 'Roboto';
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    color: #666;
+}
+
+#content .info {
+    padding: 20px 20px 5px 20px;
+    background: #fff;
+    margin: 0px 0px 20px 0px;
+    border: 1px solid #1c9cd8;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px #c1c1c1;
+}
+
+#content .info span {
+	color: #1c9cd8;
+	margin-right: 5px;
+}
+
+#content h3 {
+    font-weight: lighter;
+    font-size: 150%;
+    margin: 1em 0px .5em 0px;
+}
+
+/* ### CONTENT > HEADLINE ### */
+
+.headline tr {
+	display: flex;
+}
+
+.headline td:first-of-type {
+	flex-grow: 1;
+}
+
+.headline button {
+	margin-left: 5px;
 }
 
 
@@ -357,4 +405,23 @@ strong {
   -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
   transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
   margin: 10% auto 10px auto;
+}
+
+/* ### FOOTER ### */
+
+#footer {
+    padding: 10px 0px;
+    text-align: center;
+    color: #777;
+    font-size: 80%;
+    width: 100%;
+   	display: flex;
+   	justify-content: center;
+    background: #999 url('http://mindchamps-medical.com/wp-content/uploads/2015/04/Abstract-Background-White.jpg') no-repeat left 50%;
+}
+
+#footer a {
+    color: #1c9cd8;
+    text-decoration: none;
+    margin-left: 4px;
 }

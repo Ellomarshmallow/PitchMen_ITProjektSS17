@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -169,6 +170,44 @@ public class ReportDisplay implements EntryPoint {
 		 */
 		ReportNavigation repNav = new ReportNavigation();
 		RootPanel.get("nav").add(repNav);
+		
+		/*
+		 * Der Footer enthält das Copyright sowie einen Link
+		 * zum Impressum. 
+		 */
+		HorizontalPanel footer = new HorizontalPanel();
+		HTML copyrightText = new HTML("© 2017 PitchMen | ");
+		Anchor impressumLink = new Anchor("Impressum");
+		impressumLink.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<h2>Impressum nach §5 TMG</h2>"
+													+ "<h3>Verantwortlich</h3>"
+													+ "<p>Hochschule der Medien<br />"
+													+ "Nobelstraße 8<br />"
+													+ "70569 Stuttgart<br /></p>"
+													+ "<p><strong>Projektarbeit innerhalb des Studiengangs "
+													+ "Wirtschaftsinformatik und digitale Medien, "
+													+ "Modul: 335105 IT-Projekt SS 17.</strong></p>"
+													+ "<h3>Projektteam</h3>"
+													+ "<ul><li>Digel, Julius</li>"
+													+ "<li>Drews, Heike</li>"
+													+ "<li>Kienzler, Simon</li>"
+													+ "<li>Leenen, Lars</li>"
+													+ "<li>Schelle, Leon</li>"
+													+ "<li>Renz, Eleonora</li></ul>"
+													+ "<h3>Kontakt</h3>"
+													+ "<p><strong>Telefon:</strong> 0711 8923 10 (Zentrale)</p>"
+													+ "<p><strong>Website:</strong> <a href='http://www.hdm-stuttgart.de'>"
+													+ "www.hdm-stuttgart.de</a></p>"));
+			}
+			
+		});
+		footer.add(copyrightText);
+		footer.add(impressumLink);
+		RootPanel.get("footer").add(footer);
 	}
 		
 				
