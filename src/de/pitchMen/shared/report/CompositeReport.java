@@ -27,7 +27,7 @@ import java.util.ArrayList;
 	     * @return
 	     */
 	    public void addSubReport(Report report) {
-	        // TODO implement here
+	        subReports.add(report);
 	   
 	    }
 
@@ -36,8 +36,16 @@ import java.util.ArrayList;
 	     * @return
 	     */
 	    public void removeSubReport(Report report) {
-	        // TODO implement here
+	       subReports.remove(report);
 	        
 	    }
+	    
+	    public int getNumSubReports() {
+	        return subReports.size();
+	      }
+	    
+	    public Report getSubReportAt(int i) {
+	        return subReports.get(i);
+	      }
 
 	}
