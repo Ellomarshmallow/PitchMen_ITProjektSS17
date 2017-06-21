@@ -788,7 +788,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------TRAITMATCHING METHODE
 
 	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) {
-
+		
 		ArrayList<Trait> personTraits = traitMapper.findTraitByPartnerProfileId(pp.getId());
 
 		ArrayList<PartnerProfile> allpps = partnerProfileMapper.findAll();
@@ -813,6 +813,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		return matchingTraits;
 
-	};
+	}
 
 }
