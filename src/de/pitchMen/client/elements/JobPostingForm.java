@@ -12,6 +12,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
@@ -257,10 +259,77 @@ public class JobPostingForm extends Formular{
 		// ---------- updateJobPostingClickHandler
 		private class updateJobPostingClickHandler implements ClickHandler {
 			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span> Sie bearbeiten diese Ausschreibung.</p></div>"));
+				HorizontalPanel topPanel = new HorizontalPanel();
+				topPanel.addStyleName("headline");
+				
+				Button cancelButton = new Button("Bearbeitung abbrechen");
+				cancelButton.addStyleName("delete");
+				cancelButton.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						RootPanel.get("content").clear();
+						RootPanel.get("content").add(new JobPostingForm(selectedJobPosting));
+					}
+				});
+				
+				Button saveButton = new Button("Änderungen speichern");
+				saveButton.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						// TODO
+					}
+				});
+				
+				topPanel.add(new HTML("<h2>Ausschreibung: <em>" + selectedJobPosting.getTitle() + "</em></h2>"));
+				topPanel.add(saveButton);
+				topPanel.add(cancelButton);
+				RootPanel.get("content").add(topPanel);
+				
+				RootPanel.get("content").add(new HTML("<h3>Titel der Ausschreibung</h3>"));
+				
+				TextBox titleBox = new TextBox();
+				titleBox.setText(selectedJobPosting.getTitle());
+				RootPanel.get("content").add(titleBox);
+				
+				RootPanel.get("content").add(new HTML("<h3>Ausschreibungstext</h3>"));
+				
+				TextArea jobPostingText = new TextArea();
+				jobPostingText.setText(selectedJobPosting.getText());
+				RootPanel.get("content").add(jobPostingText);
+				
+				FlexTable traitTable = new FlexTable();
+				
+				for(final Trait trait : jobPostingTraits) {
+					int rowCount = traitTable.getRowCount();
+					
+					traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
+					traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
+					
+					rowCount = traitTable.getRowCount();
+					
+					Button removeButton = new Button("Eigenschaft entfernen");
+					removeButton.addClickHandler(new ClickHandler() {
 
-				// bei Click wird die update() Methode aufgerufen
-				AddJobPostingForm updateJobPosting = new AddJobPostingForm(selectedJobPosting,pitchMenTreeViewModel,false);
-
+						@Override
+						public void onClick(ClickEvent event) {
+							jobPostingTraits.remove(trait);
+						}
+						
+					});
+					
+					TextBox traitNameBox = new TextBox();
+					traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+					TextBox traitValueBox = new TextBox();
+					traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+					traitTable.setWidget(rowCount, 0, traitNameBox);
+					traitTable.setWidget(rowCount, 1, traitValueBox);
+					traitTable.setWidget(rowCount, 2, removeButton);
+					traitTable.setWidget(rowCount, 3, new HTML(""));
+				}
+			
+				RootPanel.get("content").add(traitTable);
 			}
 		} 
 		private class applicateClickHandler implements ClickHandler {
