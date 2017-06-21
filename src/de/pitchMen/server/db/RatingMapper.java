@@ -10,7 +10,7 @@ import de.pitchMen.shared.bo.Rating;
 
 /**
  * Die Klasse RatingMapper bildet Rating-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
- * möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * mï¿½glich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
@@ -22,14 +22,14 @@ public class RatingMapper {
 
 	/**
 	 * Die Klasse RatingMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfï¿½llt werden kann,
+	 * wird zunï¿½chst eine Variable mit dem Schlï¿½sselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 	private static RatingMapper ratingMapper = null;
 
 	/**
-	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschï¿½tzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 	protected RatingMapper() {
@@ -37,10 +37,10 @@ public class RatingMapper {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafï¿½r,
 	 * dass nur eine einzige Instanz der RatingMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über RatingMapper.ratingMapper() und
-	 * nicht über den New-Operator.
+	 * Aufgerufen wird die Klasse somit ï¿½ber RatingMapper.ratingMapper() und
+	 * nicht ï¿½ber den New-Operator.
 	 * 
 	 * @return ratingMapper
 	 */
@@ -52,7 +52,7 @@ public class RatingMapper {
 	}
 
 	/**
-	 * Fügt ein Rating-Objekt der Datenbank hinzu.
+	 * Fï¿½gt ein Rating-Objekt der Datenbank hinzu.
 	 * 
 	 * @param rating
 	 * @param application
@@ -70,9 +70,9 @@ public class RatingMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
-			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die
+			 * aktuelle id wird um eins erhï¿½ht.
+			 * Statement ausfï¿½llen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM rating");
 
@@ -82,14 +82,14 @@ public class RatingMapper {
 			stmt = con.createStatement();
 
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Rating-Tupels in die Datenbank.
+			 * SQL-Anweisung zum Einfï¿½gen des neuen Rating-Tupels in die Datenbank.
 			 */
 			stmt.executeUpdate("INSERT INTO rating (id, statement, score, application_id)" 
 					+ "VALUES (" + rating.getId()
 					+ ", '" + rating.getStatement() + "', " + rating.getScore() + ", " + rating.getApplicationId()
 					+ ")");
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -112,13 +112,13 @@ public class RatingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des ï¿½bergebenen Datensatzes in der Datenbank.
 			 */	
 			stmt.executeUpdate("UPDATE rating SET statement='" + rating.getStatement() + "', score= "
 					+ rating.getScore() + " WHERE id= " + rating.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -129,7 +129,7 @@ public class RatingMapper {
 	}
 
 	/**
-	 * Löscht ein Rating-Objekt aus der Datenbank.
+	 * Lï¿½scht ein Rating-Objekt aus der Datenbank.
 	 * 
 	 * @param rating
 	 */
@@ -139,7 +139,7 @@ public class RatingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Lï¿½schen des ï¿½bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM rating WHERE id=" + rating.getId());
 		}
@@ -150,7 +150,7 @@ public class RatingMapper {
 	}
 
 	/**
-	 * Findet ein Rating-Objekt anhand der übergebenen Id in der Datenbank.
+	 * Findet ein Rating-Objekt anhand der ï¿½bergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return rating
@@ -161,14 +161,14 @@ public class RatingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der ï¿½bergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, statement, score, application_id FROM rating WHERE id=" + id);
 
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
+			 * Zu einem Primï¿½rschlï¿½ssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel
 			 * ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -180,7 +180,7 @@ public class RatingMapper {
 				return rating;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -203,7 +203,7 @@ public class RatingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden alle Datensätze in der Datenbank.
+			 * SQL-Anweisung zum Finden alle Datensï¿½tze in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, statement, score, application_id FROM rating ORDER BY id");
 			/**
@@ -211,7 +211,7 @@ public class RatingMapper {
 			 * Tabelle raiting vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Rating rating = new Rating();
@@ -222,7 +222,7 @@ public class RatingMapper {
 				result.add(rating);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -233,7 +233,7 @@ public class RatingMapper {
 	}
 
 	/**
-	 * Findet ein Rating-Objekt anhand des übergebenen Bewertungswerts in der Datenbank.
+	 * Findet ein Rating-Objekt anhand des ï¿½bergebenen Bewertungswerts in der Datenbank.
 	 * 
 	 * @param score
 	 * @return ArrayList<Rating>
@@ -246,7 +246,7 @@ public class RatingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden alle Datensätze, anhand des übergebenen score, in der Datenbank.
+			 * SQL-Anweisung zum Finden alle Datensï¿½tze, anhand des ï¿½bergebenen score, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery(
 					"SELECT id, statement, score, application_id FROM rating WHERE score=" + score + " ORDER BY id");
@@ -255,7 +255,7 @@ public class RatingMapper {
 			 * Tabelle rating vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Rating rating = new Rating();
@@ -266,7 +266,7 @@ public class RatingMapper {
 				result.add(rating);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -280,12 +280,12 @@ public class RatingMapper {
 	 * Die Methode findRatingByApplicationId sucht anhand der applicationId alle
 	 * Rating-Tupel aus der Datenbank und speichert diese in ein Rating-Objekt.
 	 * Die Methode ist zur Umsetzung der Anforderung, eine Application zu
-	 * löschen, aber bestehende Beziehungen davor zu löschen.
+	 * lï¿½schen, aber bestehende Beziehungen davor zu lï¿½schen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensï¿½tze zusammengefï¿½gt
+	 * werden, zu den es jeweils auch ein Gegenstï¿½ck in der verknï¿½pften 
+	 * Tabelle gibt. Da es mï¿½glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * mï¿½ssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * @param applicationId
 	 * @return Rating
@@ -298,14 +298,14 @@ public class RatingMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten applicationId, in der Datenbank.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT * FROM rating" + "INNER JOIN application"
-					+ "ON application.id = rating.application_id" + "WHERE application.id = " + applicationId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM rating " + "INNER JOIN application "
+					+ "ON application.id = rating.application_id " + "WHERE application.id = " + applicationId);
 			/**
 			 * 
 			 * Zu einer Application besteht maximal ein Rating-Tupel, somit kann
-			 * auch nur einer zurückgegeben werden. Mit der IF-Abfrage wird
-			 * geprüft, ob ein DB-Tupel vorhanden ist und durch rating-Objekt
-			 * zurückgeben, andernfalls wird Null zurückgegeben.
+			 * auch nur einer zurï¿½ckgegeben werden. Mit der IF-Abfrage wird
+			 * geprï¿½ft, ob ein DB-Tupel vorhanden ist und durch rating-Objekt
+			 * zurï¿½ckgeben, andernfalls wird Null zurï¿½ckgegeben.
 			 */
 			if (rs.next()) {
 				Rating rating = new Rating();
@@ -316,7 +316,7 @@ public class RatingMapper {
 				return rating;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
