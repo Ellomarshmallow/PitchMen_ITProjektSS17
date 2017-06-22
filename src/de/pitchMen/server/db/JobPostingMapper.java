@@ -110,7 +110,7 @@ public class JobPostingMapper {
 			 */
 			stmt.executeUpdate(
 					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + " Text='" + jobPosting.getText()
-							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + " status='" 
+							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + " status= '" 
 							+ jobPosting.getStatus() + " WHERE id=" + jobPosting.getId());
 		}
 		/**
