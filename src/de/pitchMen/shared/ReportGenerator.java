@@ -52,6 +52,10 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
+	public abstract ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p) throws IllegalArgumentException;
+	/**
+	 * 
+	 */
 	public abstract AllApplicationsOfOneUser showAllApplicationsOfOneUser(int id) throws IllegalArgumentException;
 	/**
 	 * 
@@ -76,7 +80,7 @@ public interface ReportGenerator extends RemoteService {
 	/**
 	 * 
 	 */
-	public abstract ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p) throws IllegalArgumentException;
+	
 
 	
 	public Person login(String requestUri);
