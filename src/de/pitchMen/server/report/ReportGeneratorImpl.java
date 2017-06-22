@@ -263,17 +263,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	@Override
 	public ApplicationsRelatedToJobPostingsOfUser showApplicationsRelatedToJobPostingsOfUser(Person p)
 			throws IllegalArgumentException {
+		
 
 		if (pitchMenAdmin == null) {
 			return null;
 		}
-
 		/*
 		 * Zunächst legen wir uns einen leeren Report an.
 		 */
 		ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
 
-		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
+		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
 		result.setTitle("Alle Bewerbungen auf Ausschreibungen des Users");
 
 		/*
@@ -282,41 +282,104 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 */
 		result.setDatecreated(new Date());
 
+		Row headline = new Row(); // Erste Zeile im Report
+
 		/*
 		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
 		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
 		 * einzeilig, daher die Verwendung von Rows.
 		 */
-		Row headline = new Row();
 		// Erstellungsdatum der Bewerbung
 		headline.addColumn(new Column("Erstellungsdatum"));
-		// Bewerbungstext der Bewerbung
+		// Text der Bewerbung
 		headline.addColumn(new Column("Bewerbungstext"));
-		// Hinzufügen der zusammengestellten Kopfdaten zu dem Report
+		// Ersteller der Ausschreibung
+		headline.addColumn(new Column("Titel der Ausschreibung"));
+		// Beschreibung der Ausschreibung
+		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
+		// Hinzuf�gen der Row zum Resultobjekt
 		result.addRow(headline);
 
 		/*
 		 * Nun werden sämtliche Bewerbungen ausgelesen und deren
-		 * Erstellungsdatum und Text sukzessive in die Tabelle eingetragen.
+		 * Erstellungsdatum, Status und Text sukzessive in die Tabelle
+		 * eingetragen.
 		 */
-		ArrayList<Application> applications = pitchMenAdmin.getApplications();
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p.getId());
 		for (Application a : applications) {
 
-			if (a.getPartnerProfileId() == p.getId()) {
-			}
-			;
+			Application application = pitchMenAdmin.getApplicationByID(a.getJobPostingId());
+			// Person jobPoster =
+			// pitchMenAdmin.getPersonByID(application.getJobPostingId());
+			JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(application.getJobPostingId());
+
 			Row applicationsrow = new Row();
 
 			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationsrow.addColumn(new Column(a.getText()));
+			applicationsrow.addColumn(new Column(jobPosting.getTitle()));
+			applicationsrow.addColumn(new Column(jobPosting.getText()));
 
 			// Hinzuf�gen der Row zum Result
 			result.addRow(applicationsrow);
-		}
 
+		}
 		// R�ckgabe des fertigen Reports
 		return result;
 	}
+
+
+//		if (pitchMenAdmin == null) {
+//			return null;
+//		}
+//
+//		/*
+//		 * Zunächst legen wir uns einen leeren Report an.
+//		 */
+//		ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
+//
+//		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
+//		result.setTitle("Alle Bewerbungen auf Ausschreibungen des Users");
+//
+//		/*
+//		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+//		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+//		 */
+//		result.setDatecreated(new Date());
+//
+//		/*
+//		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
+//		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
+//		 * einzeilig, daher die Verwendung von Rows.
+//		 */
+//		Row headline = new Row();
+//		// Erstellungsdatum der Bewerbung
+//		headline.addColumn(new Column("Erstellungsdatum"));
+//		// Bewerbungstext der Bewerbung
+//		headline.addColumn(new Column("Bewerbungstext"));
+//		// Hinzufügen der zusammengestellten Kopfdaten zu dem Report
+//		result.addRow(headline);
+//
+////		/*
+////		 * Nun werden sämtliche Bewerbungen ausgelesen und deren
+////		 * Erstellungsdatum und Text sukzessive in die Tabelle eingetragen.
+////		 */
+////		ArrayList<Application> applications = pitchMenAdmin.getApplications();
+////		for (Application a : applications) {
+////
+////			if (a.getPartnerProfileId() == p.getId()) {
+////			}
+////			;
+////			Row applicationsrow = new Row();
+////
+////			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
+////			applicationsrow.addColumn(new Column(a.getText()));
+////
+////			// Hinzuf�gen der Row zum Result
+////			result.addRow(applicationsrow);
+////		}
+
+
 
 	/**
 	 * Erstellen von
@@ -405,7 +468,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugeh�rigen Ausschreibungen");
+		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugehoerigen Ausschreibungen");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
