@@ -114,7 +114,7 @@ public class ProjectForm extends Formular {
 
 									RootPanel.get("content").add(new HTML("<h3> Anzahl der enthaltenen Ausschreibungen: </h3> <p>" + jobPostings.size() + "</p>"));
 									
-									if (hasPermission(parentMarketplace)) {
+									if (hasPermission(selectedProject)) {
 
 										RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span>"
 												+ " Sie sind Besitzer dieses Projekts. </p></div>"));
@@ -224,7 +224,8 @@ public class ProjectForm extends Formular {
 
 		public void onClick(ClickEvent event) {
 
-			AddJobPostingForm addJobPosting = new AddJobPostingForm(pitchMenTreeViewModel, true);
+			JobPostingForm addJobPosting = new JobPostingForm(selectedProject);
+			RootPanel.get("content").add(addJobPosting);
 
 		}
 	}
