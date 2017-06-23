@@ -33,27 +33,94 @@ import de.pitchMen.shared.bo.Trait;
 
 public class JobPostingForm extends Formular{
  
+	/**
+	 * Das Projekt, zu dem das anzuzeigende und zu
+	 * bearbeitende JobPosting-Objekt dieses Formular-Objekts
+	 * gehört.
+	 */
 	private Project parentProject = null;
+	
+	/**
+	 * Das JobPosting-Objekt, welches in diesem Formular angezeigt
+	 * bzw. bearbeitet werden soll.
+	 */
 	private JobPosting selectedJobPosting = null; 
+	
+	/**
+	 * Zu jedem JobPosting-Objekt gibt es ein PartnerProfile-Objekt.
+	 * Dieses muss dem JobPostingForm ebenfalls bekannt sein.
+	 */
 	private PartnerProfile partnerProfileOfJobPosting = null;
+	
+	/**
+	 * Jedes JobPosting "gehört" einer Person. Anhand dieses Attributs
+	 * wird überprüft, ob der aktuell angemeldete Nutzer berechtigt ist,
+	 * das JobPosting zu bearbeiten oder sich nur darauf bewerben kann.
+	 */
 	private Person owningPerson = null;
-	private PitchMenTreeViewModel pitchMenTreeViewModel = null;
+	
+	/**
+	 * Die Traits des zugehörigen PartnerProfils werden aufgrund der 
+	 * RPC-Abfrage-Struktur separat abgefragt und gespeichert.
+	 */
 	private ArrayList<Trait> jobPostingTraits = null;
+	
+	/**
+	 * Ist der Nutzer Besitzer des aktuell anzuzeigenden Ausschreibungs-Objekts,
+	 * bekommt er in einer Tabelle die auf diese Ausschreibung eingegangene 
+	 * Bewerbungen angezeigt.
+	 */
 	private FlexTable applicationTable  = null;
+	
+	/**
+	 * Zum Bearbeiten des Titels der Ausschreibung.
+	 */
 	TextBox titleBox = new TextBox();
+	
+	/**
+	 * Zum Bearbeiten des Ausschreibungstextes.
+	 */
 	TextArea jobPostingText = new TextArea();
+	
+	/**
+	 * Zum Bearbeiten der Deadline der Ausschreibung.
+	 */
 	DateBox deadlineBox = new DateBox();
 	
-	HorizontalPanel buttonsPanel = null;
-	
+	/**
+	 * Konstruktor zur Ausgabe eines bestehenden JobPostings in der GUI mithilfe
+	 * des JobPostingForms. 
+	 * 
+	 * @param existieredndes jobPosting-Objekt
+	 */
 	public JobPostingForm(JobPosting jobPosting) {
 		
+		// Das RootPanel leeren und den Loading-Screen ausgeben
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 		
 		ClientsideSettings.getPitchMenAdmin().getJobPostingByID(jobPosting.getId(), new JobPostingCallback());
 	}
 	
+	/**
+	 * Konstruktor zur Anlage eines neuen JobPostings in der GUI mithilfe
+	 * des JobPostingForms. 
+	 * 
+	 * @param übergeordnetes Projekt
+	 */
+	public JobPostingForm(Project parentProject) {
+		
+		// Das RootPanel leeren und den Loading-Screen ausgeben
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
+		
+		createNewJobPosting();
+	}
+
+	/**
+	 * In dieser lokalen Klasse findet die Abarbeitung der Anzeige und Bearbeitung
+	 * eines bestehenden Ausschreibungs-Objekts statt.
+	 */
 	private class JobPostingCallback implements AsyncCallback<JobPosting> {
 
 		@Override
@@ -509,6 +576,14 @@ public class JobPostingForm extends Formular{
 	
 	public void setSelectedJobPosting(JobPosting jp) {
 		
+	}
+	
+	/**
+	 * Mit dieser Methode wird ein Formular zur Neuanlage
+	 * einer Ausschreibung angezeigt.
+	 */
+	private void createNewJobPosting() {
+		// TODO Auto-generated method stub
 	}
 	
 }
