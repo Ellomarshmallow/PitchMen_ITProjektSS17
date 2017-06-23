@@ -110,8 +110,8 @@ public class JobPostingMapper {
 			 */
 			stmt.executeUpdate(
 					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + " Text='" + jobPosting.getText()
-							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + " status='" 
-							+ jobPosting.getStatus() + "' WHERE id=" + jobPosting.getId());
+							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + " status= '" 
+							+ jobPosting.getStatus() + " WHERE id=" + jobPosting.getId());
 		}
 		/**
 		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
