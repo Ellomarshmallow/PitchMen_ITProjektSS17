@@ -110,6 +110,8 @@ public class JobPostingForm extends Formular{
 	 */
 	public JobPostingForm(Project parentProject) {
 		
+		this.parentProject = parentProject;
+		
 		// Das RootPanel leeren und den Loading-Screen ausgeben
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
@@ -582,8 +584,87 @@ public class JobPostingForm extends Formular{
 	 * Mit dieser Methode wird ein Formular zur Neuanlage
 	 * einer Ausschreibung angezeigt.
 	 */
-	private void createNewJobPosting() {
-		// TODO Auto-generated method stub
-	}
+	private void createNewJobPosting() {		
+		RootPanel.get("content").clear();
+		RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span> Sie erstellen gerade eine neue Ausschreibung innerhalb des Projekts <em>" + parentProject.getTitle() + "</em>. In einem zweiten Schritt können Sie dafür dann ein Partner-Profil definieren.</p></div>"));
+		HorizontalPanel topPanel = new HorizontalPanel();
+		topPanel.addStyleName("headline");
+		
+		Button cancelButton = new Button("Bearbeitung abbrechen");
+		cancelButton.addStyleName("delete");
+		cancelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new ProjectForm(parentProject));
+			}
+		});
+		
+		Button saveButton = new Button("Ausschreibung speichern");
+		saveButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				java.sql.Date convertedDate = new java.sql.Date(deadlineBox.getValue().getTime());
+				
+				ClientsideSettings.getPitchMenAdmin().addJobPosting(titleBox.getText(), 
+																jobPostingText.getText(), 
+																"laufend", 
+																convertedDate, 
+																parentProject.getId(), 
+																new AsyncCallback<JobPosting>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("JobPosting konnte nicht gespeichert werden.");
+					}
 	
+					@Override
+					public void onSuccess(JobPosting result) {
+						selectedJobPosting = result;
+						java.util.Date currentDate = new java.util.Date();
+						java.sql.Date convertedDate = new java.sql.Date(currentDate.getTime());
+						
+						ClientsideSettings.getPitchMenAdmin().addPartnerProfileForJobPosting(convertedDate, convertedDate, result.getId(), new AsyncCallback<PartnerProfile>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								ClientsideSettings.getLogger().severe("PartnerProfile konnte nicht gespeichert werden.");
+							}
+
+							@Override
+							public void onSuccess(PartnerProfile result) {
+								JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+								RootPanel.get("content").add(updatedForm);
+							}
+							
+						});
+					}				
+				});
+			}
+		});
+		
+		topPanel.add(new HTML("<h2>Neue Ausschreibung anlegen</h2>"));
+		topPanel.add(saveButton);
+		topPanel.add(cancelButton);
+		RootPanel.get("content").add(topPanel);
+		
+		RootPanel.get("content").add(new HTML("<h3>Titel der Ausschreibung</h3>"));
+		
+		titleBox = new TextBox();
+		RootPanel.get("content").add(titleBox);
+		
+		RootPanel.get("content").add(new HTML("<h3>Deadline</h3>"));
+		
+		deadlineBox = new DateBox();
+		deadlineBox.setValue(new java.util.Date());
+		RootPanel.get("content").add(deadlineBox);
+		
+		RootPanel.get("content").add(new HTML("<h3>Ausschreibungstext</h3>"));
+		
+		jobPostingText = new TextArea();
+		jobPostingText.setText("Beschreiben Sie die Stelle genauer. Sie können auch HTML-Tags verwenden.");
+		RootPanel.get("content").add(jobPostingText);	
+	}	
 }
