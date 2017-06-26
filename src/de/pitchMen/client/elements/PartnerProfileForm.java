@@ -321,7 +321,8 @@ public class PartnerProfileForm extends Formular {
 				int rowCount = traitTable.getRowCount();
 				
 				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
-				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3></br></br><p>Bitte geben Sie ihrer Eigenschaft Werte aus dem Bereich: sehr gut, gut, schlecht.));
+				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"
+						+ "</br></br><p>Bitte geben Sie ihrer Eigenschaft Werte aus dem Bereich: sehr gut, gut, schlecht.</p>"));
 				
 				rowCount = traitTable.getRowCount();
 				
