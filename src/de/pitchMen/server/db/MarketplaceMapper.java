@@ -208,8 +208,8 @@ public class MarketplaceMapper {
 			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id, description, title, person_id, team_id, company_id FROM marketplace " 
-							+ "ORDER BY title");
+					"SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
+					+ "ORDER BY title");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle marketplace vorhanden ist, muss das Abfragen des ResultSet so
