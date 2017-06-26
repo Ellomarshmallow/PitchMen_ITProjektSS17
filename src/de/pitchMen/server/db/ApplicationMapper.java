@@ -81,10 +81,10 @@ public class ApplicationMapper {
 				/**
 				 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
 				 */
-				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)"
+				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id, status)"
 						+ "VALUES ( " + application.getId() + ", '" + application.getText() + "' ,'"
 						+ application.getDateCreated() + "' ," + application.getJobPostingId() + " ,'"
-						+ application.getPartnerProfileId() + ")");
+						+ application.getPartnerProfileId() + "' ," + application.getStatus()() + ")");
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
