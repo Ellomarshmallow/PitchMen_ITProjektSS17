@@ -1,7 +1,6 @@
 package de.pitchMen.client.elements;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,14 +10,15 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.ibm.icu.text.DateFormat;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Project;
 
 /**
  * Klasse, deren Objekte ein Formular
@@ -46,7 +46,7 @@ public class ApplicationForm extends Formular {
 	Label infoLabel = new Label("Hiermit bewerben Sie sich auf die ausgewählte Ausschreibung,"
 							+ "bedenken Sie, dass Ihr AKTUELLES Partnerprofil automatisch beigefügt wird. ");
 	
-	RichTextArea textArea = new RichTextArea(); 
+	TextArea textArea = new TextArea(); 
 	/**
 	 * Beim Anlegen eines neuen <code>ApplicationForm</code>
 	 * Objekts wird das JobPosting-Objekt übergeben, auf das
@@ -54,7 +54,71 @@ public class ApplicationForm extends Formular {
 	 */
 	public ApplicationForm(JobPosting jobPosting) {
 		
-		this.referredJobPosting = jobPosting;
+		this.referredJobPosting = jobPosting; 
+		
+		RootPanel.get("content").clear();
+
+		ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new PartnerProfileCallback());
+			
+	}
+		
+		private class PartnerProfileCallback implements AsyncCallback<PartnerProfile> {
+		
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe("Empfangen des Partnerprofils fehlgeschlagen");
+			}
+
+			public void onSuccess(PartnerProfile result) {
+				
+				partnerProfileId = result.getId(); 
+				
+				RootPanel.get("content").add(new HTML(infoLabel + "</p>"));
+				RootPanel.get("content").add(new HTML(textArea + "</p>"));
+				Date dt = new Date(); 
+				
+				
+				Button sendBtn = new Button("Absenden");
+				sendBtn.addClickHandler(new BtnClickHandler());									
+				RootPanel.get("content").add(sendBtn);
+				
+			}	}
+				
+		 private class BtnClickHandler implements ClickHandler {
+		public void onClick(ClickEvent event) {
+			
+			java.util.Date date = new Date();
+			java.sql.Date convertedDate = new java.sql.Date(date.getTime());
+			
+			//FIXME Rating null, und Status "laufend" korrigieren,
+			
+			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getText(), null, "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
+		}		
+		
+}
+		 private class ApplicationCallback implements AsyncCallback<Application>{
+			 
+		 
+		 
+			public void onFailure(Throwable caught) {
+				ClientsideSettings.getLogger().severe("Speichern fehlgeschlagen");
+			}
+			
+			public void onSuccess(Application result) {
+				if(Window.confirm("Sind Sie sich sicher, dass Sie die Bewerbung absenden möchten?")){
+					
+					RootPanel.get("content").clear();
+					RootPanel.get("content").add(new JobPostingForm(referredJobPosting));
+					Window.alert("erfolgreich beworben");
+				}
+			}
+		 
+		 }
+		 
+		 
+}
+
+		
+		/**
 		
 		// Vertical Panel erstellen
 		VerticalPanel labelsPanel = new VerticalPanel();
@@ -139,3 +203,5 @@ public class ApplicationForm extends Formular {
 	
 	
 }
+**/
+		
