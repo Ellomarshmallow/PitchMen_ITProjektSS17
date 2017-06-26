@@ -133,7 +133,8 @@ public class PartnerProfileForm extends Formular {
 		public void onSuccess(ArrayList<Trait> result) {
 			if(result.isEmpty()) {
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(new HTML("<h2>Für Ihr Partnerprofil gibt es noch keine Eigenschaften.</h2>"));
+				RootPanel.get("content").add(new HTML("<h2>Für Ihr Partnerprofil gibt es noch keine Eigenschaften.</h2></br></br><p>Nutzen Sie das Partnerprofil "
+						+ "um Ihre pers�nlichen F�higkeiten anzulegen und hierdurch passende Ausschreibungen zu finden.</p>"));
 				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
 				
 				FlexTable traitTable = new FlexTable();
@@ -145,14 +146,14 @@ public class PartnerProfileForm extends Formular {
 				int rowCount = traitTable.getRowCount();
 				
 				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 3);
-				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
+				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaften hinzufügen</h3>"));
 				
 				rowCount = traitTable.getRowCount();
 				
 				traitNameBox = new TextBox();
-				traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaft");
+				traitNameBox.getElement().setPropertyString("placeholder", "Name der Eigenschaften");
 				traitValueBox = new TextBox();
-				traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaft");
+				traitValueBox.getElement().setPropertyString("placeholder", "Wert der Eigenschaften");
 				traitTable.setWidget(rowCount, 0, traitNameBox);
 				traitTable.setWidget(rowCount, 1, traitValueBox);
 				traitTable.setWidget(rowCount, 2, addTraitBtn);
@@ -320,7 +321,7 @@ public class PartnerProfileForm extends Formular {
 				int rowCount = traitTable.getRowCount();
 				
 				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
-				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"));
+				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3></br></br><p>Bitte geben Sie ihrer Eigenschaft Werte aus dem Bereich: sehr gut, gut, schlecht.));
 				
 				rowCount = traitTable.getRowCount();
 				
