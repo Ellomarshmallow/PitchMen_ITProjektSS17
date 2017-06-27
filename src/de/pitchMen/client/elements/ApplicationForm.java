@@ -72,16 +72,18 @@ public class ApplicationForm extends Formular {
 			public void onSuccess(PartnerProfile result) {
 				
 				partnerProfileId = result.getId(); 
+				RootPanel.get("content").add(infoLabel);
+				RootPanel.get("content").add(new HTML("</p>"));
+//				RootPanel.get("content").add(new HTML(textArea + "<p>"));
 				
-				RootPanel.get("content").add(new HTML(infoLabel + "</p>"));
+				
 				RootPanel.get("content").add(textArea);
 				RootPanel.get("content").add(new HTML("</p>"));
 				
 				
-				textArea.getElement().setLang("Bitte hier Ihren Bewerbungstext eintragen...");
 				
 				
-		
+				
 				Button sendBtn = new Button("Absenden");
 				sendBtn.addClickHandler(new BtnClickHandler());									
 				RootPanel.get("content").add(sendBtn);
@@ -93,7 +95,7 @@ public class ApplicationForm extends Formular {
 			
 			java.util.Date date = new Date();
 			java.sql.Date convertedDate = new java.sql.Date(date.getTime());
-			String text = textArea.getText();
+			
 			//FIXME textArea.getValue gibt mir nicht den Inhalt der Textarea
 			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getText() , "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
 		}		
