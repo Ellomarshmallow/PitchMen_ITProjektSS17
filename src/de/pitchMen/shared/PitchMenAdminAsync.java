@@ -20,7 +20,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- APPLICATION
 
-	void addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
+	void addApplication(Date dateCreated, String text, String status, int jobPostingId,
 			int partnerProfileId, AsyncCallback<Application> callback);
 
 	void updateApplication(Application application, AsyncCallback<Void> callback);
@@ -77,6 +77,8 @@ public interface PitchMenAdminAsync {
 	void getMarketplaces(AsyncCallback<ArrayList<Marketplace>> callback);
 
 	void getMarketplaceByID(int id, AsyncCallback<Marketplace> callback);
+	
+	void getMarketplacesByPersonId(int personId, AsyncCallback<ArrayList<Marketplace>> callback);
 
 	// ---------- PARTICIPATION
 

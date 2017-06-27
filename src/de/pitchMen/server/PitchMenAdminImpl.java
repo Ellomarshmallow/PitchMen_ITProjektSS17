@@ -77,7 +77,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
+	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId,
 			int partnerProfileId) {
 		Application application = new Application();
 		application.setDateCreated(dateCreated);
@@ -85,7 +85,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		application.setStatus(status);
 		application.setJobPostingId(jobPostingId);
 		application.setPartnerProfileId(partnerProfileId);
-		application.setRating(rating);
 
 		return this.applicationMapper.insert(application);
 
@@ -239,7 +238,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setDescription(description);
 		marketplace.setPersonId(personId);
 
-		return this.marketplaceMapper.insert(marketplace);
+		return this.marketplaceMapper.insertMarketplaceByPerson(marketplace);
 	}
 
 	@Override
@@ -250,7 +249,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setDescription(description);
 		marketplace.setTeamId(teamId);
 
-		return this.marketplaceMapper.insert(marketplace);
+		return this.marketplaceMapper.insertMarketplaceByTeam(marketplace);
 	}
 
 	@Override
@@ -261,7 +260,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setDescription(description);
 		marketplace.setCompanyId(companyId);
 
-		return this.marketplaceMapper.insert(marketplace);
+		return this.marketplaceMapper.insertMarketplaceByCompany(marketplace);
 	}
 
 	@Override
@@ -294,6 +293,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException {
 		return this.marketplaceMapper.findById(id);
 
+	}
+	
+	@Override
+	public ArrayList<Marketplace> getMarketplacesByPersonId(int personId) throws IllegalArgumentException {
+		return this.marketplaceMapper.findMarketplacesByPersonId(personId);
 	}
 
 	// --------------------------- PARTICIPATION

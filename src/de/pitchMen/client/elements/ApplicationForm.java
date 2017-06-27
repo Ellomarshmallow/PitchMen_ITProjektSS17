@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
@@ -74,7 +75,6 @@ public class ApplicationForm extends Formular {
 				
 				RootPanel.get("content").add(new HTML(infoLabel + "</p>"));
 				RootPanel.get("content").add(new HTML(textArea + "</p>"));
-				Date dt = new Date(); 
 				
 				
 				Button sendBtn = new Button("Absenden");
@@ -89,9 +89,8 @@ public class ApplicationForm extends Formular {
 			java.util.Date date = new Date();
 			java.sql.Date convertedDate = new java.sql.Date(date.getTime());
 			
-			//FIXME Rating null, und Status "laufend" korrigieren,
-			
-			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getText(), null, "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
+			//FIXME textArea.getValue gibt mir nicht den Inhalt der Textarea
+			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getValue(), "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
 		}		
 		
 }
@@ -104,12 +103,9 @@ public class ApplicationForm extends Formular {
 			}
 			
 			public void onSuccess(Application result) {
-				if(Window.confirm("Sind Sie sich sicher, dass Sie die Bewerbung absenden möchten?")){
-					
 					RootPanel.get("content").clear();
 					RootPanel.get("content").add(new JobPostingForm(referredJobPosting));
 					Window.alert("erfolgreich beworben");
-				}
 			}
 		 
 		 }
