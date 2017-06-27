@@ -264,7 +264,7 @@ public class ReportNavigation extends VerticalPanel {
 
 						@Override
 						public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+						ClientsideSettings.getLogger().severe("Upsi, da ist was schief gelaufen");
 						
 						}
 			});

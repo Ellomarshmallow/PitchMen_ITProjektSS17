@@ -122,10 +122,10 @@ public class HTMLReportWriter extends ReportWriter {
 		this.resetReportText();
 
 		//StringBuffer erzeugen
-		StringBuffer buff = new StringBuffer(); 
+		StringBuffer buff = new StringBuffer();
 
-		buff.append("<h2>" + a.getTitle() + "</h2>"); 
-		buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
+		buff.append("<p>" + a.getTitle() + "<p>"); 
+		buff.append("<p><strong>" + a.getDatecreated() + "</strong></p>");			
 		//table und tr und td öffnen			
 		buff.append("<table><tr>");
 		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
@@ -297,8 +297,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 		//StringBuffer erzeugen
 		StringBuffer buff = new StringBuffer(); 
-
-		HTML titel = new HTML("<h1>" + a.getTitle() + "</h1>");
+		HTML titel = new HTML("<p>" + a.getTitle().toString() + "</p>");
 		titel.setStyleName("header");
 		RootPanel.get("content").add(titel);
 
@@ -311,7 +310,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 			resetReportText();
 		}
-		reportText = buff.toString();
+		this.reportText = buff.toString();
 	}
 	
 	
