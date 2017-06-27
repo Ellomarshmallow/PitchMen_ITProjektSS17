@@ -83,8 +83,8 @@ public class ApplicationMapper {
 				 */
 				stmt.executeUpdate("INSERT INTO application (id, text, dateCreated, jobPosting_id, partnerProfil_id, status)"
 						+ "VALUES ( " + application.getId() + ", '" + application.getText() + "' ,'"
-						+ application.getDateCreated() + "' ," + application.getJobPostingId() + " ,'"
-						+ application.getPartnerProfileId() + "' ,'" + application.getStatus() + "')");
+						+ application.getDateCreated().toString() + "' ," + application.getJobPostingId() + " ,"
+						+ application.getPartnerProfileId() + " ,'" + application.getStatus() + "')");
 			/**
 			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
