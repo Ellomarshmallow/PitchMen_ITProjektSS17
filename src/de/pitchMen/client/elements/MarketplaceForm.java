@@ -42,6 +42,10 @@ public class MarketplaceForm extends Formular {
 	Label descLabel = new Label("Beschreibung des Marktplatzes:");
 	TextArea descBox = new TextArea();
 
+	/**
+	 * Konstruktor kommt zum Einsatz, wenn der Marktplatz bereits existiert.
+	 * @param marketplace
+	 */
 	public MarketplaceForm(Marketplace marketplace) {
 
 		this.selectedMarketplace = marketplace;
@@ -53,7 +57,66 @@ public class MarketplaceForm extends Formular {
 
 		ClientsideSettings.getPitchMenAdmin().getMarketplaceByID(marketplace.getId(), new MarketplaceCallback());
 	}
+	
+	/**
+	 * Konstruktor kommt zum Einsatz, wenn ein neuer Marktplatz angelegt wird.
+	 */
+	public MarketplaceForm() {
+		
+		RootPanel.get("content").clear();
+		
+		HorizontalPanel topPanel = new HorizontalPanel();
+		topPanel.addStyleName("headline");
 
+		topPanel.add(new HTML("<h2>Neuen Projektmarktplatz anlegen</h2>"));
+		
+		Button cancelButton = new Button("Bearbeitung abbrechen");
+		cancelButton.addStyleName("delete");
+		cancelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.Location.reload();
+			}
+		});
+		
+		
+		topPanel.add(cancelButton);
+
+		Button saveButton = new Button("Änderungen speichern");
+		saveButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(Window.confirm("Möchten Sie den Projektmarktplatz " + titleBox.getText() + " wirklich anlegen?")) {
+					ClientsideSettings.getPitchMenAdmin().addMarketplaceByPerson(titleBox.getText(),
+																				descBox.getText(),
+																				ClientsideSettings.getCurrentUser().getId(),
+																				new AsyncCallback<Marketplace>(){
+
+						public void onFailure(Throwable caught) {
+							ClientsideSettings.getLogger().severe("Konnte Projektmarktplatz nicht anlegen");
+						}
+								
+						public void onSuccess(Marketplace result) {
+							RootPanel.get("content").add(new MarketplaceForm(result));
+						}		
+					});
+				}	
+			}
+		});
+		
+		topPanel.add(saveButton);
+		
+		RootPanel.get("content").add(topPanel);
+
+		RootPanel.get("content").add(new HTML("<h3>Titel des Marktplatzes</h3>"));
+
+		RootPanel.get("content").add(titleBox);
+		
+		RootPanel.get("content").add(new HTML("<h3>Marktplatzsbeschreibung</h3>"));
+
+		RootPanel.get("content").add(descBox);
+	}
+	
 	private class MarketplaceCallback implements AsyncCallback<Marketplace> {
 
 		public void onFailure(Throwable caught) {
