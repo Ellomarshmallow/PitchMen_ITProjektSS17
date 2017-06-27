@@ -77,6 +77,8 @@ public interface PitchMenAdminAsync {
 	void getMarketplaces(AsyncCallback<ArrayList<Marketplace>> callback);
 
 	void getMarketplaceByID(int id, AsyncCallback<Marketplace> callback);
+	
+	void getMarketplacesByPersonId(int personId, AsyncCallback<ArrayList<Marketplace>> callback);
 
 	// ---------- PARTICIPATION
 

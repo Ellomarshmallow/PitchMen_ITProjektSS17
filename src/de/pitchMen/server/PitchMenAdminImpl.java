@@ -295,6 +295,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.marketplaceMapper.findById(id);
 
 	}
+	
+	@Override
+	public ArrayList<Marketplace> getMarketplacesByPersonId(int personId) throws IllegalArgumentException {
+		return this.marketplaceMapper.findMarketplacesByPersonId(personId);
+	}
 
 	// --------------------------- PARTICIPATION
 
