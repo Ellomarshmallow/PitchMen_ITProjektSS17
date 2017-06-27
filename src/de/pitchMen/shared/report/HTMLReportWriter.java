@@ -37,18 +37,26 @@ public class HTMLReportWriter extends ReportWriter {
 	 */
 
 
-	public String paragraphToHtml(Paragraph p){
-		if (p instanceof SimpleParagraph){
-			return this.paragraphToHtml((SimpleParagraph) p); 
-		}	else
-			return this.paragraphToHtml((CompositeParagraph) p); 
+//	public String paragraphToHtml(Paragraph p){
+//		if (p instanceof SimpleParagraph){
+//			return this.paragraphToHtml((SimpleParagraph) p); 
+//		}	else
+//			return this.paragraphToHtml((CompositeParagraph) p); 
+//
+//	}
+	
+	  public String paragraphToHtml(Paragraph p) {
+		    if (p instanceof CompositeParagraph) {
+		      return this.paragraphToHtml((CompositeParagraph) p);
+		    } else {
+		      return this.paragraphToHTML((SimpleParagraph) p);
+		    }
+		  }
 
-	}
-
-
-	public String paragraphToHtml(SimpleParagraph s) {
-		return "<p>" + s.toString() + "</p>";
-	}
+	
+	  public String paragraphToHTML(SimpleParagraph s) {
+		    return "<p>" + s.toString() + "</p>";
+		  }
 
 
 	public String paragraph2HTML(CompositeParagraph p) {
@@ -72,6 +80,7 @@ public class HTMLReportWriter extends ReportWriter {
 		buff.append("<html><head><title></title></head><body>");
 		return buff.toString();
 	}
+	
 
 
 	/**
@@ -97,6 +106,7 @@ public class HTMLReportWriter extends ReportWriter {
 		buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");			
 		//table und tr und td öffnen			
 		buff.append("<table><tr>");
+		//warum getHeaderData hier??
 		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
 		buff.append("</tr>");
 
@@ -123,13 +133,17 @@ public class HTMLReportWriter extends ReportWriter {
 
 		//StringBuffer erzeugen
 		StringBuffer buff = new StringBuffer();
-
-		buff.append("<p>" + a.getTitle() + "<p>"); 
-		buff.append("<p><strong>" + a.getDatecreated() + "</strong></p>");			
-		//table und tr und td öffnen			
+		
+//		buff.append("<p>" + a.getTitle() + "<p>"); 
+//		buff.append("<p><strong>" + a.getDatecreated() + "</strong></p>");			
+//		//table und tr und td öffnen			
+//		buff.append("<table><tr>");
+//		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
+//		buff.append("</tr>");
+		
+		buff.append("<2>" +  a.getTitle() + "</2>");
 		buff.append("<table><tr>");
-		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
-		buff.append("</tr>");
+		buff.append("<td> Anzahl der Bewerbungen </td></tr>");
 
 		ArrayList<Row> rows = a.getRows();
 
@@ -286,10 +300,6 @@ public class HTMLReportWriter extends ReportWriter {
 		this.reportText = buff.toString(); 
 	}
 
-	//TODO Beschreibung
-	public String getReportText(){
-		return this.getHead() + this.reportText + this.getTrailer(); 
-	}
 
 	public void process(FanInAndOutReport a) {
 		// zurücksetzen des Ausgabe-Strings
@@ -297,21 +307,39 @@ public class HTMLReportWriter extends ReportWriter {
 
 		//StringBuffer erzeugen
 		StringBuffer buff = new StringBuffer(); 
-		HTML titel = new HTML("<p>" + a.getTitle().toString() + "</p>");
-		titel.setStyleName("header");
-		RootPanel.get("content").add(titel);
+//		HTML titel = new HTML("<p>" + a.getTitle() + "</p>");
+//		titel.setStyleName("header");
+//		buff.append("<p>" + a.getTitle() + "</p>");	
+//		buff.append("<table><tr>");
+//		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
+//		buff.append("</tr>");
+//	
+		
+		buff.append("<p>" +  a.getTitle() + "</p>");
+		buff.append("<table><tr>");
+		buff.append("<td> Anzahl der Bewerbungen </td></tr>");
+		//lediglich ein Test, noch nicht fertig implementiert
+		buff.append("<tr><td>" +  a.getSubReportAt(0) +  "</td></tr>");
+		
 
-		for(int i=0; i< a.getNumSubReports();i++){
-			FanInJobPostingsOfUser subReportone = (FanInJobPostingsOfUser) a.getSubReportAt(i);
 
-			this.process(subReportone);
-
-			buff.append(reportText + "\n");
-
-			resetReportText();
-		}
+//		for(int i=0; i< a.getNumSubReports();i++){
+//			FanInJobPostingsOfUser subReportone = (FanInJobPostingsOfUser) a.getSubReportAt(i);
+//
+//			this.process(subReportone);
+//
+//			buff.append(reportText + "\n");
+//
+//			resetReportText();
+//		}
 		this.reportText = buff.toString();
 	}
+	
+	//TODO Beschreibung
+	public String getReportText(){
+		return this.getHead() + this.reportText + this.getTrailer(); 
+	}
+
 	
 	
 
