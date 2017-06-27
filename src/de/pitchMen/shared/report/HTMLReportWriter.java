@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import de.pitchMen.client.ClientsideSettings;
+
 /**
  * Subklasse von ReportWriter.
  * 
