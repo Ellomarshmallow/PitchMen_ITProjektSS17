@@ -228,22 +228,22 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			result.addRow(headline);
 
-			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
-
-			for (JobPosting jp : allJobPostings) {
-
-				Row jobPostingRow = new Row();
-
-				jobPostingRow = new Row();
-
-				jobPostingRow.addColumn(new Column(jp.getTitle()));
-				jobPostingRow.addColumn(new Column(jp.getText()));
-				// FIXME
-				// jobPostingRow.addColumn(new
-				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
-
-				result.addRow(jobPostingRow);
-			}
+//			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
+//
+//			for (JobPosting jp : allJobPostings) {
+//
+//				Row jobPostingRow = new Row();
+//
+//				jobPostingRow = new Row();
+//
+//				jobPostingRow.addColumn(new Column(jp.getTitle()));
+//				jobPostingRow.addColumn(new Column(jp.getText()));
+//				// FIXME
+//				// jobPostingRow.addColumn(new
+//				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
+//
+//				result.addRow(jobPostingRow);
+//			}
 			return result;
 
 		}
@@ -406,7 +406,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugeh�rigen Ausschreibungen");
+		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugeigen Ausschreibungen");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -460,7 +460,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			result.addRow(applicationsrow);
 
 		}
-		// R�ckgabe des fertigen Reports
+		 //R�ckgabe des fertigen Reports
 		return result;
 	}
 
