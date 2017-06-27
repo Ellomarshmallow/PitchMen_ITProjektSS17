@@ -156,7 +156,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		//Für AllJobPostings, brauchen wir keine "Dazugehörige Projekte
 //		// das dazugehï¿½rige Projekt der Ausschreibung
-		headline.addColumn(new Column("dazugehoeriges Projekt"));
+		//headline.addColumn(new Column("dazugehoeriges Projekt"));
 
 		// Deadline der Ausschreibung
 		headline.addColumn(new Column("Deadline"));
@@ -178,7 +178,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
-			jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
+			//jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getDeadline().toString()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getStatus()));
 			result.addRow(jobPostingZeile);
