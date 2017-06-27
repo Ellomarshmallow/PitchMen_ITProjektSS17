@@ -20,7 +20,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- APPLICATION
 
-	void addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
+	void addApplication(Date dateCreated, String text, String status, int jobPostingId,
 			int partnerProfileId, AsyncCallback<Application> callback);
 
 	void updateApplication(Application application, AsyncCallback<Void> callback);

@@ -77,7 +77,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------- APPLICATION
 
 	@Override
-	public Application addApplication(Date dateCreated, String text, Rating rating, String status, int jobPostingId,
+	public Application addApplication(Date dateCreated, String text, String status, int jobPostingId,
 			int partnerProfileId) {
 		Application application = new Application();
 		application.setDateCreated(dateCreated);
@@ -85,7 +85,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		application.setStatus(status);
 		application.setJobPostingId(jobPostingId);
 		application.setPartnerProfileId(partnerProfileId);
-		application.setRating(rating);
 
 		return this.applicationMapper.insert(application);
 
