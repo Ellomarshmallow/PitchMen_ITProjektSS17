@@ -154,8 +154,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Text der Ausschreibung
 		headline.addColumn(new Column("JobPosting Text"));
 
-		// das dazugehï¿½rige Projekt der Ausschreibung
-		headline.addColumn(new Column("dazugehï¿½riges Projekt"));
+		//Für AllJobPostings, brauchen wir keine "Dazugehörige Projekte
+//		// das dazugehï¿½rige Projekt der Ausschreibung
+		headline.addColumn(new Column("dazugehoeriges Projekt"));
 
 		// Deadline der Ausschreibung
 		headline.addColumn(new Column("Deadline"));
