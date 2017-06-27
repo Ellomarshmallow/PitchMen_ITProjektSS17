@@ -118,7 +118,7 @@ public class ReportNavigation extends VerticalPanel {
 				case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getProjectInterveawings() ausgewählt</h3>"));
 						reportContent = this.getProjectInterveawings();
 						break;
-				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewählt</h3>"));
+				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
 						reportContent = this.getFanInFanOutAnalysis();
 						break;
 			}
