@@ -141,19 +141,34 @@ public class HTMLReportWriter extends ReportWriter {
 //		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>"); 
 //		buff.append("</tr>");
 		
-		buff.append("<2>" +  a.getTitle() + "</2>");
-		buff.append("<table><tr>");
-		buff.append("<td> Anzahl der Bewerbungen </td></tr>");
+		
+		buff.append("<h4>" +  a.getTitle() + "</h4>");
+		buff.append("<p><table border=1px rules=all> <tr>");
+//		buff.append("<td> ID </td> ");
+//		buff.append("<td> Titel </td>");
+//		buff.append("<td> Bewerbungstext </td>");
+//		buff.append("<td> ProjektID </td>");
+//		buff.append("<td> Enddatum </td>");
+//		buff.append("<td> Status </td></tr>");
+//		buff.append("<tr><td>" + a.getJobPostingId() + "</td>");
+
 
 		ArrayList<Row> rows = a.getRows();
+		  if (rows != null) {
+		      ClientsideSettings.getLogger().info("Rows in Array ist ungleich Null");
+		    }
 
 		for(int i=0; i<rows.size();i++){
+			buff.append("<tr>");
 			Row row = rows.get(i);
-			buff.append("<tr>"); 
+			
 			for(int x=0; x<row.getNumberOfColumns();x++){
-				buff.append("<td>" + row.getColumnAt(x) + "</td");
+				
+					buff.append("<td>" + row.getColumnAt(x) + "</td>");
+				
+			
 			}
-			buff.append("</tr"); 
+			buff.append("</tr>"); 
 		}
 
 		buff.append("</table"); 
