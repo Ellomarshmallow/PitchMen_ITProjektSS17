@@ -34,20 +34,87 @@ public class ProjectForm extends Formular {
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Projektes:");
-	Label titleBox = new Label();
+	TextBox titleBox = new TextBox();
 	Label descLabel = new Label("Beschreibung des Projektes:");
-	Label descBox = new Label();
+	TextArea descBox = new TextArea();
 	Label fromLabel = new Label("Von:");
 	Label fromBox = new Label();
 	Label toLabel = new Label("Bis:");
 	Label toBox = new Label();
 
+	/**
+	 * Konstruktor, der bei bestehenden Projekten verwendet wird.
+	 * @param project
+	 */
 	public ProjectForm(Project project) {
-
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 
 		ClientsideSettings.getPitchMenAdmin().getProjectByID(project.getId(), new ProjectCallback());
+	}
+	
+	/**
+	 * Soll ein neues Projekt angelegt werden, kommt dieser Konstruktor zum Einsatz.
+	 * 
+	 * @param übergeordneter Projektmarktplatz
+	 */
+	public ProjectForm(final Marketplace parentMarketplace) {
+		RootPanel.get("content").clear();
+		HorizontalPanel topPanel = new HorizontalPanel();
+		topPanel.addStyleName("headline");
+
+		Button cancelButton = new Button("Neuanlage abbrechen");
+		cancelButton.addStyleName("delete");
+		cancelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new MarketplaceForm(parentMarketplace));
+			}
+		});
+
+		Button saveButton = new Button("Projekt anlegen");
+		saveButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				java.util.Date currentDate = new java.util.Date();
+				java.sql.Date convertedDate = new java.sql.Date(currentDate.getTime());
+				ClientsideSettings.getPitchMenAdmin().addProject(convertedDate, 
+																convertedDate, 
+																titleBox.getText(), 
+																descBox.getText(), 
+																ClientsideSettings.getCurrentUser().getId(),
+																parentMarketplace.getId(),
+																new AsyncCallback<Project>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Fehler beim Updaten des Projekts");
+					}
+
+					@Override
+					public void onSuccess(Project result) {
+						ProjectForm udpatedForm = new ProjectForm(result);
+						
+					}
+					
+				});
+			}
+		});
+
+		topPanel.add(new HTML("<h2>Neues Projekt im Marktplatz <em>" + parentMarketplace.getTitle() + "</em> anlegen</em></h2>"));
+		topPanel.add(saveButton);
+		topPanel.add(cancelButton);
+		RootPanel.get("content").add(topPanel);
+
+		RootPanel.get("content").add(new HTML("<h3>Titel des Projekts</h3>"));
+		
+		RootPanel.get("content").add(titleBox);
+
+		RootPanel.get("content").add(new HTML("<h3>Projektbeschreibung</h3>"));
+		
+		RootPanel.get("content").add(descBox);
+
 	}
 
 	private class ProjectCallback implements AsyncCallback<Project> {
@@ -88,57 +155,55 @@ public class ProjectForm extends Formular {
 
 											public void onSuccess(Person result){
 												projectManager = result;
-
-
-
-									RootPanel.get("content").clear();
-
-
-									HorizontalPanel topPanel = new HorizontalPanel();
-									topPanel.addStyleName("headline");
-
-
-									topPanel.add(new HTML("<h2>Projekt: <em>" + selectedProject.getTitle() + "</em></h2>"));
-
-									RootPanel.get("content").add(topPanel);
-
-									RootPanel.get("content").add(new HTML("<h3>Übergeordneter Marktplatz: </h3><p>" + parentMarketplace.getTitle() + "</p>"));
-
-									RootPanel.get("content").add(new HTML("<h3>Projektbeschreibung</h3><p> " + selectedProject.getDescription() + "</p>"));
-
-									RootPanel.get("content").add(new HTML("<h3> Von: </h3> <p> " + selectedProject.getDateOpened() + "</p>"));
-
-									RootPanel.get("content").add(new HTML("<h3> Bis: </h3> <p> " + selectedProject.getDateClosed() + "</p>"));
-
-									RootPanel.get("content").add(new HTML("<h3> Projektleiter: </h3> <p> " + projectManager.getFirstName() + " " + projectManager.getName() + "</p>"));
-
-									RootPanel.get("content").add(new HTML("<h3> Anzahl der enthaltenen Ausschreibungen: </h3> <p>" + jobPostings.size() + "</p>"));
-									
-									if (hasPermission(selectedProject)) {
-
-										RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span>"
-												+ " Sie sind Besitzer dieses Projekts. </p></div>"));
-
-										// ---------- Projekt löschen, ClickHandler hinzufügen und dem
-										// HorizontalPanel hinzufügen
-										Button deleteProjectBtn = new Button("- Projekt löschen");
-										deleteProjectBtn.addClickHandler(new deleteProjectClickHandler());
-										topPanel.add(deleteProjectBtn);
-
-										// ---------- Projekt bearbeiten, ClickHandler hinzufügen und dem
-										// HorizontalPanel hinzufügen
-
-										Button updateProjectBtn = new Button("Bearbeiten");
-										updateProjectBtn.addClickHandler(new updateProjectClickHandler());
-										topPanel.add(updateProjectBtn);
-
-										// ---------- Neue Ausschreibung Button, ClickHandler hinzufügen und dem
-										// HorizontalPanel hinzufügen
-										Button addJobPostingBtn = new Button("+ Neue Ausschreibung hinzufügen");
-										addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
-										topPanel.add(addJobPostingBtn);
-
-									}
+												
+												HorizontalPanel topPanel = new HorizontalPanel();
+												topPanel.addStyleName("headline");
+												
+												RootPanel.get("content").clear();
+												
+												topPanel.add(new HTML("<h2>Projekt: <em>" + selectedProject.getTitle() + "</em></h2>"));
+												
+												if (hasPermission(selectedProject)) {
+			
+													RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span>"
+															+ " Sie sind Besitzer dieses Projekts. </p></div>"));
+			
+													// ---------- Projekt löschen, ClickHandler hinzufügen und dem
+													// HorizontalPanel hinzufügen
+													Button deleteProjectBtn = new Button("Projekt löschen");
+													deleteProjectBtn.addStyleName("delete");
+													deleteProjectBtn.addClickHandler(new deleteProjectClickHandler());
+													topPanel.add(deleteProjectBtn);
+			
+													// ---------- Projekt bearbeiten, ClickHandler hinzufügen und dem
+													// HorizontalPanel hinzufügen
+			
+													Button updateProjectBtn = new Button("Bearbeiten");
+													updateProjectBtn.addClickHandler(new updateProjectClickHandler());
+													topPanel.add(updateProjectBtn);
+			
+													// ---------- Neue Ausschreibung Button, ClickHandler hinzufügen und dem
+													// HorizontalPanel hinzufügen
+													Button addJobPostingBtn = new Button("Neue Ausschreibung hinzufügen");
+													addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
+													topPanel.add(addJobPostingBtn);
+			
+												}
+			
+												RootPanel.get("content").add(topPanel);
+			
+												RootPanel.get("content").add(new HTML("<h3>Übergeordneter Marktplatz: </h3><p>" + parentMarketplace.getTitle() + "</p>"));
+			
+												RootPanel.get("content").add(new HTML("<h3>Projektbeschreibung</h3><p> " + selectedProject.getDescription() + "</p>"));
+			
+												RootPanel.get("content").add(new HTML("<h3> Von: </h3> <p> " + selectedProject.getDateOpened() + "</p>"));
+			
+												RootPanel.get("content").add(new HTML("<h3> Bis: </h3> <p> " + selectedProject.getDateClosed() + "</p>"));
+			
+												RootPanel.get("content").add(new HTML("<h3> Projektleiter: </h3> <p> " + projectManager.getFirstName() + " " + projectManager.getName() + "</p>"));
+			
+												RootPanel.get("content").add(new HTML("<h3> Anzahl der enthaltenen Ausschreibungen: </h3> <p>" + jobPostings.size() + "</p>"));
+												
 
 								}});
 						}});
@@ -146,66 +211,6 @@ public class ProjectForm extends Formular {
 		}
 
 	}
-
-	// // Vertical Panel erstellen
-	// VerticalPanel labelsPanel = new VerticalPanel();
-	// this.add(labelsPanel);
-	//
-	// // labels dem Vertical Panel hinzufügen
-	// labelsPanel.add(idLabel);
-	// labelsPanel.add(titleLabel);
-	// labelsPanel.add(titleBox);
-	// labelsPanel.add(descLabel);
-	// labelsPanel.add(descBox);
-	// labelsPanel.add(fromLabel);
-	// labelsPanel.add(fromBox);
-	// labelsPanel.add(toLabel);
-	// labelsPanel.add(toBox);
-	//
-	// // HorizontalPanel für die Buttons erstellen
-	// HorizontalPanel buttonsPanel = new HorizontalPanel();
-	// this.add(buttonsPanel);
-	//
-	// //Die zwei VerticalPanels hinzufügen
-	// RootPanel.get("content").clear();
-	// RootPanel.get("content").add(labelsPanel);
-	// RootPanel.get("content").add(buttonsPanel);
-	//
-	// // ---------- Neues Projekt Button, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	// Button addProjectBtn = new Button("+ Neues Projekt hinzufügen");
-	// addProjectBtn.addClickHandler(new addProjectClickHandler());
-	// buttonsPanel.add(addProjectBtn);
-	//
-	//
-	// /*
-	// * Wenn die aktuelle UserId gleich der PersonId ist, dann hat dieser die
-	// * Buttons Projekt Löschen, Bearbeiten und Ausschreibung hinzufügen
-	// * zur verfügung. Vgl. hasPermission() in Formular.java
-	// */
-	// if (hasPermission(this.selectedProject)) {
-	//
-	// // ---------- Projekt löschen, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	// Button deleteProjectBtn = new Button("- Projekt löschen");
-	// deleteProjectBtn.addClickHandler(new deleteProjectClickHandler());
-	// buttonsPanel.add(deleteProjectBtn);
-	//
-	// // ---------- Projekt bearbeiten, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	//
-	// Button updateProjectBtn = new Button("Bearbeiten");
-	// updateProjectBtn.addClickHandler(new updateProjectClickHandler());
-	// buttonsPanel.add(updateProjectBtn);
-	//
-	// // ---------- Neue Ausschreibung Button, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	// Button addJobPostingBtn = new Button("+ Neue Ausschreibung hinzufügen");
-	// addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
-	// buttonsPanel.add(addJobPostingBtn);
-	// }
-	//
-	//
 
 	// ---------- ClickHandler
 
@@ -249,7 +254,7 @@ public class ProjectForm extends Formular {
 		public void onClick(ClickEvent event) {
 			RootPanel.get("content").clear();
 			RootPanel.get("content").add(new HTML(
-					"<div class='info'><p><span class='fa fa-info-circle'></span> Sie bearbeiten diese Ausschreibung.</p></div>"));
+					"<div class='info'><p><span class='fa fa-info-circle'></span> Sie bearbeiten dieses Projekt.</p></div>"));
 			HorizontalPanel topPanel = new HorizontalPanel();
 			topPanel.addStyleName("headline");
 
@@ -267,7 +272,21 @@ public class ProjectForm extends Formular {
 			saveButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					// TODO
+					selectedProject.setTitle(titleBox.getText());
+					selectedProject.setDescription(descBox.getText());
+					ClientsideSettings.getPitchMenAdmin().updateProject(selectedProject, new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							ClientsideSettings.getLogger().severe("Fehler beim Updaten des Projekts");
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							ProjectForm udpatedForm = new ProjectForm(selectedProject);
+						}
+						
+					});
 				}
 			});
 
@@ -277,16 +296,14 @@ public class ProjectForm extends Formular {
 			RootPanel.get("content").add(topPanel);
 
 			RootPanel.get("content").add(new HTML("<h3>Titel des Projekts</h3>"));
-
-			TextBox titleBox = new TextBox();
+			
 			titleBox.setText(selectedProject.getTitle());
 			RootPanel.get("content").add(titleBox);
 
 			RootPanel.get("content").add(new HTML("<h3>Projektbeschreibung</h3>"));
-
-			TextArea projectDesc = new TextArea();
-			projectDesc.setText(selectedProject.getDescription());
-			RootPanel.get("content").add(projectDesc);
+			
+			descBox.setText(selectedProject.getDescription());
+			RootPanel.get("content").add(descBox);
 
 		}
 	}

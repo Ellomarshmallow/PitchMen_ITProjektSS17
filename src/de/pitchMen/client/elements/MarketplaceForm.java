@@ -38,10 +38,14 @@ public class MarketplaceForm extends Formular {
 	
 	Label idLabel = new Label();
 	Label titleLabel = new Label("Name des Marktplatzes:");
-	Label titleBox = new Label();
+	TextBox titleBox = new TextBox();
 	Label descLabel = new Label("Beschreibung des Marktplatzes:");
-	Label descBox = new Label();
+	TextArea descBox = new TextArea();
 
+	/**
+	 * Konstruktor kommt zum Einsatz, wenn der Marktplatz bereits existiert.
+	 * @param marketplace
+	 */
 	public MarketplaceForm(Marketplace marketplace) {
 
 		this.selectedMarketplace = marketplace;
@@ -53,7 +57,66 @@ public class MarketplaceForm extends Formular {
 
 		ClientsideSettings.getPitchMenAdmin().getMarketplaceByID(marketplace.getId(), new MarketplaceCallback());
 	}
+	
+	/**
+	 * Konstruktor kommt zum Einsatz, wenn ein neuer Marktplatz angelegt wird.
+	 */
+	public MarketplaceForm() {
+		
+		RootPanel.get("content").clear();
+		
+		HorizontalPanel topPanel = new HorizontalPanel();
+		topPanel.addStyleName("headline");
 
+		topPanel.add(new HTML("<h2>Neuen Projektmarktplatz anlegen</h2>"));
+		
+		Button cancelButton = new Button("Neuanlage abbrechen");
+		cancelButton.addStyleName("delete");
+		cancelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.Location.reload();
+			}
+		});
+		
+		
+		topPanel.add(cancelButton);
+
+		Button saveButton = new Button("Projektmarktplatz anlegen");
+		saveButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(Window.confirm("Möchten Sie den Projektmarktplatz " + titleBox.getText() + " wirklich anlegen?")) {
+					ClientsideSettings.getPitchMenAdmin().addMarketplaceByPerson(titleBox.getText(),
+																				descBox.getText(),
+																				ClientsideSettings.getCurrentUser().getId(),
+																				new AsyncCallback<Marketplace>(){
+
+						public void onFailure(Throwable caught) {
+							ClientsideSettings.getLogger().severe("Konnte Projektmarktplatz nicht anlegen");
+						}
+								
+						public void onSuccess(Marketplace result) {
+							RootPanel.get("content").add(new MarketplaceForm(result));
+						}		
+					});
+				}	
+			}
+		});
+		
+		topPanel.add(saveButton);
+		
+		RootPanel.get("content").add(topPanel);
+
+		RootPanel.get("content").add(new HTML("<h3>Titel des Marktplatzes</h3>"));
+
+		RootPanel.get("content").add(titleBox);
+		
+		RootPanel.get("content").add(new HTML("<h3>Marktplatzsbeschreibung</h3>"));
+
+		RootPanel.get("content").add(descBox);
+	}
+	
 	private class MarketplaceCallback implements AsyncCallback<Marketplace> {
 
 		public void onFailure(Throwable caught) {
@@ -123,14 +186,12 @@ public class MarketplaceForm extends Formular {
 		private class addProjectClickHandler implements ClickHandler {
 
 			public void onClick(ClickEvent event) {
-				// FIXME selectedProject steht im Konstruktor von
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(new HTML("<h3> Projektname: <h3>")); 
-				RootPanel.get("content").add(new HTML("<h3> Projektbeschreibung: <h3>"));
-				RootPanel.get("content").add(new HTML("<h3> Von: <h3>"));
-				RootPanel.get("content").add(new HTML("<h3> Bis: <h3>"));
-				
-			//	 ClientsideSettings.getPitchMenAdmin().addProject(dateOpened, dateClosed, title, description, currentUserId, selectedMarketplace.getId(), callback);
+				/*
+				 * Das Anlegen eines Projekts ist Sache des ProjectForms.
+				 * Da es das anzulegende Objekt noch nicht gibt, übergeben
+				 * wir ihm null.
+				 */
+				ProjectForm addProjectForm = new ProjectForm(selectedMarketplace);
 			}
 		}
 
@@ -162,23 +223,7 @@ public class MarketplaceForm extends Formular {
 				HorizontalPanel topPanel = new HorizontalPanel();
 				topPanel.addStyleName("headline");
 
-				
-
-				RootPanel.get("content").add(new HTML("<h3>Titel des Marktplatzes</h3>"));
-
-				TextBox titleBox = new TextBox();
-				titleBox.setText(selectedMarketplace.getTitle());
-				RootPanel.get("content").add(titleBox);
-				this.titleBoxContent = titleBox.getText(); 
-
-
-				RootPanel.get("content").add(new HTML("<h3>Marktplatzsbeschreibung</h3>"));
-
-				TextArea marketDesc = new TextArea();
-				marketDesc.setText(selectedMarketplace.getDescription());
-				RootPanel.get("content").add(marketDesc);
-				selectedMarketplace.setDescription(marketDesc.getValue());
-								
+				topPanel.add(new HTML("<h2>Projektmarktplatz <em>" + selectedMarketplace.getTitle() + "</em> bearbeiten</h2>"));
 				
 				Button cancelButton = new Button("Bearbeitung abbrechen");
 				cancelButton.addStyleName("delete");
@@ -191,34 +236,47 @@ public class MarketplaceForm extends Formular {
 				});
 				
 				
-				RootPanel.get("content").add(cancelButton);
+				topPanel.add(cancelButton);
 
 				Button saveButton = new Button("Änderungen speichern");
 				saveButton.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						
-						selectedMarketplace.setTitle(titleBoxContent);
+						selectedMarketplace.setTitle(titleBox.getText());
+						selectedMarketplace.setDescription(descBox.getText());
 
-					ClientsideSettings.getPitchMenAdmin().updateMarketplace(selectedMarketplace, new AsyncCallback<Void>(){
-						
-						public void onFailure(Throwable caught) {
-							ClientsideSettings.getLogger().severe("Konnte Projektmarktplatz nicht bearbeiten");
-						}
-						
-						public void onSuccess(Void result) {
+						ClientsideSettings.getPitchMenAdmin().updateMarketplace(selectedMarketplace, new AsyncCallback<Void>(){
 							
-							Window.alert("Projektmarktplatz erfolgreich bearbeitet");
-							RootPanel.get("content").add(new MarketplaceForm(selectedMarketplace));
-						}
-						
-					});
+							public void onFailure(Throwable caught) {
+								ClientsideSettings.getLogger().severe("Konnte Projektmarktplatz nicht bearbeiten");
+							}
+							
+							public void onSuccess(Void result) {
+								
+								Window.alert("Projektmarktplatz erfolgreich bearbeitet");
+								RootPanel.get("content").add(new MarketplaceForm(selectedMarketplace));
+							}
+							
+						});
 					
 					}
 				});
-				RootPanel.get("content").add(saveButton);
 				
+				topPanel.add(saveButton);
 				
+				RootPanel.get("content").add(topPanel);
+
+				RootPanel.get("content").add(new HTML("<h3>Titel des Marktplatzes</h3>"));
+
+				titleBox.setText(selectedMarketplace.getTitle());
+				RootPanel.get("content").add(titleBox);
+				
+				RootPanel.get("content").add(new HTML("<h3>Marktplatzsbeschreibung</h3>"));
+
+				descBox.setText(selectedMarketplace.getDescription());
+				RootPanel.get("content").add(descBox);
+				selectedMarketplace.setDescription(descBox.getValue());
 				
 			}
 		}
