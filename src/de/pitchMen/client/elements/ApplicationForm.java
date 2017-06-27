@@ -74,23 +74,28 @@ public class ApplicationForm extends Formular {
 				partnerProfileId = result.getId(); 
 				
 				RootPanel.get("content").add(new HTML(infoLabel + "</p>"));
-				RootPanel.get("content").add(new HTML(textArea + "</p>"));
+				RootPanel.get("content").add(textArea);
+				RootPanel.get("content").add(new HTML("</p>"));
 				
 				
+				textArea.getElement().setLang("Bitte hier Ihren Bewerbungstext eintragen...");
+				
+				
+		
 				Button sendBtn = new Button("Absenden");
 				sendBtn.addClickHandler(new BtnClickHandler());									
 				RootPanel.get("content").add(sendBtn);
 				
 			}	}
 				
-		 private class BtnClickHandler implements ClickHandler {
+	private class BtnClickHandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
 			
 			java.util.Date date = new Date();
 			java.sql.Date convertedDate = new java.sql.Date(date.getTime());
-			
+			String text = textArea.getText();
 			//FIXME textArea.getValue gibt mir nicht den Inhalt der Textarea
-			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getValue(), "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
+			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getText() , "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
 		}		
 		
 }
