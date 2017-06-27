@@ -766,7 +766,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanInAndOutReport result = new FanInAndOutReport();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Report f�r die FanIn bzw FanOut Analyse");
+		result.setTitle("Report fuer die FanIn bzw FanOut Analyse");
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
