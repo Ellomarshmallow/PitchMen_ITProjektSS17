@@ -161,7 +161,7 @@ strong {
 
 #nav {
 	width: 20%;
-	padding: 30px 0px;
+	padding: 0px;
 	display: flex;
 	flex-flow: column;
 	background: #ddd;
@@ -175,8 +175,8 @@ strong {
 #nav button {
 	width: 100%;
 	border: none;
-	background: transparent;
-	color: #444;
+	background: #1c9cd8;
+	color: #fff;
 	padding: 15px 0px 15px 20px;
 	text-align: left;
 	font-size: 100%;
@@ -185,7 +185,7 @@ strong {
 
 #nav button:hover,
 #nav button:active {
-	background: #1c9cd8;
+	background: #006EB5;
 	color: #fff;
 }
 

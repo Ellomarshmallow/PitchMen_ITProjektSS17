@@ -39,6 +39,20 @@ public class Navigation extends VerticalPanel {
 		CellTree navTree = new CellTree(navTreeModel, null);
 		
 		// Baum wird der Navigation hinzugefügt
+		
+		Button newMarketplaceBtn = new Button("Neuen Projektmarktplatz anlegen");
+		
+		newMarketplaceBtn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				MarketplaceForm addMarketplaceForm = new MarketplaceForm();
+			}
+			
+		});
+		
+		this.add(newMarketplaceBtn);
+		
 		this.add(navTree);
 	}
 }
