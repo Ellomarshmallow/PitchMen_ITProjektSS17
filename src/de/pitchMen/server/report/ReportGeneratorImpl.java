@@ -179,7 +179,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getDeadline().toString()));
-			jobPostingZeile.addColumn(new Column(jobPosting.getStatus()));
+			jobPostingZeile.addColumn(new Column(jobPosting.getStatus().toString()));
 			result.addRow(jobPostingZeile);
 
 		}

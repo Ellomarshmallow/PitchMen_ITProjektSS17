@@ -13,6 +13,9 @@ public class SimpleParagraph extends Paragraph {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public SimpleParagraph(){
+	}
+	
 	/**
 	 * 
 	 * 

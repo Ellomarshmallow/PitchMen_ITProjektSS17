@@ -252,19 +252,21 @@ public class ReportNavigation extends VerticalPanel {
 		}
 
 		private HTML getAllJobPostings() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
+			//final HTMLReportWriter writer = new HTMLReportWriter();
 			ClientsideSettings.getReportGenerator().showAllJobPostings(new AsyncCallback<AllJobPostings>() {
 					
 						@Override
 						public void onSuccess(AllJobPostings result) {
+						HTMLReportWriter writer = new HTMLReportWriter();
 						writer.process(result);
 						reportContent = new HTML(writer.getReportText());
 						
 						}
 
 						@Override
+						
 						public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+						ClientsideSettings.getLogger().severe("");
 						
 						}
 			});
