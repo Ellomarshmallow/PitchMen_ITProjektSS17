@@ -70,7 +70,7 @@ public class MarketplaceForm extends Formular {
 
 		topPanel.add(new HTML("<h2>Neuen Projektmarktplatz anlegen</h2>"));
 		
-		Button cancelButton = new Button("Bearbeitung abbrechen");
+		Button cancelButton = new Button("Neuanlage abbrechen");
 		cancelButton.addStyleName("delete");
 		cancelButton.addClickHandler(new ClickHandler() {
 			@Override
@@ -82,7 +82,7 @@ public class MarketplaceForm extends Formular {
 		
 		topPanel.add(cancelButton);
 
-		Button saveButton = new Button("Änderungen speichern");
+		Button saveButton = new Button("Projektmarktplatz anlegen");
 		saveButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
