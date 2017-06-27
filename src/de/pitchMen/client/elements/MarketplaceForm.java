@@ -123,14 +123,12 @@ public class MarketplaceForm extends Formular {
 		private class addProjectClickHandler implements ClickHandler {
 
 			public void onClick(ClickEvent event) {
-				// FIXME selectedProject steht im Konstruktor von
-				RootPanel.get("content").clear();
-				RootPanel.get("content").add(new HTML("<h3> Projektname: <h3>")); 
-				RootPanel.get("content").add(new HTML("<h3> Projektbeschreibung: <h3>"));
-				RootPanel.get("content").add(new HTML("<h3> Von: <h3>"));
-				RootPanel.get("content").add(new HTML("<h3> Bis: <h3>"));
-				
-			//	 ClientsideSettings.getPitchMenAdmin().addProject(dateOpened, dateClosed, title, description, currentUserId, selectedMarketplace.getId(), callback);
+				/*
+				 * Das Anlegen eines Projekts ist Sache des ProjectForms.
+				 * Da es das anzulegende Objekt noch nicht gibt, übergeben
+				 * wir ihm null.
+				 */
+				ProjectForm addProjectForm = new ProjectForm(selectedMarketplace);
 			}
 		}
 

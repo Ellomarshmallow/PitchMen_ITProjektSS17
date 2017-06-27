@@ -42,12 +42,79 @@ public class ProjectForm extends Formular {
 	Label toLabel = new Label("Bis:");
 	Label toBox = new Label();
 
+	/**
+	 * Konstruktor, der bei bestehenden Projekten verwendet wird.
+	 * @param project
+	 */
 	public ProjectForm(Project project) {
-
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 
 		ClientsideSettings.getPitchMenAdmin().getProjectByID(project.getId(), new ProjectCallback());
+	}
+	
+	/**
+	 * Soll ein neues Projekt angelegt werden, kommt dieser Konstruktor zum Einsatz.
+	 * 
+	 * @param übergeordneter Projektmarktplatz
+	 */
+	public ProjectForm(final Marketplace parentMarketplace) {
+		RootPanel.get("content").clear();
+		HorizontalPanel topPanel = new HorizontalPanel();
+		topPanel.addStyleName("headline");
+
+		Button cancelButton = new Button("Neuanlage abbrechen");
+		cancelButton.addStyleName("delete");
+		cancelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new MarketplaceForm(parentMarketplace));
+			}
+		});
+
+		Button saveButton = new Button("Projekt anlegen");
+		saveButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				java.util.Date currentDate = new java.util.Date();
+				java.sql.Date convertedDate = new java.sql.Date(currentDate.getTime());
+				ClientsideSettings.getPitchMenAdmin().addProject(convertedDate, 
+																convertedDate, 
+																titleBox.getText(), 
+																descBox.getText(), 
+																ClientsideSettings.getCurrentUser().getId(),
+																parentMarketplace.getId(),
+																new AsyncCallback<Project>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Fehler beim Updaten des Projekts");
+					}
+
+					@Override
+					public void onSuccess(Project result) {
+						ProjectForm udpatedForm = new ProjectForm(result);
+						
+					}
+					
+				});
+			}
+		});
+
+		topPanel.add(new HTML("<h2>Neues Projekt im Marktplatz <em>" + parentMarketplace.getTitle() + "</em> anlegen</em></h2>"));
+		topPanel.add(saveButton);
+		topPanel.add(cancelButton);
+		RootPanel.get("content").add(topPanel);
+
+		RootPanel.get("content").add(new HTML("<h3>Titel des Projekts</h3>"));
+		
+		RootPanel.get("content").add(titleBox);
+
+		RootPanel.get("content").add(new HTML("<h3>Projektbeschreibung</h3>"));
+		
+		RootPanel.get("content").add(descBox);
+
 	}
 
 	private class ProjectCallback implements AsyncCallback<Project> {
@@ -144,66 +211,6 @@ public class ProjectForm extends Formular {
 		}
 
 	}
-
-	// // Vertical Panel erstellen
-	// VerticalPanel labelsPanel = new VerticalPanel();
-	// this.add(labelsPanel);
-	//
-	// // labels dem Vertical Panel hinzufügen
-	// labelsPanel.add(idLabel);
-	// labelsPanel.add(titleLabel);
-	// labelsPanel.add(titleBox);
-	// labelsPanel.add(descLabel);
-	// labelsPanel.add(descBox);
-	// labelsPanel.add(fromLabel);
-	// labelsPanel.add(fromBox);
-	// labelsPanel.add(toLabel);
-	// labelsPanel.add(toBox);
-	//
-	// // HorizontalPanel für die Buttons erstellen
-	// HorizontalPanel buttonsPanel = new HorizontalPanel();
-	// this.add(buttonsPanel);
-	//
-	// //Die zwei VerticalPanels hinzufügen
-	// RootPanel.get("content").clear();
-	// RootPanel.get("content").add(labelsPanel);
-	// RootPanel.get("content").add(buttonsPanel);
-	//
-	// // ---------- Neues Projekt Button, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	// Button addProjectBtn = new Button("+ Neues Projekt hinzufügen");
-	// addProjectBtn.addClickHandler(new addProjectClickHandler());
-	// buttonsPanel.add(addProjectBtn);
-	//
-	//
-	// /*
-	// * Wenn die aktuelle UserId gleich der PersonId ist, dann hat dieser die
-	// * Buttons Projekt Löschen, Bearbeiten und Ausschreibung hinzufügen
-	// * zur verfügung. Vgl. hasPermission() in Formular.java
-	// */
-	// if (hasPermission(this.selectedProject)) {
-	//
-	// // ---------- Projekt löschen, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	// Button deleteProjectBtn = new Button("- Projekt löschen");
-	// deleteProjectBtn.addClickHandler(new deleteProjectClickHandler());
-	// buttonsPanel.add(deleteProjectBtn);
-	//
-	// // ---------- Projekt bearbeiten, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	//
-	// Button updateProjectBtn = new Button("Bearbeiten");
-	// updateProjectBtn.addClickHandler(new updateProjectClickHandler());
-	// buttonsPanel.add(updateProjectBtn);
-	//
-	// // ---------- Neue Ausschreibung Button, ClickHandler hinzufügen und dem
-	// // HorizontalPanel hinzufügen
-	// Button addJobPostingBtn = new Button("+ Neue Ausschreibung hinzufügen");
-	// addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
-	// buttonsPanel.add(addJobPostingBtn);
-	// }
-	//
-	//
 
 	// ---------- ClickHandler
 
