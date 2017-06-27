@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Marketplace;
 
 public class AddMarketplaceForm extends Formular {
@@ -27,7 +28,7 @@ public class AddMarketplaceForm extends Formular {
 	TextArea descBox = new TextArea();
 	private boolean isSave = false; 
 
-	//FIXME TextArea richtige größe ? 
+	//FIXME TextArea richtige größe ? NEIN zu gro�
 	public AddMarketplaceForm(Marketplace selectedMarketplace,PitchMenTreeViewModel pitchMenTreeViewModel,boolean isSave ) {
 		
 			this.selectedMarketplace = selectedMarketplace;
@@ -78,11 +79,13 @@ public class AddMarketplaceForm extends Formular {
 	// ---------- speichern
 	public void save() {
 		//FIXME companyID und TeamID
-		super.getPitchMenAdmin().addMarketplaceByPerson(titleBox.getText(), descBox.getText(),
+//		getPitchMenAdmin().addMarketplaceByPerson(titleBox.getText(), descBox.getText(), 
+//				ClientsideSettings.getCurrentUser().getId(), new AddMarketplaceFormCallback(this));
+		ClientsideSettings.getPitchMenAdmin().addMarketplaceByPerson(titleBox.getText(), descBox.getText(), 
 				ClientsideSettings.getCurrentUser().getId(), new AddMarketplaceFormCallback(this));
 	}
 
-	class AddMarketplaceFormCallback implements AsyncCallback<Marketplace> {
+	private class AddMarketplaceFormCallback implements AsyncCallback<Marketplace> {
 
 		private AddMarketplaceForm addMarketplaceForm = null;
 
@@ -91,25 +94,35 @@ public class AddMarketplaceForm extends Formular {
 		}
 
 		public void onFailure(Throwable caught) {
-
-			this.addMarketplaceForm.add(new HTML("Fehler bei RPC Aufruf:" + caught.getMessage()));
+			this.addMarketplaceForm.add(new HTML("Fehler bei RPC Aufruf"));
 
 		}
 
-		public void onSuccess(Marketplace marketplace) {
+//		public void onSuccess(Marketplace marketplace) {
+//			Window.alert("erfolgreich gespeichert");
+//			pitchMenTreeViewModel.addMarketplace(marketplace); 
+//		}
 
-			Window.alert("erfolgreich gespeichert");
-			pitchMenTreeViewModel.addMarketplace(marketplace); 
+		public void onSuccess(Marketplace result) {
+			if(Window.confirm("Sind Sie sich sicher, dass Sie die speichern wollen?")){
+				
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new MarketplaceForm(getSelectedMarketplace()));
+				Window.alert("erfolgreich gespeichert");
 		}
-
+		}
+	 
+		
 	}
 	
 		// ---------- update Methode
 	
 	public void update() {
 		if (selectedMarketplace != null) {
+			
 			selectedMarketplace.setTitle(titleBox.getText());
 			selectedMarketplace.setDescription(descBox.getText());
+			
 		super.getPitchMenAdmin().updateMarketplace(selectedMarketplace, new UpdateMarketplaceCallback());
 	}}
 
@@ -119,7 +132,7 @@ public class AddMarketplaceForm extends Formular {
 	
 
 	 public void onFailure(Throwable caught) {
-	 Window.alert("Das Bearbeiten des Projektmarktplatzes ist fehlgeschlagen!");
+		 Window.alert("Das Bearbeiten des Projektmarktplatzes ist fehlgeschlagen!");
 	
 	 }
 	
@@ -134,28 +147,14 @@ public class AddMarketplaceForm extends Formular {
 		 return this.isSave; 
 	 }
 	 
-	 // ---------- ClickHandler
-	 
-	 // ---------- cancelClickHandler
-	 private class cancelClickHandler implements ClickHandler{
-			public void onClick(ClickEvent event) {
-
-				/* Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
-				 * Projektmarktplatz zurückgeführt.*/
-				RootPanel.get("content").clear();
-				MarketplaceForm cancel = new MarketplaceForm(getSelectedMarketplace());
-
-			}
-		}
-	 
+	   
 	 // ---------- saveClickHandler
 	 private class saveClickHandler implements ClickHandler{
 		 public void onClick(ClickEvent event) {
 
-
 			 RootPanel.get("content").clear();
 			 
-			 if (Window.confirm("Sind alle Angaben korrekt?")) {
+			 if (Window.confirm("Möchten Sie den Projektmarktplatz speichern?")) {
 
 				 if(getIsSave()){
 
@@ -168,9 +167,21 @@ public class AddMarketplaceForm extends Formular {
 					 update();
 					 MarketplaceForm mpf = new MarketplaceForm(getSelectedMarketplace());
 				 }
-
+				 
 			 }
 		 }
 	 }
 
+	// ---------- cancelClickHandler
+		 private class cancelClickHandler implements ClickHandler{
+				public void onClick(ClickEvent event) {
+
+					/* Wenn man auf den Cancel Button drückt, wird man auf den vorherigen
+					 * Projektmarktplatz zurückgeführt.*/
+					RootPanel.get("content").clear();
+					MarketplaceForm cancel = new MarketplaceForm(getSelectedMarketplace());
+
+				}
+			}
+		 
 }

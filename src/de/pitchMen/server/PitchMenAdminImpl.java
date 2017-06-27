@@ -238,7 +238,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setDescription(description);
 		marketplace.setPersonId(personId);
 
-		return this.marketplaceMapper.insert(marketplace);
+		return this.marketplaceMapper.insertMarketplaceByPerson(marketplace);
 	}
 
 	@Override
@@ -249,7 +249,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setDescription(description);
 		marketplace.setTeamId(teamId);
 
-		return this.marketplaceMapper.insert(marketplace);
+		return this.marketplaceMapper.insertMarketplaceByTeam(marketplace);
 	}
 
 	@Override
@@ -260,7 +260,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		marketplace.setDescription(description);
 		marketplace.setCompanyId(companyId);
 
-		return this.marketplaceMapper.insert(marketplace);
+		return this.marketplaceMapper.insertMarketplaceByCompany(marketplace);
 	}
 
 	@Override
