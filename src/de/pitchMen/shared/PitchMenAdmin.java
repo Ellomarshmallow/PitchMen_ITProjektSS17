@@ -247,6 +247,15 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException;
+	
+	/**
+	 * Gibt alle Marktpl�tze die einer bestimmten Person gehören aus.
+	 * 
+	 * @param personId
+	 * @return ArrayList aller Marktpl�tze die der Person gehören
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Marketplace> getMarketplacesByPersonId(int personId) throws IllegalArgumentException;
 
 	// ------------------------------------ PARTICIPATION
 
