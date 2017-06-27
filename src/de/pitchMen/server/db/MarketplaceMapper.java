@@ -10,7 +10,7 @@ import de.pitchMen.shared.bo.Marketplace;
 
 /**
  * Die Klasse MarketplaceMapper bildet Marketplace-Objekte auf einer relationale
- * Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Datenbank ab. Ebenfalls ist es mï¿½glich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
@@ -22,22 +22,22 @@ public class MarketplaceMapper {
 	/**
 	 * Die Klasse MarketplaceMapper wird nur einmal instantiiert
 	 * (Singelton-Eigenschaft). Damit diese Eigenschaft gegeben ist, wird eine
-	 * Variable mit dem Schlüsselwort static und dem Standardwert null erzeugt.
+	 * Variable mit dem Schlï¿½sselwort static und dem Standardwert null erzeugt.
 	 * Sie speichert die Instanz dieser Klasse.
 	 */
 	private static MarketplaceMapper marketplaceMapper = null;
 
 	/**
-	 * Ein geschützter Konstrukter verhindert eine neue Instanz dieser Klasse zu erzeugen.
+	 * Ein geschï¿½tzter Konstrukter verhindert eine neue Instanz dieser Klasse zu erzeugen.
 	 */
 	protected MarketplaceMapper() {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafï¿½r,
 	 * dass nur eine einzige Instanz der MarketplaceMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über MarketplaceMapper.marketplaceMapper() und nicht
-	 * über den New-Operator.
+	 * Aufgerufen wird die Klasse somit ï¿½ber MarketplaceMapper.marketplaceMapper() und nicht
+	 * ï¿½ber den New-Operator.
 	 * 
 	 * @return marketplaceMapper
 	 */
@@ -49,7 +49,7 @@ public class MarketplaceMapper {
 	}
 
 	/**
-	 * Fügt ein Marketplace-Objekt der Datenbank hinzu
+	 * Fï¿½gt ein Marketplace-Objekt der Datenbank hinzu
 	 * 
 	 * @param marketplace
 	 * @return marketplace
@@ -66,8 +66,8 @@ public class MarketplaceMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die aktuelle id wird um eins erhöht.
-			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die aktuelle id wird um eins erhï¿½ht.
+			 * Statement ausfï¿½llen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM marketplace");
 
@@ -76,13 +76,13 @@ public class MarketplaceMapper {
 				}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
+			 * SQL-Anweisung zum Einfï¿½gen des neuen Datensatzes in die Datenbank.
 			 */
 			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id)"
 						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
 						+ marketplace.getTitle() + "' ," + marketplace.getPersonId()  + ")");;
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -93,7 +93,7 @@ public class MarketplaceMapper {
 	}
 
 	/**
-	 * Fügt ein Marketplace-Objekt der Datenbank hinzu
+	 * Fï¿½gt ein Marketplace-Objekt der Datenbank hinzu
 	 * 
 	 * @param marketplace
 	 * @return marketplace
@@ -110,8 +110,8 @@ public class MarketplaceMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die aktuelle id wird um eins erhöht.
-			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die aktuelle id wird um eins erhï¿½ht.
+			 * Statement ausfï¿½llen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM marketplace");
 
@@ -120,13 +120,13 @@ public class MarketplaceMapper {
 				}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
+			 * SQL-Anweisung zum Einfï¿½gen des neuen Datensatzes in die Datenbank.
 			 */
 			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, team_id)"
 						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
 						+ marketplace.getTitle() + "' ," + marketplace.getTeamId()  + ")");;
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -137,7 +137,7 @@ public class MarketplaceMapper {
 	}
 	
 	/**
-	 * Fügt ein Marketplace-Objekt der Datenbank hinzu
+	 * Fï¿½gt ein Marketplace-Objekt der Datenbank hinzu
 	 * 
 	 * @param marketplace
 	 * @return marketplace
@@ -154,8 +154,8 @@ public class MarketplaceMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die aktuelle id wird um eins erhöht.
-			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die aktuelle id wird um eins erhï¿½ht.
+			 * Statement ausfï¿½llen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM marketplace");
 
@@ -164,13 +164,13 @@ public class MarketplaceMapper {
 				}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
+			 * SQL-Anweisung zum Einfï¿½gen des neuen Datensatzes in die Datenbank.
 			 */
 			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, company_id)"
 						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
 						+ marketplace.getTitle() + " ," + marketplace.getCompanyId() + ")");
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -198,7 +198,7 @@ public class MarketplaceMapper {
 			stmt.executeUpdate("UPDATE marketplace SET description= '" + marketplace.getDescription() + "', "
 					+ "title= '" + marketplace.getTitle() + "' " + "WHERE id=" + marketplace.getId());
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -209,7 +209,7 @@ public class MarketplaceMapper {
 	}
 
 	/**
-	 * Löscht ein Marketplace-Objekt aus der Datenbank.
+	 * Lï¿½scht ein Marketplace-Objekt aus der Datenbank.
 	 * 
 	 * @param marketplace
 	 */
@@ -219,12 +219,12 @@ public class MarketplaceMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Lï¿½schen des ï¿½bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM marketplace " + "WHERE id=" + marketplace.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -234,7 +234,7 @@ public class MarketplaceMapper {
 	}
 
 	/**
-	 * Findet ein Marketplace-Objekt anhand der übergebenen Id in der Datenbank.
+	 * Findet ein Marketplace-Objekt anhand der ï¿½bergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return marketplace
@@ -245,15 +245,15 @@ public class MarketplaceMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der ï¿½bergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 							+ "WHERE id=" + id);
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
+			 * Zu einem Primï¿½rschlï¿½ssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel
 			 * ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -268,7 +268,7 @@ public class MarketplaceMapper {
 			}
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -303,7 +303,7 @@ public class MarketplaceMapper {
 			 * Tabelle marketplace vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Marketplace marketplace = new Marketplace();
@@ -317,7 +317,7 @@ public class MarketplaceMapper {
 			}
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -328,7 +328,7 @@ public class MarketplaceMapper {
 	}
 
 	/**
-	 * Findet ein Marketplace-Objekt anhand des übergebenen Titels in der Datenbank.
+	 * Findet ein Marketplace-Objekt anhand des ï¿½bergebenen Titels in der Datenbank.
 	 * 
 	 * @param title
 	 * @return ArrayList<Marketplace>
@@ -351,7 +351,7 @@ public class MarketplaceMapper {
 			 * Tabelle marketplace vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Marketplace marketplace = new Marketplace();
@@ -365,7 +365,7 @@ public class MarketplaceMapper {
 			}
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -375,4 +375,42 @@ public class MarketplaceMapper {
 		return result;
 	}
 
+	public Marketplace findMarketplacesByPersonId(int person_id) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der ï¿½bergebenen Id, in der Datenbank.
+			 */
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
+							+ "WHERE id=" + person_id);
+			/**
+			 * Zu einem Primï¿½rschlï¿½ssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel
+			 * ein DB-Tupel gibt.
+			 */
+			if (rs.next()) {
+				Marketplace marketplace = new Marketplace();
+				marketplace.setId(rs.getInt("id"));
+				marketplace.setDescription(rs.getString("description"));
+				marketplace.setTitle(rs.getString("title"));
+				marketplace.setCompanyId(rs.getInt("company_id"));
+				marketplace.setPersonId(rs.getInt("person_id"));
+				marketplace.setTeamId(rs.getInt("team_id"));
+				return marketplace;
+			}
+		}
+		/**
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
+		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+		 */	
+		catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
 }
