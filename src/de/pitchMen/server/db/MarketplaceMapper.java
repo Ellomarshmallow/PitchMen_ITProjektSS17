@@ -54,7 +54,7 @@ public class MarketplaceMapper {
 	 * @param marketplace
 	 * @return marketplace
 	 */
-	public Marketplace insert(Marketplace marketplace) {
+	public Marketplace insertMarketplaceByPerson(Marketplace marketplace) {
 		/**
 		 *  DB-Verbindung holen.
 		 */
@@ -78,10 +78,9 @@ public class MarketplaceMapper {
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
 			 */
-			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id, team_id, company_id)"
+			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, person_id)"
 						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
-						+ marketplace.getTitle() + "' ," + marketplace.getPersonId() + " ," + marketplace.getTeamId()
-						+ " ," + marketplace.getCompanyId() + ")");
+						+ marketplace.getTitle() + "' ," + marketplace.getPersonId()  + ")");;
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
@@ -93,6 +92,95 @@ public class MarketplaceMapper {
 		return marketplace;
 	}
 
+	/**
+	 * Fügt ein Marketplace-Objekt der Datenbank hinzu
+	 * 
+	 * @param marketplace
+	 * @return marketplace
+	 */
+	public Marketplace insertMarketplaceByTeam(Marketplace marketplace) {
+		/**
+		 *  DB-Verbindung holen.
+		 */
+		Connection con = DBConnection.connection();
+
+		try {
+			/**
+			 * leeres SQL-Statement (JDBC) anlegen.
+			 */
+			Statement stmt = con.createStatement();
+			/**
+			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die aktuelle id wird um eins erhöht.
+			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM marketplace");
+
+			if(rs.next()) {
+				marketplace.setId(rs.getInt("maxid") + 1);
+				}
+			stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
+			 */
+			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, team_id)"
+						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
+						+ marketplace.getTitle() + "' ," + marketplace.getTeamId()  + ")");;
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */	
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return marketplace;
+	}
+	
+	/**
+	 * Fügt ein Marketplace-Objekt der Datenbank hinzu
+	 * 
+	 * @param marketplace
+	 * @return marketplace
+	 */
+	public Marketplace insertMarketplaceByCompany(Marketplace marketplace) {
+		/**
+		 *  DB-Verbindung holen.
+		 */
+		Connection con = DBConnection.connection();
+
+		try {
+			/**
+			 * leeres SQL-Statement (JDBC) anlegen.
+			 */
+			Statement stmt = con.createStatement();
+			/**
+			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die aktuelle id wird um eins erhöht.
+			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM marketplace");
+
+			if(rs.next()) {
+				marketplace.setId(rs.getInt("maxid") + 1);
+				}
+			stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
+			 */
+			stmt.executeUpdate("INSERT INTO marketplace (id, description, title, company_id)"
+						+ "VALUES ( " + marketplace.getId() + ", '" + marketplace.getDescription() + "' ,'"
+						+ marketplace.getTitle() + " ," + marketplace.getCompanyId() + ")");
+			/**
+			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */	
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return marketplace;
+	}
+	
+	
 	/**
 	 * Aktuallisiert ein Marketplace-Objekt in der Datenbank.
 	 * 
