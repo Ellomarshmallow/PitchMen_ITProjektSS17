@@ -31,7 +31,7 @@ public class FirstLoginForm extends Formular  {
 	TextBox firstNameBox = new TextBox(); 
 	Label lastNameLabel = new Label("Nachname: ");
 	TextBox lastNameBox = new TextBox();
-	Label descriptionLabel = new Label("Kurzbeschreibung: ");
+	Label descriptionLabel = new Label("Beruflicher Status: ");
 	TextBox descriptionBox = new TextBox();
 	
 	/**

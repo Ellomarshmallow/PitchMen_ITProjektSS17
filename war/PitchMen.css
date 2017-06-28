@@ -547,3 +547,9 @@ td.datePickerYear {
   cursor: pointer;
   padding: 0px 4px;
 }
+
+.reportgenerator tr{
+	background-color: #1C9CD8;
+	color: white; 
+	
+}

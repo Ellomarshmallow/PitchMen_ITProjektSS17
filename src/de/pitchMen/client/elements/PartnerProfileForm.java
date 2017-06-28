@@ -37,6 +37,20 @@ public class PartnerProfileForm extends Formular {
 	private int currentUserId = 0;
 	
 	/**
+	 * Der angemeldete Nutzer muss dem Formular bekannt sein,
+	 * um ihm das richtige PartnerProfile zur Bearbeitung
+	 * ausgeben zu können.
+	 */
+	private int currentTeamId = 0;
+	
+	/**
+	 * Der angemeldete Nutzer muss dem Formular bekannt sein,
+	 * um ihm das richtige PartnerProfile zur Bearbeitung
+	 * ausgeben zu können.
+	 */
+	private int currentCompanyId = 0;
+	
+	/**
 	 * Auch in dieser Klasse werden die Funktionalitäten der
 	 * {@link de.pitchMen.server.PitchMenAdminImpl} benötigt.
 	 */
@@ -74,8 +88,14 @@ public class PartnerProfileForm extends Formular {
 		// Abfrage der id des aktuell angemeldeten Nutzers
 		this.currentUserId = ClientsideSettings.getCurrentUser().getId();
 		
-		// RPC-Abfrage des Partnerprofils
+		// RPC-Abfrage des Partnerprofils nach Person
 		this.pitchMenAdmin.getPartnerProfileByPersonId(currentUserId, new PartnerProfileCallback());
+		
+		//RPC-Abfrage des Partnerprofils nach Team
+		this.pitchMenAdmin.getPartnerProfileByTeamId(currentTeamId, new PartnerProfileCallback());
+		
+		//RPC-Abfrage des Partnerprofils nach Unternehmen
+		this.pitchMenAdmin.getPartnerProfileByCompanyId(currentCompanyId, new PartnerProfileCallback());
 	}
 	
 	/**
@@ -94,10 +114,18 @@ public class PartnerProfileForm extends Formular {
 		public void onSuccess(PartnerProfile result) {
 			if(result == null) {
 				RootPanel.get("content").clear();
-				RootPanel.get("content").add(new HTML("<h2>Sie haben noch kein Partnerprofil.</h2>"));
-				Button createButton = new Button("Partnerprofil anlegen");
+				RootPanel.get("content").add(new HTML("<h2>Sie haben noch keine Partnerprofile.</h2>"));
+				Button createButton = new Button("Persönliches Partnerprofil anlegen");
+				Button createTeamButton = new Button("Team anlegen");
+				Button createCompanyButton = new Button("Unternehmen anlegen");
 				createButton.addClickHandler(new CreatePartnerProfileClickHandler());
-				RootPanel.get("content").add(createButton);			
+				createTeamButton.addClickHandler(new CreateTeamPartnerProfileClickHandler());
+				createCompanyButton.addClickHandler(new CreateCompanyPartnerProfileClickHandler());
+				RootPanel.get("content").add(createButton);	
+				RootPanel.get("content").add(createTeamButton);			
+				RootPanel.get("content").add(createCompanyButton);			
+
+				
 			} else {
 				ClientsideSettings.getLogger().info("PartnerProfil von RPC empfangen");
 				/*
@@ -134,7 +162,7 @@ public class PartnerProfileForm extends Formular {
 			if(result.isEmpty()) {
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(new HTML("<h2>Für Ihr Partnerprofil gibt es noch keine Eigenschaften.</h2></br></br><p>Nutzen Sie das Partnerprofil "
-						+ "um Ihre pers�nlichen F�higkeiten anzulegen und hierdurch passende Ausschreibungen zu finden.</p>"));
+						+ "um Ihre persönlichen Fähigkeiten anzulegen und hierdurch passende Ausschreibungen zu finden. Bitte geben Sie ihren Eigenschaften Werte aus dem Bereich: sehr gut, gut, mittel.</p>"));
 				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
 				
 				FlexTable traitTable = new FlexTable();
@@ -322,7 +350,7 @@ public class PartnerProfileForm extends Formular {
 				
 				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
 				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"
-						+ "</br></br><p>Bitte geben Sie ihrer Eigenschaft Werte aus dem Bereich: sehr gut, gut, schlecht.</p>"));
+						+ "</br></br><p>Bitte geben Sie ihrer Eigenschaft Werte aus dem Bereich: sehr gut, gut, mittel.</p>"));
 				
 				rowCount = traitTable.getRowCount();
 				
@@ -336,7 +364,21 @@ public class PartnerProfileForm extends Formular {
 				traitTable.setWidget(rowCount, 3, new HTML(""));
 				
 				RootPanel.get("content").add(traitTable);
+				
+				//Buttons zum Anlegen von Team oder Unternehmen
+				
+				Button createTeamButton = new Button("Team anlegen");
+				Button createCompanyButton = new Button("Unternehmen anlegen");
+				createTeamButton.addClickHandler(new CreateTeamPartnerProfileClickHandler());
+				createCompanyButton.addClickHandler(new CreateCompanyPartnerProfileClickHandler());
+				RootPanel.get("content").add(createTeamButton);			
+				RootPanel.get("content").add(createCompanyButton);
+				
+				//FIXME If-Abfrage, wenn schon ein Partnerprofil von Team oder Person angelegt ist, dann sollte das zum öffenen angezeigt werden.
+				
 			}
+			
+			
 		}
 		
 	}
@@ -385,7 +427,7 @@ public class PartnerProfileForm extends Formular {
 	}
 	
 	/**
-	 * Die genestete Klasse <code>CreatePartnerProfileClickHandler</code>
+	 * Die genestete Klasse <code>CreateTeamPartnerProfileClickHandler</code>
 	 * behandelt das Drücken des Buttons <code>createButton</code>.
 	 */
 	private class CreatePartnerProfileClickHandler implements ClickHandler {
@@ -398,7 +440,7 @@ public class PartnerProfileForm extends Formular {
 			 */ 
 			java.util.Date initialDate = new java.util.Date();
 			java.sql.Date convertedInitialDate = new java.sql.Date(initialDate.getTime());
-			pitchMenAdmin.addPartnerProfileForPerson(convertedInitialDate, convertedInitialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
+			pitchMenAdmin.addPartnerProfileForTeam(convertedInitialDate, convertedInitialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -414,6 +456,65 @@ public class PartnerProfileForm extends Formular {
 			});
 		}
 		
+	}
+	
+	
+	/**
+	 * Die genestete Klasse <code>CreatePartnerProfileClickHandler</code>
+	 * behandelt das Drücken des Buttons <code>createButton</code>.
+	 */
+	private class CreateTeamPartnerProfileClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			/*
+			 *  wird der Button geklickt, muss ein 
+			 *  neues Team erstellt werden.
+			 */
+			CreateTeamForm addCreatTeamForm = new CreateTeamForm(userPartnerProfile);
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings.getLogger().severe("Team konnte nicht angelegt werden");				
+				}
+
+				@Override
+				public void onSuccess(PartnerProfile result) {
+					PartnerProfileForm updatedForm = new PartnerProfileForm();
+					RootPanel.get("content").add(updatedForm);
+				}
+				
+			}
+		
+	}
+	
+	/**
+	 * Die genestete Klasse <code>CreateTeamPartnerProfileClickHandler</code>
+	 * behandelt das Drücken des Buttons <code>createButton</code>.
+	 */
+	private class CreateCompanyPartnerProfileClickHandler implements ClickHandler {
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			/*
+			 *  wird der Button geklickt, muss ein 
+			 *  neues partnerProfile erstellt werden.
+			 */ 
+			CreateCompanyForm addCreatCompanyForm = new CreateCompanyForm(userPartnerProfile);
+
+				@Override
+				public void onFailure(Throwable caught) {
+					ClientsideSettings.getLogger().severe("Unternehmen konnte angelegt werden");				
+				}
+
+				@Override
+				public void onSuccess(PartnerProfile result) {
+					PartnerProfileForm updatedForm = new PartnerProfileForm();
+					RootPanel.get("content").add(updatedForm);
+				}
+				
+			}
+
 	}
 	
 	/**

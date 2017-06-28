@@ -220,13 +220,15 @@ public class PitchMen implements EntryPoint {
 		
 		
 		HorizontalPanel footer = new HorizontalPanel();
-		Anchor startPage = new Anchor ("Startseite | ", "PitchMen.html");
+		Anchor startPage = new Anchor ("Startseite", "PitchMen.html");
+		HTML copyrightText1 = new HTML(" | ");
 		Anchor reportGeneratorLink = new Anchor (" ReportGenerator", "ReportGenerator.html");
-		HTML copyrightText = new HTML(" | © 2017 PitchMen | ");
+		HTML copyrightText2 = new HTML(" | © 2017 PitchMen | ");
 		Anchor impressumLink = new Anchor("Impressum");
 		footer.add(startPage);
+		footer.add(copyrightText1);
 		footer.add(reportGeneratorLink);
-		footer.add(copyrightText);
+		footer.add(copyrightText2);
 		footer.add(impressumLink);
 		
 		impressumLink.addClickHandler(new ClickHandler() {
