@@ -390,6 +390,23 @@ input {
     background: #1c9cd8;
 }
 
+.app-status {
+	text-align: center;
+	color: #fff;
+	font-size: 80%;
+	padding: 5px 0px;
+	border-radius: 6px;
+	text-transform: uppercase;
+}
+
+.accepted {
+	background: #9cd81c;
+}
+
+.denied {
+	background: #d8581c;
+}
+
 
 /* ### CONTENT > LOADING ANIMATION ### */
 @-webkit-keyframes {name}

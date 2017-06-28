@@ -111,7 +111,7 @@ public class ApplicationMapper {
 			 * SQL-Anweisung zur Aktualisierung des �bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE application SET text='" + application.getText() + "', dateCreated= '"
-					+ application.getDateCreated() + application.getStatus() + "WHERE id= " + application.getId());
+					+ application.getDateCreated() + "', status='"+ application.getStatus() + "' WHERE id= " + application.getId());
 		}
 		/**
 		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
