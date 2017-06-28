@@ -478,6 +478,8 @@ public class PartnerProfileForm extends Formular {
 			TextBox teamSizeBox = new TextBox();
 					
 			RootPanel.get("content").clear(); 
+			RootPanel.get("content").add(new HTML("Geben Sie in der Teambeschreibung bitte Vor- und Nachname aller Teammitglieder an"));
+			RootPanel.get("content").add(new HTML("<br>"));
 			RootPanel.get("content").add(new HTML("Teamname:"));
 			RootPanel.get("content").add(nameBox);
 			RootPanel.get("content").add(new HTML("Teambeschreibung:"));
@@ -486,28 +488,32 @@ public class PartnerProfileForm extends Formular {
 			RootPanel.get("content").add(teamSizeBox);
 			
 			Button save = new Button("Speichern");
-			save.addClickHandler(new SaveClickHandler()); 
+			save.addClickHandler(new ClickHandler(){
+				public void onClick(ClickEvent event){
+					//FIXME erstellen eines Teams und erstellen eines Team Partnerprofiles
+					
+					PartnerProfileForm p = new PartnerProfileForm(); 
+//					ClientsideSettings.getPitchMenAdmin().addTeam(nameBox.getText(), descArea.getText(), Integer.parseInt(teamSizeBox.getText()), new AsyncCallback<Team>(){
+//					
+//						public void onFailure(Throwable caught) {
+//							ClientsideSettings.getLogger().severe("Neues Team konnte nicht gespeichert werden.");
+//						}
+//							
+//							public void onSuccess(Team result) {
+//							
+//								ClientsideSettings.getPitchMenAdmin().addPartnerProfileForTeam(dateCreated, dateChanged, teamId, callback);
+//								
+//								
+//							}
+//					});
+				}
+			}); 
 			RootPanel.get("content").add(save);
 		}
-			private class SaveClickHandler implements ClickHandler{
-				public void onClick(ClickEvent event){
+			
 					
 			
-			ClientsideSettings.getPitchMenAdmin().addTeam(nameBox.getText(), descArea.getText(), Integer.parseInt(teamSizeBox.getText()), new AsyncCallback<Team>(){
-			
-				public void onFailure(Throwable caught) {
-					ClientsideSettings.getLogger().severe("Neues Team konnte nicht gespeichert werden.");
-				}
-					
-					public void onSuccess(Team result) {
-					
-						ClientsideSettings.getPitchMenAdmin().addPartnerProfileForTeam(dateCreated, dateChanged, teamId, callback);
-						
-						
-					}
-			});
-				}
-			}
+		
 			
 			
 				
