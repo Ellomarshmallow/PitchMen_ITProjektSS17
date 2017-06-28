@@ -10,7 +10,7 @@ import de.pitchMen.shared.bo.PartnerProfile;
 
 /**
  * Bildet PartnerProfile-Objekte auf eine relationale Datenbank ab. Ebenfalls
- * ist es m�glich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
@@ -21,8 +21,8 @@ public class PartnerProfileMapper {
 
 	/**
 	 * Die Klasse PartnerProfileMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erf�llt werden kann,
-	 * wird zun�chst eine Variable mit dem Schl�sselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
+	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 	private static PartnerProfileMapper partnerProfileMapper = null;
@@ -35,10 +35,10 @@ public class PartnerProfileMapper {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt daf�r,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
 	 * dass nur eine einzige Instanz der PartnerProfileMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit �ber
-	 * PartnerProfileMapper.partnerProfileMapper() und nicht �ber den
+	 * Aufgerufen wird die Klasse somit über
+	 * PartnerProfileMapper.partnerProfileMapper() und nicht über den
 	 * New-Operator.
 	 * 
 	 * @return partnerProfileMapper
@@ -68,8 +68,8 @@ public class PartnerProfileMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
-			 * aktuelle id wird um eins erh�ht.
+			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
+			 * aktuelle id wird um eins erhöht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
 
@@ -78,7 +78,7 @@ public class PartnerProfileMapper {
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
+			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, person_id) VALUES (" + partnerProfile.getId() + ", '"
 					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
@@ -95,7 +95,7 @@ public class PartnerProfileMapper {
 	}
 
 	/**
-	 * F�gt ein PartnerProfile-Objekt, auf Basis einer Company, der Datenbank hinzu.
+	 * Fügt ein PartnerProfile-Objekt, auf Basis einer Company, der Datenbank hinzu.
 	 * 
 	 * @param partnerProfile
 	 * @return partnerProfile
@@ -112,8 +112,8 @@ public class PartnerProfileMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
-			 * aktuelle id wird um eins erh�ht.
+			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
+			 * aktuelle id wird um eins erhöht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
 
@@ -122,7 +122,7 @@ public class PartnerProfileMapper {
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
+			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id) VALUES (" + partnerProfile.getId() + ", '"
 					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
@@ -156,8 +156,8 @@ public class PartnerProfileMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
-			 * aktuelle id wird um eins erh�ht.
+			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
+			 * aktuelle id wird um eins erhöht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
 
@@ -166,7 +166,7 @@ public class PartnerProfileMapper {
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
+			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, team_id, "
 					+ ") VALUES (" + partnerProfile.getId() + ", '"
@@ -195,8 +195,8 @@ public class PartnerProfileMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
-			 * aktuelle id wird um eins erh�ht.
+			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
+			 * aktuelle id wird um eins erhöht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM partnerProfile");
 
@@ -205,7 +205,7 @@ public class PartnerProfileMapper {
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einf�gen des neuen PartnerProfile-Tupels in die Datenbank
+			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, jobPosting_id) VALUES (" + partnerProfile.getId() + ", '"
 					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
@@ -232,7 +232,7 @@ public class PartnerProfileMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zur Aktualisierung des �bergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE partnerProfile SET dateCreated='" + partnerProfile.getDateCreated()
 					+ "', dateChanged= '" + partnerProfile.getDateChanged() + "' WHERE id= " + partnerProfile.getId());
@@ -259,7 +259,7 @@ public class PartnerProfileMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum L�schen des �bergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM partnerProfile WHERE id=" + partnerProfile.getId());
 		}
@@ -285,14 +285,14 @@ public class PartnerProfileMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der �bergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, dateCreated, dateChanged, company_id, team_id, "
 					+ "person_id, jobPosting_id FROM partnerProfile WHERE id=" + id);
 			/**
-			 * Zu einem Prim�rschl�ssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfrage gepr�ft, ob es f�r den angefragten Prim�rschl�ssel ein
+			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -341,7 +341,7 @@ public class PartnerProfileMapper {
 			 * Tabelle partnerProfile vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschließend der ArrayList hinzugefügt.
 			 */
 			while (rs.next()) {
 				PartnerProfile partnerProfile = new PartnerProfile();
@@ -366,15 +366,15 @@ public class PartnerProfileMapper {
 	}
 	
 	/**
-	 * Findet ein PartnerProfile-Tupel anhand der �bergebenen jobPostingId in der
-	 * Datenbank. Anschlie�end wird es als Java-Objekt in der Variablen partnerProfile 
+	 * Findet ein PartnerProfile-Tupel anhand der übergebenen jobPostingId in der
+	 * Datenbank. Anschließend wird es als Java-Objekt in der Variablen partnerProfile 
 	 * vom Typ PartnerProfile gespeichert. Methode zum Suchen von Partnerprofilen 
-	 * bestehende Beziehungen/Datens�tze zu l�schen.
+	 * bestehende Beziehungen/Datensätze zu löschen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * m�ssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
+	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
+	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * mössen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * @param jobPostingId
 	 * @return partnerProfil
@@ -393,8 +393,8 @@ public class PartnerProfileMapper {
 					+ "WHERE jobPosting_id = " + jobPostingId);
 			/**
 			 * Zu einem JobPosting exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfrage gepr�ft, ob es f�r den angefragten Prim�rschl�ssel ein
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -420,15 +420,15 @@ public class PartnerProfileMapper {
 	}
 	
 	/**
-	 * Findet ein PartnerProfile-Tupel anhand der �bergebenen companyId in der
-	 * Datenbank. Anschlie�end wird es als Java-Objekt in der Variablen partnerProfile 
+	 * Findet ein PartnerProfile-Tupel anhand der übergebenen companyId in der
+	 * Datenbank. Anschließend wird es als Java-Objekt in der Variablen partnerProfile 
 	 * vom Typ PartnerProfile gespeichert. Methode zum Suchen von Partnerprofilen 
-	 * bestehende Beziehungen/Datens�tze zu l�schen.
+	 * bestehende Beziehungen/Datensätze zu löschen.
 	 *
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * m�ssen 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
+	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
+	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * müssen 
 	 * 
 	 * @param companyId
 	 * @return partnerProfil
@@ -446,8 +446,8 @@ public class PartnerProfileMapper {
 					"SELECT * FROM partnerProfile + WHERE company_id = " + companyId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfrage gepr�ft, ob es f�r den angefragten Prim�rschl�ssel ein
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -474,12 +474,12 @@ public class PartnerProfileMapper {
 	
 	/**
 	 * Methode zum Suchen von Partnerprofilen in Bezug zu teamIds um
-	 * bestehende Beziehungen/Datens�tze zu l�schen.
+	 * bestehende Beziehungen/Datensätze zu löschen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * m�ssen 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
+	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
+	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * müssen 
 	 * 
 	 * @param teamId
 	 * @return partnerProfil
@@ -497,8 +497,8 @@ public class PartnerProfileMapper {
 					"SELECT * FROM partnerProfile + WHERE company_id = " + teamId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfrage gepr�ft, ob es f�r den angefragten Prim�rschl�ssel ein
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -525,12 +525,12 @@ public class PartnerProfileMapper {
 	
 	/**
 	 * Methode zum Suchen von Partnerprofilen in Bezug zu personIds um
-	 * bestehende Beziehungen/Datens�tze zu l�schen.
+	 * bestehende Beziehungen/Datensätze zu löschen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * m�ssen 
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
+	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
+	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * müssen 
 	 * 
 	 * @param PersonId
 	 * @return partnerProfil
@@ -547,8 +547,8 @@ public class PartnerProfileMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM partnerProfile WHERE person_id = " +  personId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfrage gepr�ft, ob es f�r den angefragten Prim�rschl�ssel ein
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfrage geprüft, ob es für den angefragten Primärschlüssel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
