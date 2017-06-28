@@ -34,9 +34,9 @@ public class JobPostingCell extends AbstractCell<JobPosting> {
 		 * das umschließenede div-Element ermöglichen später ein 
 		 * einheitliches Design mittels CSS.
 		 */
-		sb.appendHtmlConstant("<div class='cell jobPostingCell'><h5>");
+		sb.appendHtmlConstant("<div class='cell jobPostingCell'><p>");
 		sb.appendEscaped(value.getTitle());
-		sb.appendHtmlConstant("</h5></div>");
+		sb.appendHtmlConstant("</p></div>");
 		
 	}
 

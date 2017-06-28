@@ -199,6 +199,10 @@ strong {
 	color: #fff;
 }
 
+.com-google-gwt-user-cellview-client-CellTree-Style-cellTreeTopItemImageValue {
+	border-bottom: none !important;
+}
+
 /* ### CONTENT ### */
 
 #content {

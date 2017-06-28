@@ -34,9 +34,9 @@ public class ProjectCell extends AbstractCell<Project> {
 		 * das umschließenede div-Element ermöglichen später ein 
 		 * einheitliches Design mittels CSS.
 		 */
-		sb.appendHtmlConstant("<div class='cell projectCell'><h4>");
+		sb.appendHtmlConstant("<div class='cell projectCell'><p>");
 		sb.appendEscaped(value.getTitle());
-		sb.appendHtmlConstant("</h4></div>");
+		sb.appendHtmlConstant("</p></div>");
 		
 	}
 
