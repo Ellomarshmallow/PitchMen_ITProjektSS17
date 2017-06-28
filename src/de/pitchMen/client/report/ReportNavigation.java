@@ -129,7 +129,8 @@ public class ReportNavigation extends VerticalPanel {
 
 									@Override
 									public void onFailure(Throwable caught) {
-										ClientsideSettings.getLogger().severe("Upsi, da ist wohl etwas schief gelaufen");
+										ClientsideSettings.getLogger()
+										.severe("Upsi, da ist wohl etwas schief gelaufen");
 
 									}
 
@@ -139,12 +140,38 @@ public class ReportNavigation extends VerticalPanel {
 										RootPanel.get("content").clear();
 										RootPanel.get("content").add(new HTML(writer.getReportText()));
 									}
-										});
-							}
-						});
+								});
+					}
+				});
+			}
+		});
+
+		report4Btn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				final HTMLReportWriter writer = new HTMLReportWriter();
+
+				ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(ClientsideSettings.getCurrentUser(),
+						new AsyncCallback<AllApplicationsOfUser>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt");
+					}
+
+					@Override
+					public void onSuccess(AllApplicationsOfUser result) {
+						writer.process(result);
+						RootPanel.get("content").clear();
+						RootPanel.get("content").add(new HTML(writer.getReportText()));
+					}
+				});
+
 			}
 		});
 		
+
 		/*
 		 * Sie werden der Navigation hinzugefügt
 		 */
@@ -160,14 +187,6 @@ public class ReportNavigation extends VerticalPanel {
 }
 
 
-//// case 3: RootPanel.get("content").add(new HTML("<h3>Switch Case
-// this.getApplicationsRelatedToJobPostingOfUser() ausgewählt</h3>"));
-//// reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
-//// break;
-//// case 4: RootPanel.get("content").add(new HTML("<h3>Switch Case
-// this.getAllApplicationsOfUserWithJobPostings() ausgewählt</h3>"));
-//// reportContent = this.getAllApplicationsOfUserWithJobPostings();
-//// break;
 //// case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case
 // this.getProjectInterveawings() ausgewählt</h3>"));
 //// reportContent = this.getProjectInterveawings();
