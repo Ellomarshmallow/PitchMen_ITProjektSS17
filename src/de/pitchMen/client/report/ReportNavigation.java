@@ -46,6 +46,63 @@ public class ReportNavigation extends VerticalPanel {
 		Button report5Btn = new Button("Projektverflechtungen von Bewerbern");
 		Button report6Btn = new Button("Fan-In- und Fan-Out-Analyse");
 		
+		report1Btn.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				final HTMLReportWriter writer = new HTMLReportWriter();
+				ClientsideSettings.getReportGenerator().showAllJobPostings(new AsyncCallback<AllJobPostings>() {
+						
+							@Override
+							public void onSuccess(AllJobPostings result) {
+							writer.process(result);
+							RootPanel.get("content").clear();
+							RootPanel.get("content").add(new HTML(writer.getReportText()));
+							
+							}
+
+							@Override
+							public void onFailure(Throwable caught) {
+							ClientsideSettings.getLogger().severe("Upsi, da ist was schief gelaufen");
+							
+							}
+				});
+				
+			}
+		});
+		
+report2Btn.addClickHandler(new ClickHandler() {
+			
+	final HTMLReportWriter writer = new HTMLReportWriter();
+	ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(PartnerProfile result) {
+			ClientsideSettings.getReportGenerator().showAllJobPostingsMatchingPartnerProfileOfUser(result, new AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(AllJobPostingsMatchingPartnerProfileOfUser result) {
+					writer.process(result);
+					reportContent = new HTML(writer.getReportText());
+				}
+				
+			});
+		}
+		
+	});
+		
 		/*
 		 * Sie werden der Navigation hinzugefügt 
 		 */
@@ -61,216 +118,222 @@ public class ReportNavigation extends VerticalPanel {
 		 * um auf Interaktionen des Nutzers entsprechend
 		 * reagieren zu können.
 		 */
-		report1Btn.addClickHandler(new ReportClickHandler(1));
-		report2Btn.addClickHandler(new ReportClickHandler(2));
-		report3Btn.addClickHandler(new ReportClickHandler(3));
-		report4Btn.addClickHandler(new ReportClickHandler(4));
-		report5Btn.addClickHandler(new ReportClickHandler(5));
-		report6Btn.addClickHandler(new ReportClickHandler(6));
+//		report1Btn.addClickHandler(new ReportClickHandler(1));
+//		report2Btn.addClickHandler(new ReportClickHandler(2));
+//		report3Btn.addClickHandler(new ReportClickHandler(3));
+//		report4Btn.addClickHandler(new ReportClickHandler(4));
+//		report5Btn.addClickHandler(new ReportClickHandler(5));
+//		report6Btn.addClickHandler(new ReportClickHandler(6));
+	}
+//	
+//	/**
+//	 *  Die geschachtelte Klasse <code>ReportClickHandler</code>
+//	 *  implementiert das von GWT vorgegebene Interface
+//	 *  ClickHandler und behandelt alle Fälle, in denen der 
+//	 *  Nutzer auf einen der Buttons klickt.
+//	 *  
+//	 * @author Simon
+//	 */
+//	private class ReportClickHandler implements ClickHandler {
+//		
+//		
+//		/**
+//		 * Die Report-Nummer wird als Instanzvariable deklariert
+//		 * und im Konstruktor gesetzt. Somit ist über den 
+//		 * später verwendeten Switch-Case eine einfache Handhabung
+//		 * der verschiedenen Fälle möglich.
+//		 */
+////		private int reportNo = 0;
+//		
+////		public ReportClickHandler(int i) {
+////			this.reportNo = i;
+////		}
+//
+//		/**
+//		 * Die onClick-Methode ist hier eine verzweigende
+//		 * Weitergabe-Methode, die je nach gewähltem 
+//		 * Report-Szenario die entsprechende Methode
+//		 * ansteuert.
+//		 */
+//		
+////	report1Btn.addClickHandler(new ClickHandler() {
+////		@Override
+////		public void onClick(ClickEvent event) {
+////			HTML reportContent = null;
+////			RootPanel.get("content").clear();
+////			RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostings() ausgewählt</h3>"));
+////			reportContent = this.getAllJobPostings();
+////			
+////			switch (reportNo) {
+////				case 1: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostings() ausgewählt</h3>"));
+////						reportContent = this.getAllJobPostings();
+////						break;
+////				case 2: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostingsMathcingPartnerProfile() ausgewählt</h3>"));
+////						reportContent = this.getAllJobPostingsMatchingPartnerProfileOfUser();
+////						break;
+////				case 3: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getApplicationsRelatedToJobPostingOfUser() ausgewählt</h3>"));
+////						reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
+////						break;
+////				case 4: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllApplicationsOfUserWithJobPostings() ausgewählt</h3>"));
+////						reportContent = this.getAllApplicationsOfUserWithJobPostings();
+////						break;
+////				case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getProjectInterveawings() ausgewählt</h3>"));
+////						reportContent = this.getProjectInterveawings();
+////						break;
+////				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
+////						reportContent = this.getFanInFanOutAnalysis();
+////						break;
+////						
+////			}
+////			RootPanel.get("content").add(new HTML("<h3>Button geklickt: " + reportNo + "</h3>"));
+////			RootPanel.get("content").add(reportContent);
+////		}});
+//		
+//
+//		private HTML getFanInFanOutAnalysis() {
+//			final HTMLReportWriter writer = new HTMLReportWriter();
+//			ClientsideSettings.getReportGenerator().showFanInAndOutReport(new AsyncCallback<FanInAndOutReport>() {
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							// TODO Auto-generated method stub
+//							
+//						}
+//
+//						@Override
+//						public void onSuccess(FanInAndOutReport result) {
+//							writer.process(result);
+//							reportContent = new HTML(writer.getReportText());
+//						}
+//			});
+//			return reportContent;
+//		}
+//
+//		private HTML getProjectInterveawings() {
+//			final HTMLReportWriter writer = new HTMLReportWriter();
+//			
+//			ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
+//													ClientsideSettings.getCurrentUser(),
+//													new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//
+//				@Override
+//				public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
+//					writer.process(result);
+//					reportContent = new HTML(writer.getReportText());
+//				}
+//			});
+//			return reportContent;
+//		}
+//
+//		private HTML getAllApplicationsOfUserWithJobPostings() {
+//			final HTMLReportWriter writer = new HTMLReportWriter();
+//			
+//			ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(ClientsideSettings.getCurrentUser(),new AsyncCallback<AllApplicationsOfUser>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt :()");
+//				}
+//
+//				@Override
+//				public void onSuccess(AllApplicationsOfUser result) {
+//					writer.process(result);
+//					reportContent = new HTML(writer.getReportText());
+//				}
+//			});							
+//			return reportContent;
+//		}
+//
+//		private HTML getApplicationsRelatedToJobPostingsOfUser() {
+//			final HTMLReportWriter writer = new HTMLReportWriter();
+//			ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<Person>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//
+//				@Override
+//				public void onSuccess(Person result) {
+//					ClientsideSettings.getReportGenerator().showApplicationsRelatedToJobPostingsOfUser(result, new AsyncCallback<ApplicationsRelatedToJobPostingsOfUser>() {
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							// TODO Auto-generated method stub
+//							
+//						}
+//
+//						@Override
+//						public void onSuccess(ApplicationsRelatedToJobPostingsOfUser result) {
+//							writer.process(result);
+//							reportContent = new HTML(writer.getReportText());
+//						}
+//					});
+//				}				
+//			});
+//			return reportContent;
+//		}
+//		
+//		
+//		private HTML getAllJobPostingsMatchingPartnerProfileOfUser() {
+//			final HTMLReportWriter writer = new HTMLReportWriter();
+//			ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//
+//				@Override
+//				public void onSuccess(PartnerProfile result) {
+//					ClientsideSettings.getReportGenerator().showAllJobPostingsMatchingPartnerProfileOfUser(result, new AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser>() {
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//							// TODO Auto-generated method stub
+//							
+//						}
+//
+//						@Override
+//						public void onSuccess(AllJobPostingsMatchingPartnerProfileOfUser result) {
+//							writer.process(result);
+//							reportContent = new HTML(writer.getReportText());
+//						}
+//						
+//					});
+//				}
+//				
+//			});
+//			return reportContent;
+//		}
+//
+//		private HTML getAllJobPostings() {
+//			final HTMLReportWriter writer = new HTMLReportWriter();
+//			ClientsideSettings.getReportGenerator().showAllJobPostings(new AsyncCallback<AllJobPostings>() {
+//					
+//						@Override
+//						public void onSuccess(AllJobPostings result) {
+//						writer.process(result);
+//						reportContent = new HTML(writer.getReportText());
+//						
+//						}
+//
+//						@Override
+//						public void onFailure(Throwable caught) {
+//						ClientsideSettings.getLogger().severe("Upsi, da ist was schief gelaufen");
+//						
+//						}
+//			});
+//			return reportContent;
+//		}
 	}
 	
-	/**
-	 *  Die geschachtelte Klasse <code>ReportClickHandler</code>
-	 *  implementiert das von GWT vorgegebene Interface
-	 *  ClickHandler und behandelt alle Fälle, in denen der 
-	 *  Nutzer auf einen der Buttons klickt.
-	 *  
-	 * @author Simon
-	 */
-	private class ReportClickHandler implements ClickHandler {
-		
-		
-		/**
-		 * Die Report-Nummer wird als Instanzvariable deklariert
-		 * und im Konstruktor gesetzt. Somit ist über den 
-		 * später verwendeten Switch-Case eine einfache Handhabung
-		 * der verschiedenen Fälle möglich.
-		 */
-		private int reportNo = 0;
-		
-		public ReportClickHandler(int i) {
-			this.reportNo = i;
-		}
 
-		/**
-		 * Die onClick-Methode ist hier eine verzweigende
-		 * Weitergabe-Methode, die je nach gewähltem 
-		 * Report-Szenario die entsprechende Methode
-		 * ansteuert.
-		 */
-		@Override
-		public void onClick(ClickEvent event) {
-			HTML reportContent = null;
-			RootPanel.get("content").clear();
-			switch (reportNo) {
-				case 1: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostings() ausgewählt</h3>"));
-						reportContent = this.getAllJobPostings();
-						break;
-				case 2: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllJobPostingsMathcingPartnerProfile() ausgewählt</h3>"));
-						reportContent = this.getAllJobPostingsMatchingPartnerProfileOfUser();
-						break;
-				case 3: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getApplicationsRelatedToJobPostingOfUser() ausgewählt</h3>"));
-						reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
-						break;
-				case 4: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllApplicationsOfUserWithJobPostings() ausgewählt</h3>"));
-						reportContent = this.getAllApplicationsOfUserWithJobPostings();
-						break;
-				case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getProjectInterveawings() ausgewählt</h3>"));
-						reportContent = this.getProjectInterveawings();
-						break;
-				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
-						reportContent = this.getFanInFanOutAnalysis();
-						break;
-						
-			}
-			RootPanel.get("content").add(new HTML("<h3>Button geklickt: " + reportNo + "</h3>"));
-			RootPanel.get("content").add(reportContent);
-		}
-
-		private HTML getFanInFanOutAnalysis() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
-			ClientsideSettings.getReportGenerator().showFanInAndOutReport(new AsyncCallback<FanInAndOutReport>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void onSuccess(FanInAndOutReport result) {
-							writer.process(result);
-							reportContent = new HTML(writer.getReportText());
-						}
-			});
-			return reportContent;
-		}
-
-		private HTML getProjectInterveawings() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
-			
-			ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
-													ClientsideSettings.getCurrentUser(),
-													new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
-					writer.process(result);
-					reportContent = new HTML(writer.getReportText());
-				}
-			});
-			return reportContent;
-		}
-
-		private HTML getAllApplicationsOfUserWithJobPostings() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
-			
-			ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(ClientsideSettings.getCurrentUser(),new AsyncCallback<AllApplicationsOfUser>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt :()");
-				}
-
-				@Override
-				public void onSuccess(AllApplicationsOfUser result) {
-					writer.process(result);
-					reportContent = new HTML(writer.getReportText());
-				}
-			});							
-			return reportContent;
-		}
-
-		private HTML getApplicationsRelatedToJobPostingsOfUser() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
-			ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<Person>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onSuccess(Person result) {
-					ClientsideSettings.getReportGenerator().showApplicationsRelatedToJobPostingsOfUser(result, new AsyncCallback<ApplicationsRelatedToJobPostingsOfUser>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void onSuccess(ApplicationsRelatedToJobPostingsOfUser result) {
-							writer.process(result);
-							reportContent = new HTML(writer.getReportText());
-						}
-					});
-				}				
-			});
-			return reportContent;
-		}
-		
-		
-		private HTML getAllJobPostingsMatchingPartnerProfileOfUser() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
-			ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onSuccess(PartnerProfile result) {
-					ClientsideSettings.getReportGenerator().showAllJobPostingsMatchingPartnerProfileOfUser(result, new AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							
-						}
-
-						@Override
-						public void onSuccess(AllJobPostingsMatchingPartnerProfileOfUser result) {
-							writer.process(result);
-							reportContent = new HTML(writer.getReportText());
-						}
-						
-					});
-				}
-				
-			});
-			return reportContent;
-		}
-
-		private HTML getAllJobPostings() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
-			ClientsideSettings.getReportGenerator().showAllJobPostings(new AsyncCallback<AllJobPostings>() {
-					
-						@Override
-						public void onSuccess(AllJobPostings result) {
-						writer.process(result);
-						reportContent = new HTML(writer.getReportText());
-						
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {
-						ClientsideSettings.getLogger().severe("Upsi, da ist was schief gelaufen");
-						
-						}
-			});
-			return reportContent;
-		}
-	}
-	
-}
