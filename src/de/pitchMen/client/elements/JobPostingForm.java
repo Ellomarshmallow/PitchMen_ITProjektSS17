@@ -305,12 +305,64 @@ public class JobPostingForm extends Formular{
 																				}
 
 																				@Override
-																				public void onSuccess(Rating result) {
-																					if(result != null) {
-																																										
+																				public void onSuccess(final Rating result) {
+																					if(result != null) {																			
 																						Button rejectButton = new Button("Ablehnen");
 																						rejectButton.addStyleName("delete");
+																						rejectButton.addClickHandler(new ClickHandler() {
+
+																							@Override
+																							public void onClick(
+																									ClickEvent event) {
+																								if(Window.confirm("Möchten Sie diese Bewerbung wirklich ablehnen?")) {
+																									app.setStatus("abgelehnt");
+																									ClientsideSettings.getPitchMenAdmin().updateApplication(app, new AsyncCallback<Void>() {
+
+																										@Override
+																										public void onFailure(
+																												Throwable caught) {
+																											ClientsideSettings.getLogger().severe("Update des Ratings fehlgeschlagen");
+																										}
+
+																										@Override
+																										public void onSuccess(
+																												Void result) {
+																											JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																										}
+																										
+																									});
+																								}
+																							}
+																							
+																						});
 																						Button acceptButton = new Button("Annehmen");
+																						
+																						acceptButton.addClickHandler(new ClickHandler() {
+
+																							@Override
+																							public void onClick(
+																									ClickEvent event) {
+																								if(Window.confirm("Möchten Sie diese Bewerbung wirklich annehmen?")) {
+																									app.setStatus("angenommen");
+																									ClientsideSettings.getPitchMenAdmin().updateApplication(app, new AsyncCallback<Void>() {
+
+																										@Override
+																										public void onFailure(
+																												Throwable caught) {
+																											ClientsideSettings.getLogger().severe("Update des Ratings fehlgeschlagen");
+																										}
+
+																										@Override
+																										public void onSuccess(
+																												Void result) {
+																											JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																										}
+																										
+																									});
+																								}
+																							}
+																							
+																						});
 																						
 																						int scorePercentage = Math.round(result.getScore()*100);
 																						
@@ -319,8 +371,16 @@ public class JobPostingForm extends Formular{
 																						applicationTable.setWidget(rowCount, 1, new HTML(app.getText()));
 																						applicationTable.setWidget(rowCount, 2, new HTML("<div class='scoreContainer'><div class='scoreBar' style='width: " + scorePercentage + "%;'></div></div>"));
 																						applicationTable.setWidget(rowCount, 3, new HTML("<p>" + result.getStatement() + "</p>"));
-																						applicationTable.setWidget(rowCount, 4, rejectButton);
-																						applicationTable.setWidget(rowCount, 5, acceptButton);
+																						if(app.getStatus().equals("laufend")) {	
+																							applicationTable.setWidget(rowCount, 4, rejectButton);
+																							applicationTable.setWidget(rowCount, 5, acceptButton);
+																						} else if(app.getStatus().equals("angenommen")) {
+																							applicationTable.getFlexCellFormatter().setColSpan(rowCount, 4, 2);
+																							applicationTable.setWidget(rowCount, 4, new HTML("<p class='accepted'>angenommen</p>"));
+																						} else if(app.getStatus().equals("abgelehnt")) {
+																							applicationTable.getFlexCellFormatter().setColSpan(rowCount, 4, 2);
+																							applicationTable.setWidget(rowCount, 4, new HTML("<p class='denied'>abgelehnt</p>"));
+																						}
 																					} else {
 																						
 																						scoreBox = new TextBox();
@@ -338,14 +398,12 @@ public class JobPostingForm extends Formular{
 																										@Override
 																										public void onFailure(
 																												Throwable caught) {
-																											Window.alert("FEHLER");
 																											ClientsideSettings.getLogger().severe("Anlegen der Bewertung fehlgeschlagen");
 																										}
 
 																										@Override
 																										public void onSuccess(
 																												Rating result) {
-																											Window.alert("KLAPPT");
 																											JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
 																										}
 																										
