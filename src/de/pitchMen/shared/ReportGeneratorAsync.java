@@ -45,7 +45,7 @@ public interface ReportGeneratorAsync {
     /**
 	 * 
 	 */
-	void showAllApplicationsOfUser(Person p, AsyncCallback<AllApplicationsOfUser> callback);
+	void showAllApplicationsOfUser(int id, AsyncCallback<AllApplicationsOfUser> callback);
 	/**
 	 * 
 	 */
@@ -53,11 +53,11 @@ public interface ReportGeneratorAsync {
 	/**
 	 * 
 	 */
-	void showAllParticipationsOfOneUser(Person p, AsyncCallback<AllParticipationsOfOneUser> callback);
+	void showAllParticipationsOfOneUser(int id, AsyncCallback<AllParticipationsOfOneUser> callback);
 	/**
 	 * 
 	 */
-	void showProjectInterweavingsWithParticipationsAndApplications(Person p, AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications> callback);
+	void showProjectInterweavingsWithParticipationsAndApplications(int id, AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications> callback);
 	/**
 	 * 
 	 */
