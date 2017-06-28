@@ -122,66 +122,7 @@ public class ReportNavigation extends VerticalPanel {
 
 }
 
-/*
- * Jeder Button benötigt einen ClickHandler, um auf Interaktionen des Nutzers
- * entsprechend reagieren zu können.
- */
-// report1Btn.addClickHandler(new ReportClickHandler(1));
-// report2Btn.addClickHandler(new ReportClickHandler(2));
-// report3Btn.addClickHandler(new ReportClickHandler(3));
-// report4Btn.addClickHandler(new ReportClickHandler(4));
-// report5Btn.addClickHandler(new ReportClickHandler(5));
-// report6Btn.addClickHandler(new ReportClickHandler(6));
-// }
-//
-// /**
-// * Die geschachtelte Klasse <code>ReportClickHandler</code>
-// * implementiert das von GWT vorgegebene Interface
-// * ClickHandler und behandelt alle Fälle, in denen der
-// * Nutzer auf einen der Buttons klickt.
-// *
-// * @author Simon
-// */
-// private class ReportClickHandler implements ClickHandler {
-//
-//
-// /**
-// * Die Report-Nummer wird als Instanzvariable deklariert
-// * und im Konstruktor gesetzt. Somit ist über den
-// * später verwendeten Switch-Case eine einfache Handhabung
-// * der verschiedenen Fälle möglich.
-// */
-//// private int reportNo = 0;
-//
-//// public ReportClickHandler(int i) {
-//// this.reportNo = i;
-//// }
-//
-// /**
-// * Die onClick-Methode ist hier eine verzweigende
-// * Weitergabe-Methode, die je nach gewähltem
-// * Report-Szenario die entsprechende Methode
-// * ansteuert.
-// */
-//
-//// report1Btn.addClickHandler(new ClickHandler() {
-//// @Override
-//// public void onClick(ClickEvent event) {
-//// HTML reportContent = null;
-//// RootPanel.get("content").clear();
-//// RootPanel.get("content").add(new HTML("<h3>Switch Case
-// this.getAllJobPostings() ausgewählt</h3>"));
-//// reportContent = this.getAllJobPostings();
-////
-//// switch (reportNo) {
-//// case 1: RootPanel.get("content").add(new HTML("<h3>Switch Case
-// this.getAllJobPostings() ausgewählt</h3>"));
-//// reportContent = this.getAllJobPostings();
-//// break;
-//// case 2: RootPanel.get("content").add(new HTML("<h3>Switch Case
-// this.getAllJobPostingsMathcingPartnerProfile() ausgewählt</h3>"));
-//// reportContent = this.getAllJobPostingsMatchingPartnerProfileOfUser();
-//// break;
+
 //// case 3: RootPanel.get("content").add(new HTML("<h3>Switch Case
 // this.getApplicationsRelatedToJobPostingOfUser() ausgewählt</h3>"));
 //// reportContent = this.getApplicationsRelatedToJobPostingsOfUser();
