@@ -90,6 +90,7 @@ public class FirstLoginForm extends Formular  {
 											  newUser.getEmailAdress(), 
 											  newUser.getLoginUrl(), 
 											  newUser.getLogoutUrl(), 
+											  descriptionBox.getText(),
 											  true, 
 											  true, 
 											  new NewPersonCallback());	
@@ -165,6 +166,7 @@ public class FirstLoginForm extends Formular  {
 											  newUser.getEmailAdress(), 
 											  newUser.getLoginUrl(), 
 											  newUser.getLogoutUrl(), 
+											  descriptionBox.getText(),
 											  true, 
 											  true, 
 											  new NewPersonOnRepGenCallback());	
