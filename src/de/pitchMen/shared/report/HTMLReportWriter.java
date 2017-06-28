@@ -128,7 +128,7 @@ public class HTMLReportWriter extends ReportWriter {
 			buff.append("</tr>");
 		}
 
-		buff.append("</table");
+		buff.append("</table>");
 		
 		//abschlieﬂend wird der erzeuge und in buff gespeicherte Text in einen String transformiert
 		this.reportText = buff.toString();
