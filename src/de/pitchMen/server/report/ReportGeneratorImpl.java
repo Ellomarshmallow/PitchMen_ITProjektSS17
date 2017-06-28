@@ -15,6 +15,7 @@ import de.pitchMen.shared.PitchMenAdmin;
 import de.pitchMen.shared.ReportGenerator;
 import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Participation;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
@@ -253,6 +254,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// TODO Methode noch zu erledigen!
 	}
 
+	
+	
+	
+	
 	/**
 	 * Erstellen von
 	 * <code>ApplicationsRelatedToJobPostingsOfUser Report</code>-Objekten.
@@ -309,17 +314,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Person bewerber = pitchMenAdmin.getPersonByID(pt.getPersonId());
 			
 			if (bewerber.getId() == p.getId()) {
-			}
-			;
 			
-			// Hinzuf�gen der Row zum Result
-			result.addSubReport(this.showAllApplicationsToOneJobPostingOfUser(a.getId()));
-		}
+				// Hinzuf�gen der Row zum Result
+				result.addSubReport(this.showAllApplicationsToOneJobPostingOfUser(a.getId()));
+			}
 
+		}
+		
 		// R�ckgabe des fertigen Reports
 		return result;
 	}
-
 	/**
 	 * Erstellen von
 	 * <code>AllApplicationsToOneJobPostingOfUser Report</code>-Objekten.
@@ -404,7 +408,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return der fertige Report
 	 */
 	@Override
-	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
+	public AllApplicationsOfUser showAllApplicationsOfUser(int id) throws IllegalArgumentException {
 
 		if (pitchMenAdmin == null) {
 			return null;
@@ -415,7 +419,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugeigen Ausschreibungen");
+		result.setTitle("Alle Bewerbungen eines Nutzers");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -448,7 +452,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * Erstellungsdatum, Status und Text sukzessive in die Tabelle
 		 * eingetragen.
 		 */
-		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p.getId());
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(id);
 		for (Application a : applications) {
 
 			Application application = pitchMenAdmin.getApplicationByID(a.getJobPostingId());
@@ -485,6 +489,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	
+	
 
 	/**
 	 * Erstellen von <code>AllParticipationsOfOneUser</code>-Objekten.
@@ -494,7 +502,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return der fertige Report
 	 */
 	@Override
-	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(Person p) throws IllegalArgumentException {
+	public AllParticipationsOfOneUser showAllParticipationsOfOneUser(int id) throws IllegalArgumentException {
 
 		if (this.getPitchMenAdmin() == null) {
 			return null;
@@ -534,15 +542,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * Nun werden sämtliche Projekte ausgelesen und deren Erstellungsdatum,
 		 * Beschreibung, Titel und Text sukzessive in die Tabelle eingetragen.
 		 */
-		ArrayList<Project> allProjects = pitchMenAdmin.getProjectsByPerson(p.getId());
-		for (Project project : allProjects) {
+		ArrayList<Participation> allParticipations = pitchMenAdmin.getParticipationsByPersonId(id);
+		for (Participation p : allParticipations) {
 
 			Row projectRow = new Row();
 
-			projectRow.addColumn(new Column(project.getTitle()));
-			projectRow.addColumn(new Column(project.getDateOpened()));
-			projectRow.addColumn(new Column(project.getDateClosed()));
-			projectRow.addColumn(new Column(project.getDescription()));
+		//	projectRow.addColumn(new Column(p.getTitle()));
+			projectRow.addColumn(new Column(p.getDateOpened()));
+			projectRow.addColumn(new Column(p.getDateClosed()));
+		//	projectRow.addColumn(new Column(p.getDescription()));
 
 			// Hinzuf�gen der Row zum Result
 			result.addRow(projectRow);
@@ -561,7 +569,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 */
 	@Override
 	public ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(
-			Person p) throws IllegalArgumentException {
+			int id) throws IllegalArgumentException {
 
 		if (this.getPitchMenAdmin() == null) {
 			return null;
@@ -581,8 +589,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Dieser Report ist ein Composite Report und setzt sich aus dem Report
 		// "showAllApplicationsOfUser" und "showAllParticipationsOfOneUser"
 		// zusammen
-		result.addSubReport(this.showAllApplicationsOfUser(p));
-		result.addSubReport(this.showAllParticipationsOfOneUser(p));
+		result.addSubReport(this.showAllApplicationsOfUser(id));
+		result.addSubReport(this.showAllParticipationsOfOneUser(id));
 		// R�ckgabe des fertigen Reports
 		return result;
 	}
