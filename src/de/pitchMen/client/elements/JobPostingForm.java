@@ -442,8 +442,10 @@ public class JobPostingForm extends Formular{
 		} 
 		private class applicateClickHandler implements ClickHandler {
 			public void onClick(ClickEvent event) {
+				
+				RootPanel.get("content").add(new ApplicationForm(selectedJobPosting));
 
-				ApplicationForm applicationForm = new ApplicationForm(selectedJobPosting);
+				//ApplicationForm applicationForm = new ApplicationForm(selectedJobPosting);
 
 			}
 		} 

@@ -118,7 +118,7 @@ public class ReportNavigation extends VerticalPanel {
 				case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getProjectInterveawings() ausgewählt</h3>"));
 						reportContent = this.getProjectInterveawings();
 						break;
-				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewählt</h3>"));
+				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
 						reportContent = this.getFanInFanOutAnalysis();
 						break;
 			}
@@ -252,21 +252,19 @@ public class ReportNavigation extends VerticalPanel {
 		}
 
 		private HTML getAllJobPostings() {
-			//final HTMLReportWriter writer = new HTMLReportWriter();
+			final HTMLReportWriter writer = new HTMLReportWriter();
 			ClientsideSettings.getReportGenerator().showAllJobPostings(new AsyncCallback<AllJobPostings>() {
 					
 						@Override
 						public void onSuccess(AllJobPostings result) {
-						HTMLReportWriter writer = new HTMLReportWriter();
 						writer.process(result);
 						reportContent = new HTML(writer.getReportText());
 						
 						}
 
 						@Override
-						
 						public void onFailure(Throwable caught) {
-						ClientsideSettings.getLogger().severe("");
+						ClientsideSettings.getLogger().severe("Upsi, da ist was schief gelaufen");
 						
 						}
 			});

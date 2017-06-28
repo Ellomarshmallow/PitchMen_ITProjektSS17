@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -204,10 +205,26 @@ public class PitchMen implements EntryPoint {
 				+ "gerne zur Verfügung.</p>"
 		));
 		
+		Button newMarketplaceBtn = new Button("Neuen Projektmarktplatz anlegen");
+		
+		newMarketplaceBtn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				MarketplaceForm addMarketplaceForm = new MarketplaceForm();
+			}
+			
+		});
+		
+		RootPanel.get("content").add(newMarketplaceBtn);
+		
+		
 		HorizontalPanel footer = new HorizontalPanel();
-		Anchor reportGeneratorLink = new Anchor ("ReportGenerator", "ReportGenerator.html");
+		Anchor startPage = new Anchor ("Startseite | ", "PitchMen.html");
+		Anchor reportGeneratorLink = new Anchor (" ReportGenerator", "ReportGenerator.html");
 		HTML copyrightText = new HTML(" | © 2017 PitchMen | ");
 		Anchor impressumLink = new Anchor("Impressum");
+		footer.add(startPage);
 		footer.add(reportGeneratorLink);
 		footer.add(copyrightText);
 		footer.add(impressumLink);

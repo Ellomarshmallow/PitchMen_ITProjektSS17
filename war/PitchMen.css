@@ -161,7 +161,7 @@ strong {
 
 #nav {
 	width: 20%;
-	padding: 30px 0px;
+	padding: 0px;
 	display: flex;
 	flex-flow: column;
 	background: #ddd;
@@ -176,16 +176,21 @@ strong {
 	width: 100%;
 	border: none;
 	background: transparent;
-	color: #444;
+	color: #666;
 	padding: 15px 0px 15px 20px;
 	text-align: left;
 	font-size: 100%;
 	cursor: pointer;
 }
 
+#nav button.editor {
+	background: #1c9cd8;
+	color: #fff;
+}
+
 #nav button:hover,
 #nav button:active {
-	background: #1c9cd8;
+	background: #006EB5;
 	color: #fff;
 }
 

@@ -79,7 +79,7 @@ public class JobPostingMapper {
 				/**
 				 * SQL-Anweisung zum Einf�gen des neuen Datensatzes in die Datenbank.
 				 */
-				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline project_id)" + " VALUES ( "
+				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline, project_id)" + " VALUES ( "
 						+ jobPosting.getId() + ", '" + jobPosting.getTitle() + "' ,'" + jobPosting.getText()
 						+ "' ,'" + jobPosting.getDeadline() + "' ," + jobPosting.getProjectId() + ")");
 			}
@@ -111,7 +111,7 @@ public class JobPostingMapper {
 			stmt.executeUpdate(
 					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + " Text='" + jobPosting.getText()
 							+ "', " + "deadline='" + jobPosting.getDeadline()+ "', " + " status= '" 
-							+ jobPosting.getStatus() + " WHERE id=" + jobPosting.getId());
+							+ jobPosting.getStatus() + "' WHERE id=" + jobPosting.getId());
 		}
 		/**
 		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die

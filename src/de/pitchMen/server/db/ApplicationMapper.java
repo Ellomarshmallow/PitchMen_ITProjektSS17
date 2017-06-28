@@ -10,11 +10,11 @@ import de.pitchMen.shared.bo.Application;
 
 /**
  * Die Klasse ApplicationMapper bildet Application-Objekte auf einer relationale
- * Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu
+ * Datenbank ab. Ebenfalls ist es mï¿½glich aus Datenbank-Tupel Java-Objekte zu
  * erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
- * Methoden (Speichern, Suchen, Löschen, Bearbeiten).
+ * Methoden (Speichern, Suchen, Lï¿½schen, Bearbeiten).
  * 
  * @author Heike
  */
@@ -22,24 +22,24 @@ public class ApplicationMapper {
 
 	/**
 	 * Die Klasse ApplicationMapper wird nur einmal instantiiert
-	 * (Singelton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singelton-Eigenschaft). Damit diese Eigenschaft erfï¿½llt werden kann,
+	 * wird zunï¿½chst eine Variable mit dem Schlï¿½sselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 	private static ApplicationMapper applicationMapper = null;
 
 	/**
-	 * Ein geschützter Konstrukter verhindert eine neue Instanz dieser Klasse zu
+	 * Ein geschï¿½tzter Konstrukter verhindert eine neue Instanz dieser Klasse zu
 	 * erzeugen.
 	 */
 	protected ApplicationMapper() {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafï¿½r,
 	 * dass nur eine einzige Instanz der ApplicationMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über ApplicationMapper.applicationMapper() 
-	 * und nicht über den New-Operator.
+	 * Aufgerufen wird die Klasse somit ï¿½ber ApplicationMapper.applicationMapper() 
+	 * und nicht ï¿½ber den New-Operator.
 	 * 
 	 * @return applicationMapper
 	 */
@@ -51,7 +51,7 @@ public class ApplicationMapper {
 	}
 
 	/**
-	 * Fügt ein Application-Objekt der Datenbank hinzu. 
+	 * Fï¿½gt ein Application-Objekt der Datenbank hinzu. 
 	 * 
 	 * @param application
 	 * @return application
@@ -69,9 +69,9 @@ public class ApplicationMapper {
 			Statement stmt = con.createStatement();
 
 			/**
-			 * Abfrage des als letztes hinzugefügten Primärschlüssels (id) Datensatzes. 
-			 * Die aktuelle id wird um eins erhöht.
-			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 * Abfrage des als letztes hinzugefï¿½gten Primï¿½rschlï¿½ssels (id) Datensatzes. 
+			 * Die aktuelle id wird um eins erhï¿½ht.
+			 * Statement ausfï¿½llen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM application");
 			if(rs.next()) {
@@ -79,14 +79,14 @@ public class ApplicationMapper {
 			}
 			stmt = con.createStatement();
 				/**
-				 * SQL-Anweisung zum Einfügen des neuen Datensatzes in die Datenbank.
+				 * SQL-Anweisung zum Einfï¿½gen des neuen Datensatzes in die Datenbank.
 				 */
-				stmt.executeUpdate("INSERT INTO appilcation (id, text, dateCreated, jobPosting_id, partnerProfil_id)"
+				stmt.executeUpdate("INSERT INTO application (id, text, dateCreated, jobPosting_id, partnerProfil_id, status)"
 						+ "VALUES ( " + application.getId() + ", '" + application.getText() + "' ,'"
-						+ application.getDateCreated() + "' ," + application.getJobPostingId() + " ,'"
-						+ application.getPartnerProfileId() + ")");
+						+ application.getDateCreated().toString() + "' ," + application.getJobPostingId() + " ,"
+						+ application.getPartnerProfileId() + " ,'" + application.getStatus() + "')");
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -108,13 +108,13 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des ï¿½bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE application SET text='" + application.getText() + "', dateCreated= '"
 					+ application.getDateCreated() + application.getStatus() + "WHERE id= " + application.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -125,7 +125,7 @@ public class ApplicationMapper {
 	}
 
 	/**
-	 * Löscht ein Application-Objekt aus der Datenbank.
+	 * Lï¿½scht ein Application-Objekt aus der Datenbank.
 	 * 
 	 * @param application
 	 */
@@ -135,12 +135,12 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Lï¿½schen des ï¿½bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM application " + "WHERE id=" + application.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -150,7 +150,7 @@ public class ApplicationMapper {
 	}
 
 	/**
-	 * Findet ein Application-Objekt anhand der übergebenen Id in der Datenbank.
+	 * Findet ein Application-Objekt anhand der ï¿½bergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return application
@@ -161,14 +161,14 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der ï¿½bergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, text, dateCreated, jobPosting_id, partnerProfil_id, status FROM application "
 							+ "WHERE id =" + id);
 			/**
-			 * Der Primärschlüssel (id) wird als eine Tupel zurückgegeben. Es
-			 * wird geprüft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * Der Primï¿½rschlï¿½ssel (id) wird als eine Tupel zurï¿½ckgegeben. Es
+			 * wird geprï¿½ft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
 			 * ein Objekt umgewandelt.
 			 * 
 			 */
@@ -183,7 +183,7 @@ public class ApplicationMapper {
 				return application;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -216,7 +216,7 @@ public class ApplicationMapper {
 			 * Tabelle application vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Application application = new Application();
@@ -229,7 +229,7 @@ public class ApplicationMapper {
 				result.add(application);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -240,7 +240,7 @@ public class ApplicationMapper {
 	}
 
 	/**
-	 * Findet ein Application-Objekt anhand des übergebenen Namens in der Datenbank.
+	 * Findet ein Application-Objekt anhand des ï¿½bergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
 	 * @return ArryList<Application>
@@ -263,7 +263,7 @@ public class ApplicationMapper {
 			 * Tabelle application vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Application application = new Application();
@@ -276,7 +276,7 @@ public class ApplicationMapper {
 				result.add(application);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -289,15 +289,15 @@ public class ApplicationMapper {
 	/**
 	/**
 	 * Findet alle Bewerbungen passend zur ratngId (Bewertung), innerhalb der application Tabelle. 
-	 * Übergibt ein application-Objekt.
+	 * ï¿½bergibt ein application-Objekt.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass eine Bewerbung mehrere Bewertungen hat,
-	 * müssen die application-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensï¿½tze zusammengefï¿½gt
+	 * werden, zu den es jeweils auch ein Gegenstï¿½ck in der verknï¿½pften 
+	 * Tabelle gibt. Da es mï¿½glich ist, dass eine Bewerbung mehrere Bewertungen hat,
+	 * mï¿½ssen die application-Objekte in einer ArrayList gespeichert werden.
 	 * 	
-	 * LEFT JOIN: Gib alle Datensätze aus der linken Tabelle und die
-	 * abgestimmten Datensätze aus der rechten Tabelle zurück.
+	 * LEFT JOIN: Gib alle Datensï¿½tze aus der linken Tabelle und die
+	 * abgestimmten Datensï¿½tze aus der rechten Tabelle zurï¿½ck.
 	 * 
 	 * @return ArryList<Application>
 	 */
@@ -317,7 +317,7 @@ public class ApplicationMapper {
 			 * Tabelle application vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				ArrayList<String> applicationRating = new ArrayList<String>();
@@ -332,7 +332,7 @@ public class ApplicationMapper {
 				applicationRating.add("rating.score");
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -344,12 +344,12 @@ public class ApplicationMapper {
 
 	/**
 	 * Findet die Bewerbungen passend zur Person-Id, innerhalb der applicaton-Tabelle. 
-	 * Übergibt ein application-Objekt.
+	 * ï¿½bergibt ein application-Objekt.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass eine Person mehrere Bewerbungen hat,
-	 * müssen die Bewerbungs-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensï¿½tze zusammengefï¿½gt
+	 * werden, zu den es jeweils auch ein Gegenstï¿½ck in der verknï¿½pften 
+	 * Tabelle gibt. Da es mï¿½glich ist, dass eine Person mehrere Bewerbungen hat,
+	 * mï¿½ssen die Bewerbungs-Objekte in einer ArrayList gespeichert werden.
 	 *
 	 * @param personId
 	 * @return ArryList<Application>
@@ -362,7 +362,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden der Datensätze, nach der gesuchten PersonenId, in der Datenbank.
+			 * SQL-Anweisung zum Finden der Datensï¿½tze, nach der gesuchten PersonenId, in der Datenbank.
 			 */			
 			ResultSet rs = stmt.executeQuery("SELECT * FROM application INNER JOIN partnerProfile"
 					+ " ON application.partnerProfil_id = partnerProfile.id WHERE partnerProfile.person_id = "
@@ -372,7 +372,7 @@ public class ApplicationMapper {
 			 * Tabelle application vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Application application = new Application();
@@ -385,7 +385,7 @@ public class ApplicationMapper {
 				result.add(application);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	
@@ -402,9 +402,9 @@ public class ApplicationMapper {
 	}
 	
 	/**
-	 * Methode ist für das herausfinden, ob Beziehungen zwischen Application und JobPostings bestehen, 
-	 * um Applications löschen zu können. Da zu einem JobPosting (Ausschreibung) mehrere Bewerbungen 
-	 * bestehen können, muss die Rückgabe in einer ArrayList mit den jeweiligen Application-Objekten, erfolgen. 
+	 * Methode ist fï¿½r das herausfinden, ob Beziehungen zwischen Application und JobPostings bestehen, 
+	 * um Applications lï¿½schen zu kï¿½nnen. Da zu einem JobPosting (Ausschreibung) mehrere Bewerbungen 
+	 * bestehen kï¿½nnen, muss die Rï¿½ckgabe in einer ArrayList mit den jeweiligen Application-Objekten, erfolgen. 
 	 * 
 	 * @param jobPostingId
 	 * @return ArryList<Application>
@@ -418,7 +418,7 @@ public class ApplicationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung - Anhand der übergebenen jobPostingId werden die dazugehörigen
+			 * SQL-Anweisung - Anhand der ï¿½bergebenen jobPostingId werden die dazugehï¿½rigen
 			 * Application-Tupel (Bewerbungen) aus der Datenbank abgefragt.
 			 */
 			ResultSet rs = stmt.executeQuery(
@@ -430,7 +430,7 @@ public class ApplicationMapper {
 			 * Tabelle application vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Application application = new Application();
@@ -443,7 +443,7 @@ public class ApplicationMapper {
 				result.add(application);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */	

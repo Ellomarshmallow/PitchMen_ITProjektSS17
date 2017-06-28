@@ -154,8 +154,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Text der Ausschreibung
 		headline.addColumn(new Column("JobPosting Text"));
 
-		// das dazugeh�rige Projekt der Ausschreibung
-		headline.addColumn(new Column("dazugeh�riges Projekt"));
+		//F�r AllJobPostings, brauchen wir keine "Dazugeh�rige Projekte
+//		// das dazugeh�rige Projekt der Ausschreibung
+		//headline.addColumn(new Column("dazugehoeriges Projekt"));
 
 		// Deadline der Ausschreibung
 		headline.addColumn(new Column("Deadline"));
@@ -177,7 +178,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
-			jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
+			//jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getDeadline().toString()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getStatus().toString()));
 			result.addRow(jobPostingZeile);
@@ -227,22 +228,22 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			result.addRow(headline);
 
-			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
-
-			for (JobPosting jp : allJobPostings) {
-
-				Row jobPostingRow = new Row();
-
-				jobPostingRow = new Row();
-
-				jobPostingRow.addColumn(new Column(jp.getTitle()));
-				jobPostingRow.addColumn(new Column(jp.getText()));
-				// FIXME
-				// jobPostingRow.addColumn(new
-				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
-
-				result.addRow(jobPostingRow);
-			}
+//			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
+//
+//			for (JobPosting jp : allJobPostings) {
+//
+//				Row jobPostingRow = new Row();
+//
+//				jobPostingRow = new Row();
+//
+//				jobPostingRow.addColumn(new Column(jp.getTitle()));
+//				jobPostingRow.addColumn(new Column(jp.getText()));
+//				// FIXME
+//				// jobPostingRow.addColumn(new
+//				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
+//
+//				result.addRow(jobPostingRow);
+//			}
 			return result;
 
 		}
@@ -405,7 +406,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugeh�rigen Ausschreibungen");
+		result.setTitle("Alle Bewerbungen eines Nutzers mit den dazugeigen Ausschreibungen");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -428,6 +429,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Titel der Ausschreibung"));
 		// Beschreibung der Ausschreibung
 		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
+		//Status der Bewerbung abfragen
+		headline.addColumn(new Column("Status der Bewerbung"));
 		// Hinzuf�gen der Row zum Resultobjekt
 		result.addRow(headline);
 
@@ -454,12 +457,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			// Column(jobPoster.getDescription()));
 			applicationsrow.addColumn(new Column(jobPosting.getTitle()));
 			applicationsrow.addColumn(new Column(jobPosting.getText()));
+			applicationsrow.addColumn(new Column(jobPosting.getStatus()));
 
 			// Hinzuf�gen der Row zum Result
 			result.addRow(applicationsrow);
 
 		}
-		// R�ckgabe des fertigen Reports
+		 //R�ckgabe des fertigen Reports
 		return result;
 	}
 
@@ -766,7 +770,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanInAndOutReport result = new FanInAndOutReport();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Report f�r die FanIn bzw FanOut Analyse");
+		result.setTitle("Report fuer die FanIn bzw FanOut Analyse");
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
