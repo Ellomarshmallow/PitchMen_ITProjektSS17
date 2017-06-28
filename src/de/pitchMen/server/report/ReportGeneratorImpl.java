@@ -429,6 +429,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Titel der Ausschreibung"));
 		// Beschreibung der Ausschreibung
 		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
+		//Status der Bewerbung abfragen
+		headline.addColumn(new Column("Status der Bewerbung"));
 		// Hinzuf�gen der Row zum Resultobjekt
 		result.addRow(headline);
 
@@ -455,6 +457,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			// Column(jobPoster.getDescription()));
 			applicationsrow.addColumn(new Column(jobPosting.getTitle()));
 			applicationsrow.addColumn(new Column(jobPosting.getText()));
+			applicationsrow.addColumn(new Column(jobPosting.getStatus()));
 
 			// Hinzuf�gen der Row zum Result
 			result.addRow(applicationsrow);

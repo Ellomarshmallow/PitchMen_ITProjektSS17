@@ -50,8 +50,7 @@ public class ReportDisplay implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
-		RootPanel.get("content").add(new HTML("<p class='load-msg'>Warte auf Nutzereingabe.</p>"));
+		RootPanel.get("content").add(new HTML("<h2>Reports über die PitchMen-Applikation</h2><p>Bitte wählen Sie in der Navigation links den gewünschten Report aus.</p>"));
 		ClientsideSettings.getPitchMenAdmin().login(GWT.getHostPageBaseURL() + "ReportGenerator.html", new LoginCallback(this));
 	}
 
