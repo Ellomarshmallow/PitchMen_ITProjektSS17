@@ -91,10 +91,10 @@ public class PartnerProfileForm extends Formular {
 		// RPC-Abfrage des Partnerprofils nach Person
 		this.pitchMenAdmin.getPartnerProfileByPersonId(currentUserId, new PartnerProfileCallback());
 		
-		//RPC-Abfrage des Partnerprofils nach Teams
+		//RPC-Abfrage des Partnerprofils nach Team
 		this.pitchMenAdmin.getPartnerProfileByTeamId(currentTeamId, new PartnerProfileCallback());
 		
-		//RPC-Abfrage des Partnerprofils nach Unternehmes
+		//RPC-Abfrage des Partnerprofils nach Unternehmen
 		this.pitchMenAdmin.getPartnerProfileByCompanyId(currentCompanyId, new PartnerProfileCallback());
 	}
 	
