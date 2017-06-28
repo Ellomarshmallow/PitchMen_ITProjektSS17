@@ -170,8 +170,7 @@ public class ReportNavigation extends VerticalPanel {
 
 			}
 		});
-		
-		
+
 		report5Btn.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -199,6 +198,30 @@ public class ReportNavigation extends VerticalPanel {
 			}
 		});
 
+		report6Btn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				final HTMLReportWriter writer = new HTMLReportWriter();
+				ClientsideSettings.getReportGenerator().showFanInAndOutReport(new AsyncCallback<FanInAndOutReport>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt");
+
+					}
+
+					@Override
+					public void onSuccess(FanInAndOutReport result) {
+						writer.process(result);
+						RootPanel.get("content").clear();
+						RootPanel.get("content").add(new HTML(writer.getReportText()));
+					}
+				});
+
+			}
+		});
+
 		/*
 		 * Sie werden der Navigation hinzugefügt
 		 */
@@ -212,171 +235,3 @@ public class ReportNavigation extends VerticalPanel {
 	}
 
 }
-
-
-
-//// case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case
-// this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
-//// reportContent = this.getFanInFanOutAnalysis();
-//// break;
-////
-//// }
-//// RootPanel.get("content").add(new HTML("<h3>Button geklickt: " + reportNo +
-// "</h3>"));
-//// RootPanel.get("content").add(reportContent);
-//// }});
-//
-//
-// private HTML getFanInFanOutAnalysis() {
-// final HTMLReportWriter writer = new HTMLReportWriter();
-// ClientsideSettings.getReportGenerator().showFanInAndOutReport(new
-// AsyncCallback<FanInAndOutReport>() {
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// // TODO Auto-generated method stub
-//
-// }
-//
-// @Override
-// public void onSuccess(FanInAndOutReport result) {
-// writer.process(result);
-// reportContent = new HTML(writer.getReportText());
-// }
-// });
-// return reportContent;
-// }
-//
-// private HTML getProjectInterveawings() {
-// final HTMLReportWriter writer = new HTMLReportWriter();
-//
-// ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
-// ClientsideSettings.getCurrentUser(),
-// new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// // TODO Auto-generated method stub
-//
-// }
-//
-// @Override
-// public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications
-// result) {
-// writer.process(result);
-// reportContent = new HTML(writer.getReportText());
-// }
-// });
-// return reportContent;
-// }
-//
-// private HTML getAllApplicationsOfUserWithJobPostings() {
-// final HTMLReportWriter writer = new HTMLReportWriter();
-//
-// ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(ClientsideSettings.getCurrentUser(),new
-// AsyncCallback<AllApplicationsOfUser>() {
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt :()");
-// }
-//
-// @Override
-// public void onSuccess(AllApplicationsOfUser result) {
-// writer.process(result);
-// reportContent = new HTML(writer.getReportText());
-// }
-// });
-// return reportContent;
-// }
-//
-// private HTML getApplicationsRelatedToJobPostingsOfUser() {
-// final HTMLReportWriter writer = new HTMLReportWriter();
-// ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(),
-// new AsyncCallback<Person>() {
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// // TODO Auto-generated method stub
-//
-// }
-//
-// @Override
-// public void onSuccess(Person result) {
-// ClientsideSettings.getReportGenerator().showApplicationsRelatedToJobPostingsOfUser(result,
-// new AsyncCallback<ApplicationsRelatedToJobPostingsOfUser>() {
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// // TODO Auto-generated method stub
-//
-// }
-//
-// @Override
-// public void onSuccess(ApplicationsRelatedToJobPostingsOfUser result) {
-// writer.process(result);
-// reportContent = new HTML(writer.getReportText());
-// }
-// });
-// }
-// });
-// return reportContent;
-// }
-//
-//
-// private HTML getAllJobPostingsMatchingPartnerProfileOfUser() {
-// final HTMLReportWriter writer = new HTMLReportWriter();
-// ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(),
-// new AsyncCallback<PartnerProfile>() {
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// // TODO Auto-generated method stub
-//
-// }
-//
-// @Override
-// public void onSuccess(PartnerProfile result) {
-// ClientsideSettings.getReportGenerator().showAllJobPostingsMatchingPartnerProfileOfUser(result,
-// new AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser>() {
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// // TODO Auto-generated method stub
-//
-// }
-//
-// @Override
-// public void onSuccess(AllJobPostingsMatchingPartnerProfileOfUser result) {
-// writer.process(result);
-// reportContent = new HTML(writer.getReportText());
-// }
-//
-// });
-// }
-//
-// });
-// return reportContent;
-// }
-//
-// private HTML getAllJobPostings() {
-// final HTMLReportWriter writer = new HTMLReportWriter();
-// ClientsideSettings.getReportGenerator().showAllJobPostings(new
-// AsyncCallback<AllJobPostings>() {
-//
-// @Override
-// public void onSuccess(AllJobPostings result) {
-// writer.process(result);
-// reportContent = new HTML(writer.getReportText());
-//
-// }
-//
-// @Override
-// public void onFailure(Throwable caught) {
-// ClientsideSettings.getLogger().severe("Upsi, da ist was schief gelaufen");
-//
-// }
-// });
-// return reportContent;
-// }
-// }
