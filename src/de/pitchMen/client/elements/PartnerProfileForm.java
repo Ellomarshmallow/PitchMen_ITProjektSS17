@@ -162,7 +162,7 @@ public class PartnerProfileForm extends Formular {
 			if(result.isEmpty()) {
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(new HTML("<h2>Für Ihr Partnerprofil gibt es noch keine Eigenschaften.</h2></br></br><p>Nutzen Sie das Partnerprofil "
-						+ "um Ihre persönlichen Fähigkeiten anzulegen und hierdurch passende Ausschreibungen zu finden.</p>"));
+						+ "um Ihre persönlichen Fähigkeiten anzulegen und hierdurch passende Ausschreibungen zu finden. Bitte geben Sie ihren Eigenschaften Werte aus dem Bereich: sehr gut, gut, mittel.</p>"));
 				ClientsideSettings.getLogger().info("RPC gibt null zurück - das Partnerprofil mit der id " + userPartnerProfile.getId() + " hat noch keine Traits.");
 				
 				FlexTable traitTable = new FlexTable();
@@ -350,7 +350,7 @@ public class PartnerProfileForm extends Formular {
 				
 				traitTable.getFlexCellFormatter().setColSpan(rowCount, 0, 4);
 				traitTable.setWidget(rowCount, 0, new HTML("<h3>Neue Eigenschaft hinzufügen</h3>"
-						+ "</br></br><p>Bitte geben Sie ihrer Eigenschaft Werte aus dem Bereich: sehr gut, gut, schlecht.</p>"));
+						+ "</br></br><p>Bitte geben Sie ihrer Eigenschaft Werte aus dem Bereich: sehr gut, gut, mittel.</p>"));
 				
 				rowCount = traitTable.getRowCount();
 				
