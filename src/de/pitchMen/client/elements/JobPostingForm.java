@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -392,8 +393,7 @@ public class JobPostingForm extends Formular{
 																							@Override
 																							public void onClick(ClickEvent event) {
 																								if(Window.confirm("Diese Bewerbung jetzt bewerten?")) {
-																									float decScore = (Integer.parseInt(scoreBox.getText()))/100;
-																									ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), decScore, app.getId(), new AsyncCallback<Rating>() {
+																									ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), (Float.parseFloat(scoreBox.getText())/100), app.getId(), new AsyncCallback<Rating>() {
 
 																										@Override
 																										public void onFailure(
