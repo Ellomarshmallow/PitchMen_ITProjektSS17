@@ -214,16 +214,6 @@ public class ProjectForm extends Formular {
 
 	// ---------- ClickHandler
 
-	// ---------- addProjectClickHandler
-	private class addProjectClickHandler implements ClickHandler {
-
-		public void onClick(ClickEvent event) {
-
-			AddProjectForm addProject = new AddProjectForm(selectedProject, pitchMenTreeViewModel, true);
-
-		}
-	}
-
 	// ---------- addJobPostingClickHandler()
 	private class addJobPostingClickHandler implements ClickHandler {
 
