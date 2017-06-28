@@ -11,11 +11,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Team;
 import de.pitchMen.shared.bo.Trait;
 
 /**
@@ -90,7 +92,7 @@ public class PartnerProfileForm extends Formular {
 		
 		// RPC-Abfrage des Partnerprofils nach Person
 		this.pitchMenAdmin.getPartnerProfileByPersonId(currentUserId, new PartnerProfileCallback());
-		
+			
 		//RPC-Abfrage des Partnerprofils nach Team
 		this.pitchMenAdmin.getPartnerProfileByTeamId(currentTeamId, new PartnerProfileCallback());
 		
@@ -440,7 +442,7 @@ public class PartnerProfileForm extends Formular {
 			 */ 
 			java.util.Date initialDate = new java.util.Date();
 			java.sql.Date convertedInitialDate = new java.sql.Date(initialDate.getTime());
-			pitchMenAdmin.addPartnerProfileForTeam(convertedInitialDate, convertedInitialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
+			pitchMenAdmin.addPartnerProfileForPerson(convertedInitialDate, convertedInitialDate, currentUserId, new AsyncCallback<PartnerProfile>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -471,13 +473,49 @@ public class PartnerProfileForm extends Formular {
 			 *  wird der Button geklickt, muss ein 
 			 *  neues Team erstellt werden.
 			 */
-			CreateTeamForm addCreatTeamForm = new CreateTeamForm(userPartnerProfile);
-
+			TextBox nameBox = new TextBox(); 
+			TextArea descArea = new TextArea();
+			TextBox teamSizeBox = new TextBox();
+					
+			RootPanel.get("content").clear(); 
+			RootPanel.get("content").add(new HTML("Teamname:"));
+			RootPanel.get("content").add(nameBox);
+			RootPanel.get("content").add(new HTML("Teambeschreibung:"));
+			RootPanel.get("content").add(descArea);
+			RootPanel.get("content").add(new HTML("Teamgröße:"));
+			RootPanel.get("content").add(teamSizeBox);
+			
+			Button save = new Button("Speichern");
+			save.addClickHandler(new SaveClickHandler()); 
+			RootPanel.get("content").add(save);
+		}
+			private class SaveClickHandler implements ClickHandler{
+				public void onClick(ClickEvent event){
+					
+			
+			ClientsideSettings.getPitchMenAdmin().addTeam(nameBox.getText(), descArea.getText(), Integer.parseInt(teamSizeBox.getText()), new AsyncCallback<Team>(){
+			
+				public void onFailure(Throwable caught) {
+					ClientsideSettings.getLogger().severe("Neues Team konnte nicht gespeichert werden.");
 				}
+					
+					public void onSuccess(Team result) {
+					
+						ClientsideSettings.getPitchMenAdmin().addPartnerProfileForTeam(dateCreated, dateChanged, teamId, callback);
+						
+						
+					}
+			});
+				}
+			}
+			
+			
 				
+				
+		
 			}
 		
-	}
+	
 	
 	/**
 	 * Die genestete Klasse <code>CreateTeamPartnerProfileClickHandler</code>
@@ -491,10 +529,9 @@ public class PartnerProfileForm extends Formular {
 			 *  wird der Button geklickt, muss ein 
 			 *  neues partnerProfile erstellt werden.
 			 */ 
-			CreateCompanyForm addCreatCompanyForm = new CreateCompanyForm(userPartnerProfile);
+			CreateCompanyForm addCreatCompanyForm = new CreateCompanyForm();
 				
 			}
-
 	}
 	
 	/**
