@@ -175,12 +175,17 @@ strong {
 #nav button {
 	width: 100%;
 	border: none;
-	background: #1c9cd8;
-	color: #fff;
+	background: transparent;
+	color: #666;
 	padding: 15px 0px 15px 20px;
 	text-align: left;
 	font-size: 100%;
 	cursor: pointer;
+}
+
+#nav button.editor {
+	background: #1c9cd8;
+	color: #fff;
 }
 
 #nav button:hover,
