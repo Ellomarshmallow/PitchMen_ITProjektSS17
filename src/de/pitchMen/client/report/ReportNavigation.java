@@ -171,6 +171,33 @@ public class ReportNavigation extends VerticalPanel {
 			}
 		});
 		
+		
+		report5Btn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				final HTMLReportWriter writer = new HTMLReportWriter();
+
+				ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
+						ClientsideSettings.getCurrentUser(),
+						new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt");
+
+							}
+
+							@Override
+							public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
+								writer.process(result);
+								RootPanel.get("content").clear();
+								RootPanel.get("content").add(new HTML(writer.getReportText()));
+							}
+						});
+
+			}
+		});
 
 		/*
 		 * Sie werden der Navigation hinzugefügt
@@ -187,10 +214,7 @@ public class ReportNavigation extends VerticalPanel {
 }
 
 
-//// case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case
-// this.getProjectInterveawings() ausgewählt</h3>"));
-//// reportContent = this.getProjectInterveawings();
-//// break;
+
 //// case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case
 // this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
 //// reportContent = this.getFanInFanOutAnalysis();
