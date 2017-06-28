@@ -228,27 +228,28 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			result.addRow(headline);
 
-//			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
-//
-//			for (JobPosting jp : allJobPostings) {
-//
-//				Row jobPostingRow = new Row();
-//
-//				jobPostingRow = new Row();
-//
-//				jobPostingRow.addColumn(new Column(jp.getTitle()));
-//				jobPostingRow.addColumn(new Column(jp.getText()));
-//				// FIXME
-//				// jobPostingRow.addColumn(new
-//				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
-//
-//				result.addRow(jobPostingRow);
-//			}
+			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
+
+			for (JobPosting jp : allJobPostings) {
+
+				Row jobPostingRow = new Row();
+
+				jobPostingRow = new Row();
+
+				jobPostingRow.addColumn(new Column(jp.getTitle()));
+				jobPostingRow.addColumn(new Column(jp.getText()));
+				// FIXME
+				// jobPostingRow.addColumn(new
+				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
+
+				result.addRow(jobPostingRow);
+			}
 			return result;
 
 		}
 		// R�ckgabe des fertigen Reports
 		return null;
+		
 		// TODO Methode noch zu erledigen!
 	}
 
@@ -288,31 +289,31 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
 		 * einzeilig, daher die Verwendung von Rows.
 		 */
-		Row headline = new Row();
+//		Row headline = new Row();
 		// Erstellungsdatum der Bewerbung
-		headline.addColumn(new Column("Erstellungsdatum"));
+//		headline.addColumn(new Column("Erstellungsdatum"));
 		// Bewerbungstext der Bewerbung
-		headline.addColumn(new Column("Bewerbungstext"));
+//		headline.addColumn(new Column("Bewerbungstext"));
 		// Hinzufügen der zusammengestellten Kopfdaten zu dem Report
-		result.addRow(headline);
+//		result.addRow(headline);
 
 		/*
 		 * Nun werden sämtliche Bewerbungen ausgelesen und deren
 		 * Erstellungsdatum und Text sukzessive in die Tabelle eingetragen.
 		 */
-		ArrayList<Application> applications = pitchMenAdmin.getApplications();
-		for (Application a : applications) {
-
-			if (a.getPartnerProfileId() == p.getId()) {
+		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
+		for (JobPosting a : jobPostings) {
+			
+			Project pt = pitchMenAdmin.getProjectByID(a.getProjectId());
+			
+			Person bewerber = pitchMenAdmin.getPersonByID(pt.getPersonId());
+			
+			if (bewerber.getId() == p.getId()) {
 			}
 			;
-			Row applicationsrow = new Row();
-
-			applicationsrow.addColumn(new Column(a.getDateCreated().toString()));
-			applicationsrow.addColumn(new Column(a.getText()));
-
+			
 			// Hinzuf�gen der Row zum Result
-			result.addRow(applicationsrow);
+			result.addSubReport(this.showAllApplicationsToOneJobPostingOfUser(a.getId()));
 		}
 
 		// R�ckgabe des fertigen Reports
@@ -358,6 +359,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
 		 * einzeilig, daher die Verwendung von Rows.
 		 */
+		// Bewerber
+		headline.addColumn(new Column("Bewerber"));
 		// Erstellungsdatum der Bewerbung
 		headline.addColumn(new Column("Erstellungsdatum"));
 		// Text der Bewerbung
@@ -375,10 +378,16 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		for (Application a : applications) {
 
 			Row applicationRow = new Row();
-
+			
+			PartnerProfile pp = pitchMenAdmin.getPartnerProfileByID(a.getPartnerProfileId());
+			
+			Person bewerber =  pitchMenAdmin.getPersonByID(pp.getPersonId());
+				
+			
+			applicationRow.addColumn(new Column(bewerber.getName()));
 			applicationRow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationRow.addColumn(new Column(a.getText()));
-			applicationRow.addColumn(new Column(a.getStatus()));
+			applicationRow.addColumn(new Column(a.getStatus().toString()));
 
 			// Hinzuf�gen der Row zum Result
 			result.addRow(applicationRow);
