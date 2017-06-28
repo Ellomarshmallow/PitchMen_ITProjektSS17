@@ -31,7 +31,7 @@ public abstract class ReportWriter {
 	
 	public abstract void process(AllApplicationsToOneJobPostingOfUser a);
 	
-// wird vermutlich nicht gebraucht	public abstract void process(AllApplicationsOfOneUser a);
+	public abstract void process(AllApplicationsOfOneUser a);
 	
 	
 	
