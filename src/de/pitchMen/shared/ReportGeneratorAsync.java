@@ -45,7 +45,7 @@ public interface ReportGeneratorAsync {
     /**
 	 * 
 	 */
-	void showAllApplicationsOfUser(int id, AsyncCallback<AllApplicationsOfUser> callback);
+	void showAllApplicationsOfUser(Person p, AsyncCallback<AllApplicationsOfUser> callback);
 	/**
 	 * 
 	 */
