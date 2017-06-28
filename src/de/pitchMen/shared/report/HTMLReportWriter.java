@@ -105,7 +105,23 @@ public class HTMLReportWriter extends ReportWriter {
 //		 buff.append("<td> PartnerProfilID </td>");
 //		 buff.append("<td> Status </td></tr>");
 
+		//Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der Rows aus dem Übergabeobjekt.
+		ArrayList<Row> rows = a.getRows();
+		
+		//Prüfung, ob in dem Array was drinne ist. 
+		if (rows == null) {
+			ClientsideSettings.getLogger().info("Das Array beinhaltet keine Rows");
+		}
 
+		for (int i = 0; i < rows.size(); i++) {
+			buff.append("<tr>");
+			Row row = rows.get(i);
+			
+			for (int x = 0; x < row.getNumberOfColumns(); x++) {
+				buff.append("<td>" + row.getColumnAt(x) + "</td>");
+			}
+			buff.append("</tr>");
+		}
 
 		buff.append("</table");
 		this.reportText = buff.toString();
