@@ -37,6 +37,20 @@ public class PartnerProfileForm extends Formular {
 	private int currentUserId = 0;
 	
 	/**
+	 * Der angemeldete Nutzer muss dem Formular bekannt sein,
+	 * um ihm das richtige PartnerProfile zur Bearbeitung
+	 * ausgeben zu können.
+	 */
+	private int currentTeamId = 0;
+	
+	/**
+	 * Der angemeldete Nutzer muss dem Formular bekannt sein,
+	 * um ihm das richtige PartnerProfile zur Bearbeitung
+	 * ausgeben zu können.
+	 */
+	private int currentCompanyId = 0;
+	
+	/**
 	 * Auch in dieser Klasse werden die Funktionalitäten der
 	 * {@link de.pitchMen.server.PitchMenAdminImpl} benötigt.
 	 */
@@ -74,8 +88,14 @@ public class PartnerProfileForm extends Formular {
 		// Abfrage der id des aktuell angemeldeten Nutzers
 		this.currentUserId = ClientsideSettings.getCurrentUser().getId();
 		
-		// RPC-Abfrage des Partnerprofils
+		// RPC-Abfrage des Partnerprofils nach Person
 		this.pitchMenAdmin.getPartnerProfileByPersonId(currentUserId, new PartnerProfileCallback());
+		
+		//RPC-Abfrage des Partnerprofils nach Teams
+		this.pitchMenAdmin.getPartnerProfileByTeamId(currentTeamId, new PartnerProfileCallback());
+		
+		//RPC-Abfrage des Partnerprofils nach Unternehmes
+		this.pitchMenAdmin.getPartnerProfileByCompanyId(currentCompanyId, new PartnerProfileCallback());
 	}
 	
 	/**
@@ -344,7 +364,21 @@ public class PartnerProfileForm extends Formular {
 				traitTable.setWidget(rowCount, 3, new HTML(""));
 				
 				RootPanel.get("content").add(traitTable);
+				
+				//Buttons zum Anlegen von Team oder Unternehmen
+				
+				Button createTeamButton = new Button("Team anlegen");
+				Button createCompanyButton = new Button("Unternehmen anlegen");
+				createTeamButton.addClickHandler(new CreateTeamPartnerProfileClickHandler());
+				createCompanyButton.addClickHandler(new CreateCompanyPartnerProfileClickHandler());
+				RootPanel.get("content").add(createTeamButton);			
+				RootPanel.get("content").add(createCompanyButton);
+				
+				//FIXME If-Abfrage, wenn schon ein Partnerprofil von Team oder Person angelegt ist, dann sollte das zum öffenen angezeigt werden.
+				
 			}
+			
+			
 		}
 		
 	}
