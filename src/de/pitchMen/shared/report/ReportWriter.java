@@ -33,6 +33,8 @@ public abstract class ReportWriter {
 	
 	public abstract void process(AllParticipationsOfOneUser a);
 	
+	public abstract void process(AllApplicationsOfOneUser a);
+	
 	
 	
 }
