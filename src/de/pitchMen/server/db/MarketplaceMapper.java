@@ -375,21 +375,23 @@ public class MarketplaceMapper {
 		return result;
 	}
 
-	public Marketplace findMarketplacesByPersonId(int person_id) {
+	public ArrayList<Marketplace> findMarketplacesByPersonId(int person_id) {
 		Connection con = DBConnection.connection();
+
+		ArrayList<Marketplace> result = new ArrayList<Marketplace>();
 
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der �bergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, description, title, person_id, team_id, company_id FROM marketplace "
 							+ "WHERE id=" + person_id);
 			/**
-			 * Zu einem Prim�rschl�ssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfragen gepr�ft, ob es f�r den angefragten Prim�rschl�ssel
+			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
 			 * ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -400,7 +402,7 @@ public class MarketplaceMapper {
 				marketplace.setCompanyId(rs.getInt("company_id"));
 				marketplace.setPersonId(rs.getInt("person_id"));
 				marketplace.setTeamId(rs.getInt("team_id"));
-				return marketplace;
+				result.add(marketplace);
 			}
 		}
 		/**
@@ -411,6 +413,6 @@ public class MarketplaceMapper {
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
-		return null;
+		return result;
 	}
 }
