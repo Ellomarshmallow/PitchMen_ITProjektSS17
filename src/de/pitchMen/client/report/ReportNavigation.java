@@ -115,9 +115,9 @@ public class ReportNavigation extends VerticalPanel {
 				case 4: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getAllApplicationsOfUserWithJobPostings() ausgewählt</h3>"));
 						reportContent = this.getAllApplicationsOfUserWithJobPostings();
 						break;
-				case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getProjectInterveawings() ausgewählt</h3>"));
-						reportContent = this.getProjectInterveawings();
-						break;
+//				case 5: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getProjectInterveawings() ausgewählt</h3>"));
+//						reportContent = this.getProjectInterveawings();
+//						break;
 				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
 						reportContent = this.getFanInFanOutAnalysis();
 						break;
@@ -145,28 +145,33 @@ public class ReportNavigation extends VerticalPanel {
 			return reportContent;
 		}
 
-		private HTML getProjectInterveawings() {
-			final HTMLReportWriter writer = new HTMLReportWriter();
-			
-			ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
-													ClientsideSettings.getCurrentUser(),
-													new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
-					writer.process(result);
-					reportContent = new HTML(writer.getReportText());
-				}
-			});
-			return reportContent;
-		}
-
+/**		
+ * FIXME: Report �berarbeiten und fertig machen
+ * 
+ */
+		
+//		private HTML getProjectInterveawings() {
+//			final HTMLReportWriter writer = new HTMLReportWriter();
+//			
+//			ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
+//													ClientsideSettings.getCurrentUser(),
+//													new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//
+//				@Override
+//				public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
+//					writer.process(result);
+//					reportContent = new HTML(writer.getReportText());
+//				}
+//			});
+//			return reportContent;
+//		}
+//
 		private HTML getAllApplicationsOfUserWithJobPostings() {
 			final HTMLReportWriter writer = new HTMLReportWriter();
 			
