@@ -13,8 +13,8 @@ public class AllApplicationsOfUser extends SimpleReport{
      * 
      */
     private static final long serialVersionUID = 1L;
-    
-    private int applicationId;
+
+//  private int applicationId;
     private int personId;
     
     
@@ -24,10 +24,10 @@ public class AllApplicationsOfUser extends SimpleReport{
 	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
-	public int getApplicationId() {
-		return applicationId;
-	}
-	public void setApplicationId(int applicationId) {
-		this.applicationId = applicationId;
-	}
+//	public int getApplicationId() {
+//		return applicationId;
+//	}
+//	public void setApplicationId(int applicationId) {
+//		this.applicationId = applicationId;
+//	}
 }
