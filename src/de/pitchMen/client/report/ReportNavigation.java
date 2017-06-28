@@ -42,7 +42,7 @@ public class ReportNavigation extends VerticalPanel {
 		Button report1Btn = new Button("Alle Ausschreibungen");
 		Button report2Btn = new Button("Alle Ausschreibungen passend zum Partnerprofil des Nutzers");
 		Button report3Btn = new Button("Alle Bewerbungen auf Ausschreibungen des Nutzers");
-		Button report4Btn = new Button("Alle Bewerbungen des Nutzers und dazu gehörende Ausschreibungen");
+		Button report4Btn = new Button("Alle Bewerbungen des Nutzers und dazu gehoerende Ausschreibungen");
 		Button report5Btn = new Button("Projektverflechtungen von Bewerbern");
 		Button report6Btn = new Button("Fan-In- und Fan-Out-Analyse");
 		
@@ -121,6 +121,7 @@ public class ReportNavigation extends VerticalPanel {
 				case 6: RootPanel.get("content").add(new HTML("<h3>Switch Case this.getFanInFanOutAnalysis() ausgewaehlt</h3>"));
 						reportContent = this.getFanInFanOutAnalysis();
 						break;
+						
 			}
 			RootPanel.get("content").add(new HTML("<h3>Button geklickt: " + reportNo + "</h3>"));
 			RootPanel.get("content").add(reportContent);
