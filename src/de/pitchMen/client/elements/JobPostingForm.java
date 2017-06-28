@@ -376,10 +376,10 @@ public class JobPostingForm extends Formular{
 																							applicationTable.setWidget(rowCount, 5, acceptButton);
 																						} else if(app.getStatus().equals("angenommen")) {
 																							applicationTable.getFlexCellFormatter().setColSpan(rowCount, 4, 2);
-																							applicationTable.setWidget(rowCount, 4, new HTML("<p class='accepted'>angenommen</p>"));
+																							applicationTable.setWidget(rowCount, 4, new HTML("<p class='app-status accepted'>angenommen</p>"));
 																						} else if(app.getStatus().equals("abgelehnt")) {
 																							applicationTable.getFlexCellFormatter().setColSpan(rowCount, 4, 2);
-																							applicationTable.setWidget(rowCount, 4, new HTML("<p class='denied'>abgelehnt</p>"));
+																							applicationTable.setWidget(rowCount, 4, new HTML("<p class='app-status denied'>abgelehnt</p>"));
 																						}
 																					} else {
 																						
