@@ -347,7 +347,7 @@ public class HTMLReportWriter extends ReportWriter {
 				 */
 				for (int i = 0; i < a.getNumSubReports(); i++) {
 
-					AllApplicationsOfUser subReportOne = (AllApplicationsOfUser)a.getSubReportAt(i);
+					AllApplicationsOfOneUser subReportOne = (AllApplicationsOfOneUser)a.getSubReportAt(i);
 					AllParticipationsOfOneUser subReportTwo = (AllParticipationsOfOneUser)a.getSubReportAt(i);
 
 					this.process(subReportOne);
@@ -456,6 +456,12 @@ public class HTMLReportWriter extends ReportWriter {
 	// TODO Beschreibung
 	public String getReportText() {
 		return this.getHead() + this.reportText + this.getTrailer();
+	}
+
+	@Override
+	public void process(AllApplicationsOfOneUser a) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
