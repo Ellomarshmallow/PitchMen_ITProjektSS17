@@ -129,8 +129,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- COMPANY
 
 	@Override
-	public Company addCompany() throws IllegalArgumentException {
+	public Company addCompany(String name, String description) throws IllegalArgumentException {
 		Company company = new Company();
+
+		company.setDescription(description);
+		company.setName(name);
 
 		return this.companyMapper.insert(company);
 	}
@@ -229,7 +232,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	// --------------------------- MARKETPLACE
 
-	// TODO
 	@Override
 	public Marketplace addMarketplaceByPerson(String title, String description, int personId)
 			throws IllegalArgumentException {
@@ -294,7 +296,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.marketplaceMapper.findById(id);
 
 	}
-	
+
 	@Override
 	public ArrayList<Marketplace> getMarketplacesByPersonId(int personId) throws IllegalArgumentException {
 		return this.marketplaceMapper.findMarketplacesByPersonId(personId);
@@ -399,7 +401,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void updatePartnerProfile(PartnerProfile partnerProfile) throws IllegalArgumentException {
-
 		this.partnerProfileMapper.update(partnerProfile);
 
 	}
@@ -420,14 +421,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<PartnerProfile> getPartnerProfiles() throws IllegalArgumentException {
-
 		return this.partnerProfileMapper.findAll();
 
 	}
 
 	@Override
 	public PartnerProfile getPartnerProfileByID(int id) throws IllegalArgumentException {
-
 		return this.partnerProfileMapper.findById(id);
 
 	}
@@ -455,12 +454,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------------- PERSON
 
 	@Override
-	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
-			boolean loggedIn, boolean isExisting) throws IllegalArgumentException {
+	public Person addPerson(String firstName, String name, String description, String emailAdress, String loginUrl,
+			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException {
 		Person person = new Person();
 
 		person.setFirstName(firstName);
 		person.setName(name);
+		person.setDescription(description);
 		person.setEmailAdress(emailAdress);
 		person.setLoginUrl(loginUrl);
 		person.setLogoutUrl(logoutUrl);
@@ -561,6 +561,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public ArrayList<Project> getProjectsByPerson(int personId) throws IllegalArgumentException {
 		return this.projectMapper.findProjectsByPersonId(personId);
 	}
+
 	// --------------------------- RATING
 
 	@Override
@@ -619,8 +620,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// --------------------------- TEAM
 
 	@Override
-	public Team addTeam() throws IllegalArgumentException {
+	public Team addTeam(String name, String description, int teamSize) throws IllegalArgumentException {
 		Team team = new Team();
+		
+		team.setDescription(description);
+		team.setName(name);
+		team.setTeamSize(teamSize);
 
 		return this.teamMapper.insert(team);
 	}
@@ -792,7 +797,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	// -------------------------TRAITMATCHING METHODE
 
 	public ArrayList<JobPosting> getJobPostingsMatchingTraits(PartnerProfile pp) {
-		
+
 		ArrayList<Trait> personTraits = traitMapper.findTraitByPartnerProfileId(pp.getId());
 
 		ArrayList<PartnerProfile> allpps = partnerProfileMapper.findAll();
