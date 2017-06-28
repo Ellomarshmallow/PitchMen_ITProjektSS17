@@ -473,15 +473,6 @@ public class PartnerProfileForm extends Formular {
 			 */
 			CreateTeamForm addCreatTeamForm = new CreateTeamForm(userPartnerProfile);
 
-				@Override
-				public void onFailure(Throwable caught) {
-					ClientsideSettings.getLogger().severe("Team konnte nicht angelegt werden");				
-				}
-
-				@Override
-				public void onSuccess(PartnerProfile result) {
-					PartnerProfileForm updatedForm = new PartnerProfileForm();
-					RootPanel.get("content").add(updatedForm);
 				}
 				
 			}
@@ -501,17 +492,6 @@ public class PartnerProfileForm extends Formular {
 			 *  neues partnerProfile erstellt werden.
 			 */ 
 			CreateCompanyForm addCreatCompanyForm = new CreateCompanyForm(userPartnerProfile);
-
-				@Override
-				public void onFailure(Throwable caught) {
-					ClientsideSettings.getLogger().severe("Unternehmen konnte angelegt werden");				
-				}
-
-				@Override
-				public void onSuccess(PartnerProfile result) {
-					PartnerProfileForm updatedForm = new PartnerProfileForm();
-					RootPanel.get("content").add(updatedForm);
-				}
 				
 			}
 
