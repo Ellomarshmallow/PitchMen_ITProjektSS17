@@ -408,7 +408,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 * @return der fertige Report
 	 */
 	@Override
-	public AllApplicationsOfUser showAllApplicationsOfUser(int id) throws IllegalArgumentException {
+	public AllApplicationsOfUser showAllApplicationsOfUser(Person p) throws IllegalArgumentException {
 
 		if (pitchMenAdmin == null) {
 			return null;
@@ -452,7 +452,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * Erstellungsdatum, Status und Text sukzessive in die Tabelle
 		 * eingetragen.
 		 */
-		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(id);
+		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p.getId());
 		for (Application a : applications) {
 
 			Application application = pitchMenAdmin.getApplicationByID(a.getJobPostingId());
@@ -589,7 +589,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Dieser Report ist ein Composite Report und setzt sich aus dem Report
 		// "showAllApplicationsOfUser" und "showAllParticipationsOfOneUser"
 		// zusammen
-		result.addSubReport(this.showAllApplicationsOfUser(id));
+		result.addSubReport(this.showAllApplicationsOfOneUser(id));
 		result.addSubReport(this.showAllParticipationsOfOneUser(id));
 		// R�ckgabe des fertigen Reports
 		return result;
