@@ -13,5 +13,6 @@ package de.pitchMen.shared.report;
 	     * 
 	     */
 	    private static final long serialVersionUID = 1L;
+	    
 
 	}
