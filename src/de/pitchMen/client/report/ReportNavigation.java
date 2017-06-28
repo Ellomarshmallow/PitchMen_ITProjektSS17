@@ -108,6 +108,43 @@ public class ReportNavigation extends VerticalPanel {
 			}
 		});
 
+		report3Btn.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				final HTMLReportWriter writer = new HTMLReportWriter();
+				ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(),
+						new AsyncCallback<Person>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Upsi, da ist wohl etwas schief gelaufen");
+
+					}
+
+					@Override
+					public void onSuccess(Person result) {
+						ClientsideSettings.getReportGenerator().showApplicationsRelatedToJobPostingsOfUser(
+								result, new AsyncCallback<ApplicationsRelatedToJobPostingsOfUser>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										ClientsideSettings.getLogger().severe("Upsi, da ist wohl etwas schief gelaufen");
+
+									}
+
+									@Override
+									public void onSuccess(ApplicationsRelatedToJobPostingsOfUser result) {
+										writer.process(result);
+										RootPanel.get("content").clear();
+										RootPanel.get("content").add(new HTML(writer.getReportText()));
+									}
+										});
+							}
+						});
+			}
+		});
+		
 		/*
 		 * Sie werden der Navigation hinzugefügt
 		 */
