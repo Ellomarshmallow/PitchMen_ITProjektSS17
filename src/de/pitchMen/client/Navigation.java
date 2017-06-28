@@ -41,6 +41,7 @@ public class Navigation extends VerticalPanel {
 		// Baum wird der Navigation hinzugefügt
 		
 		Button newMarketplaceBtn = new Button("Neuen Projektmarktplatz anlegen");
+		newMarketplaceBtn.addStyleName("editor");
 		
 		newMarketplaceBtn.addClickHandler(new ClickHandler() {
 
