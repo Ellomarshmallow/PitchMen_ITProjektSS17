@@ -113,6 +113,11 @@ public class HTMLReportWriter extends ReportWriter {
 			ClientsideSettings.getLogger().info("Das Array beinhaltet keine Rows");
 		}
 
+		/**
+		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen Objekts. 
+		 * Erstellen der Reihen durch <tr> und in der nachfolgenden Schleife die jeweiligen Spalten mit <td>
+		 * 
+		 */
 		for (int i = 0; i < rows.size(); i++) {
 			buff.append("<tr>");
 			Row row = rows.get(i);
@@ -124,6 +129,8 @@ public class HTMLReportWriter extends ReportWriter {
 		}
 
 		buff.append("</table");
+		
+		//abschließend wird der erzeuge und in buff gespeicherte Text in einen String transformiert
 		this.reportText = buff.toString();
 		
 		
