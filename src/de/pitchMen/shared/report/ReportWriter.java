@@ -29,7 +29,7 @@ public abstract class ReportWriter {
 	
 	public abstract void process(FanInAndOutReport a);
 	
-// wird vermutlich nicht gebraucht  public abstract void process(AllApplicationsToOneJobPostingOfUser a);
+	public abstract void process(AllApplicationsToOneJobPostingOfUser a);
 	
 // wird vermutlich nicht gebraucht	public abstract void process(AllApplicationsOfOneUser a);
 	
