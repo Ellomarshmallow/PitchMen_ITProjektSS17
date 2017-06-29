@@ -332,9 +332,6 @@ public class HTMLReportWriter extends ReportWriter {
 				//Titel des Reports ausgeben
 				buff.append("<h4>" + a.getTitle() + "</h4>");
 
-				//./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um anschließend der Row Columns hinzuzufügen. 
-				buff.append("<p><table border=1px rules=all> <tr>");
-
 				//Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der Rows aus dem Übergabeobjekt.
 
 
@@ -479,7 +476,7 @@ public class HTMLReportWriter extends ReportWriter {
 		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
-		  	result.append("<H1>" + r.getTitle() + "</H1>");
+		  	result.append("<h4>" + r.getTitle() + "</h4>");
 		  	result.append("<p><table border=1px rules=all> <tr>");
 		  	
 		  	

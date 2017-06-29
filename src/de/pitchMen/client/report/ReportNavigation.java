@@ -183,7 +183,7 @@ public class ReportNavigation extends VerticalPanel {
 				
 			@Override
 			public void onClick(ClickEvent event) {
-				final HTMLReportWriter writer = new HTMLReportWriter();
+			
 				final ListBox applicantBox = new ListBox();
 				ReportGeneratorAsync repGen = ClientsideSettings.getReportGenerator();
 				applicantBox.addItem("Bitte wähle einen Bewerber aus");
@@ -232,8 +232,8 @@ public class ReportNavigation extends VerticalPanel {
 
 							@Override
 							public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
+								HTMLReportWriter writer = new HTMLReportWriter();
 								writer.process(result);
-								RootPanel.get("content").clear();
 								RootPanel.get("content").add(new HTML(writer.getReportText()));
 							}
 						});
