@@ -231,46 +231,67 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Passende Trait"));
 		
 	
-//		result.addRow(headline);
-//		
-//		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
-//
-//		for (JobPosting jobPosting : jobPostings) {
-//			Row jobPostingZeile = new Row();
-//			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
-//			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
-//			result.addRow(jobPostingZeile);
-//
-//		}
-//		
-//		ArrayList<Trait> personTraits = pitchMenAdmin.getTraitsByPartnerProfileId(partnerProfile.getId());
-//		
-//		
-//		for (Trait t : personTraits) {
-//
-//			Row traitRow = new Row();
-//
-//			traitRow.addColumn(new Column(t.getName()));
-//			traitRow.addColumn(new Column(t.getPartnerProfileId()));
-//
-//			// Hinzuf�gen der Row zum Result
-//			result.addRow(traitRow);
-//		}
+		result.addRow(headline);
+		
+		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
 
+		for (JobPosting jobPosting : jobPostings) {
+			Row jobPostingZeile = new Row();
+			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
+			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
+			result.addRow(jobPostingZeile);
+
+		}
+		
+			
+		ArrayList<Trait> personTraits = pitchMenAdmin.getTraitsByPartnerProfileId(partnerProfile.getId());
 		
 		
-		 ArrayList<JobPosting> allJobPostings =
-		 this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
+		for (Trait t : personTraits) {
+			Row traitRow = new Row();
+			traitRow.addColumn(new Column(t.getName()));
+			traitRow.addColumn(new Column(t.getValue()));
+			result.addRow(traitRow);
+		}
 		
-		 for (JobPosting jp : allJobPostings) {
+	ArrayList<Trait> jobPostingTraits = pitchMenAdmin.getTraitsFromJobPostings();
 		
-		 Row jobPostingRow = new Row();
-		 jobPostingRow.addColumn(new Column(jp.getTitle()));
-		 jobPostingRow.addColumn(new Column(jp.getText()));
-		 jobPostingRow.addColumn(new Column(jp.getText()));
-		 
-		 result.addRow(jobPostingRow);
-		 }
+		
+		for (Trait jpt : jobPostingTraits) {
+			Row traitRowJobPostings = new Row();
+			traitRowJobPostings.addColumn(new Column(jpt.getName()));
+			traitRowJobPostings.addColumn(new Column(jpt.getValue()));
+			result.addRow(traitRowJobPostings);
+		}
+
+//		for (PartnerProfile pprofile : allpps) {
+//		ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
+//
+//		for (Trait trait : jPTraits) {
+//			String traitJp = trait.getName();
+//
+//			for (Trait pTrait : personTraits) {
+//				String traitPerson = pTrait.getName();
+//
+//				if (traitJp.equals(traitPerson)) {
+//					matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
+//				}
+//			}
+//		}
+//	}
+		
+//		 ArrayList<JobPosting> allJobPostings =
+//		 this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
+//		
+//		 for (JobPosting jp : allJobPostings) {
+//		
+//		 Row jobPostingRow = new Row();
+//		 jobPostingRow.addColumn(new Column(jp.getTitle()));
+//		 jobPostingRow.addColumn(new Column(jp.getText()));
+//		 jobPostingRow.addColumn(new Column(jp.getText()));
+//		 
+//		 result.addRow(jobPostingRow);
+//		 }
 		return result;
 
 	}
