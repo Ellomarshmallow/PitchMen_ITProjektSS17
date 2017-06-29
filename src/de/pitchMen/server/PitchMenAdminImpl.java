@@ -146,7 +146,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void deleteCompany(Company company) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByCompanyId(company.getId());
-		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(company.getId());
+		PartnerProfile partnerProfile = this.getPartnerProfileByCompanyId(company.getId());
+		ArrayList<Trait> traits = this
+				.getTraitsByPartnerProfileId(this.getPartnerProfileByCompanyId(company.getId()).getId());
 
 		if (participations != null) {
 			for (Participation participation : participations) {
@@ -156,6 +158,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		if (partnerProfile != null) {
 			this.partnerProfileMapper.delete(partnerProfile);
+
+			if (traits != null) {
+				for (Trait trait : traits) {
+					this.traitMapper.delete(trait);
+				}
+			}
 		}
 
 		this.companyMapper.delete(company);
@@ -199,15 +207,27 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
 		ArrayList<Application> applications = this.getApplicationsByJobPostingId(jobPosting.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfilesByJobPostingId(jobPosting.getId());
+		ArrayList<Trait> traits = this
+				.getTraitsByPartnerProfileId(this.getPartnerProfilesByJobPostingId(jobPosting.getId()).getId());
 
 		if (applications != null) {
 			for (Application application : applications) {
 				this.applicationMapper.delete(application);
+
+				Rating rating = application.getRating();
+				if (rating != null) {
+					this.ratingMapper.delete(rating);
+				}
 			}
 		}
 
 		if (partnerProfile != null) {
 			this.partnerProfileMapper.delete(partnerProfile);
+			if (traits != null) {
+				for (Trait trait : traits) {
+					this.traitMapper.delete(trait);
+				}
+			}
 		}
 
 		this.jobPostingMapper.delete(jobPosting);
@@ -215,7 +235,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException {
-
 		return this.jobPostingMapper.findAll();
 
 	}
@@ -228,6 +247,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException {
 		return this.jobPostingMapper.findJobPostingsByProjectId(projectId);
+	}
+
+	@Override
+	public ArrayList<JobPosting> getJobPostingsByPersonId(int personId) throws IllegalArgumentException {
+		return this.jobPostingMapper.findByPersonId(personId);
 	}
 
 	// --------------------------- MARKETPLACE
@@ -273,14 +297,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		ArrayList<Project> projects = this.getProjectsByMarketplaceId(marketplace.getId());
-
-		if (projects != null) {
-			for (Project project : projects) {
-				this.projectMapper.delete(project);
-			}
-		}
-
 		this.marketplaceMapper.delete(marketplace);
 	}
 
@@ -378,23 +394,25 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId)
+	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId, int personId)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
 		partnerProfile.setDateCreated(dateCreated);
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setTeamId(teamId);
+		partnerProfile.setPersonId(personId);
 
 		return this.partnerProfileMapper.insertPartnerProfileForTeam(partnerProfile);
 	}
 
 	@Override
-	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId)
+	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId, int personId)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
 		partnerProfile.setDateCreated(dateCreated);
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setCompanyId(companyId);
+		partnerProfile.setPersonId(personId);
 
 		return this.partnerProfileMapper.insertPartnerProfileForCompany(partnerProfile);
 	}
@@ -477,6 +495,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
+	// Verkettungen werden hier nicht bis ganz runter geloescht!
 	public void deletePerson(Person person) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByPersonId(person.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(person.getId());
@@ -534,7 +553,36 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		if (jobPostings != null) {
 			for (JobPosting jobPosting : jobPostings) {
 				this.jobPostingMapper.delete(jobPosting);
+
+				ArrayList<Application> applications = this.getApplicationsByJobPostingId(jobPosting.getId());
+				if (applications != null) {
+					for (Application application : applications) {
+						this.applicationMapper.delete(application);
+
+						Rating rating = this.getRatingByApplicationId(application.getId());
+						if (rating != null) {
+							this.ratingMapper.delete(rating);
+						}
+					}
+				}
+
+				PartnerProfile partnerProfile = this.getPartnerProfilesByJobPostingId(jobPosting.getId());
+				if (partnerProfile != null) {
+					this.partnerProfileMapper.delete(partnerProfile);
+
+					ArrayList<Trait> traits = this.getTraitsByPartnerProfileId(
+							this.getPartnerProfilesByJobPostingId(jobPosting.getId()).getId());
+					if (traits != null) {
+						for (Trait trait : traits) {
+							this.traitMapper.delete(trait);
+						}
+
+					}
+
+				}
+
 			}
+
 		}
 
 		this.projectMapper.delete(project);
@@ -602,7 +650,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
 			int jobPostingId) throws IllegalArgumentException {
-		// FIXME nicht sicher ob die Methode funktioniert
+		// Da anscheinend nicht benutzt und alternative Lösung in der GUI
+		// implementiert eventuell löschen
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
 
@@ -622,7 +671,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public Team addTeam(String name, String description, int teamSize) throws IllegalArgumentException {
 		Team team = new Team();
-		
+
 		team.setDescription(description);
 		team.setName(name);
 		team.setTeamSize(teamSize);
@@ -637,6 +686,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteTeam(Team team) throws IllegalArgumentException {
+		// Verkettungen werden hier nicht bis ganz runter geloescht!
 		ArrayList<Participation> participations = this.getParticipationsByTeamId(team.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByTeamId(team.getId());
 

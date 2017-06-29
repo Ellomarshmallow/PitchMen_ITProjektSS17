@@ -19,7 +19,6 @@ import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
-import de.pitchMen.shared.bo.Trait;
 
 public class ProjectForm extends Formular {
 
@@ -33,13 +32,9 @@ public class ProjectForm extends Formular {
 	private Person projectManager = null;
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	Label idLabel = new Label();
-	Label titleLabel = new Label("Name des Projektes:");
 	TextBox titleBox = new TextBox();
-	Label descLabel = new Label("Beschreibung des Projektes:");
 	TextArea descBox = new TextArea();
-	Label fromLabel = new Label("Von:");
 	Label fromBox = new Label();
-	Label toLabel = new Label("Bis:");
 	Label toBox = new Label();
 
 	/**
