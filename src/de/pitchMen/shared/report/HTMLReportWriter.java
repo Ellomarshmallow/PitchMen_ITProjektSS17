@@ -141,13 +141,13 @@ public class HTMLReportWriter extends ReportWriter {
 			ClientsideSettings.getLogger().info("Es sind keine Zeilen im Array enthalten");
 		}
 
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 2; i++) {
 			Row row = rows.get(i);
 			buff.append("<tr>");
 			for (int x = 0; x < row.getNumberOfColumns(); x++) {
 				buff.append("<td>" + row.getColumnAt(x) + "</td>");
 			}
-			buff.append("</tr");
+			buff.append("</tr>");
 		}
 
 		buff.append("</table>");
