@@ -579,7 +579,6 @@ td.datePickerYear {
 }
 
 .reportgenerator tr{
-	background-color: #1C9CD8;
-	color: white; 
-	
+
+	/* Falls man noch die Tabellen verschönern möchte*/
 }
