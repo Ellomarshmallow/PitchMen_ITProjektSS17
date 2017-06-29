@@ -488,6 +488,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
+	// TODO
 	public void deletePerson(Person person) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByPersonId(person.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(person.getId());
@@ -545,7 +546,36 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		if (jobPostings != null) {
 			for (JobPosting jobPosting : jobPostings) {
 				this.jobPostingMapper.delete(jobPosting);
+
+				ArrayList<Application> applications = this.getApplicationsByJobPostingId(jobPosting.getId());
+				if (applications != null) {
+					for (Application application : applications) {
+						this.applicationMapper.delete(application);
+
+						Rating rating = this.getRatingByApplicationId(application.getId());
+						if (rating != null) {
+							this.ratingMapper.delete(rating);
+						}
+					}
+				}
+
+				PartnerProfile partnerProfile = this.getPartnerProfilesByJobPostingId(jobPosting.getId());
+				if (partnerProfile != null) {
+					this.partnerProfileMapper.delete(partnerProfile);
+
+					ArrayList<Trait> traits = this.getTraitsByPartnerProfileId(
+							this.getPartnerProfilesByJobPostingId(jobPosting.getId()).getId());
+					if (traits != null) {
+						for (Trait trait : traits) {
+							this.traitMapper.delete(trait);
+						}
+
+					}
+
+				}
+
 			}
+
 		}
 
 		this.projectMapper.delete(project);
@@ -647,6 +677,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
+
+	// TODO
 	public void deleteTeam(Team team) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByTeamId(team.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByTeamId(team.getId());
