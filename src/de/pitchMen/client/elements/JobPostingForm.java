@@ -393,21 +393,56 @@ public class JobPostingForm extends Formular{
 																							@Override
 																							public void onClick(ClickEvent event) {
 																								if(Window.confirm("Diese Bewerbung jetzt bewerten?")) {
-																									ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), (Float.parseFloat(scoreBox.getText())/100), app.getId(), new AsyncCallback<Rating>() {
+																									if(Float.parseFloat(scoreBox.getText())/100 == 1) {
+																										if(Window.confirm("Eine mit 100% bewertete Bewerbung wird automatisch angenommen. Möchten Sie fortfahren?")) {
+																											ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), (Float.parseFloat(scoreBox.getText())/100), app.getId(), new AsyncCallback<Rating>() {
 
-																										@Override
-																										public void onFailure(
-																												Throwable caught) {
-																											ClientsideSettings.getLogger().severe("Anlegen der Bewertung fehlgeschlagen");
-																										}
+																												@Override
+																												public void onFailure(
+																														Throwable caught) {
+																													ClientsideSettings.getLogger().severe("Anlegen der Bewertung fehlgeschlagen");
+																												}
 
-																										@Override
-																										public void onSuccess(
-																												Rating result) {
-																											JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																												@Override
+																												public void onSuccess(
+																														Rating result) {
+																													app.setStatus("angenommen");
+																													ClientsideSettings.getPitchMenAdmin().updateApplication(app, new AsyncCallback<Void>() {
+
+																														@Override
+																														public void onFailure(
+																																Throwable caught) {
+																															ClientsideSettings.getLogger().severe("Update des Ratings fehlgeschlagen");
+																														}
+
+																														@Override
+																														public void onSuccess(
+																																Void result) {
+																															JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																														}
+																														
+																													});
+																												}
+																												
+																											});
 																										}
-																										
-																									});
+																									} else {
+																										ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), (Float.parseFloat(scoreBox.getText())/100), app.getId(), new AsyncCallback<Rating>() {
+
+																											@Override
+																											public void onFailure(
+																													Throwable caught) {
+																												ClientsideSettings.getLogger().severe("Anlegen der Bewertung fehlgeschlagen");
+																											}
+
+																											@Override
+																											public void onSuccess(
+																													Rating result) {
+																												JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																											}
+																											
+																										});
+																									}
 																								}
 																							}
 																							
