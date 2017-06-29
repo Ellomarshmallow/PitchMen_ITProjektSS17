@@ -19,6 +19,7 @@ import de.pitchMen.shared.bo.Participation;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Trait;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
@@ -155,9 +156,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Text der Ausschreibung
 		headline.addColumn(new Column("JobPosting Text"));
 
-		//F�r AllJobPostings, brauchen wir keine "Dazugeh�rige Projekte
-//		// das dazugeh�rige Projekt der Ausschreibung
-		//headline.addColumn(new Column("dazugehoeriges Projekt"));
+		// F�r AllJobPostings, brauchen wir keine "Dazugeh�rige Projekte
+		// // das dazugeh�rige Projekt der Ausschreibung
+		// headline.addColumn(new Column("dazugehoeriges Projekt"));
 
 		// Deadline der Ausschreibung
 		headline.addColumn(new Column("Deadline"));
@@ -179,7 +180,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
-			//jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
+			// jobPostingZeile.addColumn(new Column(jobPosting.getProjectId()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getDeadline().toString()));
 			jobPostingZeile.addColumn(new Column(jobPosting.getStatus().toString()));
 			result.addRow(jobPostingZeile);
@@ -202,62 +203,78 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(
 			PartnerProfile partnerProfile) throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
-			/*
-			 * Zunächst legen wir uns einen leeren Report an.
-			 */
-			AllJobPostingsMatchingPartnerProfileOfUser result = new AllJobPostingsMatchingPartnerProfileOfUser();
-
-			// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-			result.setTitle("Alle Ausschreibungen passend zum Partnerprofil des Benutzers");
-			/*
-			 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
-			 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
-			 */
-			result.setDatecreated(new Date());
-			/*
-			 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge,
-			 * die oben auf dem Report stehen) des Reports. Die Kopfdaten sind
-			 * einzeilig, daher die Verwendung von Rows.
-			 */
-			Row headline = new Row();
-
-			headline.addColumn(new Column("JobPosting Titel"));
-
-			headline.addColumn(new Column("JobPosting Beschreibung"));
-
-			headline.addColumn(new Column("Dazugeh�riges Projekt"));
-
-			result.addRow(headline);
-
-			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
-
-			for (JobPosting jp : allJobPostings) {
-
-				Row jobPostingRow = new Row();
-
-				jobPostingRow = new Row();
-
-				jobPostingRow.addColumn(new Column(jp.getTitle()));
-				jobPostingRow.addColumn(new Column(jp.getText()));
-				// FIXME
-				// jobPostingRow.addColumn(new
-				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
-
-				result.addRow(jobPostingRow);
-			}
-			return result;
-
+			return null;
 		}
-		// R�ckgabe des fertigen Reports
-		return null;
+		/*
+		 * Zunächst legen wir uns einen leeren Report an.
+		 */
+		AllJobPostingsMatchingPartnerProfileOfUser result = new AllJobPostingsMatchingPartnerProfileOfUser();
+
+		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
+		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil des Benutzers");
+		/*
+		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+		 */
+		result.setDatecreated(new Date());
+		/*
+		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
+		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
+		 * einzeilig, daher die Verwendung von Rows.
+		 */
+		Row headline = new Row();
+
+		headline.addColumn(new Column("JobPosting Titel"));
+
+		headline.addColumn(new Column("JobPosting Beschreibung"));
+
+		headline.addColumn(new Column("Passende Trait"));
 		
-		// TODO Methode noch zu erledigen!
+	
+//		result.addRow(headline);
+//		
+//		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
+//
+//		for (JobPosting jobPosting : jobPostings) {
+//			Row jobPostingZeile = new Row();
+//			jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
+//			jobPostingZeile.addColumn(new Column(jobPosting.getText()));
+//			result.addRow(jobPostingZeile);
+//
+//		}
+//		
+//		ArrayList<Trait> personTraits = pitchMenAdmin.getTraitsByPartnerProfileId(partnerProfile.getId());
+//		
+//		
+//		for (Trait t : personTraits) {
+//
+//			Row traitRow = new Row();
+//
+//			traitRow.addColumn(new Column(t.getName()));
+//			traitRow.addColumn(new Column(t.getPartnerProfileId()));
+//
+//			// Hinzuf�gen der Row zum Result
+//			result.addRow(traitRow);
+//		}
+
+		
+		
+		 ArrayList<JobPosting> allJobPostings =
+		 this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
+		
+		 for (JobPosting jp : allJobPostings) {
+		
+		 Row jobPostingRow = new Row();
+		 jobPostingRow.addColumn(new Column(jp.getTitle()));
+		 jobPostingRow.addColumn(new Column(jp.getText()));
+		 jobPostingRow.addColumn(new Column(jp.getText()));
+		 
+		 result.addRow(jobPostingRow);
+		 }
+		return result;
+
 	}
 
-	
-	
-	
-	
 	/**
 	 * Erstellen von
 	 * <code>ApplicationsRelatedToJobPostingsOfUser Report</code>-Objekten.
@@ -294,13 +311,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
 		 * einzeilig, daher die Verwendung von Rows.
 		 */
-//		Row headline = new Row();
+		// Row headline = new Row();
 		// Erstellungsdatum der Bewerbung
-//		headline.addColumn(new Column("Erstellungsdatum"));
+		// headline.addColumn(new Column("Erstellungsdatum"));
 		// Bewerbungstext der Bewerbung
-//		headline.addColumn(new Column("Bewerbungstext"));
+		// headline.addColumn(new Column("Bewerbungstext"));
 		// Hinzufügen der zusammengestellten Kopfdaten zu dem Report
-//		result.addRow(headline);
+		// result.addRow(headline);
 
 		/*
 		 * Nun werden sämtliche Bewerbungen ausgelesen und deren
@@ -308,22 +325,23 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 */
 		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
 		for (JobPosting a : jobPostings) {
-			
+
 			Project pt = pitchMenAdmin.getProjectByID(a.getProjectId());
-			
+
 			Person bewerber = pitchMenAdmin.getPersonByID(pt.getPersonId());
-			
+
 			if (bewerber.getId() == p.getId()) {
-			
+
 				// Hinzuf�gen der Row zum Result
 				result.addSubReport(this.showAllApplicationsToOneJobPostingOfUser(a.getId()));
 			}
 
 		}
-		
+
 		// R�ckgabe des fertigen Reports
 		return result;
 	}
+
 	/**
 	 * Erstellen von
 	 * <code>AllApplicationsToOneJobPostingOfUser Report</code>-Objekten.
@@ -382,12 +400,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		for (Application a : applications) {
 
 			Row applicationRow = new Row();
-			
+
 			PartnerProfile pp = pitchMenAdmin.getPartnerProfileByID(a.getPartnerProfileId());
-			
-			Person bewerber =  pitchMenAdmin.getPersonByID(pp.getPersonId());
-				
-			
+
+			Person bewerber = pitchMenAdmin.getPersonByID(pp.getPersonId());
+
 			applicationRow.addColumn(new Column(bewerber.getName()));
 			applicationRow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationRow.addColumn(new Column(a.getText()));
@@ -442,7 +459,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		headline.addColumn(new Column("Titel der Ausschreibung"));
 		// Beschreibung der Ausschreibung
 		headline.addColumn(new Column("Beschreibung der Ausschreibung"));
-		//Status der Bewerbung abfragen
+		// Status der Bewerbung abfragen
 		headline.addColumn(new Column("Status der Bewerbung"));
 		// Hinzuf�gen der Row zum Resultobjekt
 		result.addRow(headline);
@@ -476,7 +493,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			result.addRow(applicationsrow);
 
 		}
-		 //R�ckgabe des fertigen Reports
+		// R�ckgabe des fertigen Reports
 		return result;
 	}
 
@@ -489,10 +506,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
-	
 
 	/**
 	 * Erstellen von <code>AllParticipationsOfOneUser</code>-Objekten.
@@ -547,10 +560,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			Row projectRow = new Row();
 
-		//	projectRow.addColumn(new Column(p.getTitle()));
+			// projectRow.addColumn(new Column(p.getTitle()));
 			projectRow.addColumn(new Column(p.getDateOpened()));
 			projectRow.addColumn(new Column(p.getDateClosed()));
-		//	projectRow.addColumn(new Column(p.getDescription()));
+			// projectRow.addColumn(new Column(p.getDescription()));
 
 			// Hinzuf�gen der Row zum Result
 			result.addRow(projectRow);
