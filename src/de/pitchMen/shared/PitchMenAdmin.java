@@ -686,12 +686,21 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
+	
+	/**
+	 * Gibt die Eigenschaften der Tabelle Eigenschaften aus, welche einem JobPosting zugeordnet sind
+	 * 
+	 * 
+	 * @return PartnerProfile
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Trait> getTraitsFromJobPostings() throws IllegalArgumentException;
 
 	/**
 	 * Gibt die Eigenschaft anhand seiner Id aus.
 	 * 
 	 * @param id
-	 * @return PartnerProfile
+	 * @return ArrayList aller Trait-Objekte
 	 * @throws IllegalArgumentException
 	 */
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
@@ -710,5 +719,7 @@ public interface PitchMenAdmin extends RemoteService {
 	// --------------------------- LOGIN
 
 	public Person login(String requestUri);
+
+
 
 }
