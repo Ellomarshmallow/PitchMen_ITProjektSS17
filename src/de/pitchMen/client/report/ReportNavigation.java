@@ -178,7 +178,7 @@ public class ReportNavigation extends VerticalPanel {
 				final HTMLReportWriter writer = new HTMLReportWriter();
 
 				ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
-						ClientsideSettings.getCurrentUser(),
+						ClientsideSettings.getCurrentUser().getId(),
 						new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
 
 							@Override

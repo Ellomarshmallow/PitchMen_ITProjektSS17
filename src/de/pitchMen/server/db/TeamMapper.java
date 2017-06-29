@@ -74,8 +74,8 @@ public class TeamMapper {
 			/**
 			 * SQL-Anweisung zum Einf�gen des neuen Team-Tupels in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO team (id, name, desription, size)" + "VALUES (" + team.getId() + ", '"
-					+ team.getName() + "', '" + team.getDescription() + "' , " + team.getSize() + ")");
+			stmt.executeUpdate("INSERT INTO team (id, name, description, size)" + "VALUES (" + team.getId() + ", '"
+					+ team.getName() + "', '" + team.getDescription() + "' , " + team.getTeamSize() + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -96,7 +96,7 @@ public class TeamMapper {
 		try {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("UPDATE team SET name='" + team.getName() + "', "
-					+ "'description= '" + team.getDescription() + "'," + "'size='"+ team.getSize()	+ "' WHERE id= '" + team.getId());
+					+ "'description= '" + team.getDescription() + "'," + "'size='"+ team.getTeamSize()	+ "' WHERE id= '" + team.getId());
 		}
 
 		/**
@@ -162,7 +162,7 @@ public class TeamMapper {
 				team.setId(rs.getInt("id"));
 				team.setName(rs.getString("name"));
 				team.setDescription(rs.getString("description"));
-				team.setSize(rs.getInt("size"));
+				team.setTeamSize(rs.getInt("size"));
 				return team;
 			}
 
@@ -191,7 +191,7 @@ public class TeamMapper {
 				team.setId(rs.getInt("id"));
 				team.setName(rs.getString("name"));
 				team.setDescription(rs.getString("Description"));
-				team.setSize(rs.getInt("size"));
+				team.setTeamSize(rs.getInt("size"));
 
 				result.add(team);
 
@@ -223,7 +223,7 @@ public class TeamMapper {
 				team.setId(rs.getInt("id"));
 				team.setName(rs.getString("name"));
 				team.setDescription(rs.getString("description"));
-				team.setSize(rs.getInt("size"));
+				team.setTeamSize(rs.getInt("size"));
 
 				result.add(team);
 			}
