@@ -147,7 +147,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public void deleteCompany(Company company) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByCompanyId(company.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(company.getId());
-		ArrayList<Trait> traits = this.getTraitsByPartnerProfileId(this.getPartnerProfileByCompanyId(company.getId()).getId());
+		ArrayList<Trait> traits = this
+				.getTraitsByPartnerProfileId(this.getPartnerProfileByCompanyId(company.getId()).getId());
 
 		if (participations != null) {
 			for (Participation participation : participations) {
@@ -157,8 +158,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		if (partnerProfile != null) {
 			this.partnerProfileMapper.delete(partnerProfile);
-			
-			if (traits != null){
+
+			if (traits != null) {
 				for (Trait trait : traits) {
 					this.traitMapper.delete(trait);
 				}
@@ -206,15 +207,27 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public void deleteJobPosting(JobPosting jobPosting) throws IllegalArgumentException {
 		ArrayList<Application> applications = this.getApplicationsByJobPostingId(jobPosting.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfilesByJobPostingId(jobPosting.getId());
+		ArrayList<Trait> traits = this
+				.getTraitsByPartnerProfileId(this.getPartnerProfilesByJobPostingId(jobPosting.getId()).getId());
 
 		if (applications != null) {
 			for (Application application : applications) {
 				this.applicationMapper.delete(application);
+
+				Rating rating = application.getRating();
+				if (rating != null) {
+					this.ratingMapper.delete(rating);
+				}
 			}
 		}
 
 		if (partnerProfile != null) {
 			this.partnerProfileMapper.delete(partnerProfile);
+			if (traits != null) {
+				for (Trait trait : traits) {
+					this.traitMapper.delete(trait);
+				}
+			}
 		}
 
 		this.jobPostingMapper.delete(jobPosting);
@@ -222,7 +235,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public ArrayList<JobPosting> getJobPostings() throws IllegalArgumentException {
-
 		return this.jobPostingMapper.findAll();
 
 	}
