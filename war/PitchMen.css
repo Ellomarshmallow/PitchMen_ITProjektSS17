@@ -62,6 +62,10 @@ button {
     box-shadow: 0px 0px 8px #999;
 }
 
+.login-link-container h1 {
+	padding: 20px 0px 20px 30px;
+}
+
 .login-link-container a {
     margin: 30px 40px 0px 40px;
     padding: 10px 20px;
