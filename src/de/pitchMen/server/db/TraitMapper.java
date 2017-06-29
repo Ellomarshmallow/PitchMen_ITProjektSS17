@@ -214,10 +214,10 @@ public class TraitMapper {
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
-				trait.setId(rs.getInt("ID"));
-				trait.setName(rs.getString("NAME"));
-				trait.setValue(rs.getString("VALUE"));
-				trait.setPartnerProfileId(rs.getInt("PARTNERPROFILID"));
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
+				//trait.setPartnerProfileId(rs.getInt("partnerProfileId"));
 				result.add(trait);
 			}
 		/**
@@ -431,7 +431,7 @@ public class TraitMapper {
 	 * @return trait
 	 */
 	
-	public ArrayList<Trait> findTraitsFromJobPostings(int partnerProfileId) {
+	public ArrayList<Trait> findTraitsFromJobPostings() {
 		Connection con = DBConnection.connection();
 
 		ArrayList<Trait> result = new ArrayList<Trait>();
