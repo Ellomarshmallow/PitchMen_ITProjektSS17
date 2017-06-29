@@ -102,13 +102,17 @@ button {
 h1 {
 	font-weight: 400;
 	font-size: 16px;
-	padding: 20px 0px 20px 30px;
 	width: 20%;
 	box-sizing: border-box;
-	color: rgba(255,255,255,0.0);
 	background: url('PitchMenLogoFinal-01.png') no-repeat left 80%;
 	background-size: contain;
 	margin-left: 20px;
+}
+
+h1 a {
+	display: block;
+	color: rgba(255,255,255,0.0);
+	padding: 20px 0px 20px 30px;
 }
 
 #usermenu .gwt-HTML {
