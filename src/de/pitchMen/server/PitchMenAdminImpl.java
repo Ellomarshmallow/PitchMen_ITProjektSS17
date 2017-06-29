@@ -146,7 +146,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void deleteCompany(Company company) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByCompanyId(company.getId());
-		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(company.getId());
+		PartnerProfile partnerProfile = this.getPartnerProfileByCompanyId(company.getId());
 		ArrayList<Trait> traits = this
 				.getTraitsByPartnerProfileId(this.getPartnerProfileByCompanyId(company.getId()).getId());
 
@@ -488,7 +488,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	// TODO
+	// Verkettungen werden hier nicht bis ganz runter geloescht!
 	public void deletePerson(Person person) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByPersonId(person.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(person.getId());
@@ -643,7 +643,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
 			int jobPostingId) throws IllegalArgumentException {
-		// FIXME nicht sicher ob die Methode funktioniert
+		// Da anscheinend nicht benutzt und alternative Lösung in der GUI implementiert eventuell löschen
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
 
@@ -677,9 +677,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-
-	// TODO
 	public void deleteTeam(Team team) throws IllegalArgumentException {
+		// Verkettungen werden hier nicht bis ganz runter geloescht!
 		ArrayList<Participation> participations = this.getParticipationsByTeamId(team.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByTeamId(team.getId());
 
