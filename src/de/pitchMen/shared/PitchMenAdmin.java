@@ -337,7 +337,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId)
+	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId, int personId)
 			throws IllegalArgumentException;
 
 	/**
@@ -346,7 +346,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId)
+	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId, int personId)
 			throws IllegalArgumentException;
 
 	/**

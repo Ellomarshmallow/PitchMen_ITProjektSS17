@@ -389,23 +389,25 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	}
 
 	@Override
-	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId)
+	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId, int personId)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
 		partnerProfile.setDateCreated(dateCreated);
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setTeamId(teamId);
+		partnerProfile.setPersonId(personId);
 
 		return this.partnerProfileMapper.insertPartnerProfileForTeam(partnerProfile);
 	}
 
 	@Override
-	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId)
+	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId, int personId)
 			throws IllegalArgumentException {
 		PartnerProfile partnerProfile = new PartnerProfile();
 		partnerProfile.setDateCreated(dateCreated);
 		partnerProfile.setDateChanged(dateChanged);
 		partnerProfile.setCompanyId(companyId);
+		partnerProfile.setPersonId(personId);
 
 		return this.partnerProfileMapper.insertPartnerProfileForCompany(partnerProfile);
 	}
@@ -643,7 +645,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
 			int jobPostingId) throws IllegalArgumentException {
-		// Da anscheinend nicht benutzt und alternative Lösung in der GUI implementiert eventuell löschen
+		// Da anscheinend nicht benutzt und alternative Lösung in der GUI
+		// implementiert eventuell löschen
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
 
