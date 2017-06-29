@@ -8,18 +8,14 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
-import de.pitchMen.shared.bo.Project;
 
 /**
  * Klasse, deren Objekte ein Formular
@@ -74,7 +70,6 @@ public class ApplicationForm extends Formular {
 				partnerProfileId = result.getId(); 
 				RootPanel.get("content").add(infoLabel);
 				RootPanel.get("content").add(new HTML("</p>"));
-//				RootPanel.get("content").add(new HTML(textArea + "<p>"));
 				
 				
 				RootPanel.get("content").add(textArea);
@@ -96,7 +91,6 @@ public class ApplicationForm extends Formular {
 			java.util.Date date = new Date();
 			java.sql.Date convertedDate = new java.sql.Date(date.getTime());
 			
-			//FIXME textArea.getValue gibt mir nicht den Inhalt der Textarea
 			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getText() , "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
 		}		
 		
@@ -123,46 +117,7 @@ public class ApplicationForm extends Formular {
 		
 		/**
 		
-		// Vertical Panel erstellen
-		VerticalPanel labelsPanel = new VerticalPanel();
-		this.add(labelsPanel);
-
-		// labels und RichTextArea dem Vertical Panel hinzufügen
-		labelsPanel.add(infoLabel);
-		labelsPanel.add(textArea);
-
-		// HorizontalPanel für den Button erstellen
-		HorizontalPanel buttonsPanel = new HorizontalPanel();
-		this.add(buttonsPanel);
 		
-		
-		// PersonId des aktuellen Nutzers in die getPartnerProfileByPersonId() Methode um dann 
-		// die PartnerProfileId in die addApplication() Methode einfügen zu können
-		int personId = ClientsideSettings.getCurrentUser().getId(); 
-		super.getPitchMenAdmin().getPartnerProfileByPersonId(personId, new GetPartnerProfileCallback(this)); 
-		 
-		//Absenden Button
-		Button sendBtn = new Button("Absenden" + new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				send(); 
-				
-			}}); 
-		buttonsPanel.add(sendBtn);
-		
-			
-	}
-	
-	// Send Methode die beim Click auf den Absenden Button ausgeführt wird
-	public void send(){
-		//FIXME
-		// Aktuelles Datum
-		java.util.Date date = new Date();
-		java.sql.Date convertedDate = new java.sql.Date(date.getTime());
-		super.getPitchMenAdmin().addApplication(convertedDate, textArea.getText(), null, null, 
-				referredJobPosting.getId(), partnerProfileId, new AddApplicationCallback(this));
-		
-	}
 		
 	// GetPartnerProfilCallback
 	public class GetPartnerProfileCallback implements AsyncCallback<PartnerProfile>{
@@ -184,27 +139,9 @@ public class ApplicationForm extends Formular {
 		
 	}
 	
-	// AddApplicationCallback
 	
-	public class AddApplicationCallback implements AsyncCallback<Application>{
-		
-		private ApplicationForm applicationForm = null; 
-		
-		public AddApplicationCallback(ApplicationForm applicationForm){
-			this.applicationForm = applicationForm; 
-		}
-		
-		public void onFailure(Throwable caught) {
+	
+	
 
-		}
-
-		public void onSuccess(Application application) {
-			Window.alert("Bewerbung erfolgreich gesendet");
-		}
-	}
-	
-	
-	
-}
 **/
 		

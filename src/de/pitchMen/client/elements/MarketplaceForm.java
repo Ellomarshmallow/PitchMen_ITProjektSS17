@@ -16,8 +16,6 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
-import de.pitchMen.shared.PitchMenAdmin;
-import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
@@ -27,13 +25,10 @@ public class MarketplaceForm extends Formular {
 	 * titleBox und descBox sind hier labels, erst beim Erstellen oder
 	 * Bearbeiten ist titleBox eine Textbox und descBox eine TextArea
 	 */
-	private int currentUserId;
 	PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
 	
 	private Marketplace selectedMarketplace = null;
-	private Project selectedProject = null;
 	
-	private ArrayList<Marketplace> marketplaces = null;
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
 	
 	Label idLabel = new Label();
@@ -53,7 +48,6 @@ public class MarketplaceForm extends Formular {
 		RootPanel.get("content").clear();
 		RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 
-		this.currentUserId = ClientsideSettings.getCurrentUser().getId();
 
 		ClientsideSettings.getPitchMenAdmin().getMarketplaceByID(marketplace.getId(), new MarketplaceCallback());
 	}
@@ -227,7 +221,6 @@ public class MarketplaceForm extends Formular {
 		// ---------- updateMarketplaceClickHandler
 		private class updateMarketplaceClickHandler implements ClickHandler {
 			
-			private String titleBoxContent;
 			public void onClick(ClickEvent event) {
 
 				// bei Click wird die update() Methode aufgerufen

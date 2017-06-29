@@ -1,6 +1,5 @@
 package de.pitchMen.client.elements;
 
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
@@ -61,24 +60,11 @@ public class Formular extends VerticalPanel {
 	}
 
 	public Formular(){
-		//FIXME Panels überarbeiten ! 
+		
 		/*
 		 * Verbindung zur PitchMenAdministration
 		 */
 		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin();
-
-		/*
-		 * Erstellen eines FormPanels
-		 */
-		FormPanel form = new FormPanel(); 
-
-		/*
-		 * Erstellen und hinzufügen eines VerticalPanels zu dem FormPanel
-		 */
-		VerticalPanel ver = new VerticalPanel(); 
-		form.setWidget(ver);
-
-
 
 
 	}
