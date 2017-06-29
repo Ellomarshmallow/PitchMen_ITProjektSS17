@@ -204,7 +204,7 @@ public class TraitMapper {
 			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id AS ID, name as NAME, value AS VALUE, partnerProfil_ID AS PARTNERPROFILID FROM trait ORDER BY id");
+					"SELECT * FROM trait ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle trait vorhanden ist, muss das Abfragen des ResultSet so
