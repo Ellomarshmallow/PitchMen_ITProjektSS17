@@ -201,7 +201,7 @@ public class ReportNavigation extends VerticalPanel {
 								
 								for(Person p : result){
 									
-									applicantBox.addItem(((Person)p).getFirstName() + " " + ((Person)p).getName());
+									applicantBox.addItem(p.getFirstName() + " " + p.getName());
 									
 								}
 							}

@@ -610,7 +610,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		
 		ArrayList<Person> applicant = new ArrayList<Person>();
 	
-		Project pj = pitchMenAdmin.getProjectByID(p.getId());
+		ArrayList<Project> pj = pitchMenAdmin.getProjectsByPerson(p.getId());
 				
 		ArrayList<JobPosting> myjobpostings = pitchMenAdmin.getJobPostingsByProjectId(pj.getId());
 		
