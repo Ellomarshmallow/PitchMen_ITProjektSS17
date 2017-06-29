@@ -347,11 +347,7 @@ public class HTMLReportWriter extends ReportWriter {
 				 */
 				for (int i = 0; i < a.getNumSubReports(); i++) {
 
-					AllApplicationsOfOneUser subReportOne = (AllApplicationsOfOneUser)a.getSubReportAt(i);
-					AllParticipationsOfOneUser subReportTwo = (AllParticipationsOfOneUser)a.getSubReportAt(i);
-
-					this.process(subReportOne);
-					this.process(subReportTwo);
+					this.processSimpleReport(a.getSubReportAt(i));
 
 					buff.append(this.reportText + "\n");
 
@@ -463,5 +459,55 @@ public class HTMLReportWriter extends ReportWriter {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	 public void processSimpleReport(Report report){
+		  
+		  SimpleReport r = (SimpleReport)report;
+		  
+		  //Löschen des Ergebnisses der vorherigen Prozessierung
+		  this.resetReportText();
+		  
+
+		    /*
+		     * In diesen Buffer schreiben wir während der Prozessierung sukzessive
+		     * unsere Ergebnisse.
+		     */
+		  StringBuffer result = new StringBuffer();
+		  
+		  
+		    /*
+		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
+		     * ausgelesen und in HTML-Form übersetzt.
+		     */
+		  	result.append("<H1>" + r.getTitle() + "</H1>");
+		  	result.append("<p><table border=1px rules=all> <tr>");
+		  	
+		  	
+		  	
+		  	 ArrayList<Row> rows = r.getRows();
+		     
+		     
+		     for (int i = 0; i < rows.size(); i++) {
+		         Row row = rows.get(i);
+		         result.append("<tr>");
+		         for (int k = 0; k < row.getNumberOfColumns(); k++) {
+		          
+		             if (i > 1) {
+		               result.append("<td>" + row.getColumnAt(k) + "</td>");
+		             }
+		           
+		         }
+		         result.append("</tr>");
+		       }
+
+		       result.append("</table>");
+		       
+		       /*
+		        * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
+		        * reportText-Variable zugewiesen. Dadurch wird es möglich, anschließend das
+		        * Ergebnis mittels getReportText() auszulesen.
+		        */
+		       this.reportText = result.toString();
+	  }
 
 }
