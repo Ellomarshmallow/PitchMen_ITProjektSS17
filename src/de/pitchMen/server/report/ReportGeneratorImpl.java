@@ -124,6 +124,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 *            werden soll.
 	 * @return der fertige Report
 	 */
+	
+	
+	
 	@Override
 	public AllJobPostings showAllJobPostings() throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
@@ -594,7 +597,39 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// R�ckgabe des fertigen Reports
 		return result;
 	}
-
+	
+	/**
+	 * Erstellen von
+	 * <code>getApplicatorsOnOwnJobPostings</code>-Objekten.
+	 * 
+	 * @param Personenobjekt
+	 *            bzgl. dessen der Report erstellt werden soll.
+	 * @return der fertige Report
+	 */
+	public ArrayList<Person> getApplicatorsOnOwnJobPostings(Person p) throws IllegalArgumentException {
+		
+		ArrayList<Person> applicant = new ArrayList<Person>();
+	
+		Project pj = pitchMenAdmin.getProjectByID(p.getId());
+				
+		ArrayList<JobPosting> myjobpostings = pitchMenAdmin.getJobPostingsByProjectId(pj.getId());
+		
+			for (JobPosting jobposting : myjobpostings) {
+				
+				ArrayList<Application> applications = pitchMenAdmin.getApplicationsByJobPostingId(jobposting.getId());
+				
+				for (Application application : applications) {
+					
+					if(applicant.contains(pitchMenAdmin.getPersonByID(application.getId()))){
+					}else{
+						applicant.add(pitchMenAdmin.getPersonByID(application.getId()));
+					}
+				}
+			}
+		return applicant;
+	}
+	
+	
 	/**
 	 * Erstellen von <code>FanInJobPostingsOfUser</code>-Objekten.
 	 * 
@@ -683,6 +718,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		return result;
 
 	}
+	
+	
 
 	/**
 	 * Erstellen von <code>FanOutApplicationsOfUser</code>-Objekten.
