@@ -249,6 +249,11 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.jobPostingMapper.findJobPostingsByProjectId(projectId);
 	}
 
+	@Override
+	public ArrayList<JobPosting> getJobPostingsByPersonId(int personId) throws IllegalArgumentException {
+		return this.jobPostingMapper.findByPersonId(personId);
+	}
+
 	// --------------------------- MARKETPLACE
 
 	@Override
