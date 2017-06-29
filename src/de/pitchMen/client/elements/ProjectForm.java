@@ -214,16 +214,6 @@ public class ProjectForm extends Formular {
 
 	// ---------- ClickHandler
 
-	// ---------- addProjectClickHandler
-	private class addProjectClickHandler implements ClickHandler {
-
-		public void onClick(ClickEvent event) {
-
-			AddProjectForm addProject = new AddProjectForm(selectedProject, pitchMenTreeViewModel, true);
-
-		}
-	}
-
 	// ---------- addJobPostingClickHandler()
 	private class addJobPostingClickHandler implements ClickHandler {
 
@@ -242,7 +232,7 @@ public class ProjectForm extends Formular {
 
 			// bei Click wird die delete() Methode aufgerufen
 
-			if (Window.confirm("Sind Sie sich sicher, dass Sie das löschen wollen?")) {
+			if (Window.confirm("Sind Sie sich sicher, dass Sie das Projekt löschen wollen?")) {
 				delete();
 			}
 
@@ -310,16 +300,16 @@ public class ProjectForm extends Formular {
 
 	public void delete() {
 
-		super.getPitchMenAdmin().deleteProject(selectedProject, new DeleteProjectCallback(selectedProject));
+		ClientsideSettings.getPitchMenAdmin().deleteProject(selectedProject, new DeleteProjectCallback(parentMarketplace));
 
 	}
 
 	class DeleteProjectCallback implements AsyncCallback<Void> {
 
-		Project p = null;
+		Marketplace parentMarketplace = null;
 
-		public DeleteProjectCallback(Project p) {
-			this.p = p;
+		public DeleteProjectCallback(Marketplace parentMarketplace) {
+			this.parentMarketplace = parentMarketplace;
 		}
 
 		public void onFailure(Throwable caught) {
@@ -328,11 +318,8 @@ public class ProjectForm extends Formular {
 		}
 
 		public void onSuccess(Void result) {
-			if (p != null) {
-				setSelectedProject(null);
-
-				pitchMenTreeViewModel.deleteProject(p, parentMarketplace);
-			}
+			Window.alert("Das Projekt wurde erfolgreich gelöscht.");
+			MarketplaceForm marketplaceForm = new MarketplaceForm(parentMarketplace);
 		}
 	}
 

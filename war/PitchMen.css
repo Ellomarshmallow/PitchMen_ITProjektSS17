@@ -62,6 +62,10 @@ button {
     box-shadow: 0px 0px 8px #999;
 }
 
+.login-link-container h1 {
+	padding: 20px 0px 20px 30px;
+}
+
 .login-link-container a {
     margin: 30px 40px 0px 40px;
     padding: 10px 20px;
@@ -102,13 +106,18 @@ button {
 h1 {
 	font-weight: 400;
 	font-size: 16px;
-	padding: 20px 0px 20px 30px;
 	width: 20%;
 	box-sizing: border-box;
-	color: rgba(255,255,255,0.0);
 	background: url('PitchMenLogoFinal-01.png') no-repeat left 80%;
 	background-size: contain;
 	margin-left: 20px;
+	color: rgba(255,255,255,0.0);
+}
+
+h1 a {
+	display: block;
+	color: rgba(255,255,255,0.0);
+	padding: 20px 0px 20px 30px;
 }
 
 #usermenu .gwt-HTML {
@@ -197,6 +206,10 @@ strong {
 #nav button:focus{
 	background: #006EB5;
 	color: #fff;
+}
+
+.com-google-gwt-user-cellview-client-CellTree-Style-cellTreeTopItemImageValue {
+	border-bottom: none !important;
 }
 
 /* ### CONTENT ### */
@@ -390,6 +403,23 @@ input {
     background: #1c9cd8;
 }
 
+.app-status {
+	text-align: center;
+	color: #fff;
+	font-size: 80%;
+	padding: 5px 0px;
+	border-radius: 6px;
+	text-transform: uppercase;
+}
+
+.accepted {
+	background: #9cd81c;
+}
+
+.denied {
+	background: #d8581c;
+}
+
 
 /* ### CONTENT > LOADING ANIMATION ### */
 @-webkit-keyframes {name}
@@ -546,4 +576,10 @@ td.datePickerYear {
   cursor: hand;
   cursor: pointer;
   padding: 0px 4px;
+}
+
+.reportgenerator tr{
+	background-color: #1C9CD8;
+	color: white; 
+	
 }
