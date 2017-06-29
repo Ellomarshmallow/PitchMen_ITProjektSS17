@@ -137,20 +137,20 @@ public class HTMLReportWriter extends ReportWriter {
 		// table und tr und td öffnen
 
 		ArrayList<Row> rows = a.getRows();
-		if (rows != null) {
-			ClientsideSettings.getLogger().info("Rows in Array ist ungleich Null");
+		if (rows == null) {
+			ClientsideSettings.getLogger().info("Es sind keine Zeilen im Array enthalten");
 		}
 
-		for (int i = 0; i < rows.size(); i++) {
+		for (int i = 0; i < 1; i++) {
 			Row row = rows.get(i);
 			buff.append("<tr>");
 			for (int x = 0; x < row.getNumberOfColumns(); x++) {
-				buff.append("<td>" + row.getColumnAt(x) + "</td");
+				buff.append("<td>" + row.getColumnAt(x) + "</td>");
 			}
 			buff.append("</tr");
 		}
 
-		buff.append("</table");
+		buff.append("</table>");
 		this.reportText = buff.toString();
 	}
 
