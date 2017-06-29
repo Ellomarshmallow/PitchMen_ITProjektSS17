@@ -124,9 +124,9 @@ public class PartnerProfileMapper {
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id) VALUES (" + partnerProfile.getId() + ", '"
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, company_id, person_id) VALUES (" + partnerProfile.getId() + ", '"
 					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
-					+ partnerProfile.getCompanyId() + ")");
+					+ partnerProfile.getCompanyId() + ", " + partnerProfile.getPersonId() + ")");
 		/**
 		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
@@ -168,10 +168,10 @@ public class PartnerProfileMapper {
 			/**
 			 * SQL-Anweisung zum Einfügen des neuen PartnerProfile-Tupels in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, team_id, "
+			stmt.executeUpdate("INSERT INTO partnerProfile (id, dateCreated, dateChanged, team_id, person_id"
 					+ ") VALUES (" + partnerProfile.getId() + ", '"
 					+ partnerProfile.getDateCreated().toString() + "', '" + partnerProfile.getDateChanged().toString() + "', "
-					+ partnerProfile.getTeamId() + ")");
+					+ partnerProfile.getTeamId() + ", " + partnerProfile.getPersonId() + ")");
 		/**
 		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
@@ -494,7 +494,7 @@ public class PartnerProfileMapper {
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten companyId, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM partnerProfile + WHERE company_id = " + teamId);
+					"SELECT * FROM partnerProfile WHERE company_id = " + teamId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
 			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
