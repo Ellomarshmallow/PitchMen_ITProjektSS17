@@ -147,6 +147,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public void deleteCompany(Company company) throws IllegalArgumentException {
 		ArrayList<Participation> participations = this.getParticipationsByCompanyId(company.getId());
 		PartnerProfile partnerProfile = this.getPartnerProfileByPersonId(company.getId());
+		ArrayList<Trait> traits = this.getTraitsByPartnerProfileId(this.getPartnerProfileByCompanyId(company.getId()).getId());
 
 		if (participations != null) {
 			for (Participation participation : participations) {
@@ -156,6 +157,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		if (partnerProfile != null) {
 			this.partnerProfileMapper.delete(partnerProfile);
+			
+			if (traits != null){
+				for (Trait trait : traits) {
+					this.traitMapper.delete(trait);
+				}
+			}
 		}
 
 		this.companyMapper.delete(company);
@@ -622,7 +629,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public Team addTeam(String name, String description, int teamSize) throws IllegalArgumentException {
 		Team team = new Team();
-		
+
 		team.setDescription(description);
 		team.setName(name);
 		team.setTeamSize(teamSize);
