@@ -467,7 +467,7 @@ public class JobPostingForm extends Formular{
 
 				// bei Click wird die delete() Methode aufgerufen
 
-				if (Window.confirm("Sind Sie sich sicher, dass Sie das löschen wollen?")) {
+				if (Window.confirm("Sind Sie sich sicher, dass Sie die Ausschreibung unwiderruflich löschen wollen?")) {
 					delete();
 				}
 
@@ -568,17 +568,17 @@ public class JobPostingForm extends Formular{
 
 		public void delete() {
 			
-			super.getPitchMenAdmin().deleteJobPosting(selectedJobPosting, new DeleteJobPostingCallback(selectedJobPosting));
+			ClientsideSettings.getPitchMenAdmin().deleteJobPosting(selectedJobPosting, new DeleteJobPostingCallback(parentProject));
 
 
 		}
 
 		class DeleteJobPostingCallback implements AsyncCallback<Void> {
 
-			JobPosting j = null;
+			Project project = null;
 
-			public DeleteJobPostingCallback(JobPosting j) {
-				this.j = j;
+			public DeleteJobPostingCallback(Project parentProject) {
+				this.project = parentProject;
 			}
 
 			public void onFailure(Throwable caught) {
@@ -587,7 +587,8 @@ public class JobPostingForm extends Formular{
 			}
 
 			public void onSuccess(Void result) {
-				
+				Window.alert("Die Ausschreibung wurde erfolgreich gelöscht.");
+				ProjectForm projectForm = new ProjectForm(project); 
 			}
 		}
 				
