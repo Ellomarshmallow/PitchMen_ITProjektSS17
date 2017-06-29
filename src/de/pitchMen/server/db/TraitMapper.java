@@ -424,6 +424,12 @@ public class TraitMapper {
 		return result;
 	}
 	
+	/**
+	 * Mapper zum Abfragen von Traits aus der Trait Tabelle, welcher aber nur einem jobPosting angehören. 
+	 * Benötigt wird die Methode für den Report "Alle Ausschreibungen passend zum Partnerprofil"
+	 * @param partnerProfileId
+	 * @return trait
+	 */
 	
 	public ArrayList<Trait> findTraitsFromJobPostings(int partnerProfileId) {
 		Connection con = DBConnection.connection();
@@ -433,9 +439,9 @@ public class TraitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten PartnerProfilId, in der Datenbank.
+			 * SQL-Anweisung zum finden von Trait-Datensätzen, welche einem JobPosting und keiner Person angehören
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT * FROM trait WHERE partnerProfile_id = " + partnerProfileId);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM trait INNER JOIN partnerProfile ON trait.partnerProfile_id = partnerProfile.id WHERE partnerProfile.jobPosting_id != 0");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle trait mit dem ï¿½bergebenen Wert vorhanden ist,
