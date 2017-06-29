@@ -68,45 +68,82 @@ public class ReportNavigation extends VerticalPanel {
 
 			}
 		});
-
+		
 		report2Btn.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				final HTMLReportWriter writer = new HTMLReportWriter();
-				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(
-						ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
+				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
 
-							@Override
-							public void onFailure(Throwable caught) {
-								ClientsideSettings.getLogger().severe("Upsi, da ist wohl was schiefgegangen");
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Upsi, da ist wohl etwas schief gelaufen");
 
-							}
+					}
 
-							@Override
-							public void onSuccess(PartnerProfile result) {
-								ClientsideSettings.getReportGenerator().showAllJobPostingsMatchingPartnerProfileOfUser(
-										result, new AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser>() {
+					@Override
+					public void onSuccess(PartnerProfile result) {
+						ClientsideSettings.getReportGenerator().showAllJobPostingsMatchingPartnerProfileOfUser(
+								result, new AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser>() {
 
-											@Override
-											public void onFailure(Throwable caught) {
-												ClientsideSettings.getLogger()
-												.severe("Upsi, da ist wohl was schiefgegangen");
+									@Override
+									public void onFailure(Throwable caught) {
+										ClientsideSettings.getLogger()
+										.severe("Upsi, da ist wohl etwas schief gelaufen");
 
-											}
+									}
 
-											@Override
-											public void onSuccess(AllJobPostingsMatchingPartnerProfileOfUser result) {
-												writer.process(result);
-												RootPanel.get("content").clear();
-												RootPanel.get("content").add(new HTML(writer.getReportText()));
-											}
-
-										});
-							}
-						});
+									@Override
+									public void onSuccess(ApplicationsRelatedToJobPostingsOfUser result) {
+										writer.process(result);
+										RootPanel.get("content").clear();
+										RootPanel.get("content").add(new HTML(writer.getReportText()));
+									}
+								});
+					}
+				});
 			}
 		});
+
+//		report2Btn.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				final HTMLReportWriter writer = new HTMLReportWriter();
+//				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(
+//						ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
+//
+//							@Override
+//							public void onFailure(Throwable caught) {
+//								ClientsideSettings.getLogger().severe("Upsi, da ist wohl was schiefgegangen");
+//
+//							}
+//
+//							@Override
+//							public void onSuccess(PartnerProfile result) {
+//								ClientsideSettings.getReportGenerator().showAllJobPostingsMatchingPartnerProfileOfUser(
+//										result, new AsyncCallback<AllJobPostingsMatchingPartnerProfileOfUser>() {
+//
+//											@Override
+//											public void onFailure(Throwable caught) {
+//												ClientsideSettings.getLogger()
+//												.severe("Upsi, da ist wohl was schiefgegangen");
+//
+//											}
+//
+//											@Override
+//											public void onSuccess(AllJobPostingsMatchingPartnerProfileOfUser result) {
+//												writer.process(result);
+//												RootPanel.get("content").clear();
+//												RootPanel.get("content").add(new HTML(writer.getReportText()));
+//											}
+//
+//										});
+//							}
+//						});
+//			}
+//		});
 
 		report3Btn.addClickHandler(new ClickHandler() {
 
