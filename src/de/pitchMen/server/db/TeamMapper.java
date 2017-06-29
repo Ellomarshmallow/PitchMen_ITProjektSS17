@@ -74,7 +74,7 @@ public class TeamMapper {
 			/**
 			 * SQL-Anweisung zum Einf�gen des neuen Team-Tupels in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO team (id, name, desription, size)" + "VALUES (" + team.getId() + ", '"
+			stmt.executeUpdate("INSERT INTO team (id, name, description, size)" + "VALUES (" + team.getId() + ", '"
 					+ team.getName() + "', '" + team.getDescription() + "' , " + team.getTeamSize() + ")");
 
 		} catch (SQLException e2) {
