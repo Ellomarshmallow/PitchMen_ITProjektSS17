@@ -137,11 +137,12 @@ public class HTMLReportWriter extends ReportWriter {
 		// table und tr und td öffnen
 
 		ArrayList<Row> rows = a.getRows();
-		if (rows == null) {
-			ClientsideSettings.getLogger().info("Es sind keine Zeilen im Array enthalten");
-		}
-
-		for (int i = 0; i < 2; i++) {
+		if (rows != null) {
+			ClientsideSettings.getLogger().info("Es sind Zeilen im Array enthalten");
+			buff.append("Das Array hat Werte drin </br>");
+			}
+		
+		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.get(i);
 			buff.append("<tr>");
 			for (int x = 0; x < row.getNumberOfColumns(); x++) {
