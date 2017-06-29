@@ -187,7 +187,7 @@ public class ReportNavigation extends VerticalPanel {
 				final ListBox applicantBox = new ListBox();
 				ReportGeneratorAsync repGen = ClientsideSettings.getReportGenerator();
 				applicantBox.addItem("Bitte wähle einen Bewerber aus");
-				
+				RootPanel.get("content").clear();
 				repGen.getApplicatorsOnOwnJobPostings(ClientsideSettings.getCurrentUser(), new AsyncCallback<ArrayList<Person>>(){
 
 							@Override
@@ -218,10 +218,10 @@ public class ReportNavigation extends VerticalPanel {
 					RootPanel.get("content").clear();
 					String s = applicantBox.getValue(applicantBox.getSelectedIndex());
 					String last = s.substring(s.indexOf(':')+1, s.length());
-					int ausgewähltId = Integer.valueOf(last);
+					int chosenId = Integer.valueOf(last);
 					
 					
-					repGenA.showProjectInterweavingsWithParticipationsAndApplications(ausgewähltId,
+					repGenA.showProjectInterweavingsWithParticipationsAndApplications(chosenId,
 						new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
 
 							@Override
