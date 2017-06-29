@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -198,7 +199,24 @@ public class PartnerProfileForm extends Formular {
 				 *  die Traits des PartnerProfils des aktuell angemeldeten Benutzers.
 				 */
 				traits = result;
-				RootPanel.get("content").add(new HTML("<h2>Bearbeiten Sie Ihr Partner-Profil</h2>"));
+				
+				//Buttons zum Anlegen von Team oder Unternehmen
+				
+				HorizontalPanel topPanel = new HorizontalPanel();
+				topPanel.addStyleName("headline");
+				
+				Button createTeamButton = new Button("Team anlegen");
+				Button createCompanyButton = new Button("Unternehmen anlegen");
+				createTeamButton.addClickHandler(new CreateTeamPartnerProfileClickHandler());
+				createCompanyButton.addClickHandler(new CreateCompanyPartnerProfileClickHandler());
+				
+				topPanel.add(new HTML("<h2>Verwalten Sie Ihre Partnerprofile</h2>"));
+				topPanel.add(createTeamButton);			
+				topPanel.add(createCompanyButton);
+				
+				RootPanel.get("content").add(topPanel);
+				
+				RootPanel.get("content").add(new HTML("<h3>Eigenes, personenbezogenes Partnerprofil</h3>"));
 				
 				RootPanel.get("content").add(new HTML("<p><strong>Erstellt:</strong> "
 														+ userPartnerProfile.getDateCreated()
@@ -367,15 +385,6 @@ public class PartnerProfileForm extends Formular {
 				
 				RootPanel.get("content").add(traitTable);
 				
-				//Buttons zum Anlegen von Team oder Unternehmen
-				
-				Button createTeamButton = new Button("Team anlegen");
-				Button createCompanyButton = new Button("Unternehmen anlegen");
-				createTeamButton.addClickHandler(new CreateTeamPartnerProfileClickHandler());
-				createCompanyButton.addClickHandler(new CreateCompanyPartnerProfileClickHandler());
-				RootPanel.get("content").add(createTeamButton);			
-				RootPanel.get("content").add(createCompanyButton);
-				
 				//FIXME If-Abfrage, wenn schon ein Partnerprofil von Team oder Person angelegt ist, dann sollte das zum öffenen angezeigt werden.
 				
 			}
@@ -473,39 +482,55 @@ public class PartnerProfileForm extends Formular {
 			 *  wird der Button geklickt, muss ein 
 			 *  neues Team erstellt werden.
 			 */
-			TextBox nameBox = new TextBox(); 
-			TextArea descArea = new TextArea();
-			TextBox teamSizeBox = new TextBox();
+			final TextBox nameBox = new TextBox(); 
+			final TextArea descArea = new TextArea();
+			final TextBox teamSizeBox = new TextBox();
+			
+			HorizontalPanel topPanel = new HorizontalPanel();
+			topPanel.addStyleName("headline");
 					
 			RootPanel.get("content").clear(); 
-			RootPanel.get("content").add(new HTML("Geben Sie in der Teambeschreibung bitte Vor- und Nachname aller Teammitglieder an"));
-			RootPanel.get("content").add(new HTML("<br>"));
-			RootPanel.get("content").add(new HTML("Teamname:"));
+			topPanel.add(new HTML("<h2>Neues Team anlegen</h2>"));
+			Button save = new Button("Speichern");
+			topPanel.add(save);
+			RootPanel.get("content").add(topPanel);
+			RootPanel.get("content").add(new HTML("<p>Geben Sie in der Teambeschreibung bitte Vor- und Nachname aller Teammitglieder an.</p>"));
+			RootPanel.get("content").add(new HTML("<p>Teamname:</p>"));
 			RootPanel.get("content").add(nameBox);
-			RootPanel.get("content").add(new HTML("Teambeschreibung:"));
+			RootPanel.get("content").add(new HTML("<p>Teambeschreibung:</p>"));
 			RootPanel.get("content").add(descArea);
-			RootPanel.get("content").add(new HTML("Teamgröße:"));
+			RootPanel.get("content").add(new HTML("<p>Teamgröße:</p>"));
 			RootPanel.get("content").add(teamSizeBox);
 			
-			Button save = new Button("Speichern");
 			save.addClickHandler(new ClickHandler(){
 				public void onClick(ClickEvent event){
-					//FIXME erstellen eines Teams und erstellen eines Team Partnerprofiles
+					ClientsideSettings.getPitchMenAdmin().addTeam(nameBox.getText(), descArea.getText(), Integer.parseInt(teamSizeBox.getText()), new AsyncCallback<Team>(){
 					
-					PartnerProfileForm p = new PartnerProfileForm(); 
-//					ClientsideSettings.getPitchMenAdmin().addTeam(nameBox.getText(), descArea.getText(), Integer.parseInt(teamSizeBox.getText()), new AsyncCallback<Team>(){
-//					
-//						public void onFailure(Throwable caught) {
-//							ClientsideSettings.getLogger().severe("Neues Team konnte nicht gespeichert werden.");
-//						}
-//							
-//							public void onSuccess(Team result) {
-//							
-//								ClientsideSettings.getPitchMenAdmin().addPartnerProfileForTeam(dateCreated, dateChanged, teamId, callback);
-//								
-//								
-//							}
-//					});
+						public void onFailure(Throwable caught) {
+							ClientsideSettings.getLogger().severe("Neues Team konnte nicht gespeichert werden.");
+						}
+							
+							public void onSuccess(Team result) {
+							
+								java.util.Date currentDate = new java.util.Date();
+								java.sql.Date convertedDate = new java.sql.Date(currentDate.getTime());
+								ClientsideSettings.getPitchMenAdmin().addPartnerProfileForTeam(convertedDate, convertedDate, result.getId(), ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										ClientsideSettings.getLogger().severe("Konnte Partnerprofil nicht speichern.");
+									}
+
+									@Override
+									public void onSuccess(PartnerProfile result) {
+										PartnerProfileForm updatedForm = new PartnerProfileForm();
+									}
+									
+								});
+								
+								
+							}
+					});
 				}
 			}); 
 			RootPanel.get("content").add(save);
