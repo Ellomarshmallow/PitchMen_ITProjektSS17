@@ -99,7 +99,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Comany-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Company addCompany() throws IllegalArgumentException;
+	public Company addCompany(String name, String description) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Company-Objekt.
@@ -445,7 +445,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Person-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Person addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
+	public Person addPerson(String firstName, String name, String description, String emailAdress, String loginUrl, String logoutUrl,
 			boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
 
 	/**
@@ -618,7 +618,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Team-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Team addTeam() throws IllegalArgumentException;
+	public Team addTeam(String name, String description, int teamSize) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Team-Objekt.

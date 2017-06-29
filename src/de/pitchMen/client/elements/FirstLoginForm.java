@@ -31,7 +31,7 @@ public class FirstLoginForm extends Formular  {
 	TextBox firstNameBox = new TextBox(); 
 	Label lastNameLabel = new Label("Nachname: ");
 	TextBox lastNameBox = new TextBox();
-	Label descriptionLabel = new Label("Kurzbeschreibung: ");
+	Label descriptionLabel = new Label("Beruflicher Status: ");
 	TextBox descriptionBox = new TextBox();
 	
 	/**
@@ -90,6 +90,7 @@ public class FirstLoginForm extends Formular  {
 											  newUser.getEmailAdress(), 
 											  newUser.getLoginUrl(), 
 											  newUser.getLogoutUrl(), 
+											  descriptionBox.getText(),
 											  true, 
 											  true, 
 											  new NewPersonCallback());	
@@ -165,6 +166,7 @@ public class FirstLoginForm extends Formular  {
 											  newUser.getEmailAdress(), 
 											  newUser.getLoginUrl(), 
 											  newUser.getLogoutUrl(), 
+											  descriptionBox.getText(),
 											  true, 
 											  true, 
 											  new NewPersonOnRepGenCallback());	

@@ -1,7 +1,7 @@
 package de.pitchMen.server.db;
 
 /**
- * Bildet Team-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Bildet Team-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es mï¿½glich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * @author Lars
  */
@@ -17,15 +17,15 @@ public class TeamMapper {
 
 	/**
 	 * Die Klasse TeamMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfï¿½llt werden kann,
+	 * wird zunï¿½chst eine Variable mit dem Schlï¿½sselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 
 	private static TeamMapper teamMapper = null;
 
 	/**
-	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschï¿½tzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 
@@ -34,9 +34,9 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafï¿½r,
 	 * dass nur eine einzige Instanz der TeamMapper-Klasse existiert. Aufgerufen
-	 * wird die Klasse somit über TeamMapper.teamMapper() und nicht über den
+	 * wird die Klasse somit ï¿½ber TeamMapper.teamMapper() und nicht ï¿½ber den
 	 * New-Operator.
 	 * 
 	 * @return teamMapper
@@ -50,7 +50,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Fügt ein Team-Objekt der Datenbank hinzu.
+	 * Fï¿½gt ein Team-Objekt der Datenbank hinzu.
 	 * 
 	 * @param team
 	 * @return trait
@@ -61,8 +61,8 @@ public class TeamMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die
+			 * aktuelle id wird um eins erhï¿½ht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM team");
 			if(rs.next()) {
@@ -72,10 +72,10 @@ public class TeamMapper {
 			stmt = con.createStatement();
 
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Team-Tupels in die Datenbank
+			 * SQL-Anweisung zum Einfï¿½gen des neuen Team-Tupels in die Datenbank
 			 */
-			stmt.executeUpdate("INSERT INTO team (id, name, desription)" + "VALUES (" + team.getId() + ", '"
-					+ team.getName() + "', '" + team.getDescription() + "')");
+			stmt.executeUpdate("INSERT INTO team (id, name, desription, size)" + "VALUES (" + team.getId() + ", '"
+					+ team.getName() + "', '" + team.getDescription() + "' , " + team.getTeamSize() + ")");
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -95,12 +95,12 @@ public class TeamMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE team SET name='" + team.getName() + "', description= '" + team.getDescription()
-					+ "' WHERE id= " + team.getId());
+			stmt.executeUpdate("UPDATE team SET name='" + team.getName() + "', "
+					+ "'description= '" + team.getDescription() + "'," + "'size='"+ team.getTeamSize()	+ "' WHERE id= '" + team.getId());
 		}
 
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert und wo im Code es passiert ist.
 		 * 
@@ -113,7 +113,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Löscht ein Team-Objekt aus der Datenbank.
+	 * Lï¿½scht ein Team-Objekt aus der Datenbank.
 	 * 
 	 * @param team
 	 */
@@ -125,7 +125,7 @@ public class TeamMapper {
 			stmt.executeUpdate("DELETE FROM team WHERE id=" + team.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -137,7 +137,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Findet ein Team-Objekt anhand der übergebenen Id in der Datenbank.
+	 * Findet ein Team-Objekt anhand der ï¿½bergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return team
@@ -148,12 +148,12 @@ public class TeamMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM team WHERE id=" + id);
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description, size FROM team WHERE id=" + id);
 
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
+			 * Zu einem Primï¿½rschlï¿½ssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel
 			 * ein DB-Tupel gibt.
 			 */
 
@@ -162,6 +162,7 @@ public class TeamMapper {
 				team.setId(rs.getInt("id"));
 				team.setName(rs.getString("name"));
 				team.setDescription(rs.getString("description"));
+				team.setTeamSize(rs.getInt("size"));
 				return team;
 			}
 
@@ -183,13 +184,14 @@ public class TeamMapper {
 
 		try {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT id, name, description FROM team ORDER BY id");
+			ResultSet rs = stmt.executeQuery("SELECT id, name, description, size FROM team ORDER BY id");
 
 			while (rs.next()) {
 				Team team = new Team();
 				team.setId(rs.getInt("id"));
 				team.setName(rs.getString("name"));
 				team.setDescription(rs.getString("Description"));
+				team.setTeamSize(rs.getInt("size"));
 
 				result.add(team);
 
@@ -201,7 +203,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Findet Team-Objekte anhand des übergebenen Namens in der Datenbank.
+	 * Findet Team-Objekte anhand des ï¿½bergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
 	 * @return ArrayList<Team>
@@ -214,13 +216,14 @@ public class TeamMapper {
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, description FROM team WHERE name LIKE '" + name + "' ORDER BY id");
+					.executeQuery("SELECT id, name, description, size FROM team WHERE name LIKE '" + name + "' ORDER BY id");
 
 			while (rs.next()) {
 				Team team = new Team();
 				team.setId(rs.getInt("id"));
 				team.setName(rs.getString("name"));
-				team.setDescription(rs.getString("value"));
+				team.setDescription(rs.getString("description"));
+				team.setTeamSize(rs.getInt("size"));
 
 				result.add(team);
 			}

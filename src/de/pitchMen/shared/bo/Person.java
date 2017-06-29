@@ -13,7 +13,6 @@ public class Person extends OrganisationUnit {
 	private String firstName = "";
 	private boolean loggedIn = false;
 	private String emailAdress = "";
-	private String name = "";
 	private String loginUrl = "";
 	private String logoutUrl = "";
 	private boolean isExisting = false; 
@@ -36,14 +35,6 @@ public class Person extends OrganisationUnit {
 
 	public void setEmailAdress(String emailAdress) {
 		this.emailAdress = emailAdress;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getLoginUrl() {

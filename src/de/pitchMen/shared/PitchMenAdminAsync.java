@@ -37,7 +37,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- COMPANY
 
-	void addCompany(AsyncCallback<Company> callback);
+	void addCompany(String name, String description, AsyncCallback<Company> callback);
 
 	void updateCompany(Company company, AsyncCallback<Void> callback);
 
@@ -131,7 +131,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- PERSON
 
-	void addPerson(String firstName, String name, String emailAdress, String loginUrl, String logoutUrl,
+	void addPerson(String firstName, String name, String description, String emailAdress, String loginUrl, String logoutUrl,
 			boolean loggedIn, boolean isExisting, AsyncCallback<Person> callback);
 
 	void updatePerson(Person person, AsyncCallback<Void> callback);
@@ -178,7 +178,7 @@ public interface PitchMenAdminAsync {
 
 	// ---------- TEAM
 
-	void addTeam(AsyncCallback<Team> callback);
+	void addTeam(String name, String description, int teamSize, AsyncCallback<Team> callback);
 
 	void updateTeam(Team team, AsyncCallback<Void> callback);
 

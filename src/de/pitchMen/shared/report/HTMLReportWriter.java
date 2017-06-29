@@ -82,59 +82,7 @@ public class HTMLReportWriter extends ReportWriter {
 		return "</body></html>";
 	}
 
-	// ---------- process(AllApplicationsOfUser)
 
-	public void process(AllApplicationsOfUser a) {
-		// zurÃ¼cksetzen des Ausgabe-Strings
-		this.resetReportText();
-
-		// StringBuffer erzeugen
-		StringBuffer buff = new StringBuffer();
-
-		//Titel des Reports ausgeben
-		buff.append("<h4>" + a.getTitle() + "</h4>");
-		
-		//./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um anschließend der Row Columns hinzuzufügen. 
-		buff.append("<p><table border=1px rules=all> <tr>");
-		
-		//Fixe Werte den Columns zuweisen. Absprache mit Gruppe nochmal nötig --> LL
-//		 buff.append("<td> ID </td> ");
-//		 buff.append("<td> Bewerbungstext </td>");
-//		 buff.append("<td> Erstellungsdatum </td>");
-//		 buff.append("<td> AusschreibungsID </td>");
-//		 buff.append("<td> PartnerProfilID </td>");
-//		 buff.append("<td> Status </td></tr>");
-
-		//Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der Rows aus dem Übergabeobjekt.
-		ArrayList<Row> rows = a.getRows();
-		
-		//Prüfung, ob in dem Array was drinne ist. 
-		if (rows == null) {
-			ClientsideSettings.getLogger().info("Das Array beinhaltet keine Rows");
-		}
-
-		/**
-		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen Objekts. 
-		 * Erstellen der Reihen durch <tr> und in der nachfolgenden Schleife die jeweiligen Spalten mit <td>
-		 * 
-		 */
-		for (int i = 0; i < rows.size(); i++) {
-			buff.append("<tr>");
-			Row row = rows.get(i);
-			
-			for (int x = 0; x < row.getNumberOfColumns(); x++) {
-				buff.append("<td>" + row.getColumnAt(x) + "</td>");
-			}
-			buff.append("</tr>");
-		}
-
-		buff.append("</table>");
-		
-		//abschließend wird der erzeuge und in buff gespeicherte Text in einen String transformiert
-		this.reportText = buff.toString();
-		
-		
-	}
 
 	// ---------- process(AllJobPostings)
 
@@ -184,15 +132,14 @@ public class HTMLReportWriter extends ReportWriter {
 
 		// StringBuffer erzeugen
 		StringBuffer buff = new StringBuffer();
-
-		buff.append("<h2>" + a.getTitle() + "</h2>");
-		buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");
+		buff.append("<h4>" + a.getTitle() + "</h4>");
+		buff.append("<p><table border=1px rules=all> <tr>");
 		// table und tr und td Ã¶ffnen
-		buff.append("<table><tr>");
-		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>");
-		buff.append("</tr>");
 
 		ArrayList<Row> rows = a.getRows();
+		if (rows != null) {
+			ClientsideSettings.getLogger().info("Rows in Array ist ungleich Null");
+		}
 
 		for (int i = 0; i < rows.size(); i++) {
 			Row row = rows.get(i);
@@ -205,7 +152,6 @@ public class HTMLReportWriter extends ReportWriter {
 
 		buff.append("</table");
 		this.reportText = buff.toString();
-
 	}
 
 	// ---------- process(ApplicationsRelatedToJobPostingsOfUser)
@@ -217,45 +163,204 @@ public class HTMLReportWriter extends ReportWriter {
 		// StringBuffer erzeugen
 		StringBuffer buff = new StringBuffer();
 
-		buff.append("<h2>" + a.getTitle() + "</h2>");
-		buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");
-		// table und tr und td Ã¶ffnen
-		buff.append("<table><tr>");
-		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>");
-		buff.append("</tr>");
+		//Titel des Reports ausgeben
+		buff.append("<h4>" + a.getTitle() + "</h4>");
 
-		ArrayList<Row> rows = a.getRows();
+		//./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um anschließend der Row Columns hinzuzufügen. 
+		buff.append("<p><table border=1px rules=all> <tr>");
 
-		for (int i = 0; i < rows.size(); i++) {
-			Row row = rows.get(i);
-			buff.append("<tr>");
-			for (int x = 0; x < row.getNumberOfColumns(); x++) {
-				buff.append("<td>" + row.getColumnAt(x) + "</td");
-			}
-			buff.append("</tr");
+		//Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der Rows aus dem Übergabeobjekt.
+
+
+
+
+		/**
+		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen Objekts. 
+		 * Erstellen der Reihen durch <tr> und in der nachfolgenden Schleife die jeweiligen Spalten mit <td>
+		 * 
+		 */
+		for (int i = 0; i < a.getNumSubReports(); i++) {
+
+			AllApplicationsToOneJobPostingOfUser subReport = (AllApplicationsToOneJobPostingOfUser)a.getSubReportAt(i);
+
+			this.process(subReport);
+
+			buff.append(this.reportText + "\n");
+
+			this.resetReportText();
 		}
 
-		buff.append("</table");
 		this.reportText = buff.toString();
 	}
 
-	// ---------- process(ProjectInterweavingsWithParticipationsAndApplications)
-
-	public void process(ProjectInterweavingsWithParticipationsAndApplications a) {
-		// FIXME
+	
+	// ---------- process(AllApplicationsToOneJobPostingOfUser)
+	public void process(AllApplicationsToOneJobPostingOfUser a) {
 		// zurÃ¼cksetzen des Ausgabe-Strings
 		this.resetReportText();
 
 		// StringBuffer erzeugen
 		StringBuffer buff = new StringBuffer();
-		buff.append("<h2>" + a.getTitle() + "</h2>");
-		buff.append("<p><strong>" + a.getDatecreated().toString() + "</strong></p>");
-		// table und tr und td Ã¶ffnen
-		buff.append("<table><tr>");
-		buff.append("<td>" + paragraphToHtml(a.getHeaderData()) + "</td>");
-		buff.append("</tr>");
+
+		buff.append("<h4>" + a.getTitle() + "</h4>");
+		buff.append("<p><table border=1px rules=all> <tr>");
+		
+		ArrayList<Row> rows = a.getRows();
+		if (rows != null) {
+			ClientsideSettings.getLogger().info("Rows in Array ist ungleich Null");
+		}
+
+		for (int i = 0; i < rows.size(); i++) {
+			buff.append("<tr>");
+			Row row = rows.get(i);
+
+			for (int x = 0; x < row.getNumberOfColumns(); x++) {
+
+				buff.append("<td>" + row.getColumnAt(x) + "</td>");
+
+			}
+			buff.append("</tr>");
+		}
+
+		buff.append("</table>");
+		this.reportText = buff.toString();
+	}
+	
+	// ---------- process(AllApplicationsOfUser)
+
+	public void process(AllParticipationsOfOneUser a) {
+		// zurÃ¼cksetzen des Ausgabe-Strings
+		this.resetReportText();
+
+		// StringBuffer erzeugen
+		StringBuffer buff = new StringBuffer();
+
+		//Titel des Reports ausgeben
+		buff.append("<h4>" + a.getTitle() + "</h4>");
+
+		//./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um anschließend der Row Columns hinzuzufügen. 
+		buff.append("<p><table border=1px rules=all> <tr>");
+
+		
+		//Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der Rows aus dem Übergabeobjekt.
+		ArrayList<Row> rows = a.getRows();
+
+		//Prüfung, ob in dem Array was drinne ist. 
+		if (rows == null) {
+			ClientsideSettings.getLogger().info("Das Array beinhaltet keine Rows");
+		}
+
+		/**
+		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen Objekts. 
+		 * Erstellen der Reihen durch <tr> und in der nachfolgenden Schleife die jeweiligen Spalten mit <td>
+		 * 
+		 */
+		for (int i = 0; i < rows.size(); i++) {
+			buff.append("<tr>");
+			Row row = rows.get(i);
+
+			for (int x = 0; x < row.getNumberOfColumns(); x++) {
+				buff.append("<td>" + row.getColumnAt(x) + "</td>");
+			}
+			buff.append("</tr>");
+		}
+
+		buff.append("</table");
+
+		//abschließend wird der erzeuge und in buff gespeicherte Text in einen String transformiert
+		this.reportText = buff.toString();
+
 
 	}
+
+	// ---------- process(AllApplicationsOfUser)
+
+	public void process(AllApplicationsOfUser a) {
+		// zurÃ¼cksetzen des Ausgabe-Strings
+		this.resetReportText();
+
+		// StringBuffer erzeugen
+		StringBuffer buff = new StringBuffer();
+
+		//Titel des Reports ausgeben
+		buff.append("<h4>" + a.getTitle() + "</h4>");
+
+		//./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um anschließend der Row Columns hinzuzufügen. 
+		buff.append("<p><table border=1px rules=all> <tr>");
+
+		
+		//Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der Rows aus dem Übergabeobjekt.
+		ArrayList<Row> rows = a.getRows();
+
+		//Prüfung, ob in dem Array was drinne ist. 
+		if (rows == null) {
+			ClientsideSettings.getLogger().info("Das Array beinhaltet keine Rows");
+		}
+
+		/**
+		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen Objekts. 
+		 * Erstellen der Reihen durch <tr> und in der nachfolgenden Schleife die jeweiligen Spalten mit <td>
+		 * 
+		 */
+		for (int i = 0; i < rows.size(); i++) {
+			buff.append("<tr>");
+			Row row = rows.get(i);
+
+			for (int x = 0; x < row.getNumberOfColumns(); x++) {
+				buff.append("<td>" + row.getColumnAt(x) + "</td>");
+			}
+			buff.append("</tr>");
+		}
+
+		buff.append("</table");
+
+		//abschließend wird der erzeuge und in buff gespeicherte Text in einen String transformiert
+		this.reportText = buff.toString();
+
+
+	}
+
+	// ---------- process(ProjectInterweavingsWithParticipationsAndApplications)
+
+	public void process(ProjectInterweavingsWithParticipationsAndApplications a) {
+		// zurÃ¼cksetzen des Ausgabe-Strings
+				this.resetReportText();
+
+				// StringBuffer erzeugen
+				StringBuffer buff = new StringBuffer();
+
+				//Titel des Reports ausgeben
+				buff.append("<h4>" + a.getTitle() + "</h4>");
+
+				//./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um anschließend der Row Columns hinzuzufügen. 
+				buff.append("<p><table border=1px rules=all> <tr>");
+
+				//Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der Rows aus dem Übergabeobjekt.
+
+
+
+
+				/**
+				 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen Objekts. 
+				 * Erstellen der Reihen durch <tr> und in der nachfolgenden Schleife die jeweiligen Spalten mit <td>
+				 * 
+				 */
+				for (int i = 0; i < a.getNumSubReports(); i++) {
+
+					AllApplicationsOfOneUser subReportOne = (AllApplicationsOfOneUser)a.getSubReportAt(i);
+					AllParticipationsOfOneUser subReportTwo = (AllParticipationsOfOneUser)a.getSubReportAt(i);
+
+					this.process(subReportOne);
+					this.process(subReportTwo);
+
+					buff.append(this.reportText + "\n");
+
+					this.resetReportText();
+				}
+
+				this.reportText = buff.toString();
+			}
+
 
 	// ---------- process(FanInJobPostingsOfUser)
 
@@ -351,6 +456,12 @@ public class HTMLReportWriter extends ReportWriter {
 	// TODO Beschreibung
 	public String getReportText() {
 		return this.getHead() + this.reportText + this.getTrailer();
+	}
+
+	@Override
+	public void process(AllApplicationsOfOneUser a) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
