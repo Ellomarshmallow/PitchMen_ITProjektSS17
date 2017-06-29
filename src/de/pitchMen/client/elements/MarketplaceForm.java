@@ -199,13 +199,28 @@ public class MarketplaceForm extends Formular {
 		private class deleteMarketplaceClickHandler implements ClickHandler {
 
 			public void onClick(ClickEvent event) {
+				
+				// Überprüfen, ob Projekte enthalten sind
+				ClientsideSettings.getPitchMenAdmin().getProjectsByMarketplaceId(selectedMarketplace.getId(), new AsyncCallback<ArrayList<Project>>() {
 
-				// bei Click wird die delete() Methode aufgerufen
+					@Override
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Konnte keine Projekte empfangen");
+					}
 
-				if (Window.confirm("Sind Sie sich sicher, dass Sie das löschen wollen?")) {
-					delete();
-
-				}
+					@Override
+					public void onSuccess(ArrayList<Project> result) {
+						if(result.size() > 0) {
+							Window.alert("Der Marktplatz " + selectedMarketplace.getTitle() + " enthält " + result.size() 
+										+ " Projekt(e). Nur leere Marktplätze können gelöscht werden.");
+						} else {
+							if (Window.confirm("Sind Sie sich sicher, dass Sie den Marktplatz löschen wollen?")) {
+								delete();
+							}
+						}
+					}
+					
+				});
 			}
 		}
 
@@ -284,16 +299,10 @@ public class MarketplaceForm extends Formular {
 	// ---------- delete Methode
 
 	public void delete() {
-		ClientsideSettings.getPitchMenAdmin().deleteMarketplace(selectedMarketplace, new DeleteMarketplaceCallback(selectedMarketplace));
+		ClientsideSettings.getPitchMenAdmin().deleteMarketplace(selectedMarketplace, new DeleteMarketplaceCallback());
 	}
 	
 	class DeleteMarketplaceCallback implements AsyncCallback<Void> {
-
-		Marketplace m = null;
-
-		public DeleteMarketplaceCallback(Marketplace m) {
-			this.m = m;
-		}
 
 		public void onFailure(Throwable caught) {
 			Window.alert("Das Löschen des Projektmarktplatzes ist fehlgeschlagen!");
@@ -301,10 +310,8 @@ public class MarketplaceForm extends Formular {
 		}
 
 		public void onSuccess(Void result) {
-			if (m != null) {
-				setSelectedMarketplace(null);
-				pitchMenTreeViewModel.deleteMarketplace(m);
-			}
+			Window.alert("Der Marktplatz wurde erfolgreich gelöscht.");
+			Window.Location.reload();
 		}
 	}
 
