@@ -292,14 +292,6 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 	@Override
 	public void deleteMarketplace(Marketplace marketplace) throws IllegalArgumentException {
-		ArrayList<Project> projects = this.getProjectsByMarketplaceId(marketplace.getId());
-
-		if (projects != null) {
-			for (Project project : projects) {
-				this.projectMapper.delete(project);
-			}
-		}
-
 		this.marketplaceMapper.delete(marketplace);
 	}
 
