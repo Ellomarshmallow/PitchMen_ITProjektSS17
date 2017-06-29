@@ -87,10 +87,10 @@ public class FirstLoginForm extends Formular  {
 	public void save(){		
 		ClientsideSettings.getPitchMenAdmin().addPerson(firstNameBox.getText(), 
 											  lastNameBox.getText(),
+											  descriptionBox.getText(),
 											  newUser.getEmailAdress(), 
 											  newUser.getLoginUrl(), 
 											  newUser.getLogoutUrl(), 
-											  descriptionBox.getText(),
 											  true, 
 											  true, 
 											  new NewPersonCallback());	
@@ -110,11 +110,14 @@ public class FirstLoginForm extends Formular  {
 												+ result.getFirstName() 
 												+ " "
 												+ result.getName()
+												+ " "
+												+ result.getDescription()
 												+ " ("
 												+ result.getEmailAdress()
 												+ ")");	
 			ClientsideSettings.getCurrentUser().setFirstName(result.getFirstName());
 			ClientsideSettings.getCurrentUser().setName(result.getName());
+			ClientsideSettings.getCurrentUser().setDescription(result.getDescription());
 			ClientsideSettings.getCurrentUser().setIsExisting(true);
 			RootPanel.get("usermenu").clear();
 			RootPanel.get("content").clear();
@@ -163,10 +166,10 @@ public class FirstLoginForm extends Formular  {
 	public void saveForRepGen() {		
 		ClientsideSettings.getPitchMenAdmin().addPerson(firstNameBox.getText(), 
 											  lastNameBox.getText(),
+											  descriptionBox.getText(),
 											  newUser.getEmailAdress(), 
 											  newUser.getLoginUrl(), 
 											  newUser.getLogoutUrl(), 
-											  descriptionBox.getText(),
 											  true, 
 											  true, 
 											  new NewPersonOnRepGenCallback());	
@@ -186,11 +189,14 @@ public class FirstLoginForm extends Formular  {
 												+ result.getFirstName() 
 												+ " "
 												+ result.getName()
+												+ " "
+												+ result.getDescription()
 												+ " ("
 												+ result.getEmailAdress()
 												+ ")");	
 			ClientsideSettings.getCurrentUser().setFirstName(result.getFirstName());
 			ClientsideSettings.getCurrentUser().setName(result.getName());
+			ClientsideSettings.getCurrentUser().setDescription(result.getDescription());
 			ClientsideSettings.getCurrentUser().setIsExisting(true);
 			RootPanel.get("usermenu").clear();
 			RootPanel.get("content").clear();
