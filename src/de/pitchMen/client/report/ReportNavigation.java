@@ -74,7 +74,7 @@ public class ReportNavigation extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				final HTMLReportWriter writer = new HTMLReportWriter();
-				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByID(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
+				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -95,7 +95,7 @@ public class ReportNavigation extends VerticalPanel {
 									}
 
 									@Override
-									public void onSuccess(ApplicationsRelatedToJobPostingsOfUser result) {
+									public void onSuccess(AllJobPostingsMatchingPartnerProfileOfUser result) {
 										writer.process(result);
 										RootPanel.get("content").clear();
 										RootPanel.get("content").add(new HTML(writer.getReportText()));
