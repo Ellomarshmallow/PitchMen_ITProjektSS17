@@ -424,4 +424,43 @@ public class TraitMapper {
 		return result;
 	}
 	
+	
+	public ArrayList<Trait> findTraitsFromJobPostings(int partnerProfileId) {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Trait> result = new ArrayList<Trait>();
+
+		try {
+			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten PartnerProfilId, in der Datenbank.
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT * FROM trait WHERE partnerProfile_id = " + partnerProfileId);
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle trait mit dem �bergebenen Wert vorhanden ist,
+			 * muss das Abfragen des ResultSet so oft erfolgen (while-Schleife),
+			 * bis alle Tupel durchlaufen wurden. Die DB-Tupel werden in
+			 * Java-Objekte transformiert und anschlie�end der ArrayList
+			 * hinzugef�gt.
+			 */
+			while (rs.next()) {
+				Trait trait = new Trait();
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfile_Id"));
+				result.add(trait);
+			}
+		/**
+		* Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		* ausgegeben, was passiert ist und wo im Code es passiert ist.
+		*/
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
 }
