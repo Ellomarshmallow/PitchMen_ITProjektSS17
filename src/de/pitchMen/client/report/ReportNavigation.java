@@ -1,15 +1,23 @@
 package de.pitchMen.client.report;
 
+import java.util.ArrayList;
+
+import org.apache.http.entity.ContentProducer;
+
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.shared.ReportGeneratorAsync;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
@@ -172,13 +180,48 @@ public class ReportNavigation extends VerticalPanel {
 		});
 
 		report5Btn.addClickHandler(new ClickHandler() {
-
+				
 			@Override
 			public void onClick(ClickEvent event) {
 				final HTMLReportWriter writer = new HTMLReportWriter();
+				final ListBox applicantBox = new ListBox();
+				ReportGeneratorAsync repGen = ClientsideSettings.getReportGenerator();
+				applicantBox.addItem("Bitte wähle einen Bewerber aus");
+				
+				repGen.getApplicatorsOnOwnJobPostings(ClientsideSettings.getCurrentUser(), new AsyncCallback<ArrayList<Person>>(){
 
-				ClientsideSettings.getReportGenerator().showProjectInterweavingsWithParticipationsAndApplications(
-						ClientsideSettings.getCurrentUser().getId(),
+							@Override
+							public void onFailure(Throwable caught) {
+								ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt");
+
+							}
+
+							@Override
+							public void onSuccess(ArrayList<Person> result) {
+								
+								for(Person p : result){
+									
+									applicantBox.addItem(((Person)p).getFirstName() + " " + ((Person)p).getName());
+									
+								}
+							}
+				});
+				RootPanel.get("content").add(applicantBox);
+				
+				applicantBox.addChangeHandler(new ChangeHandler(){
+					
+				
+				public void onChange(ChangeEvent event){
+					
+					ReportGeneratorAsync repGenA = ClientsideSettings.getReportGenerator();
+					
+					RootPanel.get("content").clear();
+					String s = applicantBox.getValue(applicantBox.getSelectedIndex());
+					String last = s.substring(s.indexOf(':')+1, s.length());
+					int ausgewähltId = Integer.valueOf(last);
+					
+					
+					repGenA.showProjectInterweavingsWithParticipationsAndApplications(ausgewähltId,
 						new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
 
 							@Override
@@ -194,10 +237,12 @@ public class ReportNavigation extends VerticalPanel {
 								RootPanel.get("content").add(new HTML(writer.getReportText()));
 							}
 						});
-
+					}
+				});
 			}
 		});
-
+			
+		
 		report6Btn.addClickHandler(new ClickHandler() {
 
 			@Override
