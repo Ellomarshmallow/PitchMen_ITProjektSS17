@@ -358,6 +358,13 @@ public class ProjectForm extends Formular {
 		public void onSuccess(Void result) {
 			Window.alert("Das Projekt wurde erfolgreich gelöscht.");
 			MarketplaceForm marketplaceForm = new MarketplaceForm(parentMarketplace);
+			/* 
+			 * Beim löschen eines Projektes wird der Baum im Nav Panel neu geladen.
+			 */
+		
+				RootPanel.get("nav").clear();
+				Navigation updatedNavigation = new Navigation();  
+				RootPanel.get("nav").add(updatedNavigation);
 		}
 	}
 

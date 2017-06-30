@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.Navigation;
 import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Participation;
@@ -691,6 +692,13 @@ public class JobPostingForm extends Formular{
 			public void onSuccess(Void result) {
 				Window.alert("Die Ausschreibung wurde erfolgreich gelöscht.");
 				ProjectForm projectForm = new ProjectForm(project); 
+				/* 
+				 * Beim löschen einer Ausschreibung wird der Baum im Nav Panel neu geladen.
+				 */
+			
+					RootPanel.get("nav").clear();
+					Navigation updatedNavigation = new Navigation();  
+					RootPanel.get("nav").add(updatedNavigation);
 			}
 		}
 				
