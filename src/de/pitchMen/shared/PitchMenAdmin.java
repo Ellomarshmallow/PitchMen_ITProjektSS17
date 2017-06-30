@@ -144,6 +144,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public JobPosting addJobPosting(String title, String text, String status, Date deadline, int projectId)
 			throws IllegalArgumentException;
+	
+
 
 	/**
 	 * Aktuallisiert ein JobPosting-Objekt.
@@ -187,6 +189,19 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException;
+	
+	
+	/**
+	 * Gibt eine spezifische Ausschreibung anhand ihrer Id aus.
+	 * 
+	 * @param id
+	 * @return eine spezifische Ausschreibung zu einem PartnerProfil
+	 * @throws IllegalArgumentException
+	 */
+	public JobPosting getJobPostingByPPId(int id) throws IllegalArgumentException;
+
+	
+	
 
 	// ---------------------------------------- MARKETPLACE
 
@@ -719,6 +734,7 @@ public interface PitchMenAdmin extends RemoteService {
 	// --------------------------- LOGIN
 
 	public Person login(String requestUri);
+
 
 
 
