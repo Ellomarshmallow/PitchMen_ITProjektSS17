@@ -737,10 +737,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				for (Application application : applications) {
 					
 								
-//					if(applicants.contains(pitchMenAdmin.getPersonByID(application.)){
-//					}else{
-//						applicants.add(pitchMenAdmin.getPersonByID(application.));
-//					}
+					if(applicants.contains(pitchMenAdmin.getPersonByApplicationId(application.getId()))){
+					}else{
+						applicants.add(pitchMenAdmin.getPersonByApplicationId(application.getId()));
+					}
 				}
 			}
 		return applicants;
@@ -766,7 +766,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanInJobPostingsOfUser result = new FanInJobPostingsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Die FanIn-Analyse");
+		result.setTitle("Anzahl der Bewerbungen");
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
@@ -784,52 +784,64 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Ersteller der Bewerbung
 		headline.addColumn(new Column("Person"));
 		// Status der Bewerbung
-		headline.addColumn(new Column("Bewerbungsstatus"));
+		headline.addColumn(new Column("laufend"));
 
+		headline.addColumn(new Column("abgelehnt"));
+		
+		headline.addColumn(new Column("angenommen"));
+		
 		result.addRow(headline);
 
 		// ArrayList<Person> allPersons = pitchMenAdmin.getAllPeople();
 
 		// for(Person person : allPersons) {
 
-		ArrayList<Application> allApplications = pitchMenAdmin.getApplications();
+		ArrayList<Person> allePersonen = pitchMenAdmin.getAllPeople();
+		
+		for (Person person : allePersonen){
+			
+					/*
+					 * Hier werden die Bewerbungen in 3 neue ArrayLists vom Typ Application
+					 * aufgeteilt Und zwar in "ongoing", "declined" und "accepted" welche
+					 * die Stati der Bewerbungen wiederspiegeln
+					 */
+					ArrayList<Application> ongoing = new ArrayList<Application>();
+					ArrayList<Application> declined = new ArrayList<Application>();
+					ArrayList<Application> accepted = new ArrayList<Application>();
+			
+					ArrayList<Application> allApplications = pitchMenAdmin.getApplicationsByPerson(person.getId());
+					
+					
+					for (Application ap : allApplications) {
+			
+						/*
+						 * Hier werden die Bewerbungen den jeweiligen Stati entsprechend
+						 * zugeteilt
+						 */
+			
+						if (ap.getStatus().toString().equals("laufend")) {
+							ongoing.add(ap);
+						} else if (ap.getStatus().toString().equals("abgelehnt")) {
+							declined.add(ap);
+						} else if (ap.getStatus().toString().equals("angenommen")) {
+							accepted.add(ap);
+						}
+						;
+			
+						
+					}
+					Row applicationCount = new Row();
+					// hinzuf�gen der Spalte f�r die jeweiligen Stati
+					applicationCount.addColumn(new Column(String.valueOf(person.getId())));
+					applicationCount.addColumn(new Column(person.getFirstName()));
+					applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
+					applicationCount.addColumn(new Column(String.valueOf(declined.size())));
+					applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
+					// Hinzuf�gen der Row zum Result
+					result.addRow(applicationCount);
+		
 
-		/*
-		 * Hier werden die Bewerbungen in 3 neue ArrayLists vom Typ Application
-		 * aufgeteilt Und zwar in "ongoing", "declined" und "accepted" welche
-		 * die Stati der Bewerbungen wiederspiegeln
-		 */
-		ArrayList<Application> ongoing = new ArrayList<Application>();
-		ArrayList<Application> declined = new ArrayList<Application>();
-		ArrayList<Application> accepted = new ArrayList<Application>();
-
-		for (Application ap : allApplications) {
-
-			/*
-			 * Hier werden die Bewerbungen den jeweiligen Stati entsprechend
-			 * zugeteilt
-			 */
-
-			if (ap.getStatus().equals("laufend")) {
-				ongoing.add(ap);
-			} else if (ap.getStatus().equals("abgelehnt")) {
-				declined.add(ap);
-			} else if (ap.getStatus().equals("angenommen")) {
-				accepted.add(ap);
-			}
-			;
-
-			Row applicationCount = new Row();
-			// hinzuf�gen der Spalte f�r die jeweiligen Stati
-			applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
-			applicationCount.addColumn(new Column(String.valueOf(declined.size())));
-			applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
-			// Hinzuf�gen der Row zum Result
-			result.addRow(applicationCount);
-
-		}
-
-		// }
+		 }
 
 		// R�ckgabe des fertigen Reports
 		return result;
@@ -857,7 +869,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanOutApplicationsOfUser result = new FanOutApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Die FanOut-Analyse");
+		result.setTitle("Anzahl der Ausschreibungen");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -879,11 +891,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		result.addRow(headline);
 
-		// ArrayList<Person> allPersons = pitchMenAdmin.getAllPeople();
-
-		// for(Person person : allPersons) {
-
-		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.getJobPostings();
+		ArrayList<Person> allePersonen = pitchMenAdmin.getAllPeople();
+		
+		for (Person person : allePersonen){
+			
+		
+		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.getJobPostingsByPersonId(person.getId());
 
 		/*
 		 * Hier werden die Ausschreibungen in 3 neue ArrayLists vom Typ
@@ -900,25 +913,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			 * Hier werden die Bewerbungen den jeweiligen Stati entsprechend
 			 * zugeteilt den neuen ArrayLists zugeteilt.
 			 */
-			if (j.getStatus().equals("laufend")) {
+			if (j.getStatus().toString().equals("laufend")) {
 				ongoing.add(j);
-			} else if (j.getStatus().equals("abgelehnt")) {
+			} else if (j.getStatus().toString().equals("abgelehnt")) {
 				deleted.add(j);
-			} else if (j.getStatus().equals("angenommen")) {
+			} else if (j.getStatus().toString().equals("angenommen")) {
 				occupied.add(j);
 			}
-			;
-
-			Row jobPostingCount = new Row();
-			// hinzuf�gen der Spalte f�r die jeweiligen Stati zur Row
-			jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
-			jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
-			jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
-			// Hinzuf�gen der Row zum Result
-			result.addRow(jobPostingCount);
-
 		}
-		// }
+		Row jobPostingCount = new Row();
+		// hinzuf�gen der Spalte f�r die jeweiligen Stati zur Row
+		jobPostingCount.addColumn(new Column(String.valueOf(person.getId())));
+		jobPostingCount.addColumn(new Column(person.getFirstName()));
+		jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
+		jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
+		jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
+		// Hinzuf�gen der Row zum Result
+		result.addRow(jobPostingCount);
+		}
 		// R�ckgabe des fertigen Reports
 		return result;
 	}
