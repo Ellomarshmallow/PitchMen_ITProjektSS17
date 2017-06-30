@@ -157,13 +157,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		}
 
 		if (partnerProfile != null) {
-			this.partnerProfileMapper.delete(partnerProfile);
 
 			if (traits != null) {
 				for (Trait trait : traits) {
 					this.traitMapper.delete(trait);
 				}
 			}
+			this.partnerProfileMapper.delete(partnerProfile);
 		}
 
 		this.companyMapper.delete(company);
@@ -212,22 +212,22 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		if (applications != null) {
 			for (Application application : applications) {
-				this.applicationMapper.delete(application);
 
 				Rating rating = application.getRating();
 				if (rating != null) {
 					this.ratingMapper.delete(rating);
 				}
+				this.applicationMapper.delete(application);
 			}
 		}
 
 		if (partnerProfile != null) {
-			this.partnerProfileMapper.delete(partnerProfile);
 			if (traits != null) {
 				for (Trait trait : traits) {
 					this.traitMapper.delete(trait);
 				}
 			}
+			this.partnerProfileMapper.delete(partnerProfile);
 		}
 
 		this.jobPostingMapper.delete(jobPosting);
@@ -552,23 +552,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		if (jobPostings != null) {
 			for (JobPosting jobPosting : jobPostings) {
-				this.jobPostingMapper.delete(jobPosting);
 
 				ArrayList<Application> applications = this.getApplicationsByJobPostingId(jobPosting.getId());
 				if (applications != null) {
 					for (Application application : applications) {
-						this.applicationMapper.delete(application);
 
 						Rating rating = this.getRatingByApplicationId(application.getId());
 						if (rating != null) {
 							this.ratingMapper.delete(rating);
 						}
+						this.applicationMapper.delete(application);
 					}
 				}
 
 				PartnerProfile partnerProfile = this.getPartnerProfilesByJobPostingId(jobPosting.getId());
 				if (partnerProfile != null) {
-					this.partnerProfileMapper.delete(partnerProfile);
 
 					ArrayList<Trait> traits = this.getTraitsByPartnerProfileId(
 							this.getPartnerProfilesByJobPostingId(jobPosting.getId()).getId());
@@ -578,9 +576,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 						}
 
 					}
-
+					this.partnerProfileMapper.delete(partnerProfile);
 				}
-
+				this.jobPostingMapper.delete(jobPosting);
 			}
 
 		}

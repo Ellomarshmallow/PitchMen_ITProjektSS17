@@ -443,7 +443,7 @@ public class PartnerProfileMapper {
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten companyId, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM partnerProfile + WHERE company_id = " + companyId);
+					"SELECT * FROM partnerProfile WHERE company_id = " + companyId);
 			/**
 			 * Zu einer companyId exisitiert nur max ein Datenbank-Tupel,
 			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
