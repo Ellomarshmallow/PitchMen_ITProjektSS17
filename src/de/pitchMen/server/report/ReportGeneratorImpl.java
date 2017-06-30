@@ -207,23 +207,23 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		if (pitchMenAdmin == null) {
 			return null;
 		}
-		/*
+		/**
 		 * ZunÃ¤chst legen wir uns einen leeren Report an.
-		 */
+		 **/
 		AllJobPostingsMatchingPartnerProfileOfUser result = new AllJobPostingsMatchingPartnerProfileOfUser();
 
 		// Jeder Report hat einen Titel (Bezeichnung / Ãœberschrift).
 		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil des Benutzers");
-		/*
+		/**
 		 * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
-		 */
+		 **/
 		result.setDatecreated(new Date());
-		/*
+		/**
 		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
 		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
 		 * einzeilig, daher die Verwendung von Rows.
-		 */
+		 **/
 		Row headline = new Row();
 
 		headline.addColumn(new Column("JobPosting Titel"));
@@ -286,6 +286,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				// traitRowJobPostings.addColumn(new Column(PPTraitId));
 				// result.addRow(traitRowJobPostings);
 
+				/**
+				 * If Abfrage, welche die Inhaltiche übereinstimmung 
+				 * der Variablen personTrait und jobPostingTrait prüft. 
+				 * Wenn die Prüfung positiv ausfällt, wird Anhand der PartnerProfil ID des Traits das
+				 * dazugehörige JObPosting aus der Datenbank gelesen. Anschließend wird davon lediglich der 
+				 * Titel und der Text an das ErgebnisObjekt übergeben. 
+				 * Zusätzlich wird die Eigenschaft ausgegeben, welche sowohl im JobPosting wie auch in dem Person
+				 * PartnerProfil übereinstimmt.
+				 */
 				if (personTrait.equals(jobPostingTrait)) {
 
 						Row jobPostingZeile = new Row();
@@ -302,6 +311,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			}
 		}
 
+		/**
+		 * Ergebnis-Objekt welches dann an die Zuständige Klasse im HTML Report-Writer übergeben wird.
+		 */
 		return result;
 
 	}
