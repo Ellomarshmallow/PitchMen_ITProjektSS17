@@ -370,20 +370,17 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * Nun werden sämtliche Bewerbungen ausgelesen und deren
 		 * Erstellungsdatum und Text sukzessive in die Tabelle eingetragen.
 		 */
-		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
+		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostingsByPersonId(p.getId());
+		
 		for (JobPosting a : jobPostings) {
 			
-			Project pt = pitchMenAdmin.getProjectByID(a.getProjectId());
-			
-			Person bewerber = pitchMenAdmin.getPersonByID(pt.getPersonId());
-			
-			if (bewerber.getId() == p.getId()) {
-			
+						
+						
 				// Hinzuf�gen der Row zum Result
 				result.addSubReport(this.showAllApplicationsToOneJobPostingOfUser(a.getId()));
 			}
 
-		}
+		
 		
 		// R�ckgabe des fertigen Reports
 		return result;
@@ -428,7 +425,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * einzeilig, daher die Verwendung von Rows.
 		 */
 		// Bewerber
-		headline.addColumn(new Column("Bewerber"));
+		//headline.addColumn(new Column("BewerbungsID"));
 		// Erstellungsdatum der Bewerbung
 		headline.addColumn(new Column("Erstellungsdatum"));
 		// Text der Bewerbung
@@ -446,13 +443,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		for (Application a : applications) {
 
 			Row applicationRow = new Row();
-			
-			PartnerProfile pp = pitchMenAdmin.getPartnerProfileByID(a.getPartnerProfileId());
-			
-			Person bewerber =  pitchMenAdmin.getPersonByID(pp.getPersonId());
+		
+//			Person bewerber =  pitchMenAdmin.getPersonByApplicationId(a.getPartnerProfileId());
 				
 			
-			applicationRow.addColumn(new Column(bewerber.getName()));
+		//	applicationRow.addColumn(new Column(a.getId()));
 			applicationRow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationRow.addColumn(new Column(a.getText()));
 			applicationRow.addColumn(new Column(a.getStatus().toString()));
@@ -519,10 +514,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		ArrayList<Application> applications = pitchMenAdmin.getApplicationsByPerson(p.getId());
 		for (Application a : applications) {
 
-			Application application = pitchMenAdmin.getApplicationByID(a.getJobPostingId());
+			
 			// Person jobPoster =
 			// pitchMenAdmin.getPersonByID(application.getJobPostingId());
-			JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(application.getJobPostingId());
+			JobPosting jobPosting = pitchMenAdmin.getJobPostingByID(a.getJobPostingId());
 
 			Row applicationsrow = new Row();
 
