@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.JobPosting;
@@ -34,8 +35,10 @@ public class ProjectForm extends Formular {
 	Label idLabel = new Label();
 	TextBox titleBox = new TextBox();
 	TextArea descBox = new TextArea();
-	Label fromBox = new Label();
-	Label toBox = new Label();
+	Label fromLabel = new Label(); 
+	DateBox fromBox = new DateBox();
+	Label toLabel = new Label(); 
+	DateBox toBox = new DateBox();
 
 	/**
 	 * Konstruktor, der bei bestehenden Projekten verwendet wird.
@@ -72,10 +75,11 @@ public class ProjectForm extends Formular {
 		saveButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				java.util.Date currentDate = new java.util.Date();
-				java.sql.Date convertedDate = new java.sql.Date(currentDate.getTime());
-				ClientsideSettings.getPitchMenAdmin().addProject(convertedDate, 
-																convertedDate, 
+				
+				java.sql.Date convertedFromDate = new java.sql.Date(fromBox.getValue().getTime());
+				java.sql.Date convertedToDate = new java.sql.Date(toBox.getValue().getTime());
+				ClientsideSettings.getPitchMenAdmin().addProject(convertedFromDate, 
+																convertedToDate, 
 																titleBox.getText(), 
 																descBox.getText(), 
 																ClientsideSettings.getCurrentUser().getId(),
@@ -109,6 +113,16 @@ public class ProjectForm extends Formular {
 		RootPanel.get("content").add(new HTML("<h3>Projektbeschreibung</h3>"));
 		
 		RootPanel.get("content").add(descBox);
+		
+		RootPanel.get("content").add(new HTML("<h3>Von:</h3>"));
+		
+		toBox.setValue(new java.util.Date());
+		RootPanel.get("content").add(toBox);
+		
+		RootPanel.get("content").add(new HTML("<h3>Bis:</h3>"));
+		
+		fromBox.setValue(new java.util.Date());
+		RootPanel.get("content").add(fromBox);
 
 	}
 
@@ -259,6 +273,13 @@ public class ProjectForm extends Formular {
 				public void onClick(ClickEvent event) {
 					selectedProject.setTitle(titleBox.getText());
 					selectedProject.setDescription(descBox.getText());
+					
+					java.sql.Date convertedFromDate = new java.sql.Date(fromBox.getValue().getTime());
+					java.sql.Date convertedToDate = new java.sql.Date(toBox.getValue().getTime());
+					
+					selectedProject.setDateOpened(convertedFromDate);
+					selectedProject.setDateClosed(convertedToDate);
+					
 					ClientsideSettings.getPitchMenAdmin().updateProject(selectedProject, new AsyncCallback<Void>() {
 
 						@Override
@@ -289,6 +310,16 @@ public class ProjectForm extends Formular {
 			
 			descBox.setText(selectedProject.getDescription());
 			RootPanel.get("content").add(descBox);
+			
+			RootPanel.get("content").add(new HTML("<h3>Von:</h3>"));
+			
+			fromBox.setValue(selectedProject.getDateOpened());
+			RootPanel.get("content").add(fromBox);
+			
+			RootPanel.get("content").add(new HTML("<h3>Bis:</h3>"));
+			
+			toBox.setValue(selectedProject.getDateClosed());
+			RootPanel.get("content").add(toBox);
 
 		}
 	}
@@ -329,15 +360,15 @@ public class ProjectForm extends Formular {
 			this.selectedProject = p;
 			titleBox.setText(selectedProject.getTitle());
 			descBox.setText(selectedProject.getDescription());
-			fromBox.setText(selectedProject.getDateOpened().toString());
-			toBox.setText(selectedProject.getDateClosed().toString());
+			fromLabel.setText(selectedProject.getDateOpened().toString());
+			toLabel.setText(selectedProject.getDateClosed().toString());
 			idLabel.setText(Integer.toString(selectedProject.getId()));
 		} else {
 			idLabel.setText("");
 			titleBox.setText("");
 			descBox.setText("");
-			fromBox.setText("");
-			toBox.setText("");
+			fromLabel.setText("");
+			toLabel.setText("");
 
 		}
 	}
