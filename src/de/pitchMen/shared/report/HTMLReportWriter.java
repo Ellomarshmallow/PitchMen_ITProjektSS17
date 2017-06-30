@@ -449,23 +449,25 @@ public class HTMLReportWriter extends ReportWriter {
 		buff.append("<p><h5>Bewerbungen</h5>");
 		buff.append("<table border = 1px rules = all><tr>");
 		buff.append("<th> Status </th>");
-		buff.append("<th> Anzahl der Bewerbungen </th></tr>");
+		buff.append("<th> Anzahl Ihrer Bewerbungen </th></tr>");
 
-		// buff.append("<tr><td>Laufend</td>" + "<td>" +
-		// this.process(a.getSubReportAt(0)) + "</td></tr>");
-		buff.append("<tr><td>Abgelehnt</td>" + "<td>"
+		buff.append("<tr><td>Laufend</td>");
+		//+ 
+		//"<td>" + this.processSimpleReport(a.getSubReportAt(0)) + "</td></tr>");
+		buff.append("<tr><td>Abgelehnt</td>");
+		//+ "<td>"
 		// + for(Application application : applications){
 		// if(application.getStatus() == "laufend")
 		// x++;
 		// }
-				+ "</td></tr>");
+		//		+ "</td></tr>");
 		buff.append("<tr><td>Angenommen</td>" + "<td>Zahl</td></tr></p>");
 
 		// Fan-Out-Analyse
 		buff.append("<p><h5>Ausschreibungen</h5>");
 		buff.append("<table border = 1px rules = all><tr>");
 		buff.append("<th>Status</th>");
-		buff.append("<th>Anzahl der Ausschreibungen</th></tr></p>");
+		buff.append("<th>Anzahl Ihrer Ausschreibungen</th></tr></p>");
 
 		buff.append("<tr><td>Besetzt</td>" + "<td>Zahl</td></tr>");
 		buff.append("<tr><td>Abgebrochen</td>" + "<td>Zahl</td></tr>");
@@ -504,13 +506,13 @@ public class HTMLReportWriter extends ReportWriter {
 		// Löschen des Ergebnisses der vorherigen Prozessierung
 		this.resetReportText();
 
-		/*
+		/**
 		 * In diesen Buffer schreiben wir während der Prozessierung sukzessive
 		 * unsere Ergebnisse.
 		 */
 		StringBuffer result = new StringBuffer();
 
-		/*
+		/**
 		 * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		 * ausgelesen und in HTML-Form übersetzt.
 		 */
@@ -534,7 +536,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 		result.append("</table>");
 
-		/*
+		/**
 		 * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und
 		 * der reportText-Variable zugewiesen. Dadurch wird es möglich,
 		 * anschließend das Ergebnis mittels getReportText() auszulesen.
