@@ -525,7 +525,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	
 	@Override
 	public Person getPersonByApplicationId(int applicationId) throws IllegalArgumentException {
-		return this.personMapper.findByApplicationId(applicationId);
+		int partnerProfileId = this.applicationMapper.findById(applicationId).getPartnerProfileId();
+		int personId = this.partnerProfileMapper.findById(partnerProfileId).getPersonId();
+		return this.personMapper.findById(personId);
 	}
 
 	// --------------------------- PROJECT
