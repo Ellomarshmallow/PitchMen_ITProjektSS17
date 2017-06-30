@@ -203,6 +203,15 @@ public interface PitchMenAdmin extends RemoteService {
 	
 	
 
+	/**
+	 * Gibt das Partnerprofil einer spezischen Person aus.
+	 * 
+	 * @param personId
+	 * @return PartnerProfile einer Person
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<JobPosting> getJobPostingsByPersonId(int personId) throws IllegalArgumentException;
+
 	// ---------------------------------------- MARKETPLACE
 
 	/**
@@ -213,21 +222,24 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public Marketplace addMarketplaceByCompany(String title, String description, int companyId)
 			throws IllegalArgumentException;
+
 	/**
 	 * Ein Team erstellt ein neues Marketplace-Objekt.
 	 * 
 	 * @return Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplaceByTeam(String title, String description, int teamId) throws IllegalArgumentException;
-	
+	public Marketplace addMarketplaceByTeam(String title, String description, int teamId)
+			throws IllegalArgumentException;
+
 	/**
 	 * Eine Person erstellt ein neues Marketplace-Objekt.
 	 * 
 	 * @return Marketplace-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Marketplace addMarketplaceByPerson(String title, String description, int personId) throws IllegalArgumentException;
+	public Marketplace addMarketplaceByPerson(String title, String description, int personId)
+			throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Marketplace-Objekt.
@@ -262,7 +274,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public Marketplace getMarketplaceByID(int id) throws IllegalArgumentException;
-	
+
 	/**
 	 * Gibt alle Marktpl�tze die einer bestimmten Person gehören aus.
 	 * 
@@ -352,7 +364,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId)
+	public PartnerProfile addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId, int personId)
 			throws IllegalArgumentException;
 
 	/**
@@ -361,7 +373,7 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes PartnerProfile-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId)
+	public PartnerProfile addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId, int personId)
 			throws IllegalArgumentException;
 
 	/**
@@ -447,11 +459,11 @@ public interface PitchMenAdmin extends RemoteService {
 	 * Gibt das Partnerprofil einer spezischen Ausschreibung aus.
 	 * 
 	 * @param teamId
-	 * @return PartnerProfile eines Ausschreibung
+	 * @return PartnerProfile einer Ausschreibung
 	 * @throws IllegalArgumentException
 	 */
 	public PartnerProfile getPartnerProfilesByJobPostingId(int jobPostingId) throws IllegalArgumentException;
-
+	
 	// -------------------------------------------- PERSON
 
 	/**
@@ -460,8 +472,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @return neu erstelltes Person-Objekt
 	 * @throws IllegalArgumentException
 	 */
-	public Person addPerson(String firstName, String name, String description, String emailAdress, String loginUrl, String logoutUrl,
-			boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
+	public Person addPerson(String firstName, String name, String description, String emailAdress, String loginUrl,
+			String logoutUrl, boolean loggedIn, boolean isExisting) throws IllegalArgumentException;
 
 	/**
 	 * Aktuallisiert ein Person-Objekt.
@@ -495,6 +507,15 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Person> getAllPeople() throws IllegalArgumentException;
+	
+	/**
+	 * Gibt die Person anhand ihrer Bewerbung aus.
+	 * 
+	 * @param applicationId
+	 * @return PartnerProfile
+	 * @throws IllegalArgumentException
+	 */
+	public Person getPersonByApplicationId(int applicationId) throws IllegalArgumentException;
 
 	// ---------------------------------------------- PROJECT
 

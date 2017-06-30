@@ -17,8 +17,10 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.Navigation;
 import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
+import de.pitchMen.shared.bo.Participation;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
@@ -356,7 +358,53 @@ public class JobPostingForm extends Formular{
 																										@Override
 																										public void onSuccess(
 																												Void result) {
-																											JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																											RootPanel.get("content").clear();
+																											Button saveButton = new Button("Speichern");
+																											HorizontalPanel topPanel = new HorizontalPanel();
+																											topPanel.addStyleDependentName("headline");
+																											topPanel.add(new HTML("<h2>Legen Sie eine Beteilgung für den gerade angenommenen Bewerber an.</h2>"));
+																											topPanel.add(saveButton);
+																											RootPanel.get("content").add(topPanel);
+																											final DateBox dateOpenedBox = new DateBox();
+																											final DateBox dateClosedBox = new DateBox();
+																											final TextBox workloadBox = new TextBox();
+																											
+																											RootPanel.get("content").add(new HTML("<p>Beginn der Beteiligung</p>"));
+																											RootPanel.get("content").add(dateOpenedBox);
+																											RootPanel.get("content").add(new HTML("<p>Ende der Beteiligung</p>"));
+																											RootPanel.get("content").add(dateClosedBox);
+																											RootPanel.get("content").add(new HTML("<p>Workload in Tagen</p>"));
+																											RootPanel.get("content").add(workloadBox);
+																											
+																											saveButton.addClickHandler(new ClickHandler() {
+
+																												@Override
+																												public void onClick(
+																														ClickEvent event) {
+																													java.sql.Date convertedDateOpened = new java.sql.Date(dateOpenedBox.getValue().getTime());
+																													java.sql.Date convertedDateClosed = new java.sql.Date(dateClosedBox.getValue().getTime());
+																													ClientsideSettings.getPitchMenAdmin().addParticipation(convertedDateOpened, 
+																																										convertedDateClosed, 
+																																										Integer.parseInt(workloadBox.getText()), 
+																																										parentProject.getId(), 
+																																										person.getId(), new AsyncCallback<Participation>() {
+
+																																											@Override
+																																											public void onFailure(
+																																													Throwable caught) {
+																																												ClientsideSettings.getLogger().severe("Fehler beim Anlegen der Beteiligung");
+																																											}
+
+																																											@Override
+																																											public void onSuccess(
+																																													Participation result) {
+																																												JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																																											}
+																														
+																													});
+																												}
+																												
+																											});
 																										}
 																										
 																									});
@@ -393,21 +441,102 @@ public class JobPostingForm extends Formular{
 																							@Override
 																							public void onClick(ClickEvent event) {
 																								if(Window.confirm("Diese Bewerbung jetzt bewerten?")) {
-																									ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), (Float.parseFloat(scoreBox.getText())/100), app.getId(), new AsyncCallback<Rating>() {
+																									if(Float.parseFloat(scoreBox.getText())/100 == 1) {
+																										if(Window.confirm("Eine mit 100% bewertete Bewerbung wird automatisch angenommen. Möchten Sie fortfahren?")) {
+																											ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), (Float.parseFloat(scoreBox.getText())/100), app.getId(), new AsyncCallback<Rating>() {
 
-																										@Override
-																										public void onFailure(
-																												Throwable caught) {
-																											ClientsideSettings.getLogger().severe("Anlegen der Bewertung fehlgeschlagen");
-																										}
+																												@Override
+																												public void onFailure(
+																														Throwable caught) {
+																													ClientsideSettings.getLogger().severe("Anlegen der Bewertung fehlgeschlagen");
+																												}
 
-																										@Override
-																										public void onSuccess(
-																												Rating result) {
-																											JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																												@Override
+																												public void onSuccess(
+																														Rating result) {
+																													app.setStatus("angenommen");
+																													ClientsideSettings.getPitchMenAdmin().updateApplication(app, new AsyncCallback<Void>() {
+
+																														@Override
+																														public void onFailure(
+																																Throwable caught) {
+																															ClientsideSettings.getLogger().severe("Update des Ratings fehlgeschlagen");
+																														}
+
+																														@Override
+																														public void onSuccess(
+																																Void result) {
+																															RootPanel.get("content").clear();
+																															Button saveButton = new Button("Speichern");
+																															HorizontalPanel topPanel = new HorizontalPanel();
+																															topPanel.addStyleDependentName("headline");
+																															topPanel.add(new HTML("<h2>Legen Sie eine Beteilgung für den gerade angenommenen Bewerber an.</h2>"));
+																															topPanel.add(saveButton);
+																															RootPanel.get("content").add(topPanel);
+																															final DateBox dateOpenedBox = new DateBox();
+																															final DateBox dateClosedBox = new DateBox();
+																															final TextBox workloadBox = new TextBox();
+																															
+																															RootPanel.get("content").add(new HTML("<p>Beginn der Beteiligung</p>"));
+																															RootPanel.get("content").add(dateOpenedBox);
+																															RootPanel.get("content").add(new HTML("<p>Ende der Beteiligung</p>"));
+																															RootPanel.get("content").add(dateClosedBox);
+																															RootPanel.get("content").add(new HTML("<p>Workload in Tagen</p>"));
+																															RootPanel.get("content").add(workloadBox);
+																															
+																															saveButton.addClickHandler(new ClickHandler() {
+
+																																@Override
+																																public void onClick(
+																																		ClickEvent event) {
+																																	java.sql.Date convertedDateOpened = new java.sql.Date(dateOpenedBox.getValue().getTime());
+																																	java.sql.Date convertedDateClosed = new java.sql.Date(dateClosedBox.getValue().getTime());
+																																	ClientsideSettings.getPitchMenAdmin().addParticipation(convertedDateOpened, 
+																																														convertedDateClosed, 
+																																														Integer.parseInt(workloadBox.getText()), 
+																																														parentProject.getId(), 
+																																														person.getId(), new AsyncCallback<Participation>() {
+
+																																															@Override
+																																															public void onFailure(
+																																																	Throwable caught) {
+																																																ClientsideSettings.getLogger().severe("Fehler beim Anlegen der Beteiligung");
+																																															}
+
+																																															@Override
+																																															public void onSuccess(
+																																																	Participation result) {
+																																																JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																																															}
+																																		
+																																	});
+																																}
+																																
+																															});
+																														}
+																														
+																													});
+																												}
+																												
+																											});
 																										}
-																										
-																									});
+																									} else {
+																										ClientsideSettings.getPitchMenAdmin().addRating(ratingTextBox.getText(), (Float.parseFloat(scoreBox.getText())/100), app.getId(), new AsyncCallback<Rating>() {
+
+																											@Override
+																											public void onFailure(
+																													Throwable caught) {
+																												ClientsideSettings.getLogger().severe("Anlegen der Bewertung fehlgeschlagen");
+																											}
+
+																											@Override
+																											public void onSuccess(
+																													Rating result) {
+																												JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
+																											}
+																											
+																										});
+																									}
 																								}
 																							}
 																							
@@ -556,10 +685,30 @@ public class JobPostingForm extends Formular{
 		} 
 		private class applicateClickHandler implements ClickHandler {
 			public void onClick(ClickEvent event) {
+				/** Es wird überprüft ob der Nutzer ein PartnerProfil erstellt hat, bevor dieser sich
+				 * auf eine Ausschreibung bewerben kann
+				 */
+				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>(){
+					
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht laden");
+					}
+					
+					public void onSuccess(PartnerProfile result) {
+						
+						
+						if(result != null){
+							
+							RootPanel.get("content").add(new ApplicationForm(selectedJobPosting));
+						}
+						else{
+							Window.alert("Sie haben noch kein Partnerprofil erstellt! Klicken Sie dazu auf Ihren Namen oben rechts");
+						}
+						
+					}
+					
+				});
 				
-				RootPanel.get("content").add(new ApplicationForm(selectedJobPosting));
-
-				//ApplicationForm applicationForm = new ApplicationForm(selectedJobPosting);
 
 			}
 		} 
@@ -589,6 +738,13 @@ public class JobPostingForm extends Formular{
 			public void onSuccess(Void result) {
 				Window.alert("Die Ausschreibung wurde erfolgreich gelöscht.");
 				ProjectForm projectForm = new ProjectForm(project); 
+				/* 
+				 * Beim löschen einer Ausschreibung wird der Baum im Nav Panel neu geladen.
+				 */
+			
+					RootPanel.get("nav").clear();
+					Navigation updatedNavigation = new Navigation();  
+					RootPanel.get("nav").add(updatedNavigation);
 			}
 		}
 				

@@ -63,6 +63,8 @@ public interface PitchMenAdminAsync {
 	void getJobPostingByPPId(int id, AsyncCallback<JobPosting> callback);
 
 	void getJobPostingsByProjectId(int projectId, AsyncCallback<ArrayList<JobPosting>> callback);
+	
+	void getJobPostingsByPersonId(int personId, AsyncCallback<ArrayList<JobPosting>> callback); 
 
 	// ---------- MARKETPLACE
 
@@ -106,10 +108,10 @@ public interface PitchMenAdminAsync {
 	void addPartnerProfileForPerson(Date dateCreated, Date dateChanged, int personId,
 			AsyncCallback<PartnerProfile> callback);
 
-	void addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId,
+	void addPartnerProfileForTeam(Date dateCreated, Date dateChanged, int teamId, int personId,
 			AsyncCallback<PartnerProfile> callback);
 
-	void addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId,
+	void addPartnerProfileForCompany(Date dateCreated, Date dateChanged, int companyId, int personId,
 			AsyncCallback<PartnerProfile> callback);
 
 	void addPartnerProfileForJobPosting(Date dateCreated, Date dateChanged, int jobPostingId,
@@ -143,6 +145,8 @@ public interface PitchMenAdminAsync {
 	void getPersonByID(int id, AsyncCallback<Person> callback);
 
 	void getAllPeople(AsyncCallback<ArrayList<Person>> callback);
+	
+	void getPersonByApplicationId(int applicationId, AsyncCallback<Person> callback);
 
 	// ---------- PROJECT
 
