@@ -248,13 +248,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		ArrayList<Trait> jobPostingTraits = pitchMenAdmin.getTraitsFromJobPostings();
 
 		for (int i = 0; i < personTraits.size(); i++) {
-			Row traitRow = new Row();
+//			Row traitRow = new Row();
 			// traitRow.addColumn(new Column(t.getName()));
 			// traitRow.addColumn(new Column(t.getValue()));
 			// result.addRow(traitRow);
 			String personTrait = personTraits.get(i).getName();
-			traitRow.addColumn(new Column(personTrait));
-			result.addRow(traitRow);
+//			traitRow.addColumn(new Column(personTrait));
+//			result.addRow(traitRow);
 
 			for (Trait jpt : jobPostingTraits) {
 //				Row traitRowJobPostings = new Row();
@@ -262,17 +262,25 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				// traitRowJobPostings.addColumn(new Column(jpt.getValue()));
 				// result.addRow(traitRowJobPostings);
 				String jobPostingTrait = jpt.getName();
+				int PPTraitId = jpt.getPartnerProfileId();
 //				traitRowJobPostings.addColumn(new Column(jobPostingTrait));
+//				traitRowJobPostings.addColumn(new Column(PPTraitId));
 //				result.addRow(traitRowJobPostings);
 				
-//				if (personTrait.equals(jobPostingTrait)) {
-//					for (JobPosting jobPosting : jobPostings) {
-//						Row jobPostingZeile = new Row();
-//						jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
-//						result.addRow(jobPostingZeile);
-//
-//					}
-//				}
+				if (personTrait.equals(jobPostingTrait)) {
+					
+					for (int j = 0; j < jobPostings.size(); j++) {
+						Row jobPostingZeile = new Row();
+						String jobPostingTitle = pitchMenAdmin.getJobPostingByPPId(PPTraitId).getTitle();
+						String jobPostingText = pitchMenAdmin.getJobPostingByPPId(PPTraitId).getText();
+						jobPostingZeile.addColumn(new Column(jobPostingTitle));
+						jobPostingZeile.addColumn(new Column(jobPostingText));
+						jobPostingZeile.addColumn(new Column(personTrait));
+						result.addRow(jobPostingZeile);
+
+					}
+				}
+				
 //				
 
 			}
