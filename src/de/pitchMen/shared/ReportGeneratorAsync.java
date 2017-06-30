@@ -1,5 +1,7 @@
 package de.pitchMen.shared;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import de.pitchMen.shared.bo.PartnerProfile;
@@ -58,6 +60,10 @@ public interface ReportGeneratorAsync {
 	 * 
 	 */
 	void showProjectInterweavingsWithParticipationsAndApplications(int id, AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications> callback);
+	/**
+	 * 
+	 */
+	void getApplicatorsOnOwnJobPostings(Person p, AsyncCallback<ArrayList<Person>> callback);
 	/**
 	 * 
 	 */
