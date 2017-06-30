@@ -231,7 +231,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		headline.addColumn(new Column("JobPosting Beschreibung"));
 
-		headline.addColumn(new Column("Passende Trait"));
+		headline.addColumn(new Column("Passende Eigenschaft"));
 
 		result.addRow(headline);
 
