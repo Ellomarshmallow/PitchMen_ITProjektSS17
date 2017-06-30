@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.PitchMenAdminAsync;
+import de.pitchMen.shared.bo.Company;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Team;
 import de.pitchMen.shared.bo.Trait;
@@ -560,9 +561,57 @@ public class PartnerProfileForm extends Formular {
 		public void onClick(ClickEvent event) {
 			/*
 			 *  wird der Button geklickt, muss ein 
-			 *  neues partnerProfile erstellt werden.
+			 *  neues Unternehmen erstellt werden.
 			 */ 
-			CreateCompanyForm addCreatCompanyForm = new CreateCompanyForm();
+			final TextBox nameBox = new TextBox(); 
+			final TextArea descArea = new TextArea();
+			
+			HorizontalPanel topPanel = new HorizontalPanel();
+			topPanel.addStyleName("headline");
+					
+			RootPanel.get("content").clear(); 
+			topPanel.add(new HTML("<h2>Neues Unternehmen anlegen</h2>"));
+			Button save = new Button("Speichern");
+			topPanel.add(save);
+			RootPanel.get("content").add(topPanel);
+			RootPanel.get("content").add(new HTML("<p>Unternehmensname:</p>"));
+			RootPanel.get("content").add(nameBox);
+			RootPanel.get("content").add(new HTML("<p>Unternehmensbeschreibung:</p>"));
+			RootPanel.get("content").add(descArea);
+			
+			save.addClickHandler(new ClickHandler(){
+				public void onClick(ClickEvent event){
+					ClientsideSettings.getPitchMenAdmin().addCompany(nameBox.getText(), descArea.getText(), new AsyncCallback<Company>(){
+					
+						public void onFailure(Throwable caught) {
+							ClientsideSettings.getLogger().severe("Neues Unternehmen konnte nicht gespeichert werden.");
+						}
+							
+							public void onSuccess(Company result) {
+							
+								java.util.Date currentDate = new java.util.Date();
+								java.sql.Date convertedDate = new java.sql.Date(currentDate.getTime());
+								ClientsideSettings.getPitchMenAdmin().addPartnerProfileForCompany(convertedDate, convertedDate, result.getId(), ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										ClientsideSettings.getLogger().severe("Konnte Partnerprofil nicht speichern.");
+									}
+
+									@Override
+									public void onSuccess(PartnerProfile result) {
+										PartnerProfileForm updatedForm = new PartnerProfileForm();
+									}
+									
+								});
+								
+								
+							}
+					});
+				}
+			}); 
+			RootPanel.get("content").add(new HTML("<br>"));
+			RootPanel.get("content").add(save);
 				
 			}
 	}
