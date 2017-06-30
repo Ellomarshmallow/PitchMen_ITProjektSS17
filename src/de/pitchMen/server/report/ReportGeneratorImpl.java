@@ -605,6 +605,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Row projectRow = new Row();
 			
 			Project project = pitchMenAdmin.getProjectByID(p.getProjectId());
+			
 
 			projectRow.addColumn(new Column(project.getTitle()));
 			projectRow.addColumn(new Column(p.getDateOpened()));

@@ -184,8 +184,12 @@ public class ReportNavigation extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 			
+				
 				final ListBox applicantBox = new ListBox();
+				
+				
 				ReportGeneratorAsync repGen = ClientsideSettings.getReportGenerator();
+				applicantBox.clear();
 				applicantBox.addItem("Bitte wähle einen Bewerber aus");
 				RootPanel.get("content").clear();
 				repGen.getApplicatorsOnOwnJobPostings(ClientsideSettings.getCurrentUser(), new AsyncCallback<ArrayList<Person>>(){
@@ -201,12 +205,13 @@ public class ReportNavigation extends VerticalPanel {
 								
 								for(Person p : result){
 									
-									applicantBox.addItem(p.getFirstName() + " " + p.getName());
+									applicantBox.addItem(p.getFirstName() + " " + p.getName() + ", ID: " + p.getId());
 									
 								}
 							}
 				});
 				RootPanel.get("content").add(applicantBox);
+				
 				
 				applicantBox.addChangeHandler(new ChangeHandler(){
 					
@@ -214,12 +219,12 @@ public class ReportNavigation extends VerticalPanel {
 				public void onChange(ChangeEvent event){
 					
 					ReportGeneratorAsync repGenA = ClientsideSettings.getReportGenerator();
-					
-					RootPanel.get("content").clear();
+			
+					RootPanel.get("content").add(new HTML("<h2>i bims ein test lul</h2>"));;
 					String s = applicantBox.getValue(applicantBox.getSelectedIndex());
-					String last = s.substring(s.indexOf(':')+1, s.length());
+					String last = s.substring(s.indexOf(':')+2, s.length());
 					int chosenId = Integer.valueOf(last);
-					
+					RootPanel.get("content").add(new HTML("Ausgewählte ID: " + chosenId));
 					
 					repGenA.showProjectInterweavingsWithParticipationsAndApplications(chosenId,
 						new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
@@ -227,14 +232,19 @@ public class ReportNavigation extends VerticalPanel {
 							@Override
 							public void onFailure(Throwable caught) {
 								ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt");
-
+								RootPanel.get("content").add(new HTML("FAIL"));
 							}
 
 							@Override
 							public void onSuccess(ProjectInterweavingsWithParticipationsAndApplications result) {
+								if(result != null){
 								HTMLReportWriter writer = new HTMLReportWriter();
 								writer.process(result);
 								RootPanel.get("content").add(new HTML(writer.getReportText()));
+								}
+								else{
+								RootPanel.get("content").add(new HTML("Bei der OnSucess Methode kam kein valides Objekt zurück"));
+								}
 							}
 						});
 					}
