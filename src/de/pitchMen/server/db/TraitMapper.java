@@ -204,7 +204,7 @@ public class TraitMapper {
 			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt.executeQuery(
-					"SELECT id AS ID, name as NAME, value AS VALUE, partnerProfil_ID AS PARTNERPROFILID FROM trait ORDER BY id");
+					"SELECT * FROM trait ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle trait vorhanden ist, muss das Abfragen des ResultSet so
@@ -214,10 +214,10 @@ public class TraitMapper {
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
-				trait.setId(rs.getInt("ID"));
-				trait.setName(rs.getString("NAME"));
-				trait.setValue(rs.getString("VALUE"));
-				trait.setPartnerProfileId(rs.getInt("PARTNERPROFILID"));
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
+				//trait.setPartnerProfileId(rs.getInt("partnerProfileId"));
 				result.add(trait);
 			}
 		/**
@@ -397,6 +397,51 @@ public class TraitMapper {
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten PartnerProfilId, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT * FROM trait WHERE partnerProfile_id = " + partnerProfileId);
+			/**
+			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
+			 * Tabelle trait mit dem ï¿½bergebenen Wert vorhanden ist,
+			 * muss das Abfragen des ResultSet so oft erfolgen (while-Schleife),
+			 * bis alle Tupel durchlaufen wurden. Die DB-Tupel werden in
+			 * Java-Objekte transformiert und anschlieï¿½end der ArrayList
+			 * hinzugefï¿½gt.
+			 */
+			while (rs.next()) {
+				Trait trait = new Trait();
+				trait.setId(rs.getInt("id"));
+				trait.setName(rs.getString("name"));
+				trait.setValue(rs.getString("value"));
+				trait.setPartnerProfileId(rs.getInt("partnerProfile_Id"));
+				result.add(trait);
+			}
+		/**
+		* Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
+		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+		* ausgegeben, was passiert ist und wo im Code es passiert ist.
+		*/
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * Mapper zum Abfragen von Traits aus der Trait Tabelle, welcher aber nur einem jobPosting angehören. 
+	 * Benötigt wird die Methode für den Report "Alle Ausschreibungen passend zum Partnerprofil"
+	 * @param partnerProfileId
+	 * @return trait
+	 */
+	
+	public ArrayList<Trait> findTraitsFromJobPostings() {
+		Connection con = DBConnection.connection();
+
+		ArrayList<Trait> result = new ArrayList<Trait>();
+
+		try {
+			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum finden von Trait-Datensätzen, welche einem JobPosting und keiner Person angehören
+			 */
+			ResultSet rs = stmt.executeQuery("SELECT * FROM trait INNER JOIN partnerProfile ON trait.partnerProfile_id = partnerProfile.id WHERE partnerProfile.jobPosting_id != 0");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle trait mit dem ï¿½bergebenen Wert vorhanden ist,

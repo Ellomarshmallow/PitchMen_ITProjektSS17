@@ -19,6 +19,7 @@ import de.pitchMen.shared.bo.Participation;
 import de.pitchMen.shared.bo.PartnerProfile;
 import de.pitchMen.shared.bo.Person;
 import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Trait;
 import de.pitchMen.shared.report.AllApplicationsOfOneUser;
 import de.pitchMen.shared.report.AllApplicationsOfUser;
 import de.pitchMen.shared.report.AllApplicationsToOneJobPostingOfUser;
@@ -205,58 +206,118 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	public AllJobPostingsMatchingPartnerProfileOfUser showAllJobPostingsMatchingPartnerProfileOfUser(
 			PartnerProfile partnerProfile) throws IllegalArgumentException {
 		if (pitchMenAdmin == null) {
-			/*
-			 * Zun√§chst legen wir uns einen leeren Report an.
-			 */
-			AllJobPostingsMatchingPartnerProfileOfUser result = new AllJobPostingsMatchingPartnerProfileOfUser();
-
-			// Jeder Report hat einen Titel (Bezeichnung / √úberschrift).
-			result.setTitle("Alle Ausschreibungen passend zum Partnerprofil des Benutzers");
-			/*
-			 * Datum der Erstellung hinzuf√ºgen. new Date() erzeugt autom. einen
-			 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
-			 */
-			result.setDatecreated(new Date());
-			/*
-			 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge,
-			 * die oben auf dem Report stehen) des Reports. Die Kopfdaten sind
-			 * einzeilig, daher die Verwendung von Rows.
-			 */
-			Row headline = new Row();
-
-			headline.addColumn(new Column("JobPosting Titel"));
-
-			headline.addColumn(new Column("JobPosting Beschreibung"));
-
-			headline.addColumn(new Column("DazugehÔøΩriges Projekt"));
-
-			result.addRow(headline);
-
-			ArrayList<JobPosting> allJobPostings = this.pitchMenAdmin.getJobPostingsMatchingTraits(partnerProfile);
-
-			for (JobPosting jp : allJobPostings) {
-
-				Row jobPostingRow = new Row();
-
-				jobPostingRow = new Row();
-
-				jobPostingRow.addColumn(new Column(jp.getTitle()));
-				jobPostingRow.addColumn(new Column(jp.getText()));
-				// FIXME
-				// jobPostingRow.addColumn(new
-				// Column(pitchMenAdmin.getProjectByID(jp.getProjectId())));
-
-				result.addRow(jobPostingRow);
-			}
-			return result;
-
+			return null;
 		}
-		// RÔøΩckgabe des fertigen Reports
-		return null;
-		
-		// TODO Methode noch zu erledigen!
-	}
+		/**
+		 * Zun√§chst legen wir uns einen leeren Report an.
+		 **/
+		AllJobPostingsMatchingPartnerProfileOfUser result = new AllJobPostingsMatchingPartnerProfileOfUser();
 
+		// Jeder Report hat einen Titel (Bezeichnung / √úberschrift).
+		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil des Benutzers");
+		/**
+		 * Datum der Erstellung hinzuf√ºgen. new Date() erzeugt autom. einen
+		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+		 **/
+		result.setDatecreated(new Date());
+		/**
+		 * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die
+		 * oben auf dem Report stehen) des Reports. Die Kopfdaten sind
+		 * einzeilig, daher die Verwendung von Rows.
+		 **/
+		Row headline = new Row();
+
+		headline.addColumn(new Column("JobPosting Titel"));
+
+		headline.addColumn(new Column("JobPosting Beschreibung"));
+
+		headline.addColumn(new Column("Passende Trait"));
+
+		result.addRow(headline);
+
+		/**
+		 * ArrayListe zum abfragen aller jobPostings, dessen Methode in der PitchmenAdmin
+		 * implementiert ist. 
+		 * 
+		 */
+		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
+
+		/**
+		 * Implementiert eine ArrayList von Person-Traits, 
+		 * welche anhand der Partnerpfofile-ID abgefragt werden.
+		 */
+		ArrayList<Trait> personTraits = pitchMenAdmin.getTraitsByPartnerProfileId(partnerProfile.getId());
+		
+		/**
+		 * Implementiert eine ArrayListe mit  jobPosting-Traits. 
+		 * Die Methode selbst ist im PitchMenADmin implemementiert.
+		 * Realisiert durch einen direkten zugriff auf einen Mapper.
+		 */
+		ArrayList<Trait> jobPostingTraits = pitchMenAdmin.getTraitsFromJobPostings();
+
+		
+		/**
+		 * Erster Durchlauf der Schleife zum Abfragen der Person Traits, 
+		 * durch das komplette Array, nach Ablauf des gesamten Aufrufs. 
+		 */
+		for (int i = 0; i < personTraits.size(); i++) {
+			// Row traitRow = new Row();
+			// traitRow.addColumn(new Column(t.getName()));
+			// traitRow.addColumn(new Column(t.getValue()));
+			// result.addRow(traitRow);
+			String personTrait = personTraits.get(i).getName();
+			// traitRow.addColumn(new Column(personTrait));
+			// result.addRow(traitRow);
+
+			/**
+			 * Im zweiten Durchlauf werden alle JobPosting-Traits aus dem Array ausgelesen 
+			 * und in eine lokale String Variable jobPostingTrait gespeichert.
+			 * 
+			 * Des weiteren wird die PartnerProfilId in eine int Variable abgespeichert. Diese wird sp‰ter dazu verwendet, 
+			 * das dazugehˆrige JobPosting zu finden.
+			 */
+			for (Trait jpt : jobPostingTraits) {
+				// Row traitRowJobPostings = new Row();
+				// traitRowJobPostings.addColumn(new Column(jpt.getName()));
+				// traitRowJobPostings.addColumn(new Column(jpt.getValue()));
+				// result.addRow(traitRowJobPostings);
+				String jobPostingTrait = jpt.getName();
+				int PPTraitId = jpt.getPartnerProfileId();
+				// traitRowJobPostings.addColumn(new Column(jobPostingTrait));
+				// traitRowJobPostings.addColumn(new Column(PPTraitId));
+				// result.addRow(traitRowJobPostings);
+
+				/**
+				 * If Abfrage, welche die Inhaltiche ¸bereinstimmung 
+				 * der Variablen personTrait und jobPostingTrait pr¸ft. 
+				 * Wenn die Pr¸fung positiv ausf‰llt, wird Anhand der PartnerProfil ID des Traits das
+				 * dazugehˆrige JObPosting aus der Datenbank gelesen. Anschlieﬂend wird davon lediglich der 
+				 * Titel und der Text an das ErgebnisObjekt ¸bergeben. 
+				 * Zus‰tzlich wird die Eigenschaft ausgegeben, welche sowohl im JobPosting wie auch in dem Person
+				 * PartnerProfil ¸bereinstimmt.
+				 */
+				if (personTrait.equals(jobPostingTrait)) {
+
+						Row jobPostingZeile = new Row();
+						String jobPostingTitle = pitchMenAdmin.getJobPostingByPPId(PPTraitId).getTitle();
+						String jobPostingText = pitchMenAdmin.getJobPostingByPPId(PPTraitId).getText();
+						jobPostingZeile.addColumn(new Column(jobPostingTitle));
+						jobPostingZeile.addColumn(new Column(jobPostingText));
+						jobPostingZeile.addColumn(new Column(personTrait));
+						result.addRow(jobPostingZeile);
+
+					
+				}
+
+			}
+		}
+
+		/**
+		 * Ergebnis-Objekt welches dann an die Zust‰ndige Klasse im HTML Report-Writer ¸bergeben wird.
+		 */
+		return result;
+
+	}
 	
 	
 	
@@ -676,10 +737,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				for (Application application : applications) {
 					
 								
-					if(applicants.contains(pitchMenAdmin.getPersonByID(application.)){
-					}else{
-						applicants.add(pitchMenAdmin.getPersonByID(application.));
-					}
+//					if(applicants.contains(pitchMenAdmin.getPersonByID(application.)){
+//					}else{
+//						applicants.add(pitchMenAdmin.getPersonByID(application.));
+//					}
 				}
 			}
 		return applicants;

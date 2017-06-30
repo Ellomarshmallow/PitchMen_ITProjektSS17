@@ -760,6 +760,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException {
 		return this.traitMapper.findTraitByPartnerProfileId(partnerProfileId);
 	}
+	
+	@Override
+	public ArrayList<Trait> getTraitsFromJobPostings() throws IllegalArgumentException {
+
+		return this.traitMapper.findTraitsFromJobPostings();
+
+	}
+	
+	@Override
+	public JobPosting getJobPostingByPPId(int id) throws IllegalArgumentException {
+		return this.jobPostingMapper.findJobPostingByPPId(id);
+
+	}
 
 	// --------------------------- LOGIN
 
@@ -860,21 +873,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		ArrayList<JobPosting> matchingTraits = new ArrayList<JobPosting>();
 
-		for (PartnerProfile pprofile : allpps) {
-			ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
-
-			for (Trait trait : jPTraits) {
-				String traitJp = trait.getName();
-
-				for (Trait pTrait : personTraits) {
-					String traitPerson = pTrait.getName();
-
-					if (traitJp.equals(traitPerson)) {
-						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
-					}
-				}
-			}
-		}
+//		for (PartnerProfile pprofile : allpps) {
+//			ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
+//
+//			for (Trait trait : jPTraits) {
+//				String traitJp = trait.getName();
+//
+//				for (Trait pTrait : personTraits) {
+//					String traitPerson = pTrait.getName();
+//
+//					if (traitJp.equals(traitPerson)) {
+//						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
+//					}
+//				}
+//			}
+//		}
 
 		return matchingTraits;
 

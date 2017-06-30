@@ -14,5 +14,35 @@ package de.pitchMen.shared.report;
 	     */
 	    private static final long serialVersionUID = 1L;
 	    
+	    
+	       
+	    private int jobPostingId;
+	    
+	    private int traitId;
+
+
+	
+
+		public int getJobPostingId() {
+			return jobPostingId;
+		}
+
+
+		public void setJobPostingId(int jobPostingId) {
+			this.jobPostingId = jobPostingId;
+		}
+		
+		public int getTraitId() {
+			return traitId;
+		}
+
+
+		public void setTraitId(int traitId) {
+			this.traitId = traitId;
+		}
+
+		
+		
+	    
 
 	}
