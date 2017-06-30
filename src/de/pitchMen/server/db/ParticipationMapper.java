@@ -11,7 +11,7 @@ import de.pitchMen.shared.bo.Participation;
 
 /**
  * Die Klasse ParticipationMapper bildet Participation-Objekte auf eine 
- * relationale Datenbank ab. Ebenfalls ist es möglich aus 
+ * relationale Datenbank ab. Ebenfalls ist es mï¿½glich aus 
  * Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
@@ -23,24 +23,24 @@ public class ParticipationMapper {
 
 	/**
 	 * Die Klasse ParticipationMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfï¿½llt werden kann,
+	 * wird zunï¿½chst eine Variable mit dem Schlï¿½sselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 	private static ParticipationMapper participationMapper = null;
 
 	/**
-	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschï¿½tzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 	protected ParticipationMapper() {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafï¿½r,
 	 * dass nur eine einzige Instanz der ParticipationMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über ParticipationMapper.participationMapper() 
-	 * und nicht über den New-Operator.
+	 * Aufgerufen wird die Klasse somit ï¿½ber ParticipationMapper.participationMapper() 
+	 * und nicht ï¿½ber den New-Operator.
 	 * 
 	 * @return ParticipationMapper
 	 */
@@ -52,7 +52,7 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Fügt ein Participation-Objekt der Datenbank hinzu.
+	 * Fï¿½gt ein Participation-Objekt der Datenbank hinzu.
 	 * 
 	 * @param participation
 	 * @param project
@@ -65,8 +65,8 @@ public class ParticipationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die
-			 * aktuelle id wird um eins erhöht.
+			 * Abfrage des zuletzt hinzugefï¿½gten Primï¿½rschlï¿½ssels (id). Die
+			 * aktuelle id wird um eins erhï¿½ht.
 			 */			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM participation");
 			if(rs.next()) {
@@ -75,35 +75,35 @@ public class ParticipationMapper {
 			
 			String insert1 = "INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
 					+ participation.getId() + ", '" + participation.getDateOpened() + "', '"
-					+ participation.getDateClosed() + "'";
+					+ participation.getDateClosed() + "')";
 			String insert2 = "INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
-					+ participation.getId() + ", " + participation.getProjectId();
+					+ participation.getId() + ", " + participation.getProjectId() + ")";
 			String insert3 = "INSERT INTO person_has_participation (person_id, participation_id)" + "VALUES ("
-					+ participation.getPersonId() + ", " + participation.getId();
+					+ participation.getPersonId() + ", " + participation.getId() + ")";
 			/**
 			 * con.setAutoCommit(false) erlaubt es zwei oder mehrere Statements
-			 * in einer Gruppe auszuführen und deaktiviert die auto-commit Funktion.
+			 * in einer Gruppe auszufï¿½hren und deaktiviert die auto-commit Funktion.
 			 * 
 			 */
 			con.setAutoCommit(false);
 			/**
-			 * Fügt die oben gespeicherten SQL-Befehle der aktuellen Liste von
+			 * Fï¿½gt die oben gespeicherten SQL-Befehle der aktuellen Liste von
 			 * SQL-Statements dem Statement-Objekt hinzu
 			 */
 			stmt.addBatch(insert1);
 			stmt.addBatch(insert2);
 			stmt.addBatch(insert3);
 			/**
-			 * Bestätigt alle gelisteten, in dem Statement-Objekt enthaltenen
-			 * Statements, zur Ausführung in die Datenbank. Wenn alle Statements
-			 * erfolgreich durchgeführt worden sind, gibt es eine ArrayListe mit der
-			 * Anzahl der Updates zurück.
+			 * Bestï¿½tigt alle gelisteten, in dem Statement-Objekt enthaltenen
+			 * Statements, zur Ausfï¿½hrung in die Datenbank. Wenn alle Statements
+			 * erfolgreich durchgefï¿½hrt worden sind, gibt es eine ArrayListe mit der
+			 * Anzahl der Updates zurï¿½ck.
 			 */
 			stmt.executeBatch();
 
 			/**
 			 * Durch das Deaktivieren des AutoCommits dem Aufruf
-			 * con.setAutoCommit(false), muss das Ausführen des Commits explizit
+			 * con.setAutoCommit(false), muss das Ausfï¿½hren des Commits explizit
 			 * gestartet werden.
 			 */
 			con.commit();
@@ -133,7 +133,7 @@ public class ParticipationMapper {
 					+ "' WHERE id= " + participation.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */		
@@ -144,7 +144,7 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Löscht ein Participation-Objekt aus der Datenbank.
+	 * Lï¿½scht ein Participation-Objekt aus der Datenbank.
 	 * 
 	 * @param participation
 	 */
@@ -154,11 +154,11 @@ public class ParticipationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Lï¿½schen des Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM participation WHERE id=" + participation.getId());
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -169,7 +169,7 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Findet ein Participation-Objekt anhand der übergebenen Id in der
+	 * Findet ein Participation-Objekt anhand der ï¿½bergebenen Id in der
 	 * Datenbank.
 	 * 
 	 * @param id
@@ -186,9 +186,9 @@ public class ParticipationMapper {
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, workload, dateOpened, dateClosed FROM participation WHERE id=" + id);
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * If-Abfragen geprüft, ob es für den angefragten Primärschlüssel
+			 * Zu einem Primï¿½rschlï¿½ssel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurï¿½ckgegeben werden. Es wird mit einer
+			 * If-Abfragen geprï¿½ft, ob es fï¿½r den angefragten Primï¿½rschlï¿½ssel
 			 * ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -200,7 +200,7 @@ public class ParticipationMapper {
 				return participation;
 			}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */	
@@ -234,7 +234,7 @@ public class ParticipationMapper {
 			 * Tabelle participation vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -245,7 +245,7 @@ public class ParticipationMapper {
 				result.add(participation);
 			}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -257,7 +257,7 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Findet Participation-Objekte anhand des übergebenen Start-Datums in der Datenbank.
+	 * Findet Participation-Objekte anhand des ï¿½bergebenen Start-Datums in der Datenbank.
 	 * 
 	 * @param dateOpened
 	 * @return ArrayList<Participation>
@@ -272,7 +272,7 @@ public class ParticipationMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden der Datensätze, anahnd des Start-Datums, in der Datenbank, sortiert nach der Id.
+			 * SQL-Anweisung zum Finden der Datensï¿½tze, anahnd des Start-Datums, in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, workload, dateOpened, dateClosed FROM participation WHERE dateOpened= '"
@@ -282,7 +282,7 @@ public class ParticipationMapper {
 			 * Tabelle participation vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -293,7 +293,7 @@ public class ParticipationMapper {
 				result.add(participation);
 			}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -305,12 +305,12 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Findet Participation-Objekte anhand des übergebenen personId in der
+	 * Findet Participation-Objekte anhand des ï¿½bergebenen personId in der
 	 * Datenbank. 
 	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die
-	 * Datensätze zusammengefügt werden, zu den es jeweils auch ein Gegenstück
-	 * in der verknüpften Tabelle gibt. Da es möglich ist, dass eine Person
-	 * mehrere Participations (Beteiligungen) hat, müssen die
+	 * Datensï¿½tze zusammengefï¿½gt werden, zu den es jeweils auch ein Gegenstï¿½ck
+	 * in der verknï¿½pften Tabelle gibt. Da es mï¿½glich ist, dass eine Person
+	 * mehrere Participations (Beteiligungen) hat, mï¿½ssen die
 	 * Participation-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * @param personId
@@ -332,11 +332,11 @@ public class ParticipationMapper {
 					+ "WHERE person_has_participation.person_id = " + personId);
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle participation mit dem übergebenen Wert (value) vorhanden ist,
+			 * Tabelle participation mit dem ï¿½bergebenen Wert (value) vorhanden ist,
 			 * muss das Abfragen des ResultSet so oft erfolgen (while-Schleife),
 			 * bis alle Tupel durchlaufen wurden. Die DB-Tupel werden in
-			 * Java-Objekte transformiert und anschließend der ArrayList
-			 * hinzugefügt.
+			 * Java-Objekte transformiert und anschlieï¿½end der ArrayList
+			 * hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -347,7 +347,7 @@ public class ParticipationMapper {
 				result.add(participation);
 			}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -359,12 +359,12 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Findet Participation-Objekte anhand der übergebenen teamId in der
+	 * Findet Participation-Objekte anhand der ï¿½bergebenen teamId in der
 	 * Datenbank. 
 	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die
-	 * Datensätze zusammengefügt werden, zu den es jeweils auch ein Gegenstück
-	 * in der verknüpften Tabelle gibt. Da es möglich ist, dass ein Team 
-	 * mehrere Participations (Beteiligungen) hat, müssen die Participation-Objekte in
+	 * Datensï¿½tze zusammengefï¿½gt werden, zu den es jeweils auch ein Gegenstï¿½ck
+	 * in der verknï¿½pften Tabelle gibt. Da es mï¿½glich ist, dass ein Team 
+	 * mehrere Participations (Beteiligungen) hat, mï¿½ssen die Participation-Objekte in
 	 * einer ArrayList gespeichert werden.
 	 * 
 	 * @param teamId
@@ -389,7 +389,7 @@ public class ParticipationMapper {
 			 * Tabelle participation vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -400,7 +400,7 @@ public class ParticipationMapper {
 				result.add(participation);
 			}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -412,9 +412,9 @@ public class ParticipationMapper {
 	}
 
 	/**
-	 * Findet Participation-Objekte anhand der übergebenen companyId in der
-	 * Datenbank. Da es möglich ist, dass ein Unternehmen mehrere Participations
-	 * (Beteiligungen) hat, müssen die Participation-Objekte in einer ArrayList
+	 * Findet Participation-Objekte anhand der ï¿½bergebenen companyId in der
+	 * Datenbank. Da es mï¿½glich ist, dass ein Unternehmen mehrere Participations
+	 * (Beteiligungen) hat, mï¿½ssen die Participation-Objekte in einer ArrayList
 	 * gespeichert werden
 	 * 
 	 * @param companyId
@@ -439,7 +439,7 @@ public class ParticipationMapper {
 			 * Tabelle participation vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschlieï¿½end der ArrayList hinzugefï¿½gt.
 			 */
 			while (rs.next()) {
 				Participation participation = new Participation();
@@ -450,7 +450,7 @@ public class ParticipationMapper {
 				result.add(participation);
 			}
 		/**
-		 * Das aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das aufrufen des printStackTrace bietet die Mï¿½glichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
