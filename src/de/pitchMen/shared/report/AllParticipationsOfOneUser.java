@@ -6,7 +6,7 @@ public class AllParticipationsOfOneUser extends SimpleReport{
      */
     private static final long serialVersionUID = 1L;
     
-    private int applicationId;
+    private int participationId;
     private int personId;
     
     
@@ -17,10 +17,10 @@ public class AllParticipationsOfOneUser extends SimpleReport{
 		this.personId = personId;
 	}
 	public int getApplicationId() {
-		return applicationId;
+		return participationId;
 	}
 	public void setApplicationId(int applicationId) {
-		this.applicationId = applicationId;
+		this.participationId = applicationId;
 	}
 
 }
