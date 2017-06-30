@@ -245,15 +245,38 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// }
 
 		ArrayList<Trait> personTraits = pitchMenAdmin.getTraitsByPartnerProfileId(partnerProfile.getId());
-
-		// for (Trait t : personTraits) {
-		// Row traitRow = new Row();
-		// traitRow.addColumn(new Column(t.getName()));
-		// traitRow.addColumn(new Column(t.getValue()));
-		// result.addRow(traitRow);
-		// }
-
 		ArrayList<Trait> jobPostingTraits = pitchMenAdmin.getTraitsFromJobPostings();
+
+		for (int i = 0; i < personTraits.size(); i++) {
+			Row traitRow = new Row();
+			// traitRow.addColumn(new Column(t.getName()));
+			// traitRow.addColumn(new Column(t.getValue()));
+			// result.addRow(traitRow);
+			String personTrait = personTraits.get(i).getName();
+			traitRow.addColumn(new Column(personTrait));
+			result.addRow(traitRow);
+
+			for (Trait jpt : jobPostingTraits) {
+//				Row traitRowJobPostings = new Row();
+				// traitRowJobPostings.addColumn(new Column(jpt.getName()));
+				// traitRowJobPostings.addColumn(new Column(jpt.getValue()));
+				// result.addRow(traitRowJobPostings);
+				String jobPostingTrait = jpt.getName();
+//				traitRowJobPostings.addColumn(new Column(jobPostingTrait));
+//				result.addRow(traitRowJobPostings);
+				
+//				if (personTrait.equals(jobPostingTrait)) {
+//					for (JobPosting jobPosting : jobPostings) {
+//						Row jobPostingZeile = new Row();
+//						jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
+//						result.addRow(jobPostingZeile);
+//
+//					}
+//				}
+//				
+
+			}
+		}
 
 		// for (Trait jpt : jobPostingTraits) {
 		// Row traitRowJobPostings = new Row();
@@ -262,23 +285,22 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// result.addRow(traitRowJobPostings);
 		// }
 
-		for (Trait t : personTraits) {
-			String personTrait = t.getName();
-			for (Trait jpt : jobPostingTraits) {
-				String jobPostingTrait = jpt.getName();
-				int jobPostingTraitId = jpt.getId();
-				if (personTrait.equals(jobPostingTrait)) {
-
-					JobPosting matchingJP = pitchMenAdmin.getJobPostingByID(jobPostingTraitId);
-
-					Row matchingRow = new Row();
-					matchingRow.addColumn(new Column(matchingJP.getTitle()));
-					matchingRow.addColumn(new Column(personTrait));
-					result.addRow(matchingRow);
-				}
-
-			}
-		}
+		// for (Trait t : personTraits) {
+		// String personTrait = t.getName();
+		// String personTraitV = t.getValue();
+		// for (Trait jpt : jobPostingTraits) {
+		// String jobPostingTrait = jpt.getName();
+		// int jobPostingTraitId = jpt.getId();
+		// if (personTrait.equals(jobPostingTrait)) {
+		//
+		// Row matchingRow = new Row();
+		// matchingRow.addColumn(new Column(jobPostingTraitId));
+		// matchingRow.addColumn(new Column(personTrait));
+		// result.addRow(matchingRow);
+		// }
+		//
+		// }
+		// }
 
 		// for (PartnerProfile pprofile : allpps) {
 		// ArrayList<Trait> jPTraits =
