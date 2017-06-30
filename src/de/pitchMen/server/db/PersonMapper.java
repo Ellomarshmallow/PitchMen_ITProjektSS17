@@ -373,7 +373,7 @@ public class PersonMapper {
 	 * @param applicationId
 	 * @return person
 	 */	
-	public Person findPersonByApplicationId(int applicationId) {
+	public Person findByApplicationId(int applicationId) {
 		Connection con = DBConnection.connection();
 		
 		Person result = new Person();
