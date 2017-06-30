@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Person;
 
 /**
@@ -365,4 +366,52 @@ public class PersonMapper {
 		return null;
 	}
 
+	//FIXME von Elli. Stimmt das so oder muss man etwas beim PartnerProfil beachten?
+	/**
+	 * Findet ein Person-Objekt anhand der übergebenen applicationId in der Datenbank.
+	 * 
+	 * @param applicationId
+	 * @return person
+	 */	
+	public Person findPersonByApplicationId(int applicationId) {
+		Connection con = DBConnection.connection();
+		
+		Person result = new Person();
+
+		try {
+			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung - Anhand der �bergebenen applicationId werden die dazugeh�rigen
+			 * Application-Tupel (Bewerbungen) aus der Datenbank abgefragt.
+			 */
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM person "
+					+ "WHERE application_id = " + applicationId);
+
+			/**
+			 * Zu einem eindeutigen Wert exisitiert nur maximal ein
+			 * Datenbank-Tupel, somit kann auch nur einer zurückgegeben werden.
+			 * Es wird mit einer If-Abfragen geprüft, ob es für den
+			 * angefragten Primärschlüssel ein DB-Tupel gibt.
+			 */
+			if (rs.next()) {
+				Person person = new Person();
+				person.setId(rs.getInt("id"));
+				person.setName(rs.getString("name"));
+				person.setDescription(rs.getString("description"));
+				person.setFirstName(rs.getString("firstName"));
+				person.setEmailAdress(rs.getString("email"));
+				return person;
+			}
+			
+			/**
+			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */	
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return result;
+	}
 }
