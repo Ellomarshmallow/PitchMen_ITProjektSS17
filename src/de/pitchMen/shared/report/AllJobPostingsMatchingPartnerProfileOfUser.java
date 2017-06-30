@@ -17,7 +17,11 @@ package de.pitchMen.shared.report;
 	    
 	       
 	    private int jobPostingId;
+	    
+	    private int traitId;
 
+
+	
 
 		public int getJobPostingId() {
 			return jobPostingId;
@@ -27,6 +31,18 @@ package de.pitchMen.shared.report;
 		public void setJobPostingId(int jobPostingId) {
 			this.jobPostingId = jobPostingId;
 		}
+		
+		public int getTraitId() {
+			return traitId;
+		}
+
+
+		public void setTraitId(int traitId) {
+			this.traitId = traitId;
+		}
+
+		
+		
 	    
 
 	}
