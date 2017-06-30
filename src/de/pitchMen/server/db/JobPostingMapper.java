@@ -489,4 +489,50 @@ public class JobPostingMapper {
 		return result;
 	}
 	
+	
+	/**
+	 * Findet ein JobPosting-Objekt anhand der �bergebenen Id in der Datenbank.
+	 * 
+	 * @param partnerProfilId
+	 * @return jobPosting 
+	 */
+	public JobPosting findJobPostingByPPId(int id) {
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			/**
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der �bergebenen Id, in der Datenbank.
+			 */
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM jobPosting INNER JOIN partnerProfile ON "
+							+ "jobPosting.id = partnerProfile.jobPosting_id WHERE partnerProfile.id = " +  id);
+			/**
+			 * Der Prim�rschl�ssel (id) wird als eine Tupel zur�ckgegeben. Es
+			 * wird gepr�ft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * ein Objekt umgewandelt.
+			 * 
+			 */
+			if (rs.next()) {
+				JobPosting jobPosting = new JobPosting();
+				jobPosting.setId(rs.getInt("id"));
+				jobPosting.setTitle(rs.getString("title"));
+				jobPosting.setText(rs.getString("text"));
+				jobPosting.setDeadline(rs.getDate("deadline"));
+				jobPosting.setProjectId(rs.getInt("project_id"));
+				jobPosting.setStatus(rs.getString("status"));
+				return jobPosting;
+			}
+			/**
+			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
+			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+		}
+		return null;
+	}
+
+	
 }
