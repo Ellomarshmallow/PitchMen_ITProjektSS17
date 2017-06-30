@@ -711,6 +711,12 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		return this.traitMapper.findTraitsFromJobPostings();
 
 	}
+	
+	@Override
+	public JobPosting getJobPostingByPPId(int id) throws IllegalArgumentException {
+		return this.jobPostingMapper.findJobPostingByPPId(id);
+
+	}
 
 	// --------------------------- LOGIN
 
