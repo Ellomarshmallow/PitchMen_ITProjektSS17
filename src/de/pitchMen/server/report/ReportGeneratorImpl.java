@@ -234,12 +234,31 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		result.addRow(headline);
 
+		/**
+		 * ArrayListe zum abfragen aller jobPostings, dessen Methode in der PitchmenAdmin
+		 * implementiert ist. 
+		 * 
+		 */
 		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
 
+		/**
+		 * Implementiert eine ArrayList von Person-Traits, 
+		 * welche anhand der Partnerpfofile-ID abgefragt werden.
+		 */
 		ArrayList<Trait> personTraits = pitchMenAdmin.getTraitsByPartnerProfileId(partnerProfile.getId());
 		
+		/**
+		 * Implementiert eine ArrayListe mit  jobPosting-Traits. 
+		 * Die Methode selbst ist im PitchMenADmin implemementiert.
+		 * Realisiert durch einen direkten zugriff auf einen Mapper.
+		 */
 		ArrayList<Trait> jobPostingTraits = pitchMenAdmin.getTraitsFromJobPostings();
 
+		
+		/**
+		 * Erster Durchlauf der Schleife zum Abfragen der Person Traits, 
+		 * durch das komplette Array, nach Ablauf des gesamten Aufrufs. 
+		 */
 		for (int i = 0; i < personTraits.size(); i++) {
 			// Row traitRow = new Row();
 			// traitRow.addColumn(new Column(t.getName()));
@@ -249,6 +268,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			// traitRow.addColumn(new Column(personTrait));
 			// result.addRow(traitRow);
 
+			/**
+			 * Im zweiten Durchlauf werden alle JobPosting-Traits aus dem Array ausgelesen 
+			 * und in eine lokale String Variable jobPostingTrait gespeichert.
+			 * 
+			 * Des weiteren wird die PartnerProfilId in eine int Variable abgespeichert. Diese wird später dazu verwendet, 
+			 * das dazugehörige JobPosting zu finden.
+			 */
 			for (Trait jpt : jobPostingTraits) {
 				// Row traitRowJobPostings = new Row();
 				// traitRowJobPostings.addColumn(new Column(jpt.getName()));
