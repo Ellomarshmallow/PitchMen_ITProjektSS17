@@ -125,7 +125,9 @@ public class PartnerProfileForm extends Formular {
 				createTeamButton.addClickHandler(new CreateTeamPartnerProfileClickHandler());
 				createCompanyButton.addClickHandler(new CreateCompanyPartnerProfileClickHandler());
 				RootPanel.get("content").add(createButton);	
-				RootPanel.get("content").add(createTeamButton);			
+				RootPanel.get("content").add(new HTML("<br>"));
+				RootPanel.get("content").add(createTeamButton);
+				RootPanel.get("content").add(new HTML("<br>"));
 				RootPanel.get("content").add(createCompanyButton);			
 
 				

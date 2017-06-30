@@ -638,10 +638,30 @@ public class JobPostingForm extends Formular{
 		} 
 		private class applicateClickHandler implements ClickHandler {
 			public void onClick(ClickEvent event) {
+				/** Es wird überprüft ob der Nutzer ein PartnerProfil erstellt hat, bevor dieser sich
+				 * auf eine Ausschreibung bewerben kann
+				 */
+				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>(){
+					
+					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Konnte PartnerProfile nicht laden");
+					}
+					
+					public void onSuccess(PartnerProfile result) {
+						
+						
+						if(result != null){
+							
+							RootPanel.get("content").add(new ApplicationForm(selectedJobPosting));
+						}
+						else{
+							Window.alert("Sie haben noch kein Partnerprofil erstellt! Klicken Sie dazu auf Ihren Namen oben rechts");
+						}
+						
+					}
+					
+				});
 				
-				RootPanel.get("content").add(new ApplicationForm(selectedJobPosting));
-
-				//ApplicationForm applicationForm = new ApplicationForm(selectedJobPosting);
 
 			}
 		} 
