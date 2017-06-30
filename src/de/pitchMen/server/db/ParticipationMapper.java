@@ -64,49 +64,35 @@ public class ParticipationMapper {
 
 		try {
 			Statement stmt = con.createStatement();
+			Statement stmtzwei = con.createStatement();
+			Statement stmtdrei = con.createStatement();
+			
 			/**
 			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
 			 * aktuelle id wird um eins erh�ht.
 			 */			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM participation");
-			if(rs.next()) {
-			participation.setId(rs.getInt("maxid") + 1);
+				if(rs.next()) {
+					participation.setId(rs.getInt("maxid") + 1);
 			}
+				
+			stmt = con.createStatement();
 			
-			String insert1 = "INSERT INTO participation (id, workload, dateOpened, dateClosed)" + "VALUES ("
-					+ participation.getId() + ", '" + participation.getDateOpened() + "', '"
-					+ participation.getDateClosed() + "')";
-			String insert2 = "INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
-					+ participation.getId() + ", " + participation.getProjectId() + ")";
-			String insert3 = "INSERT INTO person_has_participation (person_id, participation_id)" + "VALUES ("
-					+ participation.getPersonId() + ", " + participation.getId() + ")";
-			/**
-			 * con.setAutoCommit(false) erlaubt es zwei oder mehrere Statements
-			 * in einer Gruppe auszuf�hren und deaktiviert die auto-commit Funktion.
-			 * 
-			 */
-			con.setAutoCommit(false);
-			/**
-			 * F�gt die oben gespeicherten SQL-Befehle der aktuellen Liste von
-			 * SQL-Statements dem Statement-Objekt hinzu
-			 */
-			stmt.addBatch(insert1);
-			stmt.addBatch(insert2);
-			stmt.addBatch(insert3);
-			/**
-			 * Best�tigt alle gelisteten, in dem Statement-Objekt enthaltenen
-			 * Statements, zur Ausf�hrung in die Datenbank. Wenn alle Statements
-			 * erfolgreich durchgef�hrt worden sind, gibt es eine ArrayListe mit der
-			 * Anzahl der Updates zur�ck.
-			 */
-			stmt.executeBatch();
-
-			/**
-			 * Durch das Deaktivieren des AutoCommits dem Aufruf
-			 * con.setAutoCommit(false), muss das Ausf�hren des Commits explizit
-			 * gestartet werden.
-			 */
-			con.commit();
+				stmt.executeUpdate("INSERT INTO participation (id, workload, dateClosed, dateOpened)" + "VALUES ("
+					+ participation.getId() + ", " + participation.getWorkload() + " , '" 
+						+ participation.getDateClosed() + "', '" + participation.getDateOpened() + "')");
+			
+		
+			
+			stmtzwei = con.createStatement();
+			stmtdrei = con.createStatement();
+			
+			stmtzwei.executeUpdate("INSERT INTO participation_has_project (participation_id, project_id)" + "VALUES ("
+					+ participation.getId() + ", " + participation.getProjectId() + ")");
+					
+			stmtdrei.executeUpdate("INSERT INTO person_has_participation (person_id, participation_id)" + "VALUES ("
+					+ participation.getPersonId() + ", " + participation.getId() + ")");
+						
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
