@@ -644,6 +644,14 @@ public class JobPostingForm extends Formular{
 							public void onSuccess(Void result) {
 								JobPostingForm updatedForm = new JobPostingForm(selectedJobPosting);
 								RootPanel.get("content").add(updatedForm);
+								
+								/* 
+								 * Beim Updaten einer Ausschreibung wird der Baum im Nav Panel neu geladen.
+								 */
+							
+									RootPanel.get("nav").clear();
+									Navigation updatedNavigation = new Navigation();  
+									RootPanel.get("nav").add(updatedNavigation);
 							}
 							
 						});
@@ -894,7 +902,17 @@ public class JobPostingForm extends Formular{
 					}
 	
 					@Override
-					public void onSuccess(JobPosting result) {
+					public void onSuccess(JobPosting result) {						
+						
+						/* 
+						 * Beim Anlegen einer Ausschreibung wird der Baum im Nav Panel neu geladen.
+						 */
+					
+							RootPanel.get("nav").clear();
+							Navigation updatedNavigation = new Navigation();  
+							RootPanel.get("nav").add(updatedNavigation);
+						
+						
 						selectedJobPosting = result;
 						java.util.Date currentDate = new java.util.Date();
 						java.sql.Date convertedDate = new java.sql.Date(currentDate.getTime());
