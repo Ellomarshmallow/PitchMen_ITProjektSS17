@@ -562,7 +562,7 @@ public class PartnerProfileForm extends Formular {
 			 *  wird der Button geklickt, muss ein 
 			 *  neues partnerProfile erstellt werden.
 			 */ 
-//			CreateCompanyForm addCreatCompanyForm = new CreateCompanyForm();
+			CreateCompanyForm addCreatCompanyForm = new CreateCompanyForm();
 				
 			}
 	}
