@@ -235,16 +235,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		result.addRow(headline);
 
 		ArrayList<JobPosting> jobPostings = pitchMenAdmin.getJobPostings();
-		//
-		// for (JobPosting jobPosting : jobPostings) {
-		// Row jobPostingZeile = new Row();
-		// jobPostingZeile.addColumn(new Column(jobPosting.getTitle()));
-		// jobPostingZeile.addColumn(new Column(jobPosting.getText()));
-		// result.addRow(jobPostingZeile);
-		//
-		// }
 
 		ArrayList<Trait> personTraits = pitchMenAdmin.getTraitsByPartnerProfileId(partnerProfile.getId());
+		
 		ArrayList<Trait> jobPostingTraits = pitchMenAdmin.getTraitsFromJobPostings();
 
 		for (int i = 0; i < personTraits.size(); i++) {
