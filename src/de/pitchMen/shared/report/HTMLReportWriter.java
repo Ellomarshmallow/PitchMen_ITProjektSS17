@@ -106,6 +106,7 @@ public class HTMLReportWriter extends ReportWriter {
 			ClientsideSettings.getLogger().info("Rows in Array ist ungleich Null");
 		}
 
+
 		for (int i = 0; i < rows.size(); i++) {
 			buff.append("<tr>");
 			Row row = rows.get(i);
@@ -131,16 +132,20 @@ public class HTMLReportWriter extends ReportWriter {
 		// StringBuffer erzeugen
 		StringBuffer buff = new StringBuffer();
 		buff.append("<h4>" + a.getTitle() + "</h4>");
-		buff.append("<p><table border=1px rules=all> <tr>");
-		// table und tr und td öffnen
+		buff.append("</br><table border=1px rules=all>");
+	
+		 buff.append("<th> JobPosting Titel </th> ");
+		 buff.append("<th> JobPosting Beschreibung </th>");
+		 buff.append("<th> Passende Eigenschaft </th>");
+
 
 		ArrayList<Row> rows = a.getRows();
 		if (rows != null) {
 			ClientsideSettings.getLogger().info("Es sind Zeilen im Array enthalten");
 			
 			}
-		
-		for (int i = 0; i < rows.size(); i++) {
+	
+		for (int i = 1; i < rows.size(); i++) {
 			Row row = rows.get(i);
 			buff.append("<tr>");
 			for (int x = 0; x < row.getNumberOfColumns(); x++) {
