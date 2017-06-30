@@ -665,7 +665,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 	 */
 	public ArrayList<Person> getApplicatorsOnOwnJobPostings(Person p) throws IllegalArgumentException {
 		
-		ArrayList<Person> applicant = new ArrayList<Person>();
+		ArrayList<Person> applicants = new ArrayList<Person>();
 	
 		ArrayList<JobPosting> myjobpostings = pitchMenAdmin.getJobPostingsByPersonId(p.getId());
 		
@@ -675,13 +675,14 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				
 				for (Application application : applications) {
 					
-					if(applicant.contains(pitchMenAdmin.getPersonByID(application.getId()))){
+								
+					if(applicants.contains(pitchMenAdmin.getPersonByID(application.)){
 					}else{
-						applicant.add(pitchMenAdmin.getPersonByID(application.getId()));
+						applicants.add(pitchMenAdmin.getPersonByID(application.));
 					}
 				}
 			}
-		return applicant;
+		return applicants;
 	}
 	
 	

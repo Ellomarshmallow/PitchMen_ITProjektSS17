@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.Navigation;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Person;
@@ -76,6 +77,15 @@ public class ProjectForm extends Formular {
 			@Override
 			public void onClick(ClickEvent event) {
 				
+				/* FIXME 
+				 * Beim Anlegen eines neuen Projekts wird der Baum im Nav Panel neu geladen.
+				 */
+			
+					RootPanel.get("nav").clear();
+					Navigation updatedNavigation = new Navigation();  
+					RootPanel.get("nav").add(updatedNavigation);
+				
+					
 				java.sql.Date convertedFromDate = new java.sql.Date(fromBox.getValue().getTime());
 				java.sql.Date convertedToDate = new java.sql.Date(toBox.getValue().getTime());
 				ClientsideSettings.getPitchMenAdmin().addProject(convertedFromDate, 
@@ -93,8 +103,8 @@ public class ProjectForm extends Formular {
 
 					@Override
 					public void onSuccess(Project result) {
-						ProjectForm udpatedForm = new ProjectForm(result);
-						
+						ProjectForm updatedForm = new ProjectForm(result);
+						//pitchMenTreeViewModel.addProject(selectedProject, parentMarketplace);	
 					}
 					
 				});
@@ -123,6 +133,8 @@ public class ProjectForm extends Formular {
 		
 		fromBox.setValue(new java.util.Date());
 		RootPanel.get("content").add(fromBox);
+		
+
 
 	}
 
@@ -289,7 +301,7 @@ public class ProjectForm extends Formular {
 
 						@Override
 						public void onSuccess(Void result) {
-							ProjectForm udpatedForm = new ProjectForm(selectedProject);
+							ProjectForm updatedForm = new ProjectForm(selectedProject);
 						}
 						
 					});
