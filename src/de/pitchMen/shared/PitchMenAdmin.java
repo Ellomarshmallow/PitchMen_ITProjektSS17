@@ -144,6 +144,8 @@ public interface PitchMenAdmin extends RemoteService {
 	 */
 	public JobPosting addJobPosting(String title, String text, String status, Date deadline, int projectId)
 			throws IllegalArgumentException;
+	
+
 
 	/**
 	 * Aktuallisiert ein JobPosting-Objekt.
@@ -187,6 +189,19 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<JobPosting> getJobPostingsByProjectId(int projectId) throws IllegalArgumentException;
+	
+	
+	/**
+	 * Gibt eine spezifische Ausschreibung anhand ihrer Id aus.
+	 * 
+	 * @param id
+	 * @return eine spezifische Ausschreibung zu einem PartnerProfil
+	 * @throws IllegalArgumentException
+	 */
+	public JobPosting getJobPostingByPPId(int id) throws IllegalArgumentException;
+
+	
+	
 
 	/**
 	 * Gibt das Partnerprofil einer spezischen Person aus.
@@ -707,12 +722,21 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Trait> getTraits() throws IllegalArgumentException;
+	
+	/**
+	 * Gibt die Eigenschaften der Tabelle Eigenschaften aus, welche einem JobPosting zugeordnet sind
+	 * 
+	 * 
+	 * @return PartnerProfile
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<Trait> getTraitsFromJobPostings() throws IllegalArgumentException;
 
 	/**
 	 * Gibt die Eigenschaft anhand seiner Id aus.
 	 * 
 	 * @param id
-	 * @return PartnerProfile
+	 * @return ArrayList aller Trait-Objekte
 	 * @throws IllegalArgumentException
 	 */
 	public Trait getTraitByID(int id) throws IllegalArgumentException;
@@ -731,5 +755,8 @@ public interface PitchMenAdmin extends RemoteService {
 	// --------------------------- LOGIN
 
 	public Person login(String requestUri);
+
+
+
 
 }

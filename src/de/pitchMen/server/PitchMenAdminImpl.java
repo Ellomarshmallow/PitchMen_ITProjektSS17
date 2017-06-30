@@ -71,6 +71,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		this.ratingMapper = RatingMapper.ratingMapper();
 		this.teamMapper = TeamMapper.teamMapper();
 		this.traitMapper = TraitMapper.traitMapper();
+		this.participationMapper = ParticipationMapper.participationMapper();
 
 	}
 
@@ -525,7 +526,9 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	
 	@Override
 	public Person getPersonByApplicationId(int applicationId) throws IllegalArgumentException {
-		return this.personMapper.findByApplicationId(applicationId);
+		int partnerProfileId = this.applicationMapper.findById(applicationId).getPartnerProfileId();
+		int personId = this.partnerProfileMapper.findById(partnerProfileId).getPersonId();
+		return this.personMapper.findById(personId);
 	}
 
 	// --------------------------- PROJECT
@@ -653,8 +656,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
 			int jobPostingId) throws IllegalArgumentException {
-		// Da anscheinend nicht benutzt und alternative Lösung in der GUI
-		// implementiert eventuell löschen
+		// Da anscheinend nicht benutzt und alternative Lï¿½sung in der GUI
+		// implementiert eventuell lï¿½schen
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
 
@@ -757,6 +760,19 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public ArrayList<Trait> getTraitsByPartnerProfileId(int partnerProfileId) throws IllegalArgumentException {
 		return this.traitMapper.findTraitByPartnerProfileId(partnerProfileId);
 	}
+	
+	@Override
+	public ArrayList<Trait> getTraitsFromJobPostings() throws IllegalArgumentException {
+
+		return this.traitMapper.findTraitsFromJobPostings();
+
+	}
+	
+	@Override
+	public JobPosting getJobPostingByPPId(int id) throws IllegalArgumentException {
+		return this.jobPostingMapper.findJobPostingByPPId(id);
+
+	}
 
 	// --------------------------- LOGIN
 
@@ -857,21 +873,21 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 
 		ArrayList<JobPosting> matchingTraits = new ArrayList<JobPosting>();
 
-		for (PartnerProfile pprofile : allpps) {
-			ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
-
-			for (Trait trait : jPTraits) {
-				String traitJp = trait.getName();
-
-				for (Trait pTrait : personTraits) {
-					String traitPerson = pTrait.getName();
-
-					if (traitJp.equals(traitPerson)) {
-						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
-					}
-				}
-			}
-		}
+//		for (PartnerProfile pprofile : allpps) {
+//			ArrayList<Trait> jPTraits = traitMapper.findTraitByPartnerProfileId(pprofile.getId());
+//
+//			for (Trait trait : jPTraits) {
+//				String traitJp = trait.getName();
+//
+//				for (Trait pTrait : personTraits) {
+//					String traitPerson = pTrait.getName();
+//
+//					if (traitJp.equals(traitPerson)) {
+//						matchingTraits.add(this.getJobPostingByID(pprofile.getJobPostingId()));
+//					}
+//				}
+//			}
+//		}
 
 		return matchingTraits;
 
