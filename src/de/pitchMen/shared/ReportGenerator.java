@@ -1,5 +1,7 @@
 package de.pitchMen.shared;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -61,6 +63,10 @@ public interface ReportGenerator extends RemoteService {
 	 * 
 	 */
 	public abstract ProjectInterweavingsWithParticipationsAndApplications showProjectInterweavingsWithParticipationsAndApplications(int id) throws IllegalArgumentException;
+	/**
+	 * 
+	 */
+	public ArrayList<Person>getApplicatorsOnOwnJobPostings(Person p) throws IllegalArgumentException;
 	/**
 	 * 
 	 */

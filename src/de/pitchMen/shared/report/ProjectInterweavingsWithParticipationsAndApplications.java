@@ -14,4 +14,28 @@ public class ProjectInterweavingsWithParticipationsAndApplications extends Compo
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private int applicationId;
+	private int personId;
+	private int participationId;
+
+
+	public int getPersonId() {
+		return personId;
+	}
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
+	public int getApplicationId() {
+		return applicationId;
+	}
+	public void setApplicationId(int applicationId) {
+		this.applicationId = applicationId;
+	}
+	public int getParticipationId() {
+		return participationId;
+	}
+	public void setParticipationId(int participationId) {
+		this.participationId = participationId;
+	}
+
 }
