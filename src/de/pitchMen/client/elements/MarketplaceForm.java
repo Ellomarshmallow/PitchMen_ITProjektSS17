@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 import de.pitchMen.client.ClientsideSettings;
+import de.pitchMen.client.Navigation;
 import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
@@ -92,6 +93,14 @@ public class MarketplaceForm extends Formular {
 								
 						public void onSuccess(Marketplace result) {
 							RootPanel.get("content").add(new MarketplaceForm(result));
+							
+							/* 
+							 * Beim Anlegen eines neuen Marktplatzes wird der Baum im Nav Panel neu geladen.
+							 */
+						
+								RootPanel.get("nav").clear();
+								Navigation updatedNavigation = new Navigation();  
+								RootPanel.get("nav").add(updatedNavigation);
 						}		
 					});
 				}	
@@ -106,7 +115,7 @@ public class MarketplaceForm extends Formular {
 
 		RootPanel.get("content").add(titleBox);
 		
-		RootPanel.get("content").add(new HTML("<h3>Marktplatzsbeschreibung</h3>"));
+		RootPanel.get("content").add(new HTML("<h3>Marktplatzbeschreibung</h3>"));
 
 		RootPanel.get("content").add(descBox);
 	}
