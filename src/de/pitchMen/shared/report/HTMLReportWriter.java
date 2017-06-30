@@ -137,7 +137,7 @@ public class HTMLReportWriter extends ReportWriter {
 		ArrayList<Row> rows = a.getRows();
 		if (rows != null) {
 			ClientsideSettings.getLogger().info("Es sind Zeilen im Array enthalten");
-			buff.append("Das Array hat Werte drin </br>");
+			
 			}
 		
 		for (int i = 0; i < rows.size(); i++) {
