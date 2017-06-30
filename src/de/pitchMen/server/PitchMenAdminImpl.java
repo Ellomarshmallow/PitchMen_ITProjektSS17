@@ -71,6 +71,7 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 		this.ratingMapper = RatingMapper.ratingMapper();
 		this.teamMapper = TeamMapper.teamMapper();
 		this.traitMapper = TraitMapper.traitMapper();
+		this.participationMapper = ParticipationMapper.participationMapper();
 
 	}
 
@@ -522,6 +523,13 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	public ArrayList<Person> getAllPeople() throws IllegalArgumentException {
 		return this.personMapper.findAll();
 	}
+	
+	@Override
+	public Person getPersonByApplicationId(int applicationId) throws IllegalArgumentException {
+		int partnerProfileId = this.applicationMapper.findById(applicationId).getPartnerProfileId();
+		int personId = this.partnerProfileMapper.findById(partnerProfileId).getPersonId();
+		return this.personMapper.findById(personId);
+	}
 
 	// --------------------------- PROJECT
 
@@ -648,8 +656,8 @@ public class PitchMenAdminImpl extends RemoteServiceServlet implements PitchMenA
 	@Override
 	public void rateApplication(float score, String statement, int applicationId, int personId, int projectId,
 			int jobPostingId) throws IllegalArgumentException {
-		// Da anscheinend nicht benutzt und alternative Lösung in der GUI
-		// implementiert eventuell löschen
+		// Da anscheinend nicht benutzt und alternative Lï¿½sung in der GUI
+		// implementiert eventuell lï¿½schen
 		Rating rating = new Rating(score, statement, applicationId);
 		this.ratingMapper.insert(rating);
 

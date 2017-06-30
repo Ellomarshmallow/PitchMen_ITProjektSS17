@@ -143,6 +143,8 @@ public interface PitchMenAdminAsync {
 	void getPersonByID(int id, AsyncCallback<Person> callback);
 
 	void getAllPeople(AsyncCallback<ArrayList<Person>> callback);
+	
+	void getPersonByApplicationId(int applicationId, AsyncCallback<Person> callback);
 
 	// ---------- PROJECT
 

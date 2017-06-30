@@ -276,7 +276,7 @@ public class ReportNavigation extends VerticalPanel {
 
 			}
 		});
-
+	
 		/*
 		 * Sie werden der Navigation hinzugefügt
 		 */

@@ -492,6 +492,15 @@ public interface PitchMenAdmin extends RemoteService {
 	 * @throws IllegalArgumentException
 	 */
 	public ArrayList<Person> getAllPeople() throws IllegalArgumentException;
+	
+	/**
+	 * Gibt die Person anhand ihrer Bewerbung aus.
+	 * 
+	 * @param applicationId
+	 * @return PartnerProfile
+	 * @throws IllegalArgumentException
+	 */
+	public Person getPersonByApplicationId(int applicationId) throws IllegalArgumentException;
 
 	// ---------------------------------------------- PROJECT
 

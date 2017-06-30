@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Person;
 
 /**
- * Die Klasse PersonMapper bildet Person-Objekte auf eine relationale Datenbank ab. 
- * Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Die Klasse PersonMapper bildet Person-Objekte auf eine relationale Datenbank
+ * ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
@@ -57,7 +58,7 @@ public class PersonMapper {
 	 */
 	public Person insert(Person person) {
 		/**
-		 *  DB-Verbindung holen.
+		 * DB-Verbindung holen.
 		 */
 		Connection con = DBConnection.connection();
 
@@ -68,26 +69,27 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 			/**
 			 * Abfrage des zuletzt hinzugefuegten Primaerschluessel (id). Die
-			 * aktuelle id wird um eins erhoeht. 
-			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 * aktuelle id wird um eins erhoeht. Statement ausfüllen und als
+			 * Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM person");
 
-			if(rs.next()) {
+			if (rs.next()) {
 				person.setId(rs.getInt("maxid") + 1);
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Person-Tupels in die Datenbank.
+			 * SQL-Anweisung zum Einfügen des neuen Person-Tupels in die
+			 * Datenbank.
 			 */
 			stmt.executeUpdate("INSERT INTO person (id, name, description, firstName, email) VALUES (" + person.getId()
 					+ ", '" + person.getName() + "', '" + person.getDescription() + "', '" + person.getFirstName()
 					+ "', '" + person.getEmailAdress() + "')");
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
-			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
-			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-			 */	
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
+			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -106,8 +108,9 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Aktualisieren des übergebenen Datensatzes in der Datenbank.
-			 */		
+			 * SQL-Anweisung zum Aktualisieren des übergebenen Datensatzes in
+			 * der Datenbank.
+			 */
 			stmt.executeUpdate("UPDATE person SET name='" + person.getName() + "', description= '"
 					+ person.getDescription() + "', firstName= '" + person.getFirstName() + "', email= '"
 					+ person.getEmailAdress() + "' WHERE id= " + person.getId());
@@ -116,7 +119,7 @@ public class PersonMapper {
 		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-		 */	
+		 */
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -134,7 +137,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der
+			 * Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM person WHERE id=" + person.getId());
 		}
@@ -142,7 +146,7 @@ public class PersonMapper {
 		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-		 */	
+		 */
 		catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -160,7 +164,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des übergebenen Datensatzes, anhand der Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des übergebenen Datensatzes, anhand der
+			 * Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE id=" + id);
@@ -181,9 +186,9 @@ public class PersonMapper {
 			}
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
-			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
-			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-			 */	
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
+			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -202,7 +207,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden aller Datensätze in der Datenbank, sortiert nach der Id.
+			 * SQL-Anweisung zum Finden aller Datensätze in der Datenbank,
+			 * sortiert nach der Id.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person ORDER BY id");
 			/**
@@ -212,7 +218,7 @@ public class PersonMapper {
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
 			 * anschließend der ArrayList hinzugefügt.
 			 */
-			
+
 			while (rs.next()) {
 				Person person = new Person();
 				person.setId(rs.getInt("id"));
@@ -224,9 +230,9 @@ public class PersonMapper {
 			}
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
-			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
-			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-			 */	
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
+			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -238,7 +244,7 @@ public class PersonMapper {
 	 * 
 	 * @param name
 	 * @return ArrayList<Person>
- 	 */
+	 */
 	public ArrayList<Person> findByName(String name) {
 		Connection con = DBConnection.connection();
 
@@ -246,7 +252,8 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand des übergebenen Namens, in der Datenbank, sortiert nach der Id.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand des übergebenen
+			 * Namens, in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE name LIKE '" + name
@@ -269,9 +276,9 @@ public class PersonMapper {
 			}
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
-			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
-			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-			 */	
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
+			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -279,7 +286,8 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Findet ein Person-Objekt anhand des übergebenen Vornamens in der Datenbank.
+	 * Findet ein Person-Objekt anhand des übergebenen Vornamens in der
+	 * Datenbank.
 	 * 
 	 * @param firstName
 	 * @return ArrayList<Person>
@@ -291,16 +299,18 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden aller Datensätze, anhand des Vornamens, in der Datenbank, sortiert nach der Id.
+			 * SQL-Anweisung zum Finden aller Datensätze, anhand des Vornamens,
+			 * in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName FROM person WHERE name LIKE '"
 					+ firstName + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle Person mit dem übergebenen Vornamen vorhanden ist, muss das
-			 * Abfragen des ResultSet so oft erfolgen (while-Schleife), bis alle
-			 * Tupel durchlaufen wurden. Die DB-Tupel werden in Java-Objekte
-			 * transformiert und anschließend der ArrayList hinzugefügt.
+			 * Tabelle Person mit dem übergebenen Vornamen vorhanden ist, muss
+			 * das Abfragen des ResultSet so oft erfolgen (while-Schleife), bis
+			 * alle Tupel durchlaufen wurden. Die DB-Tupel werden in
+			 * Java-Objekte transformiert und anschließend der ArrayList
+			 * hinzugefügt.
 			 */
 			while (rs.next()) {
 				Person person = new Person();
@@ -313,9 +323,9 @@ public class PersonMapper {
 			}
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
-			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
-			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-			 */	
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
+			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
@@ -327,14 +337,15 @@ public class PersonMapper {
 	 * 
 	 * @param email
 	 * @return person
-	 */	
+	 */
 	public Person findByEmail(String email) {
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden aller Datensätze, anhand der eMail, in der Datenbank, sortiert nach der Id.
+			 * SQL-Anweisung zum Finden aller Datensätze, anhand der eMail, in
+			 * der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE email LIKE '"
@@ -356,9 +367,9 @@ public class PersonMapper {
 			}
 			/**
 			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
-			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
-			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
-			 */	
+			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
+			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
+			 */
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
