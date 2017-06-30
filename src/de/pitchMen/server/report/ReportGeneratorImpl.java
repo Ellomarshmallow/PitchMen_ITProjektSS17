@@ -767,17 +767,18 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 						}
 						;
 			
-						Row applicationCount = new Row();
-						// hinzuf�gen der Spalte f�r die jeweiligen Stati
-						applicationCount.addColumn(new Column(String.valueOf(person.getId())));
-						applicationCount.addColumn(new Column(person.getFirstName()));
-						applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
-						applicationCount.addColumn(new Column(String.valueOf(declined.size())));
-						applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
-						// Hinzuf�gen der Row zum Result
-						result.addRow(applicationCount);
-			
+						
 					}
+					Row applicationCount = new Row();
+					// hinzuf�gen der Spalte f�r die jeweiligen Stati
+					applicationCount.addColumn(new Column(String.valueOf(person.getId())));
+					applicationCount.addColumn(new Column(person.getFirstName()));
+					applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
+					applicationCount.addColumn(new Column(String.valueOf(declined.size())));
+					applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
+					// Hinzuf�gen der Row zum Result
+					result.addRow(applicationCount);
+		
 
 		 }
 
@@ -807,7 +808,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanOutApplicationsOfUser result = new FanOutApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Die FanOut-Analyse");
+		result.setTitle("Anzahl der Ausschreibungen");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -829,11 +830,12 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 		result.addRow(headline);
 
-		// ArrayList<Person> allPersons = pitchMenAdmin.getAllPeople();
-
-		// for(Person person : allPersons) {
-
-		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.getJobPostings();
+		ArrayList<Person> allePersonen = pitchMenAdmin.getAllPeople();
+		
+		for (Person person : allePersonen){
+			
+		
+		ArrayList<JobPosting> allJobPostings = pitchMenAdmin.getJobPostingsByPersonId(person.getId());
 
 		/*
 		 * Hier werden die Ausschreibungen in 3 neue ArrayLists vom Typ
@@ -850,25 +852,24 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			 * Hier werden die Bewerbungen den jeweiligen Stati entsprechend
 			 * zugeteilt den neuen ArrayLists zugeteilt.
 			 */
-			if (j.getStatus().equals("laufend")) {
+			if (j.getStatus().toString().equals("laufend")) {
 				ongoing.add(j);
-			} else if (j.getStatus().equals("abgelehnt")) {
+			} else if (j.getStatus().toString().equals("abgelehnt")) {
 				deleted.add(j);
-			} else if (j.getStatus().equals("angenommen")) {
+			} else if (j.getStatus().toString().equals("angenommen")) {
 				occupied.add(j);
 			}
-			;
-
-			Row jobPostingCount = new Row();
-			// hinzuf�gen der Spalte f�r die jeweiligen Stati zur Row
-			jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
-			jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
-			jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
-			// Hinzuf�gen der Row zum Result
-			result.addRow(jobPostingCount);
-
 		}
-		// }
+		Row jobPostingCount = new Row();
+		// hinzuf�gen der Spalte f�r die jeweiligen Stati zur Row
+		jobPostingCount.addColumn(new Column(String.valueOf(person.getId())));
+		jobPostingCount.addColumn(new Column(person.getFirstName()));
+		jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
+		jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
+		jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
+		// Hinzuf�gen der Row zum Result
+		result.addRow(jobPostingCount);
+		}
 		// R�ckgabe des fertigen Reports
 		return result;
 	}

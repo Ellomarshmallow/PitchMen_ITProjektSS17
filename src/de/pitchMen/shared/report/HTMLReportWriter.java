@@ -485,7 +485,7 @@ public class HTMLReportWriter extends ReportWriter {
 		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
 		     * ausgelesen und in HTML-Form übersetzt.
 		     */
-		  	result.append("<H2>" + r.getTitle() + "</H2>");
+		  	result.append("</br><H2>" + r.getTitle() + "</H2></br>");
 		  	result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
 		  	result.append("</tr><tr><td></td><td>" + r.getDatecreated().toString()
 		  	        + "</td></tr></table>");
@@ -499,7 +499,7 @@ public class HTMLReportWriter extends ReportWriter {
 		         result.append("<tr>");
 		         for (int k = 0; k < row.getNumberOfColumns(); k++) {
 		           if (i == 0) {
-		             result.append("<td style=\"background:silver;font-weight:bold\">" + row.getColumnAt(k)
+		             result.append("<td style=\"font-weight:bold\">" + row.getColumnAt(k)
 		                 + "</td>");
 		           }
 		           else {
