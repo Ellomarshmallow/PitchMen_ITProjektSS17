@@ -312,10 +312,7 @@ public class ParticipationMapper {
 			/**
 			 * SQL-Anweisung zum Finden des Datensatzes, nach der gesuchten personId, in der Datenbank.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT * FROM participation " 
-					+ "INNER JOIN person_has_participation"
-					+ "ON participation.id = person_has_participation.participation_id"
-					+ "WHERE person_has_participation.person_id = " + personId);
+			ResultSet rs = stmt.executeQuery("SELECT participation.id, participation.workload, participation.dateOpened, participation.dateClosed, participation_has_project.project_id FROM participation INNER JOIN participation_has_project ON participation.id = participation_has_project.participation_id INNER JOIN person_has_participation ON participation.id = person_has_participation.participation_id WHERE person_has_participation.person_id = " + personId);
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle participation mit dem �bergebenen Wert (value) vorhanden ist,
@@ -330,6 +327,7 @@ public class ParticipationMapper {
 				participation.setWorkload(rs.getFloat("workload"));
 				participation.setDateOpened(rs.getDate("dateOpened"));
 				participation.setDateClosed(rs.getDate("dateClosed"));
+				participation.setProjectId(rs.getInt("project_id"));
 				result.add(participation);
 			}
 		/**

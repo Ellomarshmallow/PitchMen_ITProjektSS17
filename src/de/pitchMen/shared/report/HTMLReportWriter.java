@@ -85,42 +85,61 @@ public class HTMLReportWriter extends ReportWriter {
 	// ---------- process(AllJobPostings)
 
 	public void process(AllJobPostings a) {
-		// zurÃ¼cksetzen des Ausgabe-Strings
-		this.resetReportText();
+		 
+		  //Lï¿½schen des Ergebnisses der vorherigen Prozessierung
+		  this.resetReportText();
+		  
 
-		// StringBuffer erzeugen
-		StringBuffer buff = new StringBuffer();
+		    /*
+		     * In diesen Buffer schreiben wir wï¿½hrend der Prozessierung sukzessive
+		     * unsere Ergebnisse.
+		     */
+		  StringBuffer result = new StringBuffer();
+		  
+		  
+		    /*
+		     * Nun werden Schritt fï¿½r Schritt die einzelnen Bestandteile des Reports
+		     * ausgelesen und in HTML-Form ï¿½bersetzt.
+		     */
+		  	result.append("</br><H2>" + a.getTitle() + "</H2></br>");
+		  	result.append("<table border=1px rules=all style=\"font-weight:bold\"><tr>");
+		  	result.append("</tr><tr><td>" + "<p>Das Erstellungsdatum des Reports: " + a.getDatecreated().toString()+"</p>"
+		  	        + "</td></tr></table>");
+		  	
+		  	
+		  	 ArrayList<Row> rows = a.getRows();
+		     result.append("<table border=1px rules=all>");
+		     
+		     for (int i = 0; i < rows.size(); i++) {
+		         Row row = rows.get(i);
+		         result.append("<tr>");
+		         for (int k = 0; k < row.getNumberOfColumns(); k++) {
+		           if (i == 0) {
+		             result.append("<td style=\"font-weight:bold\">" + row.getColumnAt(k)
+		                 + "</td>");
+		           }
+		           else {
+		             if (i > 1) {
+		               result.append("<td>"
+		                   + row.getColumnAt(k) + "</td>");
+		             }
+		             else {
+		               result.append("<td valign=\"top\">" + row.getColumnAt(k) + "</td>");
+		             }
+		           }
+		         }
+		         result.append("</tr>");
+		       }
 
-		buff.append("<h4>" + a.getTitle() + "</h4>");
-		buff.append("<p><table border=1px rules=all> <tr>");
-		// buff.append("<td> ID </td> ");
-		// buff.append("<td> Titel </td>");
-		// buff.append("<td> Bewerbungstext </td>");
-		// buff.append("<td> ProjektID </td>");
-		// buff.append("<td> Enddatum </td>");
-		// buff.append("<td> Status </td></tr>");
-		// buff.append("<tr><td>" + a.getJobPostingId() + "</td>");
-
-		ArrayList<Row> rows = a.getRows();
-		if (rows != null) {
-			ClientsideSettings.getLogger().info("Rows in Array ist ungleich Null");
-		}
-
-
-		for (int i = 0; i < rows.size(); i++) {
-			buff.append("<tr>");
-			Row row = rows.get(i);
-
-			for (int x = 0; x < row.getNumberOfColumns(); x++) {
-
-				buff.append("<td>" + row.getColumnAt(x) + "</td>");
-
-			}
-			buff.append("</tr>");
-		}
-
-		buff.append("</table>");
-		this.reportText = buff.toString();
+		       result.append("</table>");
+		       
+		       /*
+		        * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
+		        * reportText-Variable zugewiesen. Dadurch wird es mï¿½glich, anschlieï¿½end das
+		        * Ergebnis mittels getReportText() auszulesen.
+		        */
+		       this.reportText = result.toString();
+		
 	}
 
 	// ---------- process(ApplicationsRelatedToJobPostingsOfUser)
@@ -170,15 +189,15 @@ public class HTMLReportWriter extends ReportWriter {
 		// Titel des Reports ausgeben
 		buff.append("<h4>" + a.getTitle() + "</h4>");
 
-		// ./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um
-		// anschließend der Row Columns hinzuzufügen.
+		// ./p fï¿½r einen Abstand und Tabelle ï¿½ffnen. Zuerst eine Row ï¿½ffnen um
+		// anschlieï¿½end der Row Columns hinzuzufï¿½gen.
 		buff.append("<p><table border=1px rules=all> <tr>");
 
-		// Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der
-		// Rows aus dem Übergabeobjekt.
+		// Erzeugen einer ArrayList fï¿½r die Reihen der AUsgabe. Zuweisung der
+		// Rows aus dem ï¿½bergabeobjekt.
 
 		/**
-		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen
+		 * For Schleife zum Abfragen der einzelnen Reihen des ï¿½bergebenen
 		 * Objekts. Erstellen der Reihen durch
 		 * <tr>
 		 * und in der nachfolgenden Schleife die jeweiligen Spalten mit
@@ -201,34 +220,60 @@ public class HTMLReportWriter extends ReportWriter {
 
 	// ---------- process(AllApplicationsToOneJobPostingOfUser)
 	public void process(AllApplicationsToOneJobPostingOfUser a) {
-		// zurÃ¼cksetzen des Ausgabe-Strings
-		this.resetReportText();
+		//Lï¿½schen des Ergebnisses der vorherigen Prozessierung
+		  this.resetReportText();
+		  
 
-		// StringBuffer erzeugen
-		StringBuffer buff = new StringBuffer();
+		    /*
+		     * In diesen Buffer schreiben wir wï¿½hrend der Prozessierung sukzessive
+		     * unsere Ergebnisse.
+		     */
+		  StringBuffer result = new StringBuffer();
+		  
+		  
+		    /*
+		     * Nun werden Schritt fï¿½r Schritt die einzelnen Bestandteile des Reports
+		     * ausgelesen und in HTML-Form ï¿½bersetzt.
+		     */
+		  	result.append("</br><H2>" + a.getTitle() + "</H2></br>");
+		  	result.append("<table border=1px rules=all style=\"font-weight:bold\"><tr>");
+		  	result.append("</tr><tr><td>" + "<p>Das Erstellungsdatum des Reports: " + a.getDatecreated().toString()+"</p>"
+		  	        + "</td></tr></table>");
+		  	
+		  	
+		  	 ArrayList<Row> rows = a.getRows();
+		     result.append("<table border=1px rules=all>");
+		     
+		     for (int i = 0; i < rows.size(); i++) {
+		         Row row = rows.get(i);
+		         result.append("<tr>");
+		         for (int k = 0; k < row.getNumberOfColumns(); k++) {
+		           if (i == 0) {
+		             result.append("<td style=\"font-weight:bold\">" + row.getColumnAt(k)
+		                 + "</td>");
+		           }
+		           else {
+		             if (i > 1) {
+		               result.append("<td>"
+		                   + row.getColumnAt(k) + "</td>");
+		             }
+		             else {
+		               result.append("<td valign=\"top\">" + row.getColumnAt(k) + "</td>");
+		             }
+		           }
+		         }
+		         result.append("</tr>");
+		       }
 
-		buff.append("<h4>" + a.getTitle() + "</h4>");
-		buff.append("<p><table border=1px rules=all> <tr>");
-
-		ArrayList<Row> rows = a.getRows();
-		if (rows != null) {
-			ClientsideSettings.getLogger().info("Rows in Array ist ungleich Null");
-		}
-
-		for (int i = 0; i < rows.size(); i++) {
-			buff.append("<tr>");
-			Row row = rows.get(i);
-
-			for (int x = 0; x < row.getNumberOfColumns(); x++) {
-
-				buff.append("<td>" + row.getColumnAt(x) + "</td>");
-
-			}
-			buff.append("</tr>");
-		}
-
-		buff.append("</table>");
-		this.reportText = buff.toString();
+		       result.append("</table>");
+		       
+		       /*
+		        * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
+		        * reportText-Variable zugewiesen. Dadurch wird es mï¿½glich, anschlieï¿½end das
+		        * Ergebnis mittels getReportText() auszulesen.
+		        */
+		       this.reportText = result.toString();
+		
 	}
 
 	// ---------- process(AllApplicationsOfUser)
@@ -243,21 +288,21 @@ public class HTMLReportWriter extends ReportWriter {
 		// Titel des Reports ausgeben
 		buff.append("<h4>" + a.getTitle() + "</h4>");
 
-		// ./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um
-		// anschließend der Row Columns hinzuzufügen.
+		// ./p fï¿½r einen Abstand und Tabelle ï¿½ffnen. Zuerst eine Row ï¿½ffnen um
+		// anschlieï¿½end der Row Columns hinzuzufï¿½gen.
 		buff.append("<p><table border=1px rules=all> <tr>");
 
-		// Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der
-		// Rows aus dem Übergabeobjekt.
+		// Erzeugen einer ArrayList fï¿½r die Reihen der AUsgabe. Zuweisung der
+		// Rows aus dem ï¿½bergabeobjekt.
 		ArrayList<Row> rows = a.getRows();
 
-		// Prüfung, ob in dem Array was drinne ist.
+		// Prï¿½fung, ob in dem Array was drinne ist.
 		if (rows == null) {
 			ClientsideSettings.getLogger().info("Das Array beinhaltet keine Rows");
 		}
 
 		/**
-		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen
+		 * For Schleife zum Abfragen der einzelnen Reihen des ï¿½bergebenen
 		 * Objekts. Erstellen der Reihen durch
 		 * <tr>
 		 * und in der nachfolgenden Schleife die jeweiligen Spalten mit
@@ -276,7 +321,7 @@ public class HTMLReportWriter extends ReportWriter {
 
 		buff.append("</table");
 
-		// abschließend wird der erzeuge und in buff gespeicherte Text in einen
+		// abschlieï¿½end wird der erzeuge und in buff gespeicherte Text in einen
 		// String transformiert
 		this.reportText = buff.toString();
 
@@ -284,55 +329,62 @@ public class HTMLReportWriter extends ReportWriter {
 
 	// ---------- process(AllApplicationsOfUser)
 
-	public void process(AllApplicationsOfUser a) {
-		// zurÃ¼cksetzen des Ausgabe-Strings
-		this.resetReportText();
+	public void process(AllApplicationsOfUser a) {//Lï¿½schen des Ergebnisses der vorherigen Prozessierung
+		  this.resetReportText();
+		  
 
-		// StringBuffer erzeugen
-		StringBuffer buff = new StringBuffer();
+		    /*
+		     * In diesen Buffer schreiben wir wï¿½hrend der Prozessierung sukzessive
+		     * unsere Ergebnisse.
+		     */
+		  StringBuffer result = new StringBuffer();
+		  
+		  
+		    /*
+		     * Nun werden Schritt fï¿½r Schritt die einzelnen Bestandteile des Reports
+		     * ausgelesen und in HTML-Form ï¿½bersetzt.
+		     */
+		  	result.append("</br><H2>" + a.getTitle() + "</H2></br>");
+		  	result.append("<table border=1px rules=all style=\"font-weight:bold\"><tr>");
+		  	result.append("</tr><tr><td>" + "<p>Das Erstellungsdatum des Reports: " + a.getDatecreated().toString()+"</p>"
+		  	        + "</td></tr></table>");
+		  	
+		  	
+		  	 ArrayList<Row> rows = a.getRows();
+		     result.append("<table border=1px rules=all>");
+		     
+		     for (int i = 0; i < rows.size(); i++) {
+		         Row row = rows.get(i);
+		         result.append("<tr>");
+		         for (int k = 0; k < row.getNumberOfColumns(); k++) {
+		           if (i == 0) {
+		             result.append("<td style=\"font-weight:bold\">" + row.getColumnAt(k)
+		                 + "</td>");
+		           }
+		           else {
+		             if (i > 1) {
+		               result.append("<td>"
+		                   + row.getColumnAt(k) + "</td>");
+		             }
+		             else {
+		               result.append("<td valign=\"top\">" + row.getColumnAt(k) + "</td>");
+		             }
+		           }
+		         }
+		         result.append("</tr>");
+		       }
 
-		// Titel des Reports ausgeben
-		buff.append("<h4>" + a.getTitle() + "</h4>");
-
-		// ./p für einen Abstand und Tabelle öffnen. Zuerst eine Row öffnen um
-		// anschließend der Row Columns hinzuzufügen.
-		buff.append("<p><table border=1px rules=all> <tr>");
-
-		// Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der
-		// Rows aus dem Übergabeobjekt.
-		ArrayList<Row> rows = a.getRows();
-
-		// Prüfung, ob in dem Array was drinne ist.
-		if (rows == null) {
-			ClientsideSettings.getLogger().info("Das Array beinhaltet keine Rows");
-		}
-
-		/**
-		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen
-		 * Objekts. Erstellen der Reihen durch
-		 * <tr>
-		 * und in der nachfolgenden Schleife die jeweiligen Spalten mit
-		 * <td>
-		 * 
-		 */
-		for (int i = 0; i < rows.size(); i++) {
-			buff.append("<tr>");
-			Row row = rows.get(i);
-
-			for (int x = 0; x < row.getNumberOfColumns(); x++) {
-				buff.append("<td>" + row.getColumnAt(x) + "</td>");
-			}
-			buff.append("</tr>");
-		}
-
-		buff.append("</table");
-
-		// abschließend wird der erzeuge und in buff gespeicherte Text in einen
-		// String transformiert
-		this.reportText = buff.toString();
-
+		       result.append("</table>");
+		       
+		       /*
+		        * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
+		        * reportText-Variable zugewiesen. Dadurch wird es mï¿½glich, anschlieï¿½end das
+		        * Ergebnis mittels getReportText() auszulesen.
+		        */
+		       this.reportText = result.toString();
+		
 	}
-
+	
 	// ---------- process(ProjectInterweavingsWithParticipationsAndApplications)
 
 	public void process(ProjectInterweavingsWithParticipationsAndApplications a) {
@@ -345,11 +397,11 @@ public class HTMLReportWriter extends ReportWriter {
 		// Titel des Reports ausgeben
 		buff.append("<h4>" + a.getTitle() + "</h4>");
 
-		// Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der
-		// Rows aus dem Übergabeobjekt.
+		// Erzeugen einer ArrayList fï¿½r die Reihen der AUsgabe. Zuweisung der
+		// Rows aus dem ï¿½bergabeobjekt.
 
 		/**
-		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen
+		 * For Schleife zum Abfragen der einzelnen Reihen des ï¿½bergebenen
 		 * Objekts. Erstellen der Reihen durch
 		 * <tr>
 		 * und in der nachfolgenden Schleife die jeweiligen Spalten mit
@@ -438,11 +490,11 @@ public class HTMLReportWriter extends ReportWriter {
 		// Titel des Reports ausgeben
 		buff.append("<h4>" + a.getTitle() + "</h4>");
 
-		// Erzeugen einer ArrayList für die Reihen der AUsgabe. Zuweisung der
-		// Rows aus dem Übergabeobjekt.
+		// Erzeugen einer ArrayList fï¿½r die Reihen der AUsgabe. Zuweisung der
+		// Rows aus dem ï¿½bergabeobjekt.
 
 		/**
-		 * For Schleife zum Abfragen der einzelnen Reihen des übergebenen
+		 * For Schleife zum Abfragen der einzelnen Reihen des ï¿½bergebenen
 		 * Objekts. Erstellen der Reihen durch
 		 * <tr>
 		 * und in der nachfolgenden Schleife die jeweiligen Spalten mit
@@ -474,31 +526,29 @@ public class HTMLReportWriter extends ReportWriter {
 
 	public void processSimpleReport(Report report) {
 
-		SimpleReport r = (SimpleReport)report;
-		  
-		  //Löschen des Ergebnisses der vorherigen Prozessierung
+		SimpleReport a = (SimpleReport)report;//Lï¿½schen des Ergebnisses der vorherigen Prozessierung
 		  this.resetReportText();
 		  
 
 		    /*
-		     * In diesen Buffer schreiben wir während der Prozessierung sukzessive
+		     * In diesen Buffer schreiben wir wï¿½hrend der Prozessierung sukzessive
 		     * unsere Ergebnisse.
 		     */
 		  StringBuffer result = new StringBuffer();
 		  
 		  
 		    /*
-		     * Nun werden Schritt für Schritt die einzelnen Bestandteile des Reports
-		     * ausgelesen und in HTML-Form übersetzt.
+		     * Nun werden Schritt fï¿½r Schritt die einzelnen Bestandteile des Reports
+		     * ausgelesen und in HTML-Form ï¿½bersetzt.
 		     */
-		  	result.append("</br><H2>" + r.getTitle() + "</H2></br>");
-		  	result.append("<table style=\"width:400px;border:1px solid silver\"><tr>");
-		  	result.append("</tr><tr><td></td><td>" + r.getDatecreated().toString()
+		  	result.append("</br><H2>" + a.getTitle() + "</H2></br>");
+		  	result.append("<table border=1px rules=all style=\"font-weight:bold\"><tr>");
+		  	result.append("</tr><tr><td>" + "<p>Das Erstellungsdatum des Reports: " + a.getDatecreated().toString()+"</p>"
 		  	        + "</td></tr></table>");
 		  	
 		  	
-		  	 ArrayList<Row> rows = r.getRows();
-		     result.append("<table style=\"width:400px\">");
+		  	 ArrayList<Row> rows = a.getRows();
+		     result.append("<table border=1px rules=all>");
 		     
 		     for (int i = 0; i < rows.size(); i++) {
 		         Row row = rows.get(i);
@@ -510,7 +560,7 @@ public class HTMLReportWriter extends ReportWriter {
 		           }
 		           else {
 		             if (i > 1) {
-		               result.append("<td style=\"border-top:1px solid silver\">"
+		               result.append("<td>"
 		                   + row.getColumnAt(k) + "</td>");
 		             }
 		             else {
@@ -525,11 +575,10 @@ public class HTMLReportWriter extends ReportWriter {
 		       
 		       /*
 		        * Zum Schluss wird unser Arbeits-Buffer in einen String umgewandelt und der
-		        * reportText-Variable zugewiesen. Dadurch wird es möglich, anschließend das
+		        * reportText-Variable zugewiesen. Dadurch wird es mï¿½glich, anschlieï¿½end das
 		        * Ergebnis mittels getReportText() auszulesen.
 		        */
 		       this.reportText = result.toString();
 		
 	}
-
 }

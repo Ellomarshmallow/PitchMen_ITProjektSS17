@@ -3,44 +3,24 @@ package de.pitchMen.client.elements;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.pitchMen.client.ClientsideSettings;
-import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
+/**
+ * Formular ist die Superklasse aller Formulare. Wichtig ist hier die hasPermission() Methoden
+ * @author Leon Schelle
+ *
+ */
 public class Formular extends VerticalPanel {
 
-	
-	private PitchMenAdminAsync pitchMenAdmin = null;
-
-	private String title = " " ; 
-
-	private String description = " "; 
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public PitchMenAdminAsync getPitchMenAdmin() {
-		return pitchMenAdmin;
-	}
-	
-	/* Wenn die PersonId gleich der aktuellen UserId ist, dann ist der User auch der Ersteller des
-	 * Projektmarktplatzes bzw. des Projektes und hat die Buttons Löschen und Bearbeiten zur verfügung
+	/** Wenn die PersonId gleich der aktuellen UserId ist, dann ist der User auch der Ersteller des
+	 * Projektmarktplatzes bzw. des Projektes und hat die Buttons Löschen und Bearbeiten zur Verfügung
 	 * (vgl. MarketplaceForm,ProjectForm) 
 	 * Überlagerung von Methoden: 
+	 * 
+	 * @return boolean
 	 */
+	
 	public boolean hasPermission(Marketplace selectedMarketplace){
 		if(selectedMarketplace.getPersonId() == ClientsideSettings.getCurrentUser().getId()){
 			return true;
@@ -59,16 +39,7 @@ public class Formular extends VerticalPanel {
 		}
 	}
 
-	public Formular(){
-		
-		/*
-		 * Verbindung zur PitchMenAdministration
-		 */
-		PitchMenAdminAsync pitchmenadmin = ClientsideSettings.getPitchMenAdmin();
-
-
-	}
-
+	
 }
 
 

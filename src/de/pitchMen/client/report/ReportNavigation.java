@@ -236,7 +236,7 @@ public class ReportNavigation extends VerticalPanel {
 				
 				ReportGeneratorAsync repGen = ClientsideSettings.getReportGenerator();
 				applicantBox.clear();
-				applicantBox.addItem("Bitte wähle einen Bewerber aus");
+				applicantBox.addItem("Bitte wÃ¤hlen Sie einen Bewerber aus");
 				RootPanel.get("content").clear();
 				repGen.getApplicatorsOnOwnJobPostings(ClientsideSettings.getCurrentUser(), new AsyncCallback<ArrayList<Person>>(){
 
@@ -266,19 +266,17 @@ public class ReportNavigation extends VerticalPanel {
 					
 					ReportGeneratorAsync repGenA = ClientsideSettings.getReportGenerator();
 			
-					RootPanel.get("content").add(new HTML("<h2>i bims ein test lul</h2>"));;
+					
 					String s = applicantBox.getValue(applicantBox.getSelectedIndex());
 					String last = s.substring(s.indexOf(':')+2, s.length());
 					int chosenId = Integer.valueOf(last);
-					RootPanel.get("content").add(new HTML("Ausgewählte ID: " + chosenId));
-					
+										
 					repGenA.showProjectInterweavingsWithParticipationsAndApplications(chosenId,
 						new AsyncCallback<ProjectInterweavingsWithParticipationsAndApplications>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
 								ClientsideSettings.getLogger().severe("Upsi iwas hat nicht geklappt");
-								RootPanel.get("content").add(new HTML("FAIL"));
 							}
 
 							@Override
@@ -286,10 +284,12 @@ public class ReportNavigation extends VerticalPanel {
 								if(result != null){
 								HTMLReportWriter writer = new HTMLReportWriter();
 								writer.process(result);
+								RootPanel.get("content").clear();
+								RootPanel.get("content").add(applicantBox);
 								RootPanel.get("content").add(new HTML(writer.getReportText()));
 								}
 								else{
-								RootPanel.get("content").add(new HTML("Bei der OnSucess Methode kam kein valides Objekt zurück"));
+								RootPanel.get("content").add(new HTML("Bei der OnSucess Methode kam kein valides Objekt zurÃ¼ck"));
 								}
 							}
 						});
