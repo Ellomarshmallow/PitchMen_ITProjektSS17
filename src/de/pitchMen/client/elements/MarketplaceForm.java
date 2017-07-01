@@ -20,12 +20,14 @@ import de.pitchMen.shared.PitchMenAdminAsync;
 import de.pitchMen.shared.bo.Marketplace;
 import de.pitchMen.shared.bo.Project;
 
+/**
+ * Klasse für die Bereitstellung eines Formulars
+ * zum Anzeigen und Bearbeiten von Marktplätzen.
+ * 
+ * @author Leon
+ */
 public class MarketplaceForm extends Formular {
 
-	/*
-	 * titleBox und descBox sind hier labels, erst beim Erstellen oder
-	 * Bearbeiten ist titleBox eine Textbox und descBox eine TextArea
-	 */
 	PitchMenAdminAsync pitchMenAdmin = ClientsideSettings.getPitchMenAdmin();
 	
 	private Marketplace selectedMarketplace = null;
@@ -141,17 +143,13 @@ public class MarketplaceForm extends Formular {
 				RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span>"
 						+ " Sie sind Besitzer des Projektmarktplatzes. </p></div>"));
 
-				// ---------- Marktplatz löschen, ClickHandler hinzufügen und dem
-				// HorizontalPanel hinzufügen
+				/*  Marktplatz löschen, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen*/ 
 				Button deleteMarketplaceBtn = new Button("- Projektmarktplatz löschen");
 				deleteMarketplaceBtn.addClickHandler(new deleteMarketplaceClickHandler());
 				deleteMarketplaceBtn.setStyleName("delete");
 				topPanel.add(deleteMarketplaceBtn);
 
-				// ---------- Marktplatz bearbeiten, ClickHandler hinzufügen und
-				// dem
-				// HorizontalPanel hinzufügen
-
+				/* Marktplatz bearbeiten, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */ 
 				Button updateMarketplaceBtn = new Button("Projektmarktplatz bearbeiten");
 				updateMarketplaceBtn.addClickHandler(new updateMarketplaceClickHandler());
 				topPanel.add(updateMarketplaceBtn);
@@ -162,25 +160,16 @@ public class MarketplaceForm extends Formular {
 			
 			RootPanel.get("content").add(topPanel);
 
-
-
-			RootPanel.get("content")
-					.add(new HTML("<h3>Beschreibung: </h3><p>" + selectedMarketplace.getDescription() + "</p>"));
+			RootPanel.get("content").add(new HTML("<h3>Beschreibung: </h3><p>" + selectedMarketplace.getDescription() + "</p>"));
 
 		
-		
-			// ---------- Neues	 Projekt Button, ClickHandler
-			// hinzufügen und dem
-			// HorizontalPanel hinzufügen
+			/* Neues Projekt Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */ 
 			Button addProjectBtn = new Button("+ Neues Projekt hinzufügen");
 			addProjectBtn.addClickHandler(new addProjectClickHandler());
 			topPanel.add(addProjectBtn);
-			
 		
 		}
 	}
-
-		
 
 		
 		// ---------- ClickHandler
@@ -203,7 +192,7 @@ public class MarketplaceForm extends Formular {
 
 			public void onClick(ClickEvent event) {
 				
-				// Überprüfen, ob Projekte enthalten sind
+				/* Überprüfen, ob Projekte enthalten sind */ 
 				ClientsideSettings.getPitchMenAdmin().getProjectsByMarketplaceId(selectedMarketplace.getId(), new AsyncCallback<ArrayList<Project>>() {
 
 					@Override
@@ -232,7 +221,7 @@ public class MarketplaceForm extends Formular {
 			
 			public void onClick(ClickEvent event) {
 
-				// bei Click wird die update() Methode aufgerufen
+				/* bei Click wird die update() Methode aufgerufen */ 
 
 				RootPanel.get("content").clear();
 				RootPanel.get("content").add(new HTML(
