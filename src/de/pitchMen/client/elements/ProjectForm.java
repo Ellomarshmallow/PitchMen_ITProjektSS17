@@ -250,7 +250,7 @@ public class ProjectForm extends Formular {
 
 			/* bei Click wird die delete() Methode aufgerufen */ 
 
-			if (Window.confirm("Sind Sie sich sicher, dass Sie das Projekt löschen wollen?")) {
+			if (Window.confirm("Sind Sie sich sicher, dass Sie das Projekt löschen wollen? Mit dem Löschen des Projekts werden die dazugehörigen Ausschreibungen und Partnerprofile gelöscht")) {
 				delete();
 			}
 
