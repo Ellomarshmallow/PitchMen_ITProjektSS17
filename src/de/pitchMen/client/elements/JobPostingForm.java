@@ -273,7 +273,7 @@ public class JobPostingForm extends Formular{
 														
 														applicationTable.setWidget(0, 0, new HTML("<p><strong>BewerberIn</strong></p>"));
 														applicationTable.setWidget(0, 1, new HTML("<p><strong>Anschreiben</strong></p>"));
-														applicationTable.setWidget(0, 2, new HTML("<p><strong>Numerische Bewertung</strong></p>"));
+														applicationTable.setWidget(0, 2, new HTML("<p><strong>Bewertung: 0-100</strong></p>"));
 														applicationTable.setWidget(0, 3, new HTML("<p><strong>Text-Bewertung</strong></p>"));
 														applicationTable.setWidget(0, 4, new HTML("<p><strong>Ablehnen</strong></p>"));
 														applicationTable.setWidget(0, 5, new HTML("<p><strong>Annehmen</strong></p>"));
