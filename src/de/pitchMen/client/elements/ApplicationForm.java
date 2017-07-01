@@ -71,13 +71,13 @@ public class ApplicationForm extends Formular {
 
 			public void onSuccess(PartnerProfile result) {
 				
-				/**
+				/*
 				 * partnerProfileId wird gesetzt. 				
 				 */
 				
 				partnerProfileId = result.getId(); 
 				
-				/**
+				/*
 				 * infoLabel und textArea werden im content Panel angezeigt.
 				 */
 				
