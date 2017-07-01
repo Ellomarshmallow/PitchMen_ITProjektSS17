@@ -53,12 +53,16 @@ public class FirstLoginForm extends Formular  {
 		this.pitchMen = pitchMen; 
 		this.newUser = ClientsideSettings.getCurrentUser();
 		
-		// Vertical Panel erstellen
+		/*
+		 * Vertical Panel erstellen
+		 */
 		VerticalPanel labelsPanel = new VerticalPanel();
 		this.add(labelsPanel);
-				
-		// labels und Boxen dem Vertical Panel hinzufügen
-				
+			
+		/*
+		 * labels und Boxen dem Vertical Panel hinzufügen
+		 */
+					
 		labelsPanel.add(firstNameLabel);
 		labelsPanel.add(firstNameBox);
 		labelsPanel.add(lastNameLabel);
@@ -66,14 +70,22 @@ public class FirstLoginForm extends Formular  {
 		labelsPanel.add(descriptionLabel);
 		labelsPanel.add(descriptionBox);
 				
-		// HorizontalPanel für den Button erstellen
+		/*
+		 * HorizontalPanel für den Button erstellen
+		 */
+		
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
-						
-		// ---------- Speichern Button, ClickHandler hinzufügen und dem
-		// HorizontalPanel hinzufügen
+		
+		/*
+		 * Speichern Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen
+		 */
+		
 		Button saveButton = new Button("Speichern");
 		saveButton.addClickHandler(new ClickHandler(){
 			 public void onClick(ClickEvent event) {
+				 /*
+				  * beim Klick wird die save() Methode aufgerufen.
+				  */
 				 save(); 
 			 }
 		}); 				
@@ -132,11 +144,15 @@ public class FirstLoginForm extends Formular  {
 		this.reportDisplay  = reportDisplay; 
 		this.newUser = ClientsideSettings.getCurrentUser();
 		
-		// Vertical Panel erstellen
+		/*
+		 *  Vertical Panel erstellen
+		 */
 		VerticalPanel labelsPanel = new VerticalPanel();
 		this.add(labelsPanel);
 				
-		// labels und Boxen dem Vertical Panel hinzufügen
+		/*
+		 *  labels und Boxen dem Vertical Panel hinzufügen
+		 */
 				
 		labelsPanel.add(firstNameLabel);
 		labelsPanel.add(firstNameBox);
@@ -145,11 +161,15 @@ public class FirstLoginForm extends Formular  {
 		labelsPanel.add(descriptionLabel);
 		labelsPanel.add(descriptionBox);
 				
-		// HorizontalPanel für den Button erstellen
+		/*
+		 *  HorizontalPanel für den Button erstellen
+		 */
 		HorizontalPanel buttonsPanel = new HorizontalPanel();
 						
-		// ---------- Speichern Button, ClickHandler hinzufügen und dem
-		// HorizontalPanel hinzufügen
+		/*
+		 *  Speichern Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen
+		 */
+		
 		Button saveButton = new Button("Speichern");
 		saveButton.addClickHandler(new ClickHandler(){
 			 public void onClick(ClickEvent event) {
