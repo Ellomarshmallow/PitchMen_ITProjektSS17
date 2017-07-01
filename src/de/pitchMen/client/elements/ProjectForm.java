@@ -24,15 +24,17 @@ import de.pitchMen.shared.bo.Project;
 
 public class ProjectForm extends Formular {
 
-	/*
-	 * titleBox und descBox sind hier labels, erst beim Erstellen oder
-	 * Bearbeiten ist titleBox eine Textbox und descBox eine TextArea
+	/**
+	 * Klasse für die Bereitstellung eines Formulars
+	 * zum Anzeigen und Bearbeiten von Projekten.
 	 */
+	
 	private Marketplace parentMarketplace = null;
 	private Project selectedProject = null;
 	private ArrayList<JobPosting> jobPostings = null;
 	private Person projectManager = null;
 	PitchMenTreeViewModel pitchMenTreeViewModel = null;
+	
 	Label idLabel = new Label();
 	TextBox titleBox = new TextBox();
 	TextArea descBox = new TextArea();
@@ -77,7 +79,7 @@ public class ProjectForm extends Formular {
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				/* FIXME 
+				/* 
 				 * Beim Anlegen eines neuen Projekts wird der Baum im Nav Panel neu geladen.
 				 */
 			
@@ -104,7 +106,6 @@ public class ProjectForm extends Formular {
 					@Override
 					public void onSuccess(Project result) {
 						ProjectForm updatedForm = new ProjectForm(result);
-						//pitchMenTreeViewModel.addProject(selectedProject, parentMarketplace);	
 					}
 					
 				});
@@ -189,22 +190,18 @@ public class ProjectForm extends Formular {
 													RootPanel.get("content").add(new HTML("<div class='info'><p><span class='fa fa-info-circle'></span>"
 															+ " Sie sind Besitzer dieses Projekts. </p></div>"));
 			
-													// ---------- Projekt löschen, ClickHandler hinzufügen und dem
-													// HorizontalPanel hinzufügen
+													/* Projekt löschen, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen*/ 
 													Button deleteProjectBtn = new Button("Projekt löschen");
 													deleteProjectBtn.addStyleName("delete");
 													deleteProjectBtn.addClickHandler(new deleteProjectClickHandler());
 													topPanel.add(deleteProjectBtn);
 			
-													// ---------- Projekt bearbeiten, ClickHandler hinzufügen und dem
-													// HorizontalPanel hinzufügen
-			
+													/* Projekt bearbeiten, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen */
 													Button updateProjectBtn = new Button("Bearbeiten");
 													updateProjectBtn.addClickHandler(new updateProjectClickHandler());
 													topPanel.add(updateProjectBtn);
 			
-													// ---------- Neue Ausschreibung Button, ClickHandler hinzufügen und dem
-													// HorizontalPanel hinzufügen
+													/* Neue Ausschreibung Button, ClickHandler hinzufügen und dem HorizontalPanel hinzufügen*/ 
 													Button addJobPostingBtn = new Button("Neue Ausschreibung hinzufügen");
 													addJobPostingBtn.addClickHandler(new addJobPostingClickHandler());
 													topPanel.add(addJobPostingBtn);
@@ -251,7 +248,7 @@ public class ProjectForm extends Formular {
 
 		public void onClick(ClickEvent event) {
 
-			// bei Click wird die delete() Methode aufgerufen
+			/* bei Click wird die delete() Methode aufgerufen */ 
 
 			if (Window.confirm("Sind Sie sich sicher, dass Sie das Projekt löschen wollen?")) {
 				delete();
@@ -358,9 +355,9 @@ public class ProjectForm extends Formular {
 		public void onSuccess(Void result) {
 			Window.alert("Das Projekt wurde erfolgreich gelöscht.");
 			MarketplaceForm marketplaceForm = new MarketplaceForm(parentMarketplace);
-			/* 
-			 * Beim löschen eines Projektes wird der Baum im Nav Panel neu geladen.
-			 */
+			
+			 /* Beim löschen eines Projektes wird der Baum im Nav Panel neu geladen. */
+			
 		
 				RootPanel.get("nav").clear();
 				Navigation updatedNavigation = new Navigation();  
