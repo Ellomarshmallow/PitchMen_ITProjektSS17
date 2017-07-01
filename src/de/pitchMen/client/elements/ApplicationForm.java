@@ -38,7 +38,7 @@ public class ApplicationForm extends Formular {
 	private JobPosting referredJobPosting = null;
 	private int partnerProfileId;
 	
-
+	
 
 	Label infoLabel = new Label("Hiermit bewerben Sie sich auf die ausgewählte Ausschreibung,"
 							+ "bedenken Sie, dass Ihr AKTUELLES Partnerprofil automatisch beigefügt wird. ");
@@ -54,6 +54,10 @@ public class ApplicationForm extends Formular {
 		this.referredJobPosting = jobPosting; 
 		
 		RootPanel.get("content").clear();
+		
+		/** Um eine Bewerbung zu speichern, wird eine PartnerProfileId benötigt. Daher  
+		 * 	wird zunächst das PartnerProfile der aktuellen Person geholt. 
+		 */
 
 		ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new PartnerProfileCallback());
 			
@@ -67,7 +71,16 @@ public class ApplicationForm extends Formular {
 
 			public void onSuccess(PartnerProfile result) {
 				
+				/**
+				 * partnerProfileId wird gesetzt. 				
+				 */
+				
 				partnerProfileId = result.getId(); 
+				
+				/**
+				 * infoLabel und textArea werden im content Panel angezeigt.
+				 */
+				
 				RootPanel.get("content").add(infoLabel);
 				RootPanel.get("content").add(new HTML("</p>"));
 				
@@ -84,9 +97,20 @@ public class ApplicationForm extends Formular {
 				RootPanel.get("content").add(sendBtn);
 				
 			}	}
+		
+		/**
+		 * Beim Klick auf den "Absenden" Button (sendBtn) wird die Bewerbung mit dem Bewerbungstext, dem Datum,
+		 * dem entsprechenden PartnerProfile und der betroffenen Ausschreibung hinzugefügt.		 
+		 */
 				
 	private class BtnClickHandler implements ClickHandler {
 		public void onClick(ClickEvent event) {
+			
+			/**
+			 * java.util.Date berücksichtigt auch Stunden, Minuten, Sekunden und sogar Millisekunden,
+			 * java.sql.Date hingegen entspricht dem SQL DATE. Deshalb muss das Datum vorher konvertiert
+			 * werden. 
+			 */
 			
 			java.util.Date date = new Date();
 			java.sql.Date convertedDate = new java.sql.Date(date.getTime());
@@ -104,6 +128,10 @@ public class ApplicationForm extends Formular {
 			}
 			
 			public void onSuccess(Application result) {
+				
+				/**
+				 * Nach dem erfolgreichen speichern, wird wieder die ausgewählte Ausschreibung angezeigt.
+				 */
 					RootPanel.get("content").clear();
 					RootPanel.get("content").add(new JobPostingForm(referredJobPosting));
 					Window.alert("erfolgreich beworben");
@@ -113,35 +141,3 @@ public class ApplicationForm extends Formular {
 		 
 		 
 }
-
-		
-		/**
-		
-		
-		
-	// GetPartnerProfilCallback
-	public class GetPartnerProfileCallback implements AsyncCallback<PartnerProfile>{
-		
-		private ApplicationForm applicationForm = null; 
-		
-		public GetPartnerProfileCallback(ApplicationForm applicationForm){
-			this.applicationForm = applicationForm; 
-		}
-		
-		public void onFailure(Throwable caught) {
-
-		}
-
-		public void onSuccess(PartnerProfile partnerprofile) {
-
-			this.applicationForm.partnerProfileId = partnerprofile.getId(); 
-		}
-		
-	}
-	
-	
-	
-	
-
-**/
-		
