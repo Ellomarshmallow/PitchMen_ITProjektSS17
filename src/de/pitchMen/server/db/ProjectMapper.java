@@ -11,7 +11,7 @@ import de.pitchMen.shared.bo.Project;
 
 /**
  * Die Klasse ProjectMapper bildet Project-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es
- * möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * moeglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
@@ -23,24 +23,24 @@ public class ProjectMapper {
 
 	/**
 	 * Die Klasse ProjectMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfuellt werden kann,
+	 * wird zunaechst eine Variable mit dem Schluesselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 	private static ProjectMapper projectMapper = null;
 
 	/**
-	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschuetzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 	protected ProjectMapper() {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafuer,
 	 * dass nur eine einzige Instanz der ProjectMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über ProjectMapper.projectMapper() und
-	 * nicht über den New-Operator.
+	 * Aufgerufen wird die Klasse somit ueber ProjectMapper.projectMapper() und
+	 * nicht ueber den New-Operator.
 	 * 
 	 * @return projectMapper
 	 */
@@ -52,7 +52,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Fügt ein Project-Objekt der Datenbank hinzu.
+	 * Fuegt ein Project-Objekt der Datenbank hinzu.
 	 * 
 	 * @param project
 	 * @return project
@@ -69,8 +69,8 @@ public class ProjectMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugefügten Primärschlüssels (id). Die aktuelle id wird um eins erhöht.
-			 * Statement ausfüllen und als Query an die Datenbank senden.
+			 * Abfrage des zuletzt hinzugefuegten Primaerschluessels (id). Die aktuelle id wird um eins erhoeht.
+			 * Statement ausfuellen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM project");
 
@@ -79,7 +79,7 @@ public class ProjectMapper {
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Project-Tupels in die Datenbank.
+			 * SQL-Anweisung zum Einfuegen des neuen Project-Tupels in die Datenbank.
 			 */
 			stmt.executeUpdate(
 					"INSERT INTO project (id, title, description, dateOpened, dateClosed, marketplace_id, person_id)"
@@ -88,7 +88,7 @@ public class ProjectMapper {
 							+ project.getDateClosed() + "', '" + project.getMarketplaceId() + "', "
 							+ project.getPersonId() + ")");
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -111,14 +111,14 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zur Aktualisierung des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des uebergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE project SET title='" + project.getTitle() + "', description= '"
 					+ project.getDescription() + "', dateOpened= '" + project.getDateOpened() + "', dateClosed= '"
 					+ project.getDateClosed() + "' WHERE id= " + project.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -129,7 +129,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Löscht ein Project-Objekt aus der Datenbank.
+	 * Loescht ein Project-Objekt aus der Datenbank.
 	 * 
 	 * @param project
 	 */
@@ -139,12 +139,12 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Loeschen des uebergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM project WHERE id=" + project.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -154,7 +154,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Findet ein Project-Objekt anhand der übergebenen ID in der Datenbank.
+	 * Findet ein Project-Objekt anhand der uebergebenen ID in der Datenbank.
 	 * 
 	 * @param id
 	 * @return person
@@ -165,15 +165,15 @@ public class ProjectMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der übergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der uebergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, description, dateOpened, dateClosed ,marketplace_id, person_id "
 							+ "FROM project WHERE id=" + id);
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zurückgegeben werden. Es wird mit einer
-			 * IF-Abfragen geprüft, ob es für den angefragten Primärschlüssel
+			 * Zu einem Primaerschluessel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurueckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprueft, ob es fuer den angefragten Primaerschluessel
 			 * ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -188,7 +188,7 @@ public class ProjectMapper {
 				return project;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -222,7 +222,7 @@ public class ProjectMapper {
 			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschließend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Project project = new Project();
@@ -236,7 +236,7 @@ public class ProjectMapper {
 				result.add(project);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -247,7 +247,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Findet Project-Objekte anhand des übergebenen Start-Datums in der Datenbank.
+	 * Findet Project-Objekte anhand des uebergebenen Start-Datums in der Datenbank.
 	 * 
 	 * @param dateOpened
 	 * @return ArrayList<Project>
@@ -270,7 +270,7 @@ public class ProjectMapper {
 			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschließend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Project project = new Project();
@@ -284,7 +284,7 @@ public class ProjectMapper {
 				result.add(project);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -295,7 +295,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Findet ein Project-Objekt anhand des übergebenen End-Datums in der
+	 * Findet ein Project-Objekt anhand des uebergebenen End-Datums in der
 	 * Datenbank.
 	 * 
 	 * @param dateClosed
@@ -319,7 +319,7 @@ public class ProjectMapper {
 			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschließend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Project project = new Project();
@@ -333,7 +333,7 @@ public class ProjectMapper {
 				result.add(project);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -344,7 +344,7 @@ public class ProjectMapper {
 	}
 
 	/**
-	 * Findet ein Project-Objekt anhand des übergebenen Titels in der Datenbank.
+	 * Findet ein Project-Objekt anhand des uebergebenen Titels in der Datenbank.
 	 * 
 	 * @param title
 	 * @return ArrayList<Project>
@@ -367,7 +367,7 @@ public class ProjectMapper {
 			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschließend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Project project = new Project();
@@ -381,7 +381,7 @@ public class ProjectMapper {
 				result.add(project);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -392,14 +392,14 @@ public class ProjectMapper {
 	}
 	
 	/**
-	 * Die Methode findProjectsByPersonId sucht anhand der übergebenen personId in der Datenbank
-	 * die dazugehörigen Project-Tupel ab.
-	 * Die Methode dient zur Aufgabenbewältung aus Aufgabe Nummer 7. 
+	 * Die Methode findProjectsByPersonId sucht anhand der uebergebenen personId in der Datenbank
+	 * die dazugehoerigen Project-Tupel ab.
+	 * Die Methode dient zur Aufgabenbewaeltung aus Aufgabe Nummer 7. 
 	 *
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensaetze zusammengefuegt
+	 * werden, zu den es jeweils auch ein Gegenstueck in der verknuepften 
+	 * Tabelle gibt. Da es moeglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * muessen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 *  
 	 * @param personId
 	 * @return ArrayList<Project>
@@ -409,7 +409,7 @@ public class ProjectMapper {
 
 		ArrayList<Project> result = new ArrayList<Project>();
 		/**
-		 * Das SQL-Statement sucht anhand des übergebenen Parameters die
+		 * Das SQL-Statement sucht anhand des uebergebenen Parameters die
 		 * Beteiligungen ab und grouped sie anhand der ProjectId sodass jeder
 		 * Eintrag nur einmal vorkommt.
 		 */
@@ -426,7 +426,7 @@ public class ProjectMapper {
 			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschließend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Project project = new Project();
@@ -440,7 +440,7 @@ public class ProjectMapper {
 				result.add(project);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -452,14 +452,14 @@ public class ProjectMapper {
 	
 	/**
 	 * Die Methode findProjectsByMarketplaceId sucht alle marketplace-Tupel
-	 * zu der übergebenen marketplaceId in der Datenbank ab und setzt diese in eine ArrayList.
-	 * Die Methode ist zur Umsetzung der Anforderung, ein Marketplace zu löschen, aber davor dazugehörige 
-	 * Tabellen-Beziehungen ebenfalls zu löschen.
+	 * zu der uebergebenen marketplaceId in der Datenbank ab und setzt diese in eine ArrayList.
+	 * Die Methode ist zur Umsetzung der Anforderung, ein Marketplace zu loeschen, aber davor dazugehoerige 
+	 * Tabellen-Beziehungen ebenfalls zu loeschen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensätze zusammengefügt
-	 * werden, zu den es jeweils auch ein Gegenstück in der verknüpften 
-	 * Tabelle gibt. Da es möglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * müssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensaetze zusammengefuegt
+	 * werden, zu den es jeweils auch ein Gegenstueck in der verknuepften 
+	 * Tabelle gibt. Da es moeglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * muessen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 *   
 	 * @param marketplaceId
 	 * @return ArrayList<Project>
@@ -469,7 +469,7 @@ public class ProjectMapper {
 
 		ArrayList<Project> result = new ArrayList<Project>();
 		/**
-		 * Das SQL-Statement sucht anhand des übergebenen Parameters die
+		 * Das SQL-Statement sucht anhand des uebergebenen Parameters die
 		 * Projekte ab.
 		 */
 		try {
@@ -486,7 +486,7 @@ public class ProjectMapper {
 			 * Tabelle project vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschließend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Project project = new Project();
@@ -500,7 +500,7 @@ public class ProjectMapper {
 				result.add(project);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */

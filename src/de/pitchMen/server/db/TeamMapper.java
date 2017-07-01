@@ -1,7 +1,8 @@
 package de.pitchMen.server.db;
 
 /**
- * Bildet Team-Objekte auf eine relationale Datenbank ab. Ebenfalls ist es m�glich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * Bildet Team-Objekte auf eine relationale Datenbank ab. 
+ * Ebenfalls ist es moeglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * @author Lars
  */
@@ -17,15 +18,15 @@ public class TeamMapper {
 
 	/**
 	 * Die Klasse TeamMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erf�llt werden kann,
-	 * wird zun�chst eine Variable mit dem Schl�sselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfuellt werden kann,
+	 * wird zunaechst eine Variable mit dem Schluesselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 
 	private static TeamMapper teamMapper = null;
 
 	/**
-	 * Ein gesch�tzter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschuetzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 
@@ -34,9 +35,9 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt daf�r,
+	 * Methode zum sicherstellen der Singleton-Eigenschaft. Diese sorgt dafuer,
 	 * dass nur eine einzige Instanz der TeamMapper-Klasse existiert. Aufgerufen
-	 * wird die Klasse somit �ber TeamMapper.teamMapper() und nicht �ber den
+	 * wird die Klasse somit ueber TeamMapper.teamMapper() und nicht ueber den
 	 * New-Operator.
 	 * 
 	 * @return teamMapper
@@ -50,7 +51,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * F�gt ein Team-Objekt der Datenbank hinzu.
+	 * Fuegt ein Team-Objekt der Datenbank hinzu.
 	 * 
 	 * @param team
 	 * @return trait
@@ -61,8 +62,8 @@ public class TeamMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die
-			 * aktuelle id wird um eins erh�ht.
+			 * Abfrage des zuletzt hinzugefuegten Primaerschluessels (id). Die
+			 * aktuelle id wird um eins erhoeht.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM team");
 			if(rs.next()) {
@@ -72,7 +73,7 @@ public class TeamMapper {
 			stmt = con.createStatement();
 
 			/**
-			 * SQL-Anweisung zum Einf�gen des neuen Team-Tupels in die Datenbank
+			 * SQL-Anweisung zum Einfuegen des neuen Team-Tupels in die Datenbank
 			 */
 			stmt.executeUpdate("INSERT INTO team (id, name, description, size)" + "VALUES (" + team.getId() + ", '"
 					+ team.getName() + "', '" + team.getDescription() + "' , " + team.getTeamSize() + ")");
@@ -100,7 +101,7 @@ public class TeamMapper {
 		}
 
 		/**
-		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert und wo im Code es passiert ist.
 		 * 
@@ -113,7 +114,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * L�scht ein Team-Objekt aus der Datenbank.
+	 * Loescht ein Team-Objekt aus der Datenbank.
 	 * 
 	 * @param team
 	 */
@@ -125,7 +126,7 @@ public class TeamMapper {
 			stmt.executeUpdate("DELETE FROM team WHERE id=" + team.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 * 
@@ -137,7 +138,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Findet ein Team-Objekt anhand der �bergebenen Id in der Datenbank.
+	 * Findet ein Team-Objekt anhand der uebergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return team
@@ -151,9 +152,9 @@ public class TeamMapper {
 			ResultSet rs = stmt.executeQuery("SELECT id, name, description, size FROM team WHERE id=" + id);
 
 			/**
-			 * Zu einem Prim�rschl�ssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfragen gepr�ft, ob es f�r den angefragten Prim�rschl�ssel
+			 * Zu einem Primaerschluessel exisitiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurueckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprueft, ob es fuer den angefragten Primaerschluessel
 			 * ein DB-Tupel gibt.
 			 */
 
@@ -203,7 +204,7 @@ public class TeamMapper {
 	}
 
 	/**
-	 * Findet Team-Objekte anhand des �bergebenen Namens in der Datenbank.
+	 * Findet Team-Objekte anhand des uebergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
 	 * @return ArrayList<Team>
