@@ -1,5 +1,6 @@
 package de.pitchMen.client.elements;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,6 +17,8 @@ import de.pitchMen.client.ClientsideSettings;
 import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.JobPosting;
 import de.pitchMen.shared.bo.PartnerProfile;
+import de.pitchMen.shared.bo.Project;
+import de.pitchMen.shared.bo.Trait;
 
 /**
  * Klasse, deren Objekte ein Formular
@@ -37,7 +40,7 @@ public class ApplicationForm extends Formular {
 	 */
 	private JobPosting referredJobPosting = null;
 	private int partnerProfileId;
-	
+	String applicationText; 
 	
 
 	Label infoLabel = new Label("Hiermit bewerben Sie sich auf die ausgewählte Ausschreibung,"
@@ -89,6 +92,36 @@ public class ApplicationForm extends Formular {
 				RootPanel.get("content").add(new HTML("</p>"));
 				
 				
+						ClientsideSettings.getPitchMenAdmin().getTraitsByPartnerProfileId(result.getId(), new AsyncCallback <ArrayList<Trait>>(){
+							
+							public void onFailure(Throwable caught) {
+								ClientsideSettings.getLogger().severe("Konnte Traits nicht empfangen");
+							}
+							public void onSuccess(ArrayList<Trait> traitResult) {
+								
+								
+								
+								StringBuffer buffer = new StringBuffer(); 
+								buffer.append("<br>"); 
+								buffer.append("<br> <strong> Die Eigenschaften des Bewerbers: </strong> <br>");
+								
+								for(Trait trait : traitResult){									
+									buffer.append(trait.getName());
+									buffer.append(":  "); 
+									buffer.append(trait.getValue()); 
+									buffer.append("<br>"); 
+																	
+								}
+								
+								applicationText = buffer.toString(); 
+								
+							}
+							
+							
+						});
+						
+			
+								
 				
 				
 				
@@ -115,7 +148,7 @@ public class ApplicationForm extends Formular {
 			java.util.Date date = new Date();
 			java.sql.Date convertedDate = new java.sql.Date(date.getTime());
 			
-			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getText() , "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
+			ClientsideSettings.getPitchMenAdmin().addApplication(convertedDate, textArea.getText() + applicationText, "laufend", referredJobPosting.getId(), partnerProfileId, new ApplicationCallback());				
 		}		
 		
 }
