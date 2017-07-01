@@ -201,8 +201,15 @@ public class PitchMen implements EntryPoint {
 				+ "<br/>"
 				+ "Bevor Sie sich jedoch in dem vielfältigen Angebot vertiefen, bitten wir Sie zunächst Ihr eigenes Partnerprofil"
 				+ " zu erstellen in dem Sie Ihre Skills präsentieren können. Sie erreichen Ihr Partnerprofil über einen Klick "
-				+ "auf Ihren Namen in der rechten Hauptnavigation. Für weitere Fragen steht Ihnen das PitchMen Team "
-				+ "gerne zur Verfügung.</p>"
+				+ "auf Ihren Namen in der rechten Hauptnavigation. "
+				+ "<br/>"
+				+ "<br/>"
+				+ "Ob Sie für ein Projekt angenommen wurden, sehen Sie im ReportGenerator. Dieser ist über den Link "
+				+ "auf der unteren Navigation zu erreichen. Für weitere Fragen steht Ihnen das PitchMen Team "
+				+ "gerne zur Verfügung."
+				+ "<br/>"
+				+ "<br/>"
+				+ "Legen Sie jetzt los </p>"
 		));
 		
 		Button newMarketplaceBtn = new Button("Neuen Projektmarktplatz anlegen");
