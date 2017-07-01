@@ -56,6 +56,7 @@ public class ReportNavigation extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 				final HTMLReportWriter writer = new HTMLReportWriter();
 				ClientsideSettings.getReportGenerator().showAllJobPostings(new AsyncCallback<AllJobPostings>() {
 
@@ -81,6 +82,8 @@ public class ReportNavigation extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 				final HTMLReportWriter writer = new HTMLReportWriter();
 				ClientsideSettings.getPitchMenAdmin().getPartnerProfileByPersonId(ClientsideSettings.getCurrentUser().getId(), new AsyncCallback<PartnerProfile>() {
 
@@ -157,9 +160,12 @@ public class ReportNavigation extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 				final HTMLReportWriter writer = new HTMLReportWriter();
 				ClientsideSettings.getPitchMenAdmin().getPersonByID(ClientsideSettings.getCurrentUser().getId(),
 						new AsyncCallback<Person>() {
+					
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -195,6 +201,8 @@ public class ReportNavigation extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 				final HTMLReportWriter writer = new HTMLReportWriter();
 
 				ClientsideSettings.getReportGenerator().showAllApplicationsOfUser(ClientsideSettings.getCurrentUser(),
@@ -220,7 +228,8 @@ public class ReportNavigation extends VerticalPanel {
 				
 			@Override
 			public void onClick(ClickEvent event) {
-			
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 				
 				final ListBox applicantBox = new ListBox();
 				
@@ -294,6 +303,8 @@ public class ReportNavigation extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				RootPanel.get("content").clear();
+				RootPanel.get("content").add(new HTML("<div class='lds-dual-ring'><div></div></div>"));
 				final HTMLReportWriter writer = new HTMLReportWriter();
 				ClientsideSettings.getReportGenerator().showFanInAndOutReport(new AsyncCallback<FanInAndOutReport>() {
 
