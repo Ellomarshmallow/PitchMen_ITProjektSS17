@@ -10,7 +10,7 @@ import de.pitchMen.shared.bo.Trait;
 
 /**
  * Die Klasse TraitMapper bildet Trait-Objekte auf einer relationalen Datenbank
- * ab. Ebenfalls ist es m�glich aus den Datenbank-Tupel Java-Objekte zur
+ * ab. Ebenfalls ist es moeglich aus den Datenbank-Tupel Java-Objekte zur
  * erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
@@ -23,23 +23,23 @@ public class TraitMapper {
 	/**
 	 * Die Klasse TraitMapper wird nur einmal instantiiert
 	 * (Singleton-Eigenschaft). Damit diese Eigenschaft gegeben ist, wird eine
-	 * Variable mit dem Schl�sselwort static und dem Standardwert null erzeugt.
+	 * Variable mit dem Schluesselwort static und dem Standardwert null erzeugt.
 	 * Sie speichert die Instanz dieser Klasse.
 	 */
 	private static TraitMapper traitMapper = null;
 
 	/**
-	 * Ein gesch�tzter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschuetzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 	protected TraitMapper() {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt daf�r,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafuer,
 	 * dass nur eine einzige Instanz der TraitMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit �ber TraitMapper.traitMapper() und nicht
-	 * �ber den New-Operator.
+	 * Aufgerufen wird die Klasse somit ueber TraitMapper.traitMapper() und nicht
+	 * ueber den New-Operator.
 	 * 
 	 * @return traitMapper
 	 */
@@ -51,7 +51,7 @@ public class TraitMapper {
 	}
 
 	/**
-	 * F�gt ein Trait-Objekt der Datenbank hinzu.
+	 * Fuegt ein Trait-Objekt der Datenbank hinzu.
 	 * 
 	 * @param trait
 	 * @return trait
@@ -68,8 +68,8 @@ public class TraitMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die aktuelle id wird um eins erh�ht.
-			 * Statement ausf�llen und als Query an die Datenbank senden.
+			 * Abfrage des zuletzt hinzugefuegten Primaerschluessels (id). Die aktuelle id wird um eins erhoeht.
+			 * Statement ausfuellen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM trait");
 			if(rs.next()) {
@@ -77,7 +77,7 @@ public class TraitMapper {
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einf�gen des neuen Datensatzes in die Datenbank.
+			 * SQL-Anweisung zum Einfuegen des neuen Datensatzes in die Datenbank.
 			 */
 			stmt.executeUpdate("INSERT INTO trait (id, name, value, partnerProfile_id)" 
 					+ "VALUES (" + trait.getId()
@@ -106,13 +106,13 @@ public class TraitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zur Aktualisierung des �bergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des uebergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE trait SET name='" + trait.getName() + "', value= '" + trait.getValue()
 					+ "' WHERE id= " + trait.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -123,7 +123,7 @@ public class TraitMapper {
 	}
 
 	/**
-	 * L�scht ein Trait-Objekt aus der Datenbank.
+	 * Loescht ein Trait-Objekt aus der Datenbank.
 	 * 
 	 * @param trait
 	 */
@@ -133,11 +133,11 @@ public class TraitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum L�schen des �bergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Loeschen des �bergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM trait WHERE id=" + trait.getId());
 		/**
-		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -147,7 +147,7 @@ public class TraitMapper {
 	}
 
 	/**
-	 * Findet ein Trait-Objekt anhand der �bergebenen Id in der Datenbank.
+	 * Findet ein Trait-Objekt anhand der uebergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return trait
@@ -158,13 +158,13 @@ public class TraitMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der �bergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der uebergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, name, value, partnerProfil_id FROM trait WHERE id=" + id);
 			/**
-			 * Zu einem Prim�rschl�ssel exisitiert nur max ein Datenbank-Tupel,
-			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfragen gepr�ft, ob es f�r den angefragten Prim�rschl�ssel
+			 * Zu einem Primaerschluessel existiert nur max ein Datenbank-Tupel,
+			 * somit kann auch nur einer zurueckgegeben werden. Es wird mit einer
+			 * IF-Abfragen geprueft, ob es fuer den angefragten Primaerschluessel
 			 * ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -176,7 +176,7 @@ public class TraitMapper {
 				return trait;
 			}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -210,7 +210,7 @@ public class TraitMapper {
 			 * Tabelle trait vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
@@ -221,7 +221,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/	
@@ -232,7 +232,7 @@ public class TraitMapper {
 	}
 
 	/**
-	 * Findet Trait-Objekte anhand des �bergebenen Namens in der Datenbank.
+	 * Findet Trait-Objekte anhand des uebergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
 	 * @return ArrayList<Trait>
@@ -253,10 +253,10 @@ public class TraitMapper {
 					"SELECT id, name, value, partnerProfil_id FROM trait WHERE name LIKE '" + name + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle trait mit dem �bergebenen Namen vorhanden ist, muss das
+			 * Tabelle trait mit dem uebergebenen Namen vorhanden ist, muss das
 			 * Abfragen des ResultSet so oft erfolgen (while-Schleife), bis alle
 			 * Tupel durchlaufen wurden. Die DB-Tupel werden in Java-Objekte
-			 * transformiert und anschlie�end der ArrayList hinzugef�gt.
+			 * transformiert und anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
@@ -267,7 +267,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Moelichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/	
@@ -278,7 +278,7 @@ public class TraitMapper {
 	}
 
 	/**
-	 * Findet ein Trait-Objekt anhand des �bergebenen Wertes(value) in der Datenbank.
+	 * Findet ein Trait-Objekt anhand des uebergebenen Wertes(value) in der Datenbank.
 	 * 
 	 * @param value
 	 * @return ArrayList<Trait>
@@ -299,11 +299,11 @@ public class TraitMapper {
 					"SELECT id, name, value, partnerProfil_id FROM trait WHERE value LIKE '" + value + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle trait mit dem �bergebenen Wert vorhanden ist,
+			 * Tabelle trait mit dem uebergebenen Wert vorhanden ist,
 			 * muss das Abfragen des ResultSet so oft erfolgen (while-Schleife),
 			 * bis alle Tupel durchlaufen wurden. Die DB-Tupel werden in
-			 * Java-Objekte transformiert und anschlie�end der ArrayList
-			 * hinzugef�gt.
+			 * Java-Objekte transformiert und anschliessend der ArrayList
+			 * hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
@@ -314,7 +314,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/	
@@ -326,13 +326,13 @@ public class TraitMapper {
 
 	/**
 	 * Findet die Eigenschaften passend zur Person-Id, innerhalb der ParterProfile Tabelle. 
-	 * �bergibt ein Trait-Objekt zum Vergleich der Traits mit der ArrayList aus der 
+	 * uebergibt ein Trait-Objekt zum Vergleich der Traits mit der ArrayList aus der 
 	 * Methode @seeFindByJobPosting.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * m�ssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensaetze zusammengefuegt
+	 * werden, zu den es jeweils auch ein Gegenstueck in der verknuepften 
+	 * Tabelle gibt. Da es moeglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * muessen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * @param id
 	 * @return trait
@@ -351,7 +351,7 @@ public class TraitMapper {
 			/**
 			 * Zu einem Prim�rschl�ssel exisitiert nur max ein Datenbank-Tupel,
 			 * somit kann auch nur einer zur�ckgegeben werden. Es wird mit einer
-			 * IF-Abfrage gepr�ft, ob es f�r den angefragten Prim�rschl�ssel ein
+			 * IF-Abfrage geprueft, ob es fuer den angefragten Primaerschluessel ein
 			 * DB-Tupel gibt.
 			 */
 			if (rs.next()) {
@@ -363,7 +363,7 @@ public class TraitMapper {
 				return trait;
 			}
 		/**
-		* Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/
@@ -377,10 +377,10 @@ public class TraitMapper {
 	 * Findet alle Eigenschaften (Traits) passend zum ParnterProfile, innerhalb der ParterProfile Tabelle. 
 	 * Ausgegeben wird eine ArrayListe, welche die Trait-Objekte beinhaltet
 	 *
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
-	 * m�ssen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensaetze zusammengefuegt
+	 * werden, zu den es jeweils auch ein Gegenstueck in der verknuepften 
+	 * Tabelle gibt. Da es moeglich ist, dass ein Partnerprofil mehrere Eigenschaften hat,
+	 * muessen die PartnerProfile-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * @param partnerProfileId
 	 * @return ArrayList<Traits>
@@ -399,11 +399,11 @@ public class TraitMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM trait WHERE partnerProfile_id = " + partnerProfileId);
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle trait mit dem �bergebenen Wert vorhanden ist,
+			 * Tabelle trait mit dem uebergebenen Wert vorhanden ist,
 			 * muss das Abfragen des ResultSet so oft erfolgen (while-Schleife),
 			 * bis alle Tupel durchlaufen wurden. Die DB-Tupel werden in
-			 * Java-Objekte transformiert und anschlie�end der ArrayList
-			 * hinzugef�gt.
+			 * Java-Objekte transformiert und anschliessend der ArrayList
+			 * hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
@@ -414,7 +414,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/
@@ -444,11 +444,11 @@ public class TraitMapper {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM trait INNER JOIN partnerProfile ON trait.partnerProfile_id = partnerProfile.id WHERE partnerProfile.jobPosting_id != 0");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle trait mit dem �bergebenen Wert vorhanden ist,
+			 * Tabelle trait mit dem uebergebenen Wert vorhanden ist,
 			 * muss das Abfragen des ResultSet so oft erfolgen (while-Schleife),
 			 * bis alle Tupel durchlaufen wurden. Die DB-Tupel werden in
-			 * Java-Objekte transformiert und anschlie�end der ArrayList
-			 * hinzugef�gt.
+			 * Java-Objekte transformiert und anschliessend der ArrayList
+			 * hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Trait trait = new Trait();
@@ -459,7 +459,7 @@ public class TraitMapper {
 				result.add(trait);
 			}
 		/**
-		* Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		* Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		* Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		* ausgegeben, was passiert ist und wo im Code es passiert ist.
 		*/

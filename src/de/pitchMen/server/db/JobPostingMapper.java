@@ -10,7 +10,7 @@ import de.pitchMen.shared.bo.JobPosting;
 
 /**
  * Die Klasse JobPostingMapper bildet JobPosting-Objekte auf einer relationale
- * Datenbank ab. Ebenfalls ist es m�glich aus Datenbank-Tupel Java-Objekte zu
+ * Datenbank ab. Ebenfalls ist es moeglich aus Datenbank-Tupel Java-Objekte zu
  * erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
@@ -23,13 +23,13 @@ public class JobPostingMapper {
 	/**
 	 * Die Klasse JobPostingMapper wird nur einmal instantiiert
 	 * (Singelton-Eigenschaft).Damit diese Eigenschaft gegeben ist, wird eine
-	 * Variable mit dem Schl�sselwort static und dem Standardwert null erzeugt.
+	 * Variable mit dem Schluesselwort static und dem Standardwert null erzeugt.
 	 * Sie speichert die Instanz dieser Klasse.
 	 */
 	private static JobPostingMapper jobPostingMapper = null;
 
 	/**
-	 * Ein gesch�tzter Konstrukter verhindert eine neue Instanz dieser Klasse zu
+	 * Ein geschuetzter Konstrukter verhindert eine neue Instanz dieser Klasse zu
 	 * erzeugen.
 	 */
 	protected JobPostingMapper() {
@@ -38,8 +38,8 @@ public class JobPostingMapper {
 	/**
 	 * Methode zum sicherstellen der Singleton-Eigenschaft. Es wird somit
 	 * sichergestellt, dass nur eine einzige Instanz der JobPostingMapper existiert.
-	 * Aufgerufen wird die Klasse somit �ber JobPostingMapper.jobPostingMapper() und nicht
-	 * �ber den New-Operator.
+	 * Aufgerufen wird die Klasse somit ueber JobPostingMapper.jobPostingMapper() und nicht
+	 * ueber den New-Operator.
 	 * 
 	 * @return jobPostingMapper
 	 */
@@ -51,7 +51,7 @@ public class JobPostingMapper {
 	}
 
 	/**
-	 * F�gt ein JobPosting-Objekt der Datenbank hinzu. 
+	 * Fuegt ein JobPosting-Objekt der Datenbank hinzu. 
 	 * 
 	 * @param jobPosting
 	 * @return jobPosting
@@ -68,8 +68,8 @@ public class JobPostingMapper {
 			 */
 			Statement stmt = con.createStatement();
 			/**
-			 * Abfrage des zuletzt hinzugef�gten Prim�rschl�ssels (id). Die aktuelle id wird um eins erh�ht.
-			 * Statement ausf�llen und als Query an die Datenbank senden.
+			 * Abfrage des zuletzt hinzugefuegten Primaerschluessels (id). Die aktuelle id wird um eins erhoeht.
+			 * Statement ausfuellen und als Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM jobPosting");
 
@@ -77,14 +77,14 @@ public class JobPostingMapper {
 				jobPosting.setId(rs.getInt("maxid") + 1);
 				stmt = con.createStatement();
 				/**
-				 * SQL-Anweisung zum Einf�gen des neuen Datensatzes in die Datenbank.
+				 * SQL-Anweisung zum Einfuegen des neuen Datensatzes in die Datenbank.
 				 */
 				stmt.executeUpdate("INSERT INTO jobPosting (id, title, text, deadline, project_id)" + " VALUES ( "
 						+ jobPosting.getId() + ", '" + jobPosting.getTitle() + "' ,'" + jobPosting.getText()
 						+ "' ,'" + jobPosting.getDeadline() + "' ," + jobPosting.getProjectId() + ")");
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */		
@@ -106,7 +106,7 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zur Aktualisierung des �bergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zur Aktualisierung des uebergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate(
 					"UPDATE jobPosting SET Title='" + jobPosting.getTitle() + "', " + " Text='" + jobPosting.getText()
@@ -114,7 +114,7 @@ public class JobPostingMapper {
 							+ jobPosting.getStatus() + "' WHERE id=" + jobPosting.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -125,7 +125,7 @@ public class JobPostingMapper {
 	}
 
 	/**
-	 * L�scht ein JobPosting-Objekt aus der Datenbank.
+	 * Loescht ein JobPosting-Objekt aus der Datenbank.
 	 * 
 	 * @param jobPosting
 	 */
@@ -135,12 +135,12 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum L�schen des �bergebenen Datensatzes in der Datenbank.
+			 * SQL-Anweisung zum Loeschen des uebergebenen Datensatzes in der Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM jobPosting" + " WHERE id=" + jobPosting.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -150,7 +150,7 @@ public class JobPostingMapper {
 	}
 
 	/**
-	 * Findet ein JobPosting-Objekt anhand der �bergebenen Id in der Datenbank.
+	 * Findet ein JobPosting-Objekt anhand der uebergebenen Id in der Datenbank.
 	 * 
 	 * @param id
 	 * @return jobPosting 
@@ -161,14 +161,14 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der �bergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der uebergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, title, text, deadline, project_id, "
 							+ "status FROM jobPosting" + " WHERE id =" + id);
 			/**
-			 * Der Prim�rschl�ssel (id) wird als eine Tupel zur�ckgegeben. Es
-			 * wird gepr�ft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * Der Primaerschluessel (id) wird als eine Tupel zurueckgegeben. Es
+			 * wird geprueft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
 			 * ein Objekt umgewandelt.
 			 * 
 			 */
@@ -183,7 +183,7 @@ public class JobPostingMapper {
 				return jobPosting;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -210,13 +210,13 @@ public class JobPostingMapper {
 			/**
 			 * SQL-Anweisung zum Finden aller Datensatzes in der Datenbank, sortiert nach der Id.
 			 */
-			ResultSet rs = stmt.executeQuery("SELECT * FROM jobPosting ORDER BY status");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM jobPosting ORDER BY status, title");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
@@ -229,7 +229,7 @@ public class JobPostingMapper {
 				result.add(jobPosting);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -240,7 +240,7 @@ public class JobPostingMapper {
 	}
 
 	/**
-	 * Findet ein JobPosting-Objekt anhand des �bergebenen Textes in der
+	 * Findet ein JobPosting-Objekt anhand des uebergebenen Textes in der
 	 * Datenbank.
 	 * 
 	 * @param text
@@ -263,7 +263,7 @@ public class JobPostingMapper {
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
@@ -276,7 +276,7 @@ public class JobPostingMapper {
 				result.add(jobPosting);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -287,7 +287,7 @@ public class JobPostingMapper {
 	}
 
 	/**
-	 * Findet ein JobPosting-Objekt anhand des �bergebenen Titels in der
+	 * Findet ein JobPosting-Objekt anhand des uebergebenen Titels in der
 	 * Datenbank.
 	 * 
 	 * @param titel
@@ -310,7 +310,7 @@ public class JobPostingMapper {
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
@@ -323,7 +323,7 @@ public class JobPostingMapper {
 				result.add(jobPosting);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -334,7 +334,7 @@ public class JobPostingMapper {
 	}
 
 	/**
-	 * Findet ein JobPosting-Objekt anhand des �bergebenen Deadline in der
+	 * Findet ein JobPosting-Objekt anhand des uebergebenen Deadline in der
 	 * Datenbank.
 	 * 
 	 * @param deadline
@@ -357,7 +357,7 @@ public class JobPostingMapper {
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
@@ -370,7 +370,7 @@ public class JobPostingMapper {
 				result.add(jobPosting);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -382,13 +382,14 @@ public class JobPostingMapper {
 
 	/**
 	 * Findet die Ausschreibungen passend zur Person-Id, innerhalb der jobPosting-Tabelle. 
-	 * �bergibt ein Ausschreibungs-Objekt zur�ck.
+	 * uebergibt ein Ausschreibungs-Objekt zurueck.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass eine Person mehrere Ausschreibungen hat,
-	 * m�ssen die Ausschreibungs-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensaetze zusammengefuegt
+	 * werden, zu den es jeweils auch ein Gegenstueck in der verknuepften 
+	 * Tabelle gibt. Da es moeglich ist, dass eine Person mehrere Ausschreibungen hat,
+	 * muessen die Ausschreibungs-Objekte in einer ArrayList gespeichert werden.
 	 * 
+	 * @param personId
 	 * @return ArryList<JobPosting>
 	 */
 
@@ -412,7 +413,7 @@ public class JobPostingMapper {
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
@@ -425,7 +426,7 @@ public class JobPostingMapper {
 				result.add(jobPosting);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -438,14 +439,14 @@ public class JobPostingMapper {
 	
 	/**
 	 * Die Methode findJobPostingByProjectId sucht alle jobPosting-Tupel
-	 * zu der �bergebenen projectId in der Datenbank ab und setzt diese in eine ArrayList.
-	 * Die Methode ist zur Umsetzung der Anforderung, ein Projekt zu l�schen, aber davor dazugeh�rige 
-	 * Tabellen-Beziehungen ebenfalls zu l�schen.
+	 * zu der uebergebenen projectId in der Datenbank ab und setzt diese in eine ArrayList.
+	 * Die Methode ist zur Umsetzung der Anforderung, ein Projekt zu loeschen, aber davor dazugehoerige 
+	 * Tabellen-Beziehungen ebenfalls zu loeschen.
 	 * 
-	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datens�tze zusammengef�gt
-	 * werden, zu den es jeweils auch ein Gegenst�ck in der verkn�pften 
-	 * Tabelle gibt. Da es m�glich ist, dass ein Projekt mehrere Ausschreibungen hat,
-	 * m�ssen die Ausschreibungs-Objekte in einer ArrayList gespeichert werden.
+	 * Mit der Inner-Join-Klausel wird erreicht, dass nur die Datensaetze zusammengefuegt
+	 * werden, zu den es jeweils auch ein Gegenstueck in der verknuepften 
+	 * Tabelle gibt. Da es moeglich ist, dass ein Projekt mehrere Ausschreibungen hat,
+	 * muessen die Ausschreibungs-Objekte in einer ArrayList gespeichert werden.
 	 * 
 	 * 
 	 * @param projectId
@@ -466,7 +467,7 @@ public class JobPostingMapper {
 			 * Tabelle jobPosting vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschlie�end der ArrayList hinzugef�gt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				JobPosting jobPosting = new JobPosting();
@@ -479,7 +480,7 @@ public class JobPostingMapper {
 				result.add(jobPosting);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -491,7 +492,7 @@ public class JobPostingMapper {
 	
 	
 	/**
-	 * Findet ein JobPosting-Objekt anhand der �bergebenen Id in der Datenbank.
+	 * Findet ein JobPosting-Objekt anhand der uebergebenen Id in der Datenbank.
 	 * 
 	 * @param partnerProfilId
 	 * @return jobPosting 
@@ -502,14 +503,14 @@ public class JobPostingMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand der �bergebenen Id, in der Datenbank.
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand der uebergebenen Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM jobPosting INNER JOIN partnerProfile ON "
 							+ "jobPosting.id = partnerProfile.jobPosting_id WHERE partnerProfile.id = " +  id);
 			/**
-			 * Der Prim�rschl�ssel (id) wird als eine Tupel zur�ckgegeben. Es
-			 * wird gepr�ft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
+			 * Der Primaerschluessel (id) wird als eine Tupel zurueckgegeben. Es
+			 * wird geprueft ob ein Ergebnis vorliegt Das Ergebnis-Tupel wird in
 			 * ein Objekt umgewandelt.
 			 * 
 			 */
@@ -524,7 +525,7 @@ public class JobPostingMapper {
 				return jobPosting;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die M�glichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 			 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */

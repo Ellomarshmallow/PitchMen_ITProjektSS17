@@ -153,8 +153,8 @@ public class HTMLReportWriter extends ReportWriter {
 		buff.append("<h4>" + a.getTitle() + "</h4>");
 		buff.append("</br><table border=1px rules=all>");
 	
-		 buff.append("<th> JobPosting Titel </th> ");
-		 buff.append("<th> JobPosting Beschreibung </th>");
+		 buff.append("<th> Titel der Ausschreibung </th> ");
+		 buff.append("<th> Beschreibung </th>");
 		 buff.append("<th> Passende Eigenschaft </th>");
 
 

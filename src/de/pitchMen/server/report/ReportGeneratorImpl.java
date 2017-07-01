@@ -139,7 +139,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllJobPostings result = new AllJobPostings();
 
 		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-		result.setTitle("Alle Job Postings");
+		result.setTitle("Alle Ausschreibungen im System: ");
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
@@ -154,10 +154,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row headline = new Row(); // Erste Zeile im Report
 
 		// Titel der Ausschreibung
-		headline.addColumn(new Column("JobPosting Titel"));
+		headline.addColumn(new Column("Titel der Ausschreibung"));
 
 		// Text der Ausschreibung
-		headline.addColumn(new Column("JobPosting Text"));
+		headline.addColumn(new Column("Text"));
 
 		//F�r AllJobPostings, brauchen wir keine "Dazugeh�rige Projekte
 //		// das dazugeh�rige Projekt der Ausschreibung
@@ -214,7 +214,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllJobPostingsMatchingPartnerProfileOfUser result = new AllJobPostingsMatchingPartnerProfileOfUser();
 
 		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-		result.setTitle("Alle Ausschreibungen passend zum Partnerprofil des Benutzers");
+		result.setTitle("Alle Ausschreibungen passend zu Ihrem Partnerprofil: ");
 		/**
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
@@ -227,9 +227,9 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 **/
 		Row headline = new Row();
 
-		headline.addColumn(new Column("JobPosting Titel"));
+		headline.addColumn(new Column("Titel der Ausschreibung"));
 
-		headline.addColumn(new Column("JobPosting Beschreibung"));
+		headline.addColumn(new Column("Beschreibung"));
 
 		headline.addColumn(new Column("Passende Eigenschaft"));
 
@@ -345,7 +345,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		ApplicationsRelatedToJobPostingsOfUser result = new ApplicationsRelatedToJobPostingsOfUser();
 
 		// Jeder Report hat einen Titel (Bezeichnung / Überschrift).
-		result.setTitle("Alle Bewerbungen auf Ausschreibungen des Users");
+		result.setTitle("Alle Bewerbungen auf Ihre Ausschreibungen: ");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -409,7 +409,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * der Titel der Ausschreibung sowie die ID der Ausschreibung
 		 * festehalten werden.
 		 */
-		result.setTitle("Alle Bewerbungen auf die Ausschreibung " + jobPosting.getTitle() + "mit der ID: "
+		result.setTitle("Alle Bewerbungen auf die Ausschreibung " + jobPosting.getTitle() + " mit der ID: "
 				+ jobPosting.getId());
 
 		/*
@@ -425,7 +425,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		 * einzeilig, daher die Verwendung von Rows.
 		 */
 		// Bewerber
-		//headline.addColumn(new Column("BewerbungsID"));
+		headline.addColumn(new Column("Bewerber"));
 		// Erstellungsdatum der Bewerbung
 		headline.addColumn(new Column("Erstellungsdatum"));
 		// Text der Bewerbung
@@ -444,10 +444,10 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 
 			Row applicationRow = new Row();
 		
-//			Person bewerber =  pitchMenAdmin.getPersonByApplicationId(a.getPartnerProfileId());
+			Person bewerber =  pitchMenAdmin.getPersonByApplicationId(a.getId());
 				
 			
-		//	applicationRow.addColumn(new Column(a.getId()));
+			applicationRow.addColumn(new Column(bewerber.getFirstName()+" "+bewerber.getName()));
 			applicationRow.addColumn(new Column(a.getDateCreated().toString()));
 			applicationRow.addColumn(new Column(a.getText()));
 			applicationRow.addColumn(new Column(a.getStatus().toString()));
@@ -478,7 +478,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfUser result = new AllApplicationsOfUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Alle Bewerbungen eines Nutzers");
+		result.setTitle("Ihre Bewerbungen: ");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -555,7 +555,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfOneUser result = new AllApplicationsOfOneUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Report für Alle Bewerbungen des Nutzers");
+		result.setTitle("Alle Bewerbungen des Bewerbers");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -577,7 +577,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Enddatum des Projekts
 		headline.addColumn(new Column("Status"));
 		// Beschreibung des Projekts
-		headline.addColumn(new Column("Titel der dazugeh�rigen Ausschreibung"));
+		headline.addColumn(new Column("Titel der dazugehörigen Ausschreibung"));
 
 		result.addRow(headline);
 		/*
@@ -626,7 +626,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllParticipationsOfOneUser result = new AllParticipationsOfOneUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Report für Alle Beteiligungen eines Nutzers");
+		result.setTitle("Jede Projektteilnahme des Bewerbers");
 
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -696,7 +696,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		ProjectInterweavingsWithParticipationsAndApplications result = new ProjectInterweavingsWithParticipationsAndApplications();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Des Nutzers Projektverflechtungen");
+		result.setTitle("Die Projektverflechtungen des Bewerbers: ");
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
@@ -948,7 +948,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		FanInAndOutReport result = new FanInAndOutReport();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Überschrift) */
-		result.setTitle("Report fuer die FanIn bzw FanOut Analyse");
+		result.setTitle("Report für die FanIn bzw FanOut Analyse");
 		/*
 		 * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
 		 * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.

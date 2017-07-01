@@ -5,13 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import de.pitchMen.shared.bo.Application;
 import de.pitchMen.shared.bo.Person;
 
 /**
  * Die Klasse PersonMapper bildet Person-Objekte auf eine relationale Datenbank
- * ab. Ebenfalls ist es möglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
+ * ab. Ebenfalls ist es moeglich aus Datenbank-Tupel Java-Objekte zu erzeugen.
  * 
  * Zur Verwaltung der Objekte implementiert die Mapper-Klasse entsprechende
  * Methoden (insert, search, delete, update).
@@ -22,24 +20,24 @@ public class PersonMapper {
 
 	/**
 	 * Die Klasse PersonMapper wird nur einmal instantiiert
-	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfüllt werden kann,
-	 * wird zunächst eine Variable mit dem Schlüsselwort static und dem
+	 * (Singleton-Eigenschaft). Damit diese Eigenschaft erfuellt werden kann,
+	 * wird zunaechst eine Variable mit dem Schluesselwort static und dem
 	 * Standardwert null erzeugt. Sie speichert die Instanz dieser Klasse.
 	 */
 	private static PersonMapper personMapper = null;
 
 	/**
-	 * Ein geschützter Konstruktor verhindert das erneute erzeugen von weiteren
+	 * Ein geschuetzter Konstruktor verhindert das erneute erzeugen von weiteren
 	 * Instanzen dieser Klasse.
 	 */
 	protected PersonMapper() {
 	}
 
 	/**
-	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafür,
+	 * Methode zum Sicherstellen der Singleton-Eigenschaft. Diese sorgt dafuer,
 	 * dass nur eine einzige Instanz der PersonMapper-Klasse existiert.
-	 * Aufgerufen wird die Klasse somit über PersonMapper.personMapper() und
-	 * nicht über den New-Operator.
+	 * Aufgerufen wird die Klasse somit ueber PersonMapper.personMapper() und
+	 * nicht ueber den New-Operator.
 	 * 
 	 * @return personMapper
 	 */
@@ -51,7 +49,7 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Fügt ein Person-Objekt der Datenbank hinzu.
+	 * Fuegt ein Person-Objekt der Datenbank hinzu.
 	 * 
 	 * @param person
 	 * @return person
@@ -69,7 +67,7 @@ public class PersonMapper {
 			Statement stmt = con.createStatement();
 			/**
 			 * Abfrage des zuletzt hinzugefuegten Primaerschluessel (id). Die
-			 * aktuelle id wird um eins erhoeht. Statement ausfüllen und als
+			 * aktuelle id wird um eins erhoeht. Statement ausfuellen und als
 			 * Query an die Datenbank senden.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid FROM person");
@@ -79,14 +77,14 @@ public class PersonMapper {
 			}
 			stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Einfügen des neuen Person-Tupels in die
+			 * SQL-Anweisung zum Einfuegen des neuen Person-Tupels in die
 			 * Datenbank.
 			 */
 			stmt.executeUpdate("INSERT INTO person (id, name, description, firstName, email) VALUES (" + person.getId()
 					+ ", '" + person.getName() + "', '" + person.getDescription() + "', '" + person.getFirstName()
 					+ "', '" + person.getEmailAdress() + "')");
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
 			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -108,7 +106,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Aktualisieren des übergebenen Datensatzes in
+			 * SQL-Anweisung zum Aktualisieren des uebergebenen Datensatzes in
 			 * der Datenbank.
 			 */
 			stmt.executeUpdate("UPDATE person SET name='" + person.getName() + "', description= '"
@@ -116,7 +114,7 @@ public class PersonMapper {
 					+ person.getEmailAdress() + "' WHERE id= " + person.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -127,7 +125,7 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Löscht ein Person-Objekt aus der Datenbank.
+	 * Loescht ein Person-Objekt aus der Datenbank.
 	 * 
 	 * @param person
 	 */
@@ -137,13 +135,13 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Löschen des übergebenen Datensatzes in der
+			 * SQL-Anweisung zum Loeschen des uebergebenen Datensatzes in der
 			 * Datenbank.
 			 */
 			stmt.executeUpdate("DELETE FROM person WHERE id=" + person.getId());
 		}
 		/**
-		 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+		 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 		 * Fehlermeldung genauer zu analyisieren. Es werden Informationen dazu
 		 * ausgegeben, was passiert ist und wo im Code es passiert ist.
 		 */
@@ -164,16 +162,16 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des übergebenen Datensatzes, anhand der
+			 * SQL-Anweisung zum Finden des uebergebenen Datensatzes, anhand der
 			 * Id, in der Datenbank.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT id, name, description, firstName, email FROM person WHERE id=" + id);
 			/**
-			 * Zu einem Primärschlüssel exisitiert nur maximal ein
-			 * Datenbank-Tupel, somit kann auch nur einer zurückgegeben werden.
-			 * Es wird mit einer If-Abfragen geprüft, ob es für den
-			 * angefragten Primärschlüssel ein DB-Tupel gibt.
+			 * Zu einem Primaerschluessel exisitiert nur maximal ein
+			 * Datenbank-Tupel, somit kann auch nur einer zurueckgegeben werden.
+			 * Es wird mit einer If-Abfragen geprueft, ob es fuer den
+			 * angefragten Primaerschluessel ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
 				Person person = new Person();
@@ -185,7 +183,7 @@ public class PersonMapper {
 				return person;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
 			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -207,7 +205,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden aller Datensätze in der Datenbank,
+			 * SQL-Anweisung zum Finden aller Datensaetze in der Datenbank,
 			 * sortiert nach der Id.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName, email FROM person ORDER BY id");
@@ -216,7 +214,7 @@ public class PersonMapper {
 			 * Tabelle person vorhanden ist, muss das Abfragen des ResultSet so
 			 * oft erfolgen (while-Schleife), bis alle Tupel durchlaufen wurden.
 			 * Die DB-Tupel werden in Java-Objekte transformiert und
-			 * anschließend der ArrayList hinzugefügt.
+			 * anschliessend der ArrayList hinzugefuegt.
 			 */
 
 			while (rs.next()) {
@@ -229,7 +227,7 @@ public class PersonMapper {
 				result.add(person);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
 			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -240,7 +238,7 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Findet Person-Objekte anhand des übergebenen Namens in der Datenbank.
+	 * Findet Person-Objekte anhand des uebergebenen Namens in der Datenbank.
 	 * 
 	 * @param name
 	 * @return ArrayList<Person>
@@ -252,7 +250,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden des Datensatzes, anhand des übergebenen
+			 * SQL-Anweisung zum Finden des Datensatzes, anhand des uebergebenen
 			 * Namens, in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt
@@ -260,10 +258,10 @@ public class PersonMapper {
 							+ "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle Person mit dem übergebenen Namen vorhanden ist, muss das
+			 * Tabelle Person mit dem uebergebenen Namen vorhanden ist, muss das
 			 * Abfragen des ResultSet so oft erfolgen (while-Schleife), bis alle
 			 * Tupel durchlaufen wurden. Die DB-Tupel werden in Java-Objekte
-			 * transformiert und anschließend der ArrayList hinzugefügt.
+			 * transformiert und anschliessend der ArrayList hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Person person = new Person();
@@ -275,7 +273,7 @@ public class PersonMapper {
 				result.add(person);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
 			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -286,7 +284,7 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Findet ein Person-Objekt anhand des übergebenen Vornamens in der
+	 * Findet ein Person-Objekt anhand des uebergebenen Vornamens in der
 	 * Datenbank.
 	 * 
 	 * @param firstName
@@ -299,18 +297,18 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden aller Datensätze, anhand des Vornamens,
+			 * SQL-Anweisung zum Finden aller Datensaetze, anhand des Vornamens,
 			 * in der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT id, name, description, firstName FROM person WHERE name LIKE '"
 					+ firstName + "' ORDER BY id");
 			/**
 			 * Da es sein kann, dass mehr als nur ein Datenbank-Tupel in der
-			 * Tabelle Person mit dem übergebenen Vornamen vorhanden ist, muss
+			 * Tabelle Person mit dem uebergebenen Vornamen vorhanden ist, muss
 			 * das Abfragen des ResultSet so oft erfolgen (while-Schleife), bis
 			 * alle Tupel durchlaufen wurden. Die DB-Tupel werden in
-			 * Java-Objekte transformiert und anschließend der ArrayList
-			 * hinzugefügt.
+			 * Java-Objekte transformiert und anschliessend der ArrayList
+			 * hinzugefuegt.
 			 */
 			while (rs.next()) {
 				Person person = new Person();
@@ -322,7 +320,7 @@ public class PersonMapper {
 				result.add(person);
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
 			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
@@ -333,7 +331,7 @@ public class PersonMapper {
 	}
 
 	/**
-	 * Findet ein Person-Objekt anhand der übergebenen eMail in der Datenbank.
+	 * Findet ein Person-Objekt anhand der uebergebenen eMail in der Datenbank.
 	 * 
 	 * @param email
 	 * @return person
@@ -344,7 +342,7 @@ public class PersonMapper {
 		try {
 			Statement stmt = con.createStatement();
 			/**
-			 * SQL-Anweisung zum Finden aller Datensätze, anhand der eMail, in
+			 * SQL-Anweisung zum Finden aller Datensaetze, anhand der eMail, in
 			 * der Datenbank, sortiert nach der Id.
 			 */
 			ResultSet rs = stmt
@@ -352,9 +350,9 @@ public class PersonMapper {
 							+ email + "' ORDER BY id");
 			/**
 			 * Zu einem eindeutigen Wert exisitiert nur maximal ein
-			 * Datenbank-Tupel, somit kann auch nur einer zurückgegeben werden.
-			 * Es wird mit einer If-Abfragen geprüft, ob es für den
-			 * angefragten Primärschlüssel ein DB-Tupel gibt.
+			 * Datenbank-Tupel, somit kann auch nur einer zurueckgegeben werden.
+			 * Es wird mit einer If-Abfragen geprueft, ob es fuer den
+			 * angefragten Primaerschluessel ein DB-Tupel gibt.
 			 */
 			if (rs.next()) {
 				Person person = new Person();
@@ -366,7 +364,7 @@ public class PersonMapper {
 				return person;
 			}
 			/**
-			 * Das Aufrufen des printStackTrace bietet die Möglichkeit, die
+			 * Das Aufrufen des printStackTrace bietet die Moeglichkeit, die
 			 * Fehlermeldung genauer zu analyisieren. Es werden Informationen
 			 * dazu ausgegeben, was passiert ist und wo im Code es passiert ist.
 			 */
