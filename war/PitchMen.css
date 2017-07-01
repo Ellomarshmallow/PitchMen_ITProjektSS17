@@ -578,8 +578,9 @@ td.datePickerYear {
   padding: 0px 4px;
 }
 
-.reportgenerator th {
+/* ### REPORT GENERATOR TABELLEN ### */
 
-	/* Falls man noch die Tabellen verschönern möchte*/
+.reportgenerator td {
+	padding: 10px;
 }
 

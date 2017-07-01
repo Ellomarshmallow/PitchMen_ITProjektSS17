@@ -159,7 +159,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Text der Ausschreibung
 		headline.addColumn(new Column("JobPosting Text"));
 
-		//Für AllJobPostings, brauchen wir keine "Dazugehörige Projekte
+		//Fï¿½r AllJobPostings, brauchen wir keine "Dazugehï¿½rige Projekte
 //		// das dazugehï¿½rige Projekt der Ausschreibung
 		//headline.addColumn(new Column("dazugehoeriges Projekt"));
 
@@ -273,8 +273,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			 * Im zweiten Durchlauf werden alle JobPosting-Traits aus dem Array ausgelesen 
 			 * und in eine lokale String Variable jobPostingTrait gespeichert.
 			 * 
-			 * Des weiteren wird die PartnerProfilId in eine int Variable abgespeichert. Diese wird später dazu verwendet, 
-			 * das dazugehörige JobPosting zu finden.
+			 * Des weiteren wird die PartnerProfilId in eine int Variable abgespeichert. Diese wird spï¿½ter dazu verwendet, 
+			 * das dazugehï¿½rige JobPosting zu finden.
 			 */
 			for (Trait jpt : jobPostingTraits) {
 				// Row traitRowJobPostings = new Row();
@@ -288,13 +288,13 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 				// result.addRow(traitRowJobPostings);
 
 				/**
-				 * If Abfrage, welche die Inhaltiche übereinstimmung 
-				 * der Variablen personTrait und jobPostingTrait prüft. 
-				 * Wenn die Prüfung positiv ausfällt, wird Anhand der PartnerProfil ID des Traits das
-				 * dazugehörige JObPosting aus der Datenbank gelesen. Anschließend wird davon lediglich der 
-				 * Titel und der Text an das ErgebnisObjekt übergeben. 
-				 * Zusätzlich wird die Eigenschaft ausgegeben, welche sowohl im JobPosting wie auch in dem Person
-				 * PartnerProfil übereinstimmt.
+				 * If Abfrage, welche die Inhaltiche ï¿½bereinstimmung 
+				 * der Variablen personTrait und jobPostingTrait prï¿½ft. 
+				 * Wenn die Prï¿½fung positiv ausfï¿½llt, wird Anhand der PartnerProfil ID des Traits das
+				 * dazugehï¿½rige JObPosting aus der Datenbank gelesen. Anschlieï¿½end wird davon lediglich der 
+				 * Titel und der Text an das ErgebnisObjekt ï¿½bergeben. 
+				 * Zusï¿½tzlich wird die Eigenschaft ausgegeben, welche sowohl im JobPosting wie auch in dem Person
+				 * PartnerProfil ï¿½bereinstimmt.
 				 */
 				if (personTrait.equals(jobPostingTrait)) {
 
@@ -313,7 +313,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		}
 
 		/**
-		 * Ergebnis-Objekt welches dann an die Zuständige Klasse im HTML Report-Writer übergeben wird.
+		 * Ergebnis-Objekt welches dann an die Zustï¿½ndige Klasse im HTML Report-Writer ï¿½bergeben wird.
 		 */
 		return result;
 
@@ -555,7 +555,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllApplicationsOfOneUser result = new AllApplicationsOfOneUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
-		result.setTitle("Report für Alle Bewerbungen des Nutzers");
+		result.setTitle("Report fÃ¼r Alle Bewerbungen des Nutzers");
 
 		/*
 		 * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
@@ -577,7 +577,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		// Enddatum des Projekts
 		headline.addColumn(new Column("Status"));
 		// Beschreibung des Projekts
-		headline.addColumn(new Column("Titel der dazugehörigen Ausschreibung"));
+		headline.addColumn(new Column("Titel der dazugehï¿½rigen Ausschreibung"));
 
 		result.addRow(headline);
 		/*
@@ -590,7 +590,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			Row projectRow = new Row();
 			JobPosting receivingJp = pitchMenAdmin.getJobPostingByID(p.getJobPostingId());
 		
-			projectRow.addColumn(new Column(p.getDateCreated()));
+			projectRow.addColumn(new Column(p.getDateCreated().toString()));
 			projectRow.addColumn(new Column(p.getText()));
 			projectRow.addColumn(new Column(p.getStatus()));
 			projectRow.addColumn(new Column(receivingJp.getTitle()));
@@ -626,7 +626,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		AllParticipationsOfOneUser result = new AllParticipationsOfOneUser();
 
 		/* Dieser Report hat einen Titel (Bezeichnung / Ãœberschrift) */
-		result.setTitle("Report für Alle Beteiligungen eines Nutzers");
+		result.setTitle("Report fÃ¼r Alle Beteiligungen eines Nutzers");
 
 		/*
 		 * Datum der Erstellung hinzufÃ¼gen. new Date() erzeugt autom. einen
@@ -664,8 +664,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 			
 
 			projectRow.addColumn(new Column(project.getTitle()));
-			projectRow.addColumn(new Column(p.getDateOpened()));
-			projectRow.addColumn(new Column(p.getDateClosed()));
+			projectRow.addColumn(new Column(p.getDateOpened().toString()));
+			projectRow.addColumn(new Column(p.getDateClosed().toString()));
 			projectRow.addColumn(new Column(project.getDescription()));
 
 			// Hinzufï¿½gen der Row zum Result
@@ -828,7 +828,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 					Row applicationCount = new Row();
 					// hinzufï¿½gen der Spalte fï¿½r die jeweiligen Stati
 					applicationCount.addColumn(new Column(String.valueOf(person.getId())));
-					applicationCount.addColumn(new Column(person.getFirstName()));
+					applicationCount.addColumn(new Column(person.getFirstName()+" "+person.getName()));
 					applicationCount.addColumn(new Column(String.valueOf(ongoing.size())));
 					applicationCount.addColumn(new Column(String.valueOf(declined.size())));
 					applicationCount.addColumn(new Column(String.valueOf(accepted.size())));
@@ -919,7 +919,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet implements ReportG
 		Row jobPostingCount = new Row();
 		// hinzufï¿½gen der Spalte fï¿½r die jeweiligen Stati zur Row
 		jobPostingCount.addColumn(new Column(String.valueOf(person.getId())));
-		jobPostingCount.addColumn(new Column(person.getFirstName()));
+		jobPostingCount.addColumn(new Column(person.getFirstName()+" "+person.getName()));
 		jobPostingCount.addColumn(new Column(String.valueOf(ongoing.size())));
 		jobPostingCount.addColumn(new Column(String.valueOf(deleted.size())));
 		jobPostingCount.addColumn(new Column(String.valueOf(occupied.size())));
